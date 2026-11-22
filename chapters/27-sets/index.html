@@ -1,0 +1,716 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 27: Sets · AoPS Learner</title>
+  <meta name="description" content="Set notation, elements and size, union, intersection and complement, Venn diagrams with two and three sets, and counting subsets, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="27" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 27 · Advanced Topics</span>
+    <h1>Sets</h1>
+    <p class="lede">A set is just a collection of things, yet the language of sets is how nearly all of modern mathematics is written. In this chapter you'll learn to describe sets, combine them, picture them with Venn diagrams, and count their subsets, which leads to a surprising identity about binomial coefficients.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Roster notation lists elements, $\{2, 4, 6, 8\}$; set-builder notation states a rule, $\{x \mid x \text{ is an even integer},\ 0 &lt; x &lt; 10\}$. Order and repeats don't matter.</li>
+      <li>$x \in A$ means "$x$ is an element of $A$"; $\#A$ is the number of elements (the cardinality).</li>
+      <li>$\mathbb{Z} \subset \mathbb{Q} \subset \mathbb{R} \subset \mathbb{C}$: integers, rationals, reals, complex numbers.</li>
+      <li>Union $A \cup B$ (in either), intersection $A \cap B$ (in both), complement $\overline{A}$ (not in $A$), empty set $\varnothing$.</li>
+      <li>$\#(A \cup B) = \#A + \#B - \#(A \cap B)$, and for three sets add back the triple overlap.</li>
+      <li>Fill a Venn diagram from the inside out: triple overlap first, then the pairs, then the singles.</li>
+      <li>An $n$-element set has $2^n$ subsets, so $\binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{n} = 2^n$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 27.1 ===================== -->
+  <section class="lesson" id="s27-1" data-title="Some Definitions">
+    <h2><span class="sec-num">27.1</span> Some Definitions</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Your music library has a "favourites" playlist. Add the same song to it twice and most apps simply ignore the second copy; shuffle the playlist and it is still the same collection of favourites. That is exactly how mathematicians think about a <em>set</em>: what matters is only which things are in it.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>set</strong> is a collection of objects, called its <strong>elements</strong>. There are two common ways to describe one:</p>
+      <ul>
+        <li><em>Roster notation</em> lists the elements inside braces: $\{1, 4, 9, 16\}$.</li>
+        <li><em>Set-builder notation</em> gives a rule: $\{x \mid x \text{ is a perfect square and } 1 \le x \le 16\}$, read "the set of all $x$ such that…". The variable $x$ is a dummy variable; any letter would do.</li>
+      </ul>
+      <p>Because a set is only a collection, <em>order doesn't matter</em> and <em>repeats don't count</em>: $\{3, 1, 2\}$, $\{1, 2, 3\}$ and $\{1, 1, 2, 3\}$ are all the same set.</p>
+      <div class="rule"><p>$$x \in A \text{ means "}x\text{ is an element of }A\text{"}, \qquad x \notin A \text{ means it is not}, \qquad \#A = \text{number of elements of } A.$$</p></div>
+      <p>The number of elements, $\#A$, is also called the <em>size</em> or <em>cardinality</em> of $A$. The major number systems from Chapter 8 have standard names:</p>
+      <div class="rule"><p>$$\mathbb{Z} = \text{integers}, \quad \mathbb{Q} = \text{rationals (quotients)}, \quad \mathbb{R} = \text{reals}, \quad \mathbb{C} = \text{complex numbers}.$$</p></div>
+      <p>So "find all $x \in \mathbb{R}$" just means "find all real numbers $x$."</p>
+      <div class="note"><p>Elements can themselves be sets. The set $\{1, \{1, 2\}\}$ has exactly two elements: the number $1$ and the set $\{1, 2\}$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="setBuilder">
+      <figcaption><strong>Explore:</strong> Choose a rule and a range. The numbers that satisfy the rule light up; below you see the same set in roster form and in set-builder form, with its size. Which rules give the same size for different ranges?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>From rule to roster</h3>
+        <div class="problem"><p>List the elements of $\{x \mid x \text{ is a positive odd integer less than } 10\}$ and find its size.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Positive odd integers below $10$: $\{1, 3, 5, 7, 9\}$.</p></div><p class="why">Test each positive integer below $10$ against the rule.</p></li>
+          <li><div class="do"><p>The size is $5$.</p></div><p class="why">Count the listed elements.</p></li>
+        </ol>
+        <p class="answer">$\{1, 3, 5, 7, 9\}$, with $5$ elements.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Same set or not?</h3>
+        <div class="problem"><p>Are $\{3, 1, 2\}$ and $\{1, 2, 3, 3\}$ the same set? What is the size of each?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Both contain exactly the elements $1$, $2$ and $3$.</p></div><p class="why">Order doesn't matter, and a repeated element is still just one element.</p></li>
+          <li><div class="do"><p>So they are equal, and each has size $3$.</p></div><p class="why">Two sets are equal when they have the same elements.</p></li>
+        </ol>
+        <p class="answer">Yes, they are the same set, of size $3$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>From roster to rule</h3>
+        <div class="problem"><p>Write $\{4, 9, 16, 25, 36\}$ in set-builder notation.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The elements are $2^2, 3^2, 4^2, 5^2, 6^2$.</p></div><p class="why">Look for the pattern the elements share.</p></li>
+          <li><div class="do"><p>$\{n^2 \mid n \in \mathbb{Z},\ 2 \le n \le 6\}$.</p></div><p class="why">State the rule and the allowed values of the dummy variable. $\{x \mid x \text{ is a perfect square},\ 4 \le x \le 36\}$ also works.</p></li>
+        </ol>
+        <p class="answer">$\{n^2 \mid n \in \mathbb{Z},\ 2 \le n \le 6\}$</p>
+        <p class="book-next">Next in the book: Exercise 27-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Which number systems?</h3>
+        <div class="problem"><p>True or false: (a) $-3 \in \mathbb{Z}$, (b) $\sqrt{2} \in \mathbb{Q}$, (c) $\tfrac23 \in \mathbb{R}$, (d) $i \in \mathbb{R}$, (e) $i \in \mathbb{C}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) True: $-3$ is an integer.</p></div><p class="why">The integers include the negatives.</p></li>
+          <li><div class="do"><p>(b) False: $\sqrt2$ is irrational. (c) True: every rational number is real.</p></div><p class="why">$\sqrt2$ can't be written as a quotient of integers (Chapter 8).</p></li>
+          <li><div class="do"><p>(d) False and (e) True: $i$ is complex but not real.</p></div><p class="why">$i^2 = -1$, and no real number squares to a negative.</p></li>
+        </ol>
+        <p class="answer">(a) T, (b) F, (c) T, (d) F, (e) T</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Count with a condition</h3>
+        <div class="problem"><p>Find $\#\{x \in \mathbb{Z} \mid x^2 &lt; 20\}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4^2 = 16 &lt; 20$ but $5^2 = 25 \ge 20$, so we need $-4 \le x \le 4$.</p></div><p class="why">Negative integers count too: $(-4)^2 = 16$.</p></li>
+          <li><div class="do"><p>The set is $\{-4, -3, \dots, 3, 4\}$, which has $9$ elements.</p></div><p class="why">Four negatives, zero, and four positives.</p></li>
+        </ol>
+        <p class="answer">$9$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A set of pairs</h3>
+        <div class="problem"><p>Find the size of $\{(x, y) \mid x, y \text{ positive integers},\ x + y = 10\}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x$ can be any of $1, 2, \dots, 9$, and then $y = 10 - x$ is a positive integer.</p></div><p class="why">Each choice of $x$ forces $y$, so count the choices of $x$.</p></li>
+          <li data-think="Are $(3,7)$ and $(7,3)$ the same element?"><div class="do"><p>The pairs $(1, 9), (2, 8), \dots, (9, 1)$ are all different, so there are $9$.</p></div><p class="why">The elements are <em>ordered</em> pairs; $(3, 7)$ and $(7, 3)$ are different points of the plane.</p></li>
+        </ol>
+        <p class="answer">$9$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Sets inside sets</h3>
+        <div class="problem"><p>Let $A = \{1, \{2, 3\}, \varnothing\}$, where $\varnothing$ is the empty set. Find $\#A$, and decide whether $2 \in A$, $\{2, 3\} \in A$ and $\varnothing \in A$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$A$ has three elements: the number $1$, the set $\{2, 3\}$, and the set $\varnothing$. So $\#A = 3$.</p></div><p class="why">The braces around $2, 3$ package them as a single element.</p></li>
+          <li><div class="do"><p>$2 \notin A$: $2$ is inside an element of $A$, but is not itself an element.</p></div><p class="why">Being in a box inside the box is not the same as being in the box.</p></li>
+          <li><div class="do"><p>$\{2, 3\} \in A$ and $\varnothing \in A$: both appear in the list.</p></div><p class="why">The empty set is a perfectly good object, and here it is listed as an element.</p></li>
+        </ol>
+        <p class="answer">$\#A = 3$; $2 \notin A$; $\{2,3\} \in A$; $\varnothing \in A$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Duplicates collapse</h3>
+        <div class="problem"><p>How many elements does $\left\{\tfrac{x}{y} \;\middle|\; x, y \in \{1, 2, 3, 4\}\right\}$ have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>There are $4 \times 4 = 16$ ways to choose $x$ and $y$, but many give the same value, such as $\tfrac12 = \tfrac24$ and $\tfrac11 = \tfrac22 = \tfrac33 = \tfrac44$.</p></div><p class="why">A set keeps each value once, so we must count distinct values, not choices.</p></li>
+          <li data-think="How can you organize the distinct values so none is missed or counted twice?"><div class="do"><p>Group by lowest terms: whole numbers $1, 2, 3, 4$; halves $\tfrac12, \tfrac32$; thirds $\tfrac13, \tfrac23, \tfrac43$; quarters $\tfrac14, \tfrac34$.</p></div><p class="why">Each value has exactly one lowest-terms form, so listing by denominator avoids repeats.</p></li>
+          <li><div class="do"><p>Total: $4 + 2 + 3 + 2 = 11$.</p></div><p class="why">Five of the sixteen choices were repeats.</p></li>
+        </ol>
+        <p class="answer">$11$</p>
+        <p class="key-idea">When a set is built by a formula, count the distinct outputs, not the inputs.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 27.2 ===================== -->
+  <section class="lesson" id="s27-2" data-title="Operating on Sets">
+    <h2><span class="sec-num">27.2</span> Operating on Sets</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A teacher asks, "Who has a dog?" and $12$ hands go up. "Who has a cat?" Nine hands. Does that mean $21$ students have a pet? Only if nobody has both. Combining sets correctly, without double-counting, is the heart of this section.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>From sets $A$ and $B$ we build new sets:</p>
+      <ul>
+        <li>the <strong>union</strong> $A \cup B$: everything in $A$ or in $B$ (or both);</li>
+        <li>the <strong>intersection</strong> $A \cap B$: everything in both $A$ and $B$;</li>
+        <li>the <strong>complement</strong> $\overline{A}$: everything <em>not</em> in $A$, within a "universe" that is clear from context.</li>
+      </ul>
+      <p>The set with no elements at all is the <strong>empty set</strong> (or null set), written $\varnothing$ or $\{\}$. Two sets with $A \cap B = \varnothing$ are called <em>disjoint</em>.</p>
+      <p>When we count $A \cup B$ by adding $\#A$ and $\#B$, every element of $A \cap B$ is counted twice, so we subtract it once:</p>
+      <div class="rule"><p>$$\#(A \cup B) = \#A + \#B - \#(A \cap B).$$</p></div>
+      <p>This is the simplest case of the <em>principle of inclusion-exclusion</em>. Together with $\#\overline{A} = \#(\text{universe}) - \#A$, it handles "neither" questions too.</p>
+    </div>
+
+    <figure class="explore" data-widget="setOps">
+      <figcaption><strong>Explore:</strong> In the universe $\{1, \dots, 30\}$, $A$ is the multiples of $a$ and $B$ the multiples of $b$. Pick an operation and watch which numbers survive. Check the counting formula in the readout. When is $A \cap B$ the multiples of $a \cdot b$, and when isn't it?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Union and intersection</h3>
+        <div class="problem"><p>Let $A = \{1, 2, 3, 4, 5\}$ and $B = \{4, 5, 6, 7\}$. Find $A \cup B$ and $A \cap B$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$A \cup B = \{1, 2, 3, 4, 5, 6, 7\}$.</p></div><p class="why">Take everything in either set; $4$ and $5$ are listed only once.</p></li>
+          <li><div class="do"><p>$A \cap B = \{4, 5\}$.</p></div><p class="why">Only $4$ and $5$ are in both.</p></li>
+        </ol>
+        <p class="answer">$A \cup B = \{1, \dots, 7\}$, $A \cap B = \{4, 5\}$.</p>
+        <p class="book-next">Next in the book: Exercise 27-2.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A complement</h3>
+        <div class="problem"><p>In the universe $\{1, 2, \dots, 10\}$, let $E$ be the even numbers. Find $\overline{E}$ and $E \cap \overline{E}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\overline{E} = \{1, 3, 5, 7, 9\}$.</p></div><p class="why">The complement is everything in the universe that is not even.</p></li>
+          <li><div class="do"><p>$E \cap \overline{E} = \varnothing$.</p></div><p class="why">No number is both even and not even. A set and its complement are always disjoint.</p></li>
+        </ol>
+        <p class="answer">$\overline{E} = \{1,3,5,7,9\}$ and $E \cap \overline{E} = \varnothing$.</p>
+        <p class="book-next">Next in the book: Example 27-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Counting a union</h3>
+        <div class="problem"><p>$\#A = 12$, $\#B = 9$ and $\#(A \cap B) = 4$. Find $\#(A \cup B)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\#(A \cup B) = 12 + 9 - 4$.</p></div><p class="why">The $4$ shared elements were counted in both $12$ and $9$; subtract one copy.</p></li>
+          <li><div class="do"><p>$= 17$.</p></div><p class="why">Arithmetic.</p></li>
+        </ol>
+        <p class="answer">$17$</p>
+        <p class="book-next">Next in the book: Exercises 27-3 to 27-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Multiples of 4 or 6</h3>
+        <div class="problem"><p>How many integers from $1$ to $60$ are multiples of $4$ or of $6$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiples of $4$: $60/4 = 15$. Multiples of $6$: $60/6 = 10$.</p></div><p class="why">Let $A$ and $B$ be these two sets.</p></li>
+          <li data-think="A number is a multiple of both $4$ and $6$ exactly when it is a multiple of what?"><div class="do"><p>$A \cap B$ is the multiples of $\operatorname{lcm}(4, 6) = 12$: there are $60/12 = 5$.</p></div><p class="why">Not $24$! Being divisible by both $4$ and $6$ means being divisible by their least common multiple.</p></li>
+          <li><div class="do"><p>$15 + 10 - 5 = 20$.</p></div><p class="why">Inclusion-exclusion.</p></li>
+        </ol>
+        <p class="answer">$20$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Finding the overlap</h3>
+        <div class="problem"><p>In a class of $30$, $18$ play soccer, $15$ play basketball, and $5$ play neither. How many play both?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Students playing at least one sport: $30 - 5 = 25$, so $\#(S \cup B) = 25$.</p></div><p class="why">"Neither" is the complement of the union.</p></li>
+          <li><div class="do"><p>$25 = 18 + 15 - \#(S \cap B)$.</p></div><p class="why">Inclusion-exclusion, now with the intersection unknown.</p></li>
+          <li><div class="do"><p>$\#(S \cap B) = 33 - 25 = 8$.</p></div><p class="why">Solve for the overlap.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Neither 2 nor 5</h3>
+        <div class="problem"><p>How many integers from $1$ to $100$ are divisible by neither $2$ nor $5$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Divisible by $2$: $50$. By $5$: $20$. By both (by $10$): $10$.</p></div><p class="why">Count each set and the overlap.</p></li>
+          <li><div class="do"><p>Divisible by $2$ or $5$: $50 + 20 - 10 = 60$.</p></div><p class="why">Inclusion-exclusion gives the union.</p></li>
+          <li><div class="do"><p>Neither: $100 - 60 = 40$.</p></div><p class="why">"Neither" is the complement of the union.</p></li>
+        </ol>
+        <p class="answer">$40$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Multiples of 6 and multiples of 10</h3>
+        <div class="problem"><p>In $\{1, \dots, 100\}$, let $A$ be the multiples of $6$ and $B$ the multiples of $10$. List $A \cap B$ and find $\#(A \cup B)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$A \cap B$ is the multiples of $\operatorname{lcm}(6, 10) = 30$: $\{30, 60, 90\}$.</p></div><p class="why">Again the overlap is governed by the lcm, not the product $60$.</p></li>
+          <li><div class="do"><p>$\#A = \lfloor 100/6 \rfloor = 16$ and $\#B = 10$.</p></div><p class="why">$6 \times 16 = 96 \le 100 &lt; 102$.</p></li>
+          <li><div class="do"><p>$\#(A \cup B) = 16 + 10 - 3 = 23$.</p></div><p class="why">Inclusion-exclusion.</p></li>
+        </ol>
+        <p class="answer">$A \cap B = \{30, 60, 90\}$ and $\#(A \cup B) = 23$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>How big can the union be?</h3>
+        <div class="problem"><p>$\#A = 12$ and $\#B = 15$. What are the smallest and largest possible values of $\#(A \cup B)$ and of $\#(A \cap B)$?</p></div>
+        <ol class="steps">
+          <li data-think="What arrangement of $A$ and $B$ makes the overlap as big as possible? As small?"><div class="do"><p>$A \cap B$ is inside $A$, so $\#(A \cap B) \le 12$, with equality when $A$ sits entirely inside $B$. It can be as small as $0$ if $A$ and $B$ are disjoint.</p></div><p class="why">The overlap can't be bigger than the smaller set, and nothing forces any overlap (the universe isn't limited here).</p></li>
+          <li><div class="do"><p>$\#(A \cup B) = 27 - \#(A \cap B)$, so it ranges from $27 - 12 = 15$ to $27 - 0 = 27$.</p></div><p class="why">Inclusion-exclusion links the two: a bigger overlap means a smaller union.</p></li>
+        </ol>
+        <p class="answer">$0 \le \#(A \cap B) \le 12$ and $15 \le \#(A \cup B) \le 27$.</p>
+        <p class="key-idea">Inclusion-exclusion turns questions about the union into questions about the overlap, and vice versa.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 27.3 ===================== -->
+  <section class="lesson" id="s27-3" data-title="Venn Diagrams">
+    <h2><span class="sec-num">27.3</span> Venn Diagrams</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A café survey asks who drinks tea, coffee or juice. The results come back as overlapping totals: so many drink tea and coffee, so many drink all three… Reading them as a list is a headache. Draw three overlapping circles and the picture sorts everyone into exactly one region, like letters into pigeonholes.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>In a <strong>Venn diagram</strong>, a rectangle represents the universe and each set is a circle inside it. Union, intersection and complement become regions you can shade:</p>
+      <ul>
+        <li>$A \cap B$ is the lens where the circles overlap; $A \cup B$ is everything inside either circle;</li>
+        <li>$\overline{A}$ is everything in the rectangle outside circle $A$;</li>
+        <li>"In $A$ but not $B$" is $A \cap \overline{B}$, the part of $A$'s circle outside $B$.</li>
+      </ul>
+      <p>Three circles cut the rectangle into $8$ regions, one for each combination of in/out for $A$, $B$ and $C$. To solve a counting problem, write a number in each region, <strong>working from the inside out</strong>: the triple overlap first, then each two-set overlap minus the triple, then each single set minus what's already in its circle. The three-set inclusion-exclusion formula packages this:</p>
+      <div class="rule"><p>$$\#(A \cup B \cup C) = \#A + \#B + \#C - \#(A\cap B) - \#(A \cap C) - \#(B \cap C) + \#(A \cap B \cap C).$$</p></div>
+      <div class="note"><p>A statement like "$8$ drink tea and coffee" includes those who also drink juice. That's why the triple overlap must be subtracted before you fill in a two-set region.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="venn3">
+      <figcaption><strong>Explore:</strong> Pick a set expression and see its region shaded. Then switch on the sample counts to see the eight regions filled in for the café survey used in the examples below. Try to predict each shading before you press the button.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>In A but not B</h3>
+        <div class="problem"><p>In the universe $\{1, \dots, 10\}$, let $A = \{1, 2, 3, 4, 5, 6\}$ and $B$ be the even numbers. List $A \cap \overline{B}$ and describe its region in a Venn diagram.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\overline{B} = \{1, 3, 5, 7, 9\}$, so $A \cap \overline{B} = \{1, 3, 5\}$.</p></div><p class="why">Keep the elements of $A$ that are not in $B$.</p></li>
+          <li><div class="do"><p>It is the crescent of circle $A$ outside circle $B$.</p></div><p class="why">Inside $A$, outside $B$.</p></li>
+        </ol>
+        <p class="answer">$\{1, 3, 5\}$: the part of $A$ outside $B$.</p>
+        <p class="book-next">Next in the book: Example 27-2.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Two circles, four regions</h3>
+        <div class="problem"><p>Of $40$ students, $25$ like maths, $20$ like art, and $10$ like both. How many like maths only, art only, and neither?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Both: $10$ (the overlap).</p></div><p class="why">Start at the inside.</p></li>
+          <li><div class="do"><p>Maths only: $25 - 10 = 15$. Art only: $20 - 10 = 10$.</p></div><p class="why">Each circle's total includes the overlap, so remove it.</p></li>
+          <li><div class="do"><p>Neither: $40 - (15 + 10 + 10) = 5$.</p></div><p class="why">Whatever is left lies outside both circles.</p></li>
+        </ol>
+        <p class="answer">Maths only $15$, art only $10$, neither $5$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Exactly one</h3>
+        <div class="problem"><p>Using the previous example, write "likes exactly one of maths ($M$) and art ($A$)" in set notation and count it.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\left(M \cap \overline{A}\right) \cup \left(A \cap \overline{M}\right)$.</p></div><p class="why">Exactly one means: maths but not art, or art but not maths. These two crescents are disjoint.</p></li>
+          <li><div class="do"><p>$15 + 10 = 25$.</p></div><p class="why">Add the two "only" regions. Check: $\#(M \cup A) - \#(M \cap A) = 35 - 10 = 25$.</p></li>
+        </ol>
+        <p class="answer">$\left(M \cap \overline{A}\right) \cup \left(A \cap \overline{M}\right)$, with $25$ students.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Three circles, inside out</h3>
+        <div class="problem"><p>In a survey of $50$ people, $20$ drink tea, $25$ coffee and $18$ juice. $8$ drink tea and coffee, $6$ tea and juice, $7$ coffee and juice, and $3$ drink all three. How many drink none of these?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Centre: $3$. Tea and coffee only: $8 - 3 = 5$; tea and juice only: $6 - 3 = 3$; coffee and juice only: $7 - 3 = 4$.</p></div><p class="why">Each pair total includes the $3$ who drink all three; remove them first.</p></li>
+          <li><div class="do"><p>Tea only: $20 - 5 - 3 - 3 = 9$; coffee only: $25 - 5 - 4 - 3 = 13$; juice only: $18 - 3 - 4 - 3 = 8$.</p></div><p class="why">Subtract everything already written inside that circle.</p></li>
+          <li><div class="do"><p>In at least one circle: $3 + 5 + 3 + 4 + 9 + 13 + 8 = 45$, so none: $50 - 45 = 5$.</p></div><p class="why">The rest of the rectangle holds the people outside all three circles.</p></li>
+        </ol>
+        <p class="answer">$5$</p>
+        <p class="book-next">Next in the book: Example 27-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Exactly one, exactly two</h3>
+        <div class="problem"><p>For the same survey, how many people drink exactly one of the drinks, and how many exactly two?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Exactly one: $9 + 13 + 8 = 30$.</p></div><p class="why">The three "only" regions from the filled-in diagram.</p></li>
+          <li><div class="do"><p>Exactly two: $5 + 3 + 4 = 12$.</p></div><p class="why">The three pair-only regions.</p></li>
+          <li><div class="do"><p>Check: $30 + 12 + 3 = 45$ drink at least one. ✓</p></div><p class="why">Exactly one, two or three drinks must account for everyone in the circles.</p></li>
+        </ol>
+        <p class="answer">Exactly one: $30$; exactly two: $12$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Divisible by 2, 3 or 5</h3>
+        <div class="problem"><p>How many integers from $1$ to $100$ are divisible by at least one of $2$, $3$, $5$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Singles: $50$, $33$, $20$. Pairs (by $6$, $10$, $15$): $16$, $10$, $6$. Triple (by $30$): $3$.</p></div><p class="why">Overlaps are multiples of the lcm, and $\lfloor 100/k \rfloor$ counts multiples of $k$.</p></li>
+          <li><div class="do"><p>$50 + 33 + 20 - 16 - 10 - 6 + 3 = 74$.</p></div><p class="why">Three-set inclusion-exclusion: add singles, subtract pairs, add back the triple.</p></li>
+        </ol>
+        <p class="answer">$74$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The missing centre</h3>
+        <div class="problem"><p>Each of $60$ students takes at least one of French, German and Spanish: $30$ French, $25$ German, $28$ Spanish, $10$ French and German, $9$ German and Spanish, $12$ French and Spanish. How many take all three?</p></div>
+        <ol class="steps">
+          <li data-think="Which formula connects all the given numbers with the one you want?"><div class="do"><p>Let $x$ take all three. Since everyone is in the union: $60 = 30 + 25 + 28 - 10 - 9 - 12 + x$.</p></div><p class="why">Inclusion-exclusion with only the centre unknown.</p></li>
+          <li><div class="do"><p>$60 = 52 + x$, so $x = 8$.</p></div><p class="why">Solve.</p></li>
+          <li><div class="do"><p>Check the regions: pairs only $2, 1, 4$; singles $16, 14, 15$; total $8 + 2 + 1 + 4 + 16 + 14 + 15 = 60$. ✓</p></div><p class="why">Every region count must be a non-negative whole number, and they must add to $60$.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A guaranteed overlap</h3>
+        <div class="problem"><p>Of $100$ people, $80$ like apples, $70$ like bananas and $60$ like cherries. What is the smallest possible number who like all three?</p></div>
+        <ol class="steps">
+          <li data-think="Instead of counting people who like a fruit, count those who don't."><div class="do"><p>Count the complements: $20$ dislike apples, $30$ dislike bananas, $40$ dislike cherries.</p></div><p class="why">A person misses "all three" exactly when they are in at least one of these complements.</p></li>
+          <li><div class="do"><p>$\#\left(\overline{A} \cup \overline{B} \cup \overline{C}\right) \le 20 + 30 + 40 = 90$.</p></div><p class="why">A union is never bigger than the sum of its parts (overlaps only make it smaller).</p></li>
+          <li><div class="do"><p>So at least $100 - 90 = 10$ like all three. This is achieved when the three "dislike" groups don't overlap at all.</p></div><p class="why">Complement again. For example: $20$ dislike only apples, $30$ only bananas, $40$ only cherries, $10$ like everything.</p></li>
+        </ol>
+        <p class="answer">$10$</p>
+        <p class="key-idea">For "at least how many in all of them," count the people who miss at least one.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 27.4 ===================== -->
+  <section class="lesson" id="s27-4" data-title="Subsets">
+    <h2><span class="sec-num">27.4</span> Subsets</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A pizza shop offers five toppings, and you may choose any combination, including none at all or all five. How many different pizzas is that? You'll be able to answer in your head by the end of this section, and the answer will prove a fact about Pascal's triangle almost for free.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>$A$ is a <strong>subset</strong> of $B$, written $A \subseteq B$, if every element of $A$ is also an element of $B$. Two cases are easy to forget:</p>
+      <ul>
+        <li>$\varnothing \subseteq B$ for every set $B$: the empty set has no elements that could fail to be in $B$;</li>
+        <li>$B \subseteq B$: every set is a subset of itself.</li>
+      </ul>
+      <p>Don't mix up $\in$ and $\subseteq$: $2 \in \{1, 2\}$ (an element), but $\{2\} \subseteq \{1, 2\}$ (a subset).</p>
+      <p>To build a subset of an $n$-element set, go through the elements one at a time and decide "in" or "out." That is $2$ choices, $n$ times:</p>
+      <div class="rule"><p>$$\text{an } n\text{-element set has } 2^n \text{ subsets}.$$</p></div>
+      <p>Now count the same subsets a second way, by size: there are $\binom{n}{k}$ subsets with exactly $k$ elements (Chapter 25). Counting one collection two ways must give the same total, so</p>
+      <div class="rule"><p>$$\binom{n}{0} + \binom{n}{1} + \binom{n}{2} + \cdots + \binom{n}{n} = 2^n.$$</p></div>
+      <div class="note"><p>This is our first taste of a powerful idea: prove an identity by counting one thing in two different ways.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="subsetList">
+      <figcaption><strong>Explore:</strong> Choose how many elements the set has. Every subset is listed, grouped by size, with $\binom{n}{k}$ subsets of size $k$. Switch to "in/out codes" to see each subset as a string of in/out decisions, which is why there are $2^n$ of them.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>All subsets of a pair</h3>
+        <div class="problem"><p>List every subset of $\{x, y\}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Size $0$: $\varnothing$. Size $1$: $\{x\}$, $\{y\}$. Size $2$: $\{x, y\}$.</p></div><p class="why">Organize by size so nothing is missed; include the empty set and the set itself.</p></li>
+          <li><div class="do"><p>That's $4 = 2^2$ subsets.</p></div><p class="why">Matches the in/out count: $2$ choices for each of $2$ elements.</p></li>
+        </ol>
+        <p class="answer">$\varnothing,\ \{x\},\ \{y\},\ \{x, y\}$</p>
+        <p class="book-next">Next in the book: Exercises 27-6 to 27-9.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Element or subset?</h3>
+        <div class="problem"><p>True or false: (a) $\varnothing \subseteq \{1, 2\}$, (b) $\{1\} \subseteq \{1, 2\}$, (c) $1 \subseteq \{1, 2\}$, (d) $\{1, 2\} \subseteq \{1, 2\}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) True and (d) True.</p></div><p class="why">The empty set is a subset of every set, and every set is a subset of itself.</p></li>
+          <li><div class="do"><p>(b) True: its only element, $1$, is in $\{1, 2\}$.</p></div><p class="why">Check each element of the smaller set.</p></li>
+          <li><div class="do"><p>(c) False: $1$ is a number, not a set. The correct statement is $1 \in \{1, 2\}$.</p></div><p class="why">$\subseteq$ compares two sets; $\in$ relates an element to a set.</p></li>
+        </ol>
+        <p class="answer">(a) T, (b) T, (c) F, (d) T</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The pizza count</h3>
+        <div class="problem"><p>A pizza can have any combination of $5$ toppings (including none). How many different pizzas are possible?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A pizza is a subset of the $5$ toppings.</p></div><p class="why">Translate the situation into sets.</p></li>
+          <li><div class="do"><p>$2^5 = 32$.</p></div><p class="why">Each topping is either on or off.</p></li>
+        </ol>
+        <p class="answer">$32$</p>
+        <p class="book-next">Next in the book: Example 27-4.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Subsets with a requirement</h3>
+        <div class="problem"><p>How many subsets of $\{1, 2, \dots, 8\}$ contain $1$ but not $8$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The decisions for $1$ (in) and $8$ (out) are already made.</p></div><p class="why">Only the other elements are free.</p></li>
+          <li><div class="do"><p>Each of $2, 3, \dots, 7$ is in or out: $2^6 = 64$.</p></div><p class="why">Six free elements, two choices each.</p></li>
+        </ol>
+        <p class="answer">$64$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Subsets of a given size</h3>
+        <div class="problem"><p>How many $3$-element subsets does a $7$-element set have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Choosing a $3$-element subset means choosing $3$ of the $7$ elements, order irrelevant.</p></div><p class="why">A subset doesn't care about order, so this is a combination.</p></li>
+          <li><div class="do"><p>$\dbinom{7}{3} = \dfrac{7 \cdot 6 \cdot 5}{3 \cdot 2 \cdot 1} = 35$.</p></div><p class="why">Chapter 25's formula.</p></li>
+        </ol>
+        <p class="answer">$35$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Check the identity</h3>
+        <div class="problem"><p>Verify $\binom{n}{0} + \binom{n}{1} + \cdots + \binom{n}{n} = 2^n$ for $n = 4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\binom40 = 1$, $\binom41 = 4$, $\binom42 = 6$, $\binom43 = 4$, $\binom44 = 1$.</p></div><p class="why">Row $4$ of Pascal's triangle.</p></li>
+          <li><div class="do"><p>$1 + 4 + 6 + 4 + 1 = 16 = 2^4$. ✓</p></div><p class="why">Subsets of a $4$-element set, sorted by size, add up to all $16$ subsets.</p></li>
+        </ol>
+        <p class="answer">$16 = 2^4$</p>
+        <p class="book-next">Next in the book: Exercises 27-10 to 27-12.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>At least two elements</h3>
+        <div class="problem"><p>How many subsets of $\{1, 2, \dots, 10\}$ have at least $2$ elements?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>All subsets: $2^{10} = 1024$.</p></div><p class="why">Start with everything.</p></li>
+          <li><div class="do"><p>Remove those with fewer than $2$ elements: $\binom{10}{0} + \binom{10}{1} = 1 + 10 = 11$.</p></div><p class="why">Complementary counting: the empty set and the ten one-element sets.</p></li>
+          <li><div class="do"><p>$1024 - 11 = 1013$.</p></div><p class="why">Subtract.</p></li>
+        </ol>
+        <p class="answer">$1013$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>At least one even number</h3>
+        <div class="problem"><p>How many subsets of $\{1, 2, \dots, 10\}$ contain at least one even number?</p></div>
+        <ol class="steps">
+          <li data-think="What do the subsets with no even numbers look like?"><div class="do"><p>A subset with no even number is a subset of $\{1, 3, 5, 7, 9\}$: there are $2^5 = 32$ of these.</p></div><p class="why">The complement of "at least one even" is "all odd," which is easy to count.</p></li>
+          <li><div class="do"><p>$2^{10} - 2^5 = 1024 - 32 = 992$.</p></div><p class="why">Subtract from the total.</p></li>
+        </ol>
+        <p class="answer">$992$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Even-sized subsets</h3>
+        <div class="problem"><p>How many subsets of $\{1, 2, 3, 4, 5, 6\}$ have an even number of elements? Explain why the answer is exactly half of all subsets.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Directly: $\binom60 + \binom62 + \binom64 + \binom66 = 1 + 15 + 15 + 1 = 32$.</p></div><p class="why">Add the counts for sizes $0, 2, 4, 6$.</p></li>
+          <li data-think="Can you pair each even-sized subset with an odd-sized one?"><div class="do"><p>Pair each subset with the one obtained by flipping element $1$ (add it if absent, remove it if present). Each pair has one even-sized and one odd-sized subset.</p></div><p class="why">Flipping one element changes the size by exactly $1$, and doing it twice returns to the start, so the subsets split into pairs.</p></li>
+          <li><div class="do"><p>So even and odd subsets are equally many: $2^6 / 2 = 32$.</p></div><p class="why">The pairing is a perfect one-to-one match.</p></li>
+        </ol>
+        <p class="answer">$32$</p>
+        <p class="key-idea">A clever pairing can prove two collections have the same size without counting either.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-27">
+    <h2 id="further-27">Further reading in the book</h2>
+    <ul>
+      <li><strong>§27.1 Some Definitions</strong>: set notation, the number systems, and Exercise 27-1.</li>
+      <li><strong>§27.2 Operating on Sets</strong>: Example 27-1 and Exercises 27-2 to 27-5.</li>
+      <li><strong>§27.3 Venn Diagrams</strong>: Examples 27-2 and 27-3.</li>
+      <li><strong>§27.4 Subsets</strong>: Example 27-4, the identity (27.1), and Exercises 27-6 to 27-12.</li>
+      <li><strong>Problems to Solve for Chapter 27</strong>: Problems 500–507, including two Venn problems and a binomial identity proved by counting subsets.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 27 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 27.1 — set-builder sieve */
+  AOPS.registerWidget("setBuilder", function (body) {
+    var svg = W.stage(body, { w: 620, h: 210, label: "Numbers from 1 to N with members of the chosen set highlighted" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var N = 20, rule = "even";
+    function isPrime(n) { if (n < 2) return false; for (var d = 2; d * d <= n; d++) if (n % d === 0) return false; return true; }
+    var rules = {
+      even: { label: "even", test: function (n) { return n % 2 === 0; }, tex: "x \\text{ is even}" },
+      m3: { label: "multiple of 3", test: function (n) { return n % 3 === 0; }, tex: "x \\text{ is a multiple of } 3" },
+      sq: { label: "square", test: function (n) { var r = Math.round(Math.sqrt(n)); return r * r === n; }, tex: "x \\text{ is a perfect square}" },
+      pr: { label: "prime", test: isPrime, tex: "x \\text{ is prime}" },
+      f41: { label: "4k + 1", test: function (n) { return n % 4 === 1; }, tex: "x = 4k + 1 \\text{ for an integer } k" }
+    };
+    W.slider(ctl, { label: "Largest number N", min: 10, max: 40, value: N, onInput: function (v) { N = v; draw(); } });
+    W.segmented(ctl, { title: "Rule", value: rule, options: Object.keys(rules).map(function (k) { return { value: k, label: rules[k].label }; }), onChange: function (v) { rule = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      svg.setAttribute("viewBox", "0 0 620 " + (12 + Math.ceil(N / 10) * 50));
+      var members = [];
+      for (var n = 1; n <= N; n++) {
+        var i = n - 1, x = 10 + (i % 10) * 60, y = 10 + Math.floor(i / 10) * 50, on = rules[rule].test(n);
+        if (on) members.push(n);
+        svg.appendChild(W.s("rect", { x: x, y: y, width: 54, height: 42, rx: 8,
+          fill: on ? "color-mix(in srgb, var(--accent) 70%, transparent)" : "var(--surface-2)", stroke: on ? "var(--accent)" : "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: x + 27, y: y + 27, "text-anchor": "middle", style: "font: 600 15px var(--font-mono)", fill: on ? "var(--ink)" : "var(--muted)", text: n }));
+      }
+      out.set("<p>Roster: <span style=\"font-family:var(--font-mono)\">{" + members.join(", ") + "}</span></p>" +
+        "<p>Set-builder: $\\{x \\mid " + rules[rule].tex + ",\\ 1 \\le x \\le " + N + "\\}$ &nbsp;·&nbsp; size $=" + members.length + "$</p>");
+    }
+    draw();
+  });
+
+  /* 27.2 — union / intersection / complement on 1..30 */
+  AOPS.registerWidget("setOps", function (body) {
+    var svg = W.stage(body, { w: 620, h: 230, label: "Numbers 1 to 30 marked by membership in A and B, with the chosen operation highlighted" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var a = 2, b = 3, op = "or";
+    W.slider(ctl, { label: "A = multiples of a", min: 2, max: 7, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "B = multiples of b", min: 2, max: 7, value: b, onInput: function (v) { b = v; draw(); } });
+    W.segmented(ctl2, { title: "Operation", value: op, options: [{ value: "or", label: "A ∪ B" }, { value: "and", label: "A ∩ B" }, { value: "notA", label: "not A" }, { value: "neither", label: "neither" }], onChange: function (v) { op = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var cA = 0, cB = 0, cAB = 0, cR = 0, res = [];
+      for (var n = 1; n <= 30; n++) {
+        var inA = n % a === 0, inB = n % b === 0;
+        var r = op === "or" ? inA || inB : op === "and" ? inA && inB : op === "notA" ? !inA : !inA && !inB;
+        if (inA) cA++; if (inB) cB++; if (inA && inB) cAB++; if (r) { cR++; res.push(n); }
+        var i = n - 1, x = 10 + (i % 10) * 60, y = 10 + Math.floor(i / 10) * 64;
+        svg.appendChild(W.s("rect", { x: x, y: y, width: 54, height: 50, rx: 8,
+          fill: r ? "color-mix(in srgb, var(--accent) 70%, transparent)" : "var(--surface-2)", stroke: r ? "var(--accent)" : "var(--border-strong)" }));
+        if (inA) svg.appendChild(W.s("rect", { x: x + 6, y: y + 5, width: 18, height: 6, rx: 3, fill: "var(--plot-2)" }));
+        if (inB) svg.appendChild(W.s("rect", { x: x + 30, y: y + 5, width: 18, height: 6, rx: 3, fill: "var(--plot-4)" }));
+        svg.appendChild(W.s("text", { x: x + 27, y: y + 36, "text-anchor": "middle", style: "font: 600 15px var(--font-mono)", fill: r ? "var(--ink)" : "var(--muted)", text: n }));
+      }
+      svg.appendChild(W.s("rect", { x: 12, y: 208, width: 18, height: 6, rx: 3, fill: "var(--plot-2)" }));
+      svg.appendChild(W.s("text", { x: 36, y: 216, class: "lbl", text: "in A" }));
+      svg.appendChild(W.s("rect", { x: 92, y: 208, width: 18, height: 6, rx: 3, fill: "var(--plot-4)" }));
+      svg.appendChild(W.s("text", { x: 116, y: 216, class: "lbl", text: "in B" }));
+      svg.appendChild(W.s("text", { x: 610, y: 216, "text-anchor": "end", class: "lbl", text: "highlighted: " + cR + " numbers" }));
+      var l = a * b / W.gcd(a, b), line;
+      if (op === "or") line = "\\#(A\\cup B) = \\#A + \\#B - \\#(A\\cap B) = " + cA + " + " + cB + " - " + cAB + " = " + cR;
+      else if (op === "and") line = "A \\cap B = \\text{multiples of } \\operatorname{lcm}(" + a + "," + b + ") = " + l + ",\\quad \\#(A\\cap B) = " + cR;
+      else if (op === "notA") line = "\\#\\overline{A} = 30 - \\#A = 30 - " + cA + " = " + cR;
+      else line = "\\#\\big(\\overline{A\\cup B}\\big) = 30 - (" + cA + " + " + cB + " - " + cAB + ") = " + cR;
+      out.tex(line);
+    }
+    draw();
+  });
+
+  /* 27.3 — three-set Venn diagram with shading by expression */
+  AOPS.registerWidget("venn3", function (body) {
+    var Wd = 600, Ht = 390;
+    var svg = W.stage(body, { w: Wd, h: Ht, label: "Venn diagram of three sets A, B and C with the chosen region shaded" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var uid = "v3" + Math.random().toString(36).slice(2, 7);
+    var Cs = [{ x: 245, y: 155, n: "A", lx: 120, ly: 70 }, { x: 355, y: 155, n: "B", lx: 480, ly: 70 }, { x: 300, y: 250, n: "C", lx: 300, ly: 376 }], R = 105;
+    var U = { x: 20, y: 18, w: 560, h: 362 };
+    var defs = W.s("defs"); svg.appendChild(defs);
+    Cs.forEach(function (c, i) {
+      var cp = W.s("clipPath", { id: uid + "c" + i }); cp.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: R })); defs.appendChild(cp);
+      var m = W.s("mask", { id: uid + "m" + i, maskUnits: "userSpaceOnUse", x: 0, y: 0, width: Wd, height: Ht });
+      m.appendChild(W.s("rect", { x: 0, y: 0, width: Wd, height: Ht, fill: "white" }));
+      m.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: R, fill: "black" }));
+      defs.appendChild(m);
+    });
+    var regions = [];
+    for (var k = 0; k < 8; k++) {
+      var node = W.s("rect", { x: U.x, y: U.y, width: U.w, height: U.h, fill: "none" }), wrap = node;
+      for (var i = 0; i < 3; i++) {
+        var g = W.s("g", (k >> i) & 1 ? { "clip-path": "url(#" + uid + "c" + i + ")" } : { mask: "url(#" + uid + "m" + i + ")" });
+        g.appendChild(wrap); wrap = g;
+      }
+      svg.appendChild(wrap);
+      regions.push(node);
+    }
+    svg.appendChild(W.s("rect", { x: U.x, y: U.y, width: U.w, height: U.h, rx: 10, fill: "none", stroke: "var(--border-strong)", "stroke-width": 2 }));
+    svg.appendChild(W.s("text", { x: U.x + 10, y: U.y + 20, class: "lbl", text: "universe" }));
+    var colors = ["var(--plot-2)", "var(--plot-4)", "var(--plot-3)"];
+    Cs.forEach(function (c, i) {
+      svg.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: R, fill: "none", stroke: colors[i], "stroke-width": 3 }));
+      svg.appendChild(W.s("text", { x: c.lx, y: c.ly, "text-anchor": "middle", style: "font: 700 20px var(--font-body)", fill: colors[i], text: c.n }));
+    });
+    // label positions for regions (bit0 = A, bit1 = B, bit2 = C)
+    var pos = { 0: [530, 330], 1: [195, 125], 2: [405, 125], 3: [300, 110], 4: [300, 300], 5: [240, 225], 6: [360, 225], 7: [300, 190] };
+    var sample = { 0: 5, 1: 9, 2: 13, 3: 5, 4: 8, 5: 3, 6: 4, 7: 3 }; // café survey: A tea, B coffee, C juice
+    var nums = W.s("g"); svg.appendChild(nums);
+    var exprs = {
+      AandB: { label: "A ∩ B", f: function (a, b) { return a && b; }, tex: "A \\cap B" },
+      AorB: { label: "A ∪ B", f: function (a, b) { return a || b; }, tex: "A \\cup B" },
+      all3: { label: "A ∩ B ∩ C", f: function (a, b, c) { return a && b && c; }, tex: "A \\cap B \\cap C" },
+      AorBandC: { label: "(A ∪ B) ∩ C", f: function (a, b, c) { return (a || b) && c; }, tex: "(A \\cup B) \\cap C" },
+      AnotB: { label: "A, not B", f: function (a, b) { return a && !b; }, tex: "A \\cap \\overline{B}" },
+      notA: { label: "not A", f: function (a) { return !a; }, tex: "\\overline{A}" },
+      one: { label: "exactly one", f: function (a, b, c) { return a + b + c === 1; }, tex: "\\text{exactly one of } A, B, C" }
+    };
+    var cur = "AandB", showNums = false;
+    W.segmented(ctl, { title: "Shade", value: cur, options: Object.keys(exprs).map(function (k) { return { value: k, label: exprs[k].label }; }), onChange: function (v) { cur = v; draw(); } });
+    W.segmented(ctl2, { title: "Region labels", value: "off", options: [{ value: "off", label: "none" }, { value: "on", label: "café survey counts" }], onChange: function (v) { showNums = v === "on"; draw(); } });
+    function draw() {
+      var e = exprs[cur], total = 0, n = 0;
+      regions.forEach(function (r, k) {
+        var on = e.f(!!(k & 1), !!(k & 2), !!(k & 4));
+        r.setAttribute("fill", on ? "color-mix(in srgb, var(--accent) 60%, transparent)" : "none");
+        if (on) { n++; total += sample[k]; }
+      });
+      W.clear(nums);
+      if (showNums) Object.keys(pos).forEach(function (k) {
+        nums.appendChild(W.s("text", { x: pos[k][0], y: pos[k][1] + 6, "text-anchor": "middle", style: "font: 700 17px var(--font-mono)", fill: "var(--ink)", text: sample[k] }));
+      });
+      out.set("Shaded: $" + e.tex + "$, made of " + n + " of the 8 regions." + (showNums ? " With A = tea, B = coffee, C = juice: $" + total + "$ people." : ""));
+    }
+    draw();
+  });
+
+  /* 27.4 — every subset, grouped by size */
+  AOPS.registerWidget("subsetList", function (body) {
+    var ctl = W.controls(body);
+    var list = W.el("div", { class: "readout", style: "display:grid;gap:8px" });
+    body.appendChild(list);
+    var out = W.readout(body);
+    var n = 3, mode = "sets", letters = ["a", "b", "c", "d", "e"];
+    W.slider(ctl, { label: "Number of elements n", min: 0, max: 5, value: n, onInput: function (v) { n = v; draw(); } });
+    W.segmented(ctl, { title: "Show as", value: mode, options: [{ value: "sets", label: "sets" }, { value: "codes", label: "in/out codes" }], onChange: function (v) { mode = v; draw(); } });
+    function binom(a, b) { var r = 1; for (var i = 1; i <= b; i++) r = r * (a - b + i) / i; return Math.round(r); }
+    function draw() {
+      W.clear(list);
+      list.appendChild(W.el("div", { class: "ctl-label", text: "Subsets of {" + letters.slice(0, n).join(", ") + "}" + (mode === "codes" ? "  (code: one digit per element, 1 = in, 0 = out)" : "") }));
+      var bySize = [];
+      for (var k = 0; k <= n; k++) bySize.push([]);
+      for (var m = 0; m < (1 << n); m++) {
+        var els = [], code = "";
+        for (var i = 0; i < n; i++) { var inn = (m >> i) & 1; code += inn; if (inn) els.push(letters[i]); }
+        bySize[els.length].push(mode === "codes" ? code || "(empty code)" : (els.length ? "{" + els.join(",") + "}" : "∅"));
+      }
+      bySize.forEach(function (items, k) {
+        var row = W.el("div", { style: "display:flex;flex-wrap:wrap;align-items:center;gap:2px" },
+          W.el("span", { class: "ctl-label", style: "min-width:7.5em", text: "size " + k + ": " + items.length }));
+        items.forEach(function (t) { row.appendChild(W.el("span", { class: "chip", text: t })); });
+        list.appendChild(row);
+      });
+      var terms = [];
+      for (var j = 0; j <= n; j++) terms.push(binom(n, j));
+      out.tex("\\binom{" + n + "}{0}" + (n ? " + \\cdots + \\binom{" + n + "}{" + n + "}" : "") + " = " + terms.join(" + ") + " = " + (1 << n) + " = 2^{" + n + "}");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

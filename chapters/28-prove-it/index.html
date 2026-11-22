@@ -1,0 +1,947 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 28: Prove It · AoPS Learner</title>
+  <meta name="description" content="The language of proof, proof by contradiction, converses and contrapositives, mathematical induction, the pigeonhole principle and spotting wrong proofs, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="28" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 28 · Advanced Topics</span>
+    <h1>Prove It</h1>
+    <p class="lede">Finding an answer is half of mathematics; convincing someone it is right is the other half. This chapter collects the proof techniques you'll use for the rest of your mathematical life: careful wording, contradiction, contrapositives, induction and the pigeonhole principle, plus a field guide to arguments that look right but aren't.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>"$P$ if $Q$" means $Q \Rightarrow P$; "$P$ only if $Q$" means $P \Rightarrow Q$; "iff" (necessary and sufficient) means both, and needs two proofs.</li>
+      <li>A maximum needs two parts: a bound nothing exceeds, and an example that reaches it.</li>
+      <li>"Without loss of generality" is allowed only when relabelling doesn't change the problem.</li>
+      <li>Contradiction: assume the opposite of what you want and derive something impossible.</li>
+      <li>A statement and its contrapositive ($\text{not } Q \Rightarrow \text{not } P$) are equivalent; the converse ($Q \Rightarrow P$) is a different claim.</li>
+      <li>Induction: prove a base case, then prove "true for $k$" implies "true for $k+1$."</li>
+      <li>Pigeonhole: $kn + 1$ objects in $n$ boxes force some box to hold at least $k + 1$. The art is choosing the boxes.</li>
+      <li>Patterns are not proofs; watch for division by zero, $\sqrt{a^2} \ne a$, and assuming what you want to prove.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 28.1 ===================== -->
+  <section class="lesson" id="s28-1" data-title="Words, Words, Words">
+    <h2><span class="sec-num">28.1</span> Words, Words, Words</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A sign at a pool says "You may swim only if a lifeguard is on duty." One afternoon a lifeguard is on duty but the pool is closed for cleaning. Was the sign wrong? No: "only if" promised that a lifeguard is <em>needed</em>, not that one is <em>enough</em>. Mathematics uses these little words with exactly this precision.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Proofs come with a vocabulary of their own:</p>
+      <ul>
+        <li><strong>Distinct</strong> objects are all different from each other.</li>
+        <li><strong>Without loss of generality</strong> (WLOG) means "we may pick a convenient special case, because every case looks the same up to renaming." For example, if $x$, $y$, $z$ play symmetric roles, we may assume $x \le y \le z$.</li>
+        <li>To find a <strong>maximum</strong>, you must show two things: no value is larger (a bound), and the value is actually reached (an example). The same goes for a minimum.</li>
+        <li>A <strong>trivial</strong> solution is an obvious one that uses none of the problem's content, like all variables $= 0$. Problems often ask for <em>nontrivial</em> solutions.</li>
+        <li>A <strong>lemma</strong> is a small result proved on the way to a bigger one; a proof is <strong>rigorous</strong> if it leaves no unproved assumptions.</li>
+      </ul>
+      <p>The most important pair of phrases is "if" and "only if." For statements $P$ and $Q$:</p>
+      <div class="rule"><p>$$P \text{ if } Q:\ Q \Rightarrow P \qquad P \text{ only if } Q:\ P \Rightarrow Q \qquad P \text{ iff } Q:\ \text{both}.$$</p></div>
+      <p>"$Q$ is <em>sufficient</em> for $P$" means $Q \Rightarrow P$; "$Q$ is <em>necessary</em> for $P$" means $P \Rightarrow Q$. "Necessary and sufficient" is another way of saying "if and only if," and proving it always takes two separate arguments.</p>
+    </div>
+
+    <figure class="explore" data-widget="wlogTriples">
+      <figcaption><strong>Explore:</strong> These are all the ways to write a total as a sum of three distinct positive integers. With WLOG we only list them in increasing order; switch to "all orderings" to see the six relabellings each sorted triple stands for. The sorted list is six times shorter but loses nothing.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>What "distinct" changes</h3>
+        <div class="problem"><p>$a$, $b$, $c$ are digits. What is the largest possible value of $a + b + c$? What if the digits must be distinct?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Without restriction: $9 + 9 + 9 = 27$.</p></div><p class="why">Each digit is at most $9$, and $9, 9, 9$ reaches the bound.</p></li>
+          <li><div class="do"><p>Distinct: the three largest different digits give $9 + 8 + 7 = 24$.</p></div><p class="why">Distinct digits can't repeat, so the best we can do is the top three values. No larger sum is possible, and $24$ is reached.</p></li>
+        </ol>
+        <p class="answer">$27$ in general; $24$ if the digits are distinct.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>If, only if, or iff?</h3>
+        <div class="problem"><p>Fill each blank with "if," "only if," or "iff" to make the strongest true statement. (a) A shape is a square ___ it is a rectangle with four equal sides. (b) A shape is a square ___ it is a rectangle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Squares are exactly the rectangles with four equal sides, so both directions hold: "iff."</p></div><p class="why">Check each direction: square $\Rightarrow$ equal-sided rectangle, and equal-sided rectangle $\Rightarrow$ square.</p></li>
+          <li><div class="do"><p>(b) Every square is a rectangle, but not every rectangle is a square: "only if."</p></div><p class="why">"Square only if rectangle" means square $\Rightarrow$ rectangle, which is true. "If" would claim rectangle $\Rightarrow$ square, which is false.</p></li>
+        </ol>
+        <p class="answer">(a) iff; (b) only if.</p>
+        <p class="book-next">Next in the book: Exercise 28-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A maximum must be reached</h3>
+        <div class="problem"><p>Find the maximum of $x + y$ if $x &lt; 4$ and $y &lt; 6$, (a) for integers $x, y$; (b) for real $x, y$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Integers force $x \le 3$ and $y \le 5$, so $x + y \le 8$. And $x = 3$, $y = 5$ gives $8$.</p></div><p class="why">Both parts of a maximum: a bound ($\le 8$) and an example reaching it.</p></li>
+          <li data-think="Is $10$ the maximum for real numbers?"><div class="do"><p>(b) For reals, $x + y &lt; 10$, but $10$ is never reached. And any value below $10$ can be beaten by moving $x$ and $y$ closer to $4$ and $6$.</p></div><p class="why">A bound that is never reached is not a maximum.</p></li>
+        </ol>
+        <p class="answer">(a) $8$; (b) there is no maximum.</p>
+        <p class="book-next">Next in the book: Example 28-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>WLOG in action</h3>
+        <div class="problem"><p>How many ordered triples $(a, b, c)$ of distinct positive integers have $a + b + c = 9$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>WLOG first find the sets with $a &lt; b &lt; c$: $\{1, 2, 6\}$, $\{1, 3, 5\}$, $\{2, 3, 4\}$.</p></div><p class="why">The equation is symmetric in $a, b, c$, so sorting loses nothing. Try $a = 1$, then $a = 2$; $a = 3$ would need $b + c = 6$ with $3 &lt; b &lt; c$, impossible.</p></li>
+          <li><div class="do"><p>Each set of three distinct numbers can be ordered in $3! = 6$ ways: $3 \times 6 = 18$.</p></div><p class="why">Now undo the WLOG by counting relabellings.</p></li>
+        </ol>
+        <p class="answer">$18$</p>
+        <p class="book-next">Next in the book: Example 28-1.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>When WLOG is not allowed</h3>
+        <div class="problem"><p>Explain why we can't assume $x \le y \le z$ when solving $x + 2y + 3z = 12$ in positive integers, then count the solutions.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Swapping $x$ and $z$ gives $z + 2y + 3x = 12$, a different equation: $(7, 1, 1)$ solves the original but not the swapped one.</p></div><p class="why">WLOG needs the variables to be interchangeable, and here they have different coefficients.</p></li>
+          <li><div class="do"><p>Case on $z$: $z = 1$ needs $x + 2y = 9$, so $y = 1, 2, 3, 4$; $z = 2$ needs $x + 2y = 6$, so $y = 1, 2$; $z = 3$ needs $x + 2y = 3$, so $y = 1$.</p></div><p class="why">Casework on the variable with the largest coefficient keeps the cases few. $z \ge 4$ is too big.</p></li>
+          <li><div class="do"><p>$4 + 2 + 1 = 7$ solutions.</p></div><p class="why">Each $y$ determines $x$, which must be positive.</p></li>
+        </ol>
+        <p class="answer">$7$ solutions</p>
+        <p class="book-next">Next in the book: Example 28-2.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>An "iff" in two halves</h3>
+        <div class="problem"><p>Prove that for an integer $n$, $n^2$ is even if and only if $n$ is even.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>"If": suppose $n = 2k$. Then $n^2 = 4k^2 = 2(2k^2)$ is even.</p></div><p class="why">This shows "$n$ even" is sufficient.</p></li>
+          <li data-think="Proving ‘$n^2$ even $\Rightarrow n$ even’ directly is awkward. What equivalent statement is easier?"><div class="do"><p>"Only if": we show the equivalent "if $n$ is odd, then $n^2$ is odd." If $n = 2k + 1$, then $n^2 = 4k^2 + 4k + 1 = 2(2k^2 + 2k) + 1$, which is odd.</p></div><p class="why">An odd $n$ can never give an even square, so an even square must come from an even $n$. (Section 28.3 explains why this switch is legal.)</p></li>
+        </ol>
+        <p class="answer">Both directions hold, so $n^2$ is even $\iff$ $n$ is even.</p>
+        <p class="book-next">Next in the book: Examples 28-4 and 28-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A minimum, both halves</h3>
+        <div class="problem"><p>Find the minimum value of $n^2 - 10n + 30$ over all real $n$, with proof.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Complete the square: $n^2 - 10n + 30 = (n - 5)^2 + 5$.</p></div><p class="why">This form makes the smallest value visible.</p></li>
+          <li><div class="do"><p>Bound: $(n-5)^2 \ge 0$, so the expression is always $\ge 5$.</p></div><p class="why">A square is never negative.</p></li>
+          <li><div class="do"><p>Reached: at $n = 5$ the value is exactly $5$.</p></div><p class="why">Without this example, $5$ would only be a lower bound.</p></li>
+        </ol>
+        <p class="answer">$5$, at $n = 5$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>How large, how small?</h3>
+        <div class="problem"><p>Four distinct positive integers $a &lt; b &lt; c &lt; d$ add up to $20$. Find the largest and smallest possible values of $d$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Largest: $a + b + c \ge 1 + 2 + 3 = 6$, so $d \le 14$; and $1 + 2 + 3 + 14 = 20$ reaches it.</p></div><p class="why">Make the three small numbers as small as distinctness allows, then check the bound is attained.</p></li>
+          <li data-think="If $d$ is the largest, how big can $a$, $b$, $c$ be at most?"><div class="do"><p>Smallest: $c \le d - 1$, $b \le d - 2$, $a \le d - 3$, so $20 = a + b + c + d \le 4d - 6$, giving $d \ge 6.5$, so $d \ge 7$.</p></div><p class="why">Distinct integers below $d$ are at most $d-1$, $d-2$, $d-3$.</p></li>
+          <li><div class="do"><p>$d = 7$ works: $2 + 5 + 6 + 7 = 20$.</p></div><p class="why">The bound is reached, so it is the minimum. (Note $4 + 5 + 6 + 7 = 22$, so we had room to spare.)</p></li>
+        </ol>
+        <p class="answer">Largest $d = 14$; smallest $d = 7$.</p>
+        <p class="key-idea">Every "largest" or "smallest" answer is really two claims: a bound and an example.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 28.2 ===================== -->
+  <section class="lesson" id="s28-2" data-title="Contradiction">
+    <h2><span class="sec-num">28.2</span> Contradiction</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A detective doesn't always find the culprit directly. Often she says: "Suppose the butler did it. Then he was in the kitchen at nine, but the cook saw him in the garden at nine. Impossible. So the butler is innocent." That is a proof by contradiction, and mathematicians use it constantly.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To prove a statement $S$ by <strong>contradiction</strong>:</p>
+      <ol>
+        <li>Assume $S$ is false.</li>
+        <li>Reason correctly from that assumption until you reach something impossible: a number that is both even and odd, a fraction in lowest terms that isn't, a largest element with something larger.</li>
+        <li>Conclude that the assumption was wrong, so $S$ is true.</li>
+      </ol>
+      <p>Contradiction shines when the statement is "negative" (no solution exists, a number is not rational, there is no largest prime), because assuming the opposite hands you a concrete object to work with.</p>
+      <div class="rule"><p>$$\text{Assume not } S \;\Longrightarrow\; \cdots \;\Longrightarrow\; \text{impossible} \qquad\therefore\quad S.$$</p></div>
+      <div class="note"><p>The famous example: if there were only finitely many primes $p_1, \dots, p_k$, the number $p_1 p_2 \cdots p_k + 1$ would leave remainder $1$ when divided by each of them, so its prime factors would be primes missing from the list.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="primeContradiction">
+      <figcaption><strong>Explore:</strong> Pretend the primes you select are <em>all</em> the primes. Multiply them and add $1$. Factor the result: every prime factor is one you didn't list. However you choose, the "complete" list is always incomplete.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>No largest even number</h3>
+        <div class="problem"><p>Prove that there is no largest even integer.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $N$ is the largest even integer.</p></div><p class="why">Assume the opposite of what we want.</p></li>
+          <li><div class="do"><p>Then $N + 2$ is even and larger than $N$. Contradiction.</p></div><p class="why">The assumption produced an even number bigger than the "largest" one.</p></li>
+        </ol>
+        <p class="answer">The assumption is impossible, so no largest even integer exists.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A parity contradiction</h3>
+        <div class="problem"><p>Prove that $6x + 4y = 15$ has no solution in integers.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose integers $x, y$ satisfy it. The left side is $2(3x + 2y)$, which is even.</p></div><p class="why">Assume a solution exists and examine it.</p></li>
+          <li><div class="do"><p>The right side, $15$, is odd. An even number can't equal an odd one.</p></div><p class="why">Contradiction, so no integer solution exists.</p></li>
+        </ol>
+        <p class="answer">No integer solutions.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Rational plus irrational</h3>
+        <div class="problem"><p>Prove that if $r$ is rational and $x$ is irrational, then $r + x$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $r + x = s$ for some rational $s$.</p></div><p class="why">Assume the sum is rational.</p></li>
+          <li><div class="do"><p>Then $x = s - r$, a difference of two rationals, which is rational.</p></div><p class="why">$\frac ab - \frac cd = \frac{ad - bc}{bd}$ is a quotient of integers.</p></li>
+          <li><div class="do"><p>But $x$ is irrational. Contradiction.</p></div><p class="why">So the sum can't be rational.</p></li>
+        </ol>
+        <p class="answer">$r + x$ is irrational.</p>
+        <p class="book-next">Next in the book: Exercise 28-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A polynomial with no positive roots</h3>
+        <div class="problem"><p>Prove that every real root of $x^3 + 4x^2 + x + 6 = 0$ is negative.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose some root $x$ is not negative, so $x \ge 0$.</p></div><p class="why">Assume the opposite.</p></li>
+          <li><div class="do"><p>Then $x^3 \ge 0$, $4x^2 \ge 0$, $x \ge 0$, so the left side is at least $6 > 0$, not $0$.</p></div><p class="why">Every term is non-negative and the constant is positive.</p></li>
+        </ol>
+        <p class="answer">Contradiction, so every real root is negative.</p>
+        <p class="book-next">Next in the book: Example 28-6 and Exercise 28-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Someone is above average</h3>
+        <div class="problem"><p>Prove that if $n$ numbers have average $A$, at least one of them is at least $A$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose every number is less than $A$: $x_1 &lt; A, \dots, x_n &lt; A$.</p></div><p class="why">The negation of "at least one is $\ge A$" is "all are $&lt; A$."</p></li>
+          <li><div class="do"><p>Adding: $x_1 + \cdots + x_n &lt; nA$, so the average is less than $A$.</p></div><p class="why">Strict inequalities add.</p></li>
+          <li><div class="do"><p>That contradicts the average being $A$.</p></div><p class="why">So some number is at least $A$.</p></li>
+        </ol>
+        <p class="answer">Some $x_i \ge A$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The square root of 2</h3>
+        <div class="problem"><p>Prove that $\sqrt2$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $\sqrt2 = \frac pq$ with integers $p, q$ in lowest terms. Then $p^2 = 2q^2$.</p></div><p class="why">Any rational number can be written in lowest terms; square both sides to clear the root.</p></li>
+          <li><div class="do"><p>$p^2$ is even, so $p$ is even (28.1): $p = 2m$. Then $4m^2 = 2q^2$, so $q^2 = 2m^2$ and $q$ is even too.</p></div><p class="why">Substitute and repeat the same argument for $q$.</p></li>
+          <li><div class="do"><p>Both $p$ and $q$ are even, so $\frac pq$ was not in lowest terms. Contradiction.</p></div><p class="why">The assumption contradicted itself.</p></li>
+        </ol>
+        <p class="answer">$\sqrt2$ is irrational.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>An irrational logarithm</h3>
+        <div class="problem"><p>Prove that $\log_2 3$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $\log_2 3 = \frac pq$ with positive integers $p, q$. Then $2^{p/q} = 3$, so $2^p = 3^q$.</p></div><p class="why">Translate the log to exponential form, then raise both sides to the $q$th power.</p></li>
+          <li><div class="do"><p>$2^p$ is even (as $p \ge 1$), while $3^q$ is odd.</p></div><p class="why">Look at parity.</p></li>
+        </ol>
+        <p class="answer">Contradiction, so $\log_2 3$ is irrational.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Infinitely many primes of the form 4k + 3</h3>
+        <div class="problem"><p>Prove that there are infinitely many primes that leave remainder $3$ when divided by $4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose there are only finitely many: $p_1, p_2, \dots, p_k$ (including $3$). Let $N = 4p_1p_2\cdots p_k - 1$.</p></div><p class="why">Mimic the classic proof, but build a number that is $3$ more than a multiple of $4$.</p></li>
+          <li data-think="If every prime factor of $N$ had remainder $1$ mod $4$, what would $N$'s remainder be?"><div class="do"><p>$N$ is odd, so its prime factors are odd: each is $1$ or $3$ mod $4$. A product of numbers that are $1$ mod $4$ is $1$ mod $4$, but $N$ is $3$ mod $4$. So some prime factor $q$ of $N$ is $3$ mod $4$.</p></div><p class="why">$(4a+1)(4b+1) = 4(4ab + a + b) + 1$, so remainders of $1$ are closed under multiplication.</p></li>
+          <li><div class="do"><p>But $q$ can't be any $p_i$: dividing $N$ by $p_i$ leaves remainder $p_i - 1$, not $0$. So $q$ is a prime of the form $4k + 3$ missing from the list.</p></div><p class="why">The list was supposed to be complete. Contradiction.</p></li>
+        </ol>
+        <p class="answer">There are infinitely many primes of the form $4k + 3$.</p>
+        <p class="key-idea">In a contradiction proof, the assumed object (here, the finite list) is raw material to build with.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 28.3 ===================== -->
+  <section class="lesson" id="s28-3" data-title="Converses Aren't Necessarily True">
+    <h2><span class="sec-num">28.3</span> Converses Aren't Necessarily True</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>"Every cat has four legs. My table has four legs. So my table is a cat." Silly, of course, but the same mistake hides in real arguments all the time: proving "if $P$ then $Q$" and then using "if $Q$ then $P$" as though it came for free.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Start with a conditional statement "if $P$, then $Q$." Three related statements come from swapping and/or negating:</p>
+      <div class="rule"><p>$$\begin{array}{ll} \text{statement:} &amp; P \Rightarrow Q \\ \text{converse:} &amp; Q \Rightarrow P \\ \text{inverse:} &amp; \text{not } P \Rightarrow \text{not } Q \\ \text{contrapositive:} &amp; \text{not } Q \Rightarrow \text{not } P \end{array}$$</p></div>
+      <p>A statement is false exactly when there is a counterexample with $P$ true and $Q$ false. The contrapositive fails in exactly the same situation, so <strong>a statement and its contrapositive are always both true or both false</strong>. The converse and inverse fail when $Q$ is true and $P$ false, which is a different situation, so they are equivalent to each other but tell you nothing about the original.</p>
+      <ul>
+        <li>To prove $P \Rightarrow Q$, you may prove the contrapositive instead, which is often easier.</li>
+        <li>Knowing $P \Rightarrow Q$ never proves the converse. If you need $Q \Rightarrow P$, prove it separately.</li>
+      </ul>
+      <div class="note"><p>Negating "and" and "or" swaps them: "not ($A$ or $B$)" is "(not $A$) and (not $B$)." You'll need this when writing contrapositives.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="contraGrid">
+      <figcaption><strong>Explore:</strong> Choose conditions $P$ and $Q$ about whole numbers from $1$ to $30$. Each number lands in one of four boxes. A statement fails only if some number sits in its "bad" box: the statement and contrapositive share one bad box, and the converse and inverse share another.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Four versions of one statement</h3>
+        <div class="problem"><p>Write the converse, inverse and contrapositive of "If it is Tuesday, then the library is open late."</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Converse: "If the library is open late, then it is Tuesday."</p></div><p class="why">Swap the two parts.</p></li>
+          <li><div class="do"><p>Inverse: "If it is not Tuesday, then the library is not open late."</p></div><p class="why">Negate both parts, in the original order.</p></li>
+          <li><div class="do"><p>Contrapositive: "If the library is not open late, then it is not Tuesday."</p></div><p class="why">Swap and negate. Only this one is guaranteed by the original.</p></li>
+        </ol>
+        <p class="answer">As above; the contrapositive is equivalent to the original.</p>
+        <p class="book-next">Next in the book: Example 28-7.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A true statement with a false converse</h3>
+        <div class="problem"><p>Is "If $n$ is a multiple of $6$, then $n$ is even" true? Is its converse true?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>True: $n = 6k = 2(3k)$ is even.</p></div><p class="why">Direct proof.</p></li>
+          <li><div class="do"><p>Converse: "If $n$ is even, then $n$ is a multiple of $6$." False: $n = 4$.</p></div><p class="why">One counterexample is enough to kill a general claim.</p></li>
+        </ol>
+        <p class="answer">Statement true; converse false.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Squares and inequalities</h3>
+        <div class="problem"><p>For real $x$, consider "If $x > 3$, then $x^2 > 9$." Decide which of the statement, converse, inverse and contrapositive are true.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Statement: true, since $x > 3 > 0$ gives $x^2 > 9$. So the contrapositive "if $x^2 \le 9$ then $x \le 3$" is also true.</p></div><p class="why">Multiplying $x > 3$ by the positive number $x$ keeps the direction; contrapositives share truth.</p></li>
+          <li data-think="Can you find a number whose square exceeds $9$ but which is not more than $3$?"><div class="do"><p>Converse "if $x^2 > 9$ then $x > 3$": false, $x = -4$. So the inverse is false too.</p></div><p class="why">Negative numbers have large squares.</p></li>
+        </ol>
+        <p class="answer">Statement and contrapositive true; converse and inverse false.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>When the converse is also true</h3>
+        <div class="problem"><p>"If a triangle has two equal sides, then it has two equal angles." Its converse is also a theorem. How should we state the combined fact?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Converse: "If a triangle has two equal angles, then it has two equal sides." This is true (Chapter 11), but it needs its own proof.</p></div><p class="why">The original statement says nothing about the converse; each direction was proved separately.</p></li>
+          <li><div class="do"><p>Combined: "A triangle has two equal sides if and only if it has two equal angles."</p></div><p class="why">A statement plus its converse is exactly an "iff."</p></li>
+        </ol>
+        <p class="answer">Two equal sides $\iff$ two equal angles.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Prove the contrapositive instead</h3>
+        <div class="problem"><p>Prove: if $n^2$ is a multiple of $3$, then $n$ is a multiple of $3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Contrapositive: if $n$ is not a multiple of $3$, then $n^2$ is not.</p></div><p class="why">"Not a multiple of $3$" gives us a concrete form to compute with.</p></li>
+          <li><div class="do"><p>Then $n = 3k \pm 1$, and $n^2 = 9k^2 \pm 6k + 1 = 3(3k^2 \pm 2k) + 1$.</p></div><p class="why">Every non-multiple of $3$ is one more or one less than a multiple of $3$.</p></li>
+          <li><div class="do"><p>So $n^2$ leaves remainder $1$ and is not a multiple of $3$.</p></div><p class="why">The contrapositive is proved, so the original is too.</p></li>
+        </ol>
+        <p class="answer">Proved, via the contrapositive.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Negating an "or"</h3>
+        <div class="problem"><p>Prove: if $x + y > 10$, then $x > 5$ or $y > 5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Contrapositive: if not ($x > 5$ or $y > 5$), then $x + y \le 10$. That is: if $x \le 5$ and $y \le 5$, then $x + y \le 10$.</p></div><p class="why">"Not (A or B)" means "not A and not B."</p></li>
+          <li><div class="do"><p>Adding $x \le 5$ and $y \le 5$ gives $x + y \le 10$.</p></div><p class="why">The contrapositive is immediate.</p></li>
+        </ol>
+        <p class="answer">Proved via the contrapositive.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Mersenne numbers</h3>
+        <div class="problem"><p>Prove that if $2^n - 1$ is prime, then $n$ is prime. Is the converse true?</p></div>
+        <ol class="steps">
+          <li data-think="What does ‘$n$ is not prime’ give you to work with?"><div class="do"><p>Contrapositive: if $n$ is composite, $n = ab$ with $1 &lt; a, b &lt; n$, then $2^n - 1$ is composite.</p></div><p class="why">A composite $n$ comes with a factorization, which we can exploit.</p></li>
+          <li><div class="do"><p>With $x = 2^a$: $2^n - 1 = x^b - 1 = (x - 1)(x^{b-1} + x^{b-2} + \cdots + 1)$.</p></div><p class="why">The factorization $x^b - 1 = (x-1)(x^{b-1} + \cdots + 1)$ from Chapter 7.</p></li>
+          <li><div class="do"><p>Here $x - 1 = 2^a - 1$ is between $1$ and $2^n - 1$ (as $1 &lt; a &lt; n$), so it is a proper factor.</p></div><p class="why">$a > 1$ makes $2^a - 1 \ge 3$, and $a &lt; n$ makes it smaller than $2^n - 1$.</p></li>
+          <li><div class="do"><p>Converse false: $11$ is prime, but $2^{11} - 1 = 2047 = 23 \times 89$.</p></div><p class="why">A single counterexample disproves the converse.</p></li>
+        </ol>
+        <p class="answer">Proved; the converse is false ($n = 11$).</p>
+        <p class="key-idea">The contrapositive turns "not prime" into a factorization you can use.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 28.4 ===================== -->
+  <section class="lesson" id="s28-4" data-title="Mathematical Induction">
+    <h2><span class="sec-num">28.4</span> Mathematical Induction</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Line up a million dominoes. You don't need to watch every one fall to know they all will. You only need two facts: the first one gets pushed, and each falling domino knocks over the next. That is mathematical induction.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To prove a statement $S(n)$ for every integer $n \ge n_0$:</p>
+      <ol>
+        <li><strong>Base case.</strong> Prove $S(n_0)$, usually $n_0 = 1$ or $0$.</li>
+        <li><strong>Inductive step.</strong> Assume $S(k)$ is true for some $k \ge n_0$ (the <em>inductive hypothesis</em>) and use it to prove $S(k+1)$.</li>
+      </ol>
+      <p>Then $S(n_0)$ gives $S(n_0 + 1)$, which gives $S(n_0 + 2)$, and so on forever.</p>
+      <div class="rule"><p>$$S(n_0) \ \text{ and } \ \big(S(k) \Rightarrow S(k+1)\big) \quad\Longrightarrow\quad S(n) \text{ for all } n \ge n_0.$$</p></div>
+      <p>The typical inductive step for a sum: write the sum up to $k+1$ as (the sum up to $k$) $+$ (the new term), replace the sum up to $k$ using the hypothesis, and simplify to the formula with $k+1$ in place of $n$.</p>
+      <div class="note"><p>Both parts are essential. A perfect inductive step with no base case proves nothing (see Section 28.6), and a base case with no step is just one example.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="oddSquares">
+      <figcaption><strong>Explore:</strong> Each L-shaped layer has $2k - 1$ squares and turns a $(k-1) \times (k-1)$ square into a $k \times k$ square. Slide $n$ up one at a time: adding the next odd number is exactly the inductive step.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Spot the pattern (not yet a proof)</h3>
+        <div class="problem"><p>Compute $1$, $1 + 3$, $1 + 3 + 5$, $1 + 3 + 5 + 7$. Guess a formula for the sum of the first $n$ odd numbers.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The sums are $1, 4, 9, 16$.</p></div><p class="why">Compute small cases first.</p></li>
+          <li><div class="do"><p>Guess: $1 + 3 + \cdots + (2n - 1) = n^2$.</p></div><p class="why">The sums are perfect squares. A guess from a pattern still needs a proof: the next example.</p></li>
+        </ol>
+        <p class="answer">Conjecture: $n^2$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Sum of odd numbers, proved</h3>
+        <div class="problem"><p>Prove by induction that $1 + 3 + 5 + \cdots + (2n - 1) = n^2$ for all $n \ge 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base case $n = 1$: $1 = 1^2$. ✓</p></div><p class="why">The first domino.</p></li>
+          <li><div class="do"><p>Assume $1 + 3 + \cdots + (2k - 1) = k^2$. Add the next odd number, $2(k+1) - 1 = 2k + 1$:</p><p>$1 + \cdots + (2k-1) + (2k+1) = k^2 + 2k + 1$.</p></div><p class="why">Write the $(k+1)$-term sum as the $k$-term sum plus one new term, then use the hypothesis.</p></li>
+          <li><div class="do"><p>$k^2 + 2k + 1 = (k + 1)^2$, which is the formula for $n = k + 1$.</p></div><p class="why">The inductive step is complete, so the formula holds for all $n \ge 1$.</p></li>
+        </ol>
+        <p class="answer">$1 + 3 + \cdots + (2n-1) = n^2$ for all $n \ge 1$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Powers of two</h3>
+        <div class="problem"><p>Prove that $1 + 2 + 4 + \cdots + 2^n = 2^{n+1} - 1$ for all $n \ge 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base case $n = 0$: $1 = 2^1 - 1$. ✓</p></div><p class="why">The statement starts at $n = 0$, so that is the base case.</p></li>
+          <li><div class="do"><p>Assume $1 + \cdots + 2^k = 2^{k+1} - 1$. Then $1 + \cdots + 2^k + 2^{k+1} = 2^{k+1} - 1 + 2^{k+1}$.</p></div><p class="why">Add the next term to both sides.</p></li>
+          <li><div class="do"><p>$= 2 \cdot 2^{k+1} - 1 = 2^{k+2} - 1$. ✓</p></div><p class="why">That's the formula with $n = k + 1$.</p></li>
+        </ol>
+        <p class="answer">Proved for all $n \ge 0$.</p>
+        <p class="book-next">Next in the book: Example 28-8.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Sum of squares</h3>
+        <div class="problem"><p>Prove $1^2 + 2^2 + \cdots + n^2 = \dfrac{n(n+1)(2n+1)}{6}$ for all $n \ge 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base: $n = 1$ gives $\frac{1 \cdot 2 \cdot 3}{6} = 1$. ✓</p></div><p class="why">Check the first case.</p></li>
+          <li><div class="do"><p>Assume it for $k$. Then the sum to $k+1$ is $\dfrac{k(k+1)(2k+1)}{6} + (k+1)^2 = \dfrac{(k+1)\big[k(2k+1) + 6(k+1)\big]}{6}$.</p></div><p class="why">Add the new term and factor out the common $(k+1)$ instead of expanding everything.</p></li>
+          <li data-think="What should the bracket factor into if the formula is right for $k+1$?"><div class="do"><p>$k(2k+1) + 6(k+1) = 2k^2 + 7k + 6 = (k+2)(2k+3)$, so the sum is $\dfrac{(k+1)(k+2)(2k+3)}{6}$.</p></div><p class="why">That is $\frac{n(n+1)(2n+1)}{6}$ with $n = k+1$. Knowing the target tells you how to factor.</p></li>
+        </ol>
+        <p class="answer">Proved for all $n \ge 1$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A divisibility proof</h3>
+        <div class="problem"><p>Prove that $4^n - 1$ is divisible by $3$ for all $n \ge 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base: $4 - 1 = 3$. ✓</p></div><p class="why">First case.</p></li>
+          <li><div class="do"><p>Assume $4^k - 1 = 3m$. Then $4^{k+1} - 1 = 4 \cdot 4^k - 1 = 4(3m + 1) - 1 = 12m + 3 = 3(4m + 1)$.</p></div><p class="why">Rewrite $4^k$ using the hypothesis, $4^k = 3m + 1$.</p></li>
+        </ol>
+        <p class="answer">$3 \mid 4^n - 1$ for all $n \ge 1$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>An inequality with a late start</h3>
+        <div class="problem"><p>Prove that $2^n > n^2$ for all $n \ge 5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base $n = 5$: $32 > 25$. ✓</p></div><p class="why">The claim is false for $n = 2, 3, 4$ ($4 = 4$, $8 &lt; 9$, $16 = 16$), so the base case must be $5$.</p></li>
+          <li><div class="do"><p>Assume $2^k > k^2$ with $k \ge 5$. Then $2^{k+1} = 2 \cdot 2^k > 2k^2$.</p></div><p class="why">Double both sides of the hypothesis.</p></li>
+          <li data-think="When is $2k^2 \ge (k+1)^2$?"><div class="do"><p>$2k^2 - (k+1)^2 = k^2 - 2k - 1 = (k-1)^2 - 2 > 0$ for $k \ge 5$. So $2^{k+1} > 2k^2 > (k+1)^2$.</p></div><p class="why">We need $2k^2$ to beat $(k+1)^2$; it does once $k \ge 3$, and certainly for $k \ge 5$.</p></li>
+        </ol>
+        <p class="answer">$2^n > n^2$ for all $n \ge 5$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Postage stamps</h3>
+        <div class="problem"><p>Prove that every whole number of cents from $8$ up can be paid exactly with $3$-cent and $5$-cent stamps.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base: $8 = 3 + 5$. ✓</p></div><p class="why">The smallest amount claimed.</p></li>
+          <li data-think="Given stamps for $k$ cents, how can you make $k + 1$ by swapping a few stamps?"><div class="do"><p>Suppose $k \ge 8$ cents uses some stamps. If at least one $5$ is used, replace it with two $3$s: $-5 + 6 = +1$.</p></div><p class="why">The swap adds exactly one cent.</p></li>
+          <li><div class="do"><p>If no $5$ is used, all stamps are $3$s and $k \ge 8$ means at least three of them. Replace three $3$s with two $5$s: $-9 + 10 = +1$.</p></div><p class="why">Every case gets $k + 1$ cents, so the inductive step works.</p></li>
+        </ol>
+        <p class="answer">Every amount of $8$ cents or more can be made.</p>
+        <p class="key-idea">The inductive step can be a construction: show how to turn a solution for $k$ into one for $k+1$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A Fibonacci identity</h3>
+        <div class="problem"><p>The Fibonacci numbers are $F_1 = F_2 = 1$ and $F_{n+2} = F_{n+1} + F_n$. Prove $F_1 + F_2 + \cdots + F_n = F_{n+2} - 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base: $F_1 = 1$ and $F_3 - 1 = 2 - 1 = 1$. ✓</p></div><p class="why">Check $n = 1$.</p></li>
+          <li><div class="do"><p>Assume $F_1 + \cdots + F_k = F_{k+2} - 1$. Then $F_1 + \cdots + F_{k+1} = F_{k+2} - 1 + F_{k+1}$.</p></div><p class="why">Add the next term.</p></li>
+          <li><div class="do"><p>$F_{k+2} + F_{k+1} = F_{k+3}$, so the sum is $F_{k+3} - 1$. ✓</p></div><p class="why">The defining recursion is exactly what the step needs.</p></li>
+        </ol>
+        <p class="answer">$F_1 + \cdots + F_n = F_{n+2} - 1$.</p>
+        <p class="book-next">Next in the book: Exercise 28-4.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 28.5 ===================== -->
+  <section class="lesson" id="s28-5" data-title="Shooting Holes in Pigeons">
+    <h2><span class="sec-num">28.5</span> Shooting Holes in Pigeons</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>In a city of a million people, are there two with exactly the same number of hairs on their heads? Nobody has more than about $200{,}000$ hairs, so there are fewer possible hair counts than people. Without counting a single hair, you know the answer is yes.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>pigeonhole principle</strong>: if $n + 1$ pigeons fly into $n$ holes, some hole gets at least two pigeons. More generally:</p>
+      <div class="rule"><p>$$kn + 1 \text{ objects in } n \text{ boxes} \;\Longrightarrow\; \text{some box holds at least } k + 1 \text{ objects}.$$</p></div>
+      <p>Proof by contradiction: if every box held at most $k$, there would be at most $kn$ objects, not $kn + 1$. Equivalently, with $m$ objects in $n$ boxes, some box holds at least $\lceil m/n \rceil$.</p>
+      <p>The hard part is choosing the "boxes." Common choices:</p>
+      <ul>
+        <li>categories (months, colours, suits);</li>
+        <li>remainders when dividing by some number;</li>
+        <li>equal pieces of a segment or square;</li>
+        <li>pairs of numbers that work together.</li>
+      </ul>
+      <div class="note"><p>For "how many must be chosen to guarantee…" questions, find the worst case (spread out as evenly as possible) and add one.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="pigeonholes">
+      <figcaption><strong>Explore:</strong> Choose how many pigeons and holes. "Random" drops them anywhere; "Spread out" packs them as evenly as possible, the worst case. Even then, some hole is forced to hold $\lceil \text{pigeons}/\text{holes} \rceil$ pigeons.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Shared birth months</h3>
+        <div class="problem"><p>Show that among any $13$ people, two were born in the same month.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Boxes: the $12$ months. Objects: the $13$ people.</p></div><p class="why">Name the pigeons and the holes.</p></li>
+          <li><div class="do"><p>$13 > 12$, so some month holds at least two people.</p></div><p class="why">Pigeonhole with $k = 1$.</p></li>
+        </ol>
+        <p class="answer">Two of them share a birth month.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Socks in the dark</h3>
+        <div class="problem"><p>A drawer has many red, blue and green socks. How many must you take, in the dark, to be sure of a matching pair?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Worst case: $3$ socks, one of each colour, and still no pair.</p></div><p class="why">Find the largest number that can avoid the goal.</p></li>
+          <li><div class="do"><p>The $4$th sock must match one of the three colours.</p></div><p class="why">$4$ socks in $3$ colour boxes.</p></li>
+        </ol>
+        <p class="answer">$4$ socks</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The general principle</h3>
+        <div class="problem"><p>A school has $50$ students. Show that at least $8$ of them were born on the same day of the week.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Boxes: $7$ weekdays. If each held at most $7$ students, there would be at most $49$.</p></div><p class="why">The contradiction argument behind the principle.</p></li>
+          <li><div class="do"><p>$50 = 7 \cdot 7 + 1$, so some weekday has at least $8$.</p></div><p class="why">$kn + 1$ objects with $k = 7$, $n = 7$.</p></li>
+        </ol>
+        <p class="answer">At least $8$ share a weekday.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Three of a suit</h3>
+        <div class="problem"><p>How many cards must be drawn from a standard deck to guarantee three cards of the same suit?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Worst case: $2$ of each of the $4$ suits, $8$ cards, with no three alike.</p></div><p class="why">Spread out as evenly as possible.</p></li>
+          <li><div class="do"><p>The $9$th card makes three in some suit. So $9 = 2 \cdot 4 + 1$.</p></div><p class="why">Pigeonhole with $k = 2$, $n = 4$.</p></li>
+        </ol>
+        <p class="answer">$9$ cards</p>
+        <p class="book-next">Next in the book: Exercise 28-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Remainders as boxes</h3>
+        <div class="problem"><p>Prove that among any $6$ integers, two differ by a multiple of $5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Boxes: the remainders $0, 1, 2, 3, 4$ on division by $5$.</p></div><p class="why">Remainders are a classic choice of pigeonholes.</p></li>
+          <li><div class="do"><p>$6$ integers, $5$ remainders: two integers $a, b$ share a remainder.</p></div><p class="why">Pigeonhole.</p></li>
+          <li><div class="do"><p>Then $a - b$ is a multiple of $5$.</p></div><p class="why">Equal remainders cancel when you subtract.</p></li>
+        </ol>
+        <p class="answer">Two of the integers differ by a multiple of $5$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Points in a square</h3>
+        <div class="problem"><p>Five points are placed in a $2 \times 2$ square. Prove that two of them are at most $\sqrt2$ apart.</p></div>
+        <ol class="steps">
+          <li data-think="What could the four boxes be?"><div class="do"><p>Cut the square into four $1 \times 1$ squares.</p></div><p class="why">Five points, four regions: equal pieces of the figure are the natural pigeonholes.</p></li>
+          <li><div class="do"><p>Some small square (edges included) contains two of the points.</p></div><p class="why">Pigeonhole.</p></li>
+          <li><div class="do"><p>Two points in a $1 \times 1$ square are at most a diagonal apart: $\sqrt{1^2 + 1^2} = \sqrt2$.</p></div><p class="why">The diagonal is the longest distance inside a square.</p></li>
+        </ol>
+        <p class="answer">Two points are within $\sqrt2$ of each other.</p>
+        <p class="book-next">Next in the book: Example 28-9.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Pairs that sum to 11</h3>
+        <div class="problem"><p>Prove that any $6$ numbers chosen from $\{1, 2, \dots, 10\}$ include two that add up to $11$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Boxes: the pairs $\{1, 10\}, \{2, 9\}, \{3, 8\}, \{4, 7\}, \{5, 6\}$.</p></div><p class="why">Each pair sums to $11$, and every number is in exactly one pair.</p></li>
+          <li><div class="do"><p>$6$ numbers in $5$ boxes: some box contains both of its numbers.</p></div><p class="why">Pigeonhole.</p></li>
+        </ol>
+        <p class="answer">Two of them sum to $11$. ($5$ numbers aren't enough: $1, 2, 3, 4, 5$.)</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A lattice-point midpoint</h3>
+        <div class="problem"><p>Five points with integer coordinates are chosen in the plane. Prove that the midpoint of some two of them also has integer coordinates.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The midpoint of $(a, b)$ and $(c, d)$ is $\left(\frac{a+c}{2}, \frac{b+d}{2}\right)$, which has integer coordinates exactly when $a, c$ have the same parity and $b, d$ have the same parity.</p></div><p class="why">A sum is even exactly when both terms are even or both are odd.</p></li>
+          <li data-think="How many parity patterns can a point $(x, y)$ have?"><div class="do"><p>Boxes: the parity patterns (even, even), (even, odd), (odd, even), (odd, odd).</p></div><p class="why">Four boxes, chosen to match exactly the condition in the first step.</p></li>
+          <li><div class="do"><p>Five points, four patterns: two points share a pattern, and their midpoint is a lattice point.</p></div><p class="why">Pigeonhole.</p></li>
+        </ol>
+        <p class="answer">Some midpoint has integer coordinates.</p>
+        <p class="key-idea">Design the boxes so that "two in one box" is exactly the property you want.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 28.6 ===================== -->
+  <section class="lesson" id="s28-6" data-title="Convincing But Wrong">
+    <h2><span class="sec-num">28.6</span> Convincing But Wrong</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Here is a "proof" that $2 = 1$ in five tidy lines, every one of which looks fine. A good mathematician isn't someone who never writes a wrong step. It's someone who can find the wrong step, in other people's work and especially in their own.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A proof is only as strong as its weakest step. The usual culprits:</p>
+      <ul>
+        <li><strong>Hidden division by zero.</strong> Cancelling a factor that might be $0$.</li>
+        <li><strong>Square roots.</strong> $\sqrt{a^2} = |a|$, not $a$. Squaring both sides of an equation can also create false solutions.</li>
+        <li><strong>Patterns without proof.</strong> A formula that works for the first few cases, or even the first forty, can still fail.</li>
+        <li><strong>Circular reasoning.</strong> Using the conclusion (or something equivalent to it) as a step along the way.</li>
+        <li><strong>A missing base case</strong> or an inductive step that silently fails for some $k$.</li>
+      </ul>
+      <div class="rule"><p>$$\text{Check every link: is this step true for } \textit{all } \text{the values it is used for?}$$</p></div>
+      <div class="note"><p>Different correct proofs of the same fact are common. If your proof differs from a model solution, don't assume either is wrong; check each step of yours carefully.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="circleRegions">
+      <figcaption><strong>Explore:</strong> Put $n$ points on a circle and join every pair with a chord. Count the regions inside: $1, 2, 4, 8, 16, \dots$ looks like doubling. Slide to $6$ points before you trust the pattern.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Two equals one?</h3>
+        <div class="problem"><p>Find the error: Let $a = b$. Then $a^2 = ab$, so $a^2 - b^2 = ab - b^2$, so $(a + b)(a - b) = b(a - b)$, so $a + b = b$, so $2b = b$, so $2 = 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The step from $(a+b)(a-b) = b(a-b)$ to $a + b = b$ divides by $a - b$.</p></div><p class="why">Look for any cancellation and ask whether the cancelled quantity could be zero.</p></li>
+          <li><div class="do"><p>Since $a = b$, $a - b = 0$. Dividing by zero is not allowed.</p></div><p class="why">$0 \cdot x = 0 \cdot y$ is true for any $x, y$, so it tells us nothing about $x$ and $y$.</p></li>
+        </ol>
+        <p class="answer">Division by $a - b = 0$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A square-root slip</h3>
+        <div class="problem"><p>Find the error: $(-5)^2 = 25 = 5^2$. Taking square roots of both sides, $-5 = 5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\sqrt{(-5)^2} = \sqrt{25} = 5$, not $-5$.</p></div><p class="why">The symbol $\sqrt{\phantom{x}}$ always means the non-negative root.</p></li>
+          <li><div class="do"><p>In general $\sqrt{a^2} = |a|$, so the correct conclusion is $|-5| = |5|$, which is true.</p></div><p class="why">$x^2 = y^2$ only tells us $x = \pm y$.</p></li>
+        </ol>
+        <p class="answer">$\sqrt{a^2} = |a|$, not $a$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Forty primes in a row</h3>
+        <div class="problem"><p>$n^2 - n + 41$ is prime for $n = 1, 2, 3, \dots, 40$. Is it prime for every positive integer $n$?</p></div>
+        <ol class="steps">
+          <li data-think="Is there a value of $n$ that makes every term share a factor?"><div class="do"><p>Try $n = 41$: $41^2 - 41 + 41 = 41^2$.</p></div><p class="why">Choosing $n = 41$ makes every term a multiple of $41$.</p></li>
+          <li><div class="do"><p>$41^2 = 1681$ is not prime.</p></div><p class="why">One counterexample defeats the general claim, no matter how many cases worked.</p></li>
+        </ol>
+        <p class="answer">No: $n = 41$ gives $41^2$.</p>
+        <p class="key-idea">Forty confirming cases are evidence, not proof.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Doubling regions</h3>
+        <div class="problem"><p>With $1, 2, 3, 4, 5$ points on a circle, joining all pairs of points with chords gives $1, 2, 4, 8, 16$ regions. Is it $32$ for $6$ points?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Count carefully (or use the explorer): with $6$ points in general position there are $31$ regions.</p></div><p class="why">Test the pattern on the next case before believing it.</p></li>
+          <li><div class="do"><p>The true count is $1 + \binom{n}{2} + \binom{n}{4}$: for $n = 6$, $1 + 15 + 15 = 31$.</p></div><p class="why">Each chord adds regions and each crossing point adds one more. The formula agrees with $1, 2, 4, 8, 16$ for $n \le 5$ and then breaks from doubling.</p></li>
+        </ol>
+        <p class="answer">No: $31$ regions.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Checking is not proving</h3>
+        <div class="problem"><p>What is wrong with this "proof" that if $x^2 = 4$ and $x > 0$ then $x = 2$? "Let $x = 2$. Then $x^2 = 4$ and $x > 0$, as required." Give a correct proof.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>It assumes the conclusion $x = 2$ and checks the hypotheses. That shows $2$ is <em>a</em> solution, not that it is the <em>only</em> one.</p></div><p class="why">Circular reasoning: the claim to be proved was used as the first step.</p></li>
+          <li><div class="do"><p>Correct: $x^2 = 4 \Rightarrow (x - 2)(x + 2) = 0$. Since $x > 0$, $x + 2 > 0$, so $x - 2 = 0$.</p></div><p class="why">Start from the hypotheses and reason forward to the conclusion.</p></li>
+        </ol>
+        <p class="answer">The argument was circular; the factoring argument is a valid proof.</p>
+        <p class="book-next">Next in the book: Examples 28-10 and 28-11.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A solution that isn't</h3>
+        <div class="problem"><p>Find the error: "Solve $\sqrt{x + 2} = x$. Squaring, $x + 2 = x^2$, so $(x - 2)(x + 1) = 0$, and the solutions are $x = 2$ and $x = -1$."</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Check $x = -1$: $\sqrt{1} = 1 \ne -1$.</p></div><p class="why">Always test candidates in the original equation.</p></li>
+          <li><div class="do"><p>Squaring is not reversible: $a^2 = b^2$ allows $a = -b$. Here $x = -1$ solves $-\sqrt{x+2} = x$ instead.</p></div><p class="why">Each step was "if", not "iff", so the final list may contain extra values.</p></li>
+        </ol>
+        <p class="answer">Only $x = 2$ is a solution; $x = -1$ is extraneous.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A step that works, a conclusion that doesn't</h3>
+        <div class="problem"><p>Find the error: "Claim: $n^2 + n$ is odd for every positive integer $n$. Inductive step: if $k^2 + k$ is odd, then $(k+1)^2 + (k+1) = (k^2 + k) + 2(k + 1)$ is odd plus even, hence odd."</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The algebra in the inductive step is correct: $(k+1)^2 + (k+1) = k^2 + 3k + 2 = (k^2 + k) + 2(k+1)$.</p></div><p class="why">Check each link: this one holds.</p></li>
+          <li data-think="What part of an induction proof is missing?"><div class="do"><p>There is no base case, and none exists: $1^2 + 1 = 2$ is even. In fact $n^2 + n = n(n+1)$ is always even.</p></div><p class="why">The dominoes are set up to knock each other over, but the first one never falls.</p></li>
+        </ol>
+        <p class="answer">The base case fails; the claim is false for every $n$.</p>
+        <p class="key-idea">An inductive step alone proves nothing. Always check the base case.</p>
+        <p class="book-next">Next in the book: Exercise 28-6, then the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-28">
+    <h2 id="further-28">Further reading in the book</h2>
+    <ul>
+      <li><strong>§28.1 Words, Words, Words</strong>: Examples 28-1 to 28-5 and Exercise 28-1.</li>
+      <li><strong>§28.2 Contradiction</strong>: Example 28-6 and Exercises 28-2, 28-3.</li>
+      <li><strong>§28.3 Converses Aren't Necessarily True</strong>: Example 28-7.</li>
+      <li><strong>§28.4 Mathematical Induction</strong>: the sum $1 + 2 + \cdots + n$, Example 28-8 and Exercise 28-4.</li>
+      <li><strong>§28.5 Shooting Holes in Pigeons</strong>: Example 28-9, the general Pigeonhole Principle, and Exercise 28-5.</li>
+      <li><strong>§28.6 Convincing But Wrong</strong>: Examples 28-10, 28-11 and Exercise 28-6.</li>
+      <li><strong>Problems to Solve for Chapter 28</strong>: Problems 508–525 mix every technique in the chapter; induction (518, 521), pigeonhole (511, 517, 522) and iff proofs (519) all appear.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 28 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 28.1 — WLOG: sorted triples vs all orderings */
+  AOPS.registerWidget("wlogTriples", function (body) {
+    var ctl = W.controls(body);
+    var box = W.el("div", { class: "readout", style: "display:flex;flex-wrap:wrap;gap:4px;align-content:flex-start;min-height:120px" });
+    body.appendChild(box);
+    var out = W.readout(body);
+    var S = 9, mode = "sorted";
+    W.slider(ctl, { label: "Total a + b + c", min: 6, max: 18, value: S, onInput: function (v) { S = v; draw(); } });
+    W.segmented(ctl, { title: "List", value: mode, options: [{ value: "sorted", label: "WLOG a < b < c" }, { value: "all", label: "all orderings" }], onChange: function (v) { mode = v; draw(); } });
+    function perms(t) { var a = t[0], b = t[1], c = t[2]; return [[a, b, c], [a, c, b], [b, a, c], [b, c, a], [c, a, b], [c, b, a]]; }
+    function draw() {
+      W.clear(box);
+      var trips = [];
+      for (var a = 1; a < S; a++) for (var b = a + 1; b < S; b++) { var c = S - a - b; if (c > b) trips.push([a, b, c]); }
+      if (!trips.length) box.appendChild(W.el("span", { class: "ctl-label", text: "No triples: the smallest possible total is 1 + 2 + 3 = 6." }));
+      trips.forEach(function (t) {
+        if (mode === "sorted") box.appendChild(W.el("span", { class: "chip", style: "border-color:var(--accent)", text: "(" + t.join(", ") + ")" }));
+        else {
+          var grp = W.el("span", { style: "display:inline-flex;flex-wrap:wrap;border:2px solid var(--accent);border-radius:10px;padding:2px;margin:2px" });
+          perms(t).forEach(function (p, i) { grp.appendChild(W.el("span", { class: "chip", style: i ? "opacity:.7" : "", text: "(" + p.join(",") + ")" })); });
+          box.appendChild(grp);
+        }
+      });
+      out.tex("\\text{sorted triples} = " + trips.length + ",\\qquad \\text{ordered triples} = 3! \\times " + trips.length + " = " + (6 * trips.length));
+    }
+    draw();
+  });
+
+  /* 28.2 — Euclid's contradiction: multiply the "complete" list and add 1 */
+  AOPS.registerWidget("primeContradiction", function (body) {
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var primes = [2, 3, 5, 7, 11, 13, 17, 19], chosen = { 2: true, 3: true, 5: true };
+    ctl.appendChild(W.el("span", { class: "ctl-label", text: "My \"complete\" list of primes:" }));
+    primes.forEach(function (p) {
+      var b = W.button(ctl, String(p), function () {
+        chosen[p] = !chosen[p];
+        if (!Object.keys(chosen).some(function (k) { return chosen[k]; })) chosen[p] = true;
+        sync(); draw();
+      });
+      b.dataset.p = p;
+    });
+    function sync() {
+      ctl.querySelectorAll("button[data-p]").forEach(function (b) {
+        var on = !!chosen[b.dataset.p];
+        b.setAttribute("aria-pressed", String(on));
+        b.style.background = on ? "var(--accent)" : "";
+        b.style.color = on ? "var(--surface-solid)" : "";
+      });
+    }
+    function draw() {
+      var list = primes.filter(function (p) { return chosen[p]; });
+      var prod = list.reduce(function (a, b) { return a * b; }, 1), N = prod + 1;
+      var fs = W.primeFactors(N), uniq = fs.filter(function (v, i) { return fs.indexOf(v) === i; });
+      var fac = uniq.map(function (p) { var e = fs.filter(function (q) { return q === p; }).length; return p + (e > 1 ? "^{" + e + "}" : ""); }).join(" \\times ");
+      out.set("<p>$N = " + list.join(" \\cdot ") + " + 1 = " + N + (uniq.length === 1 && fs.length === 1 ? "$, which is itself prime." : " = " + fac + "$.") + "</p>" +
+        "<p>Each listed prime leaves remainder $1$ when dividing $N$, so " + (uniq.length > 1 ? "the primes $" + uniq.join(",\\ ") + "$ are" : "the prime $" + uniq[0] + "$ is") + " missing from the list. The list was not complete after all.</p>");
+    }
+    sync(); draw();
+  });
+
+  /* 28.3 — statement / converse / inverse / contrapositive via a 2x2 table */
+  AOPS.registerWidget("contraGrid", function (body) {
+    var ctl = W.controls(body);
+    var grid = W.el("div", { style: "display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px" });
+    body.appendChild(grid);
+    var out = W.readout(body);
+    function isPrime(n) { if (n < 2) return false; for (var d = 2; d * d <= n; d++) if (n % d === 0) return false; return true; }
+    var preds = {
+      m4: { label: "multiple of 4", f: function (n) { return n % 4 === 0; } },
+      m6: { label: "multiple of 6", f: function (n) { return n % 6 === 0; } },
+      even: { label: "even", f: function (n) { return n % 2 === 0; } },
+      m3: { label: "multiple of 3", f: function (n) { return n % 3 === 0; } },
+      sq: { label: "perfect square", f: function (n) { var r = Math.round(Math.sqrt(n)); return r * r === n; } },
+      prime: { label: "prime", f: isPrime },
+      odd: { label: "odd", f: function (n) { return n % 2 === 1; } }
+    };
+    var P = "m4", Q = "even";
+    var opts = Object.keys(preds).map(function (k) { return { value: k, label: preds[k].label }; });
+    W.segmented(ctl, { title: "P: n is …", value: P, options: opts, onChange: function (v) { P = v; draw(); } });
+    W.segmented(ctl, { title: "Q: n is …", value: Q, options: opts, onChange: function (v) { Q = v; draw(); } });
+    function draw() {
+      W.clear(grid);
+      var cells = { TT: [], TF: [], FT: [], FF: [] };
+      for (var n = 1; n <= 30; n++) cells[(preds[P].f(n) ? "T" : "F") + (preds[Q].f(n) ? "T" : "F")].push(n);
+      var info = [
+        ["TT", "P and Q", null], ["TF", "P, not Q", "bad box for statement and contrapositive"],
+        ["FT", "Q, not P", "bad box for converse and inverse"], ["FF", "neither", null]
+      ];
+      info.forEach(function (c) {
+        var bad = c[2] && cells[c[0]].length;
+        var cell = W.el("div", { class: "readout", style: "min-height:96px;" + (bad ? "border-color:var(--plot-5);box-shadow:inset 0 0 0 1px var(--plot-5)" : "") },
+          W.el("div", { class: "ctl-label", text: c[1] + " (" + cells[c[0]].length + ")" + (c[2] ? " · " + c[2] : "") }));
+        var chips = W.el("div", { style: "display:flex;flex-wrap:wrap;gap:2px;margin-top:4px" });
+        cells[c[0]].forEach(function (n) { chips.appendChild(W.el("span", { class: "chip", style: "min-width:1.6em;padding:0 4px;font-size:.8rem", text: n })); });
+        cell.appendChild(chips);
+        grid.appendChild(cell);
+      });
+      function ph(l) { return /^(multiple|perfect)/.test(l) ? "a " + l : l; }
+      var p = ph(preds[P].label), q = ph(preds[Q].label);
+      var s1 = !cells.TF.length, s2 = !cells.FT.length;
+      function verdict(ok, box) { return ok ? "<strong>true</strong> (for 1–30)" : "<strong>false</strong>, e.g. $n = " + box[0] + "$"; }
+      out.set("<p>Statement: if $n$ is " + p + ", then $n$ is " + q + ": " + verdict(s1, cells.TF) + "</p>" +
+        "<p>Contrapositive: if $n$ is not " + q + ", then $n$ is not " + p + ": " + verdict(s1, cells.TF) + "</p>" +
+        "<p>Converse: if $n$ is " + q + ", then $n$ is " + p + ": " + verdict(s2, cells.FT) + "</p>" +
+        "<p>Inverse: if $n$ is not " + p + ", then $n$ is not " + q + ": " + verdict(s2, cells.FT) + "</p>");
+    }
+    draw();
+  });
+
+  /* 28.4 — sum of odd numbers as L-shaped layers */
+  AOPS.registerWidget("oddSquares", function (body) {
+    var svg = W.stage(body, { w: 620, h: 340, label: "An n by n square built from L-shaped layers of 1, 3, 5, ... unit squares" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 4, cols = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)", "var(--plot-5)"];
+    W.slider(ctl, { label: "n", min: 1, max: 10, value: n, onInput: function (v) { n = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var cell = 300 / n, ox = 30, oy = 20;
+      for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) {
+        var layer = Math.max(i, j);
+        var last = layer === n - 1;
+        svg.appendChild(W.s("rect", { x: ox + j * cell + 1, y: oy + (n - 1 - i) * cell + 1, width: cell - 2, height: cell - 2, rx: 3,
+          fill: "color-mix(in srgb, " + cols[layer % 5] + " " + (last ? 85 : 40) + "%, transparent)", stroke: last ? "var(--ink)" : cols[layer % 5], "stroke-width": last ? 1.5 : 1 }));
+      }
+      var tx = 370;
+      svg.appendChild(W.s("text", { x: tx, y: 40, class: "lbl", text: "layer k has 2k − 1 squares" }));
+      for (var k = 1; k <= n; k++) {
+        var y = 40 + k * 26;
+        svg.appendChild(W.s("rect", { x: tx, y: y - 13, width: 16, height: 16, rx: 3, fill: "color-mix(in srgb, " + cols[(k - 1) % 5] + " " + (k === n ? 85 : 40) + "%, transparent)" }));
+        svg.appendChild(W.s("text", { x: tx + 26, y: y, class: "lbl", style: "font-size:14px", fill: k === n ? "var(--ink)" : "var(--muted)", text: "k = " + k + ": " + (2 * k - 1) + (k === n && n > 1 ? "  ← step " + (n - 1) + " → " + n : "") }));
+      }
+      var terms = [];
+      for (var t = 1; t <= n; t++) terms.push(2 * t - 1);
+      out.tex((n > 6 ? "1 + 3 + 5 + \\cdots + " + (2 * n - 1) : terms.join(" + ")) + " = " + (n * n) + " = " + n + "^2" + (n > 1 ? ",\\qquad (" + (n - 1) + ")^2 + " + (2 * n - 1) + " = " + n + "^2" : ""));
+    }
+    draw();
+  });
+
+  /* 28.5 — pigeonholes */
+  AOPS.registerWidget("pigeonholes", function (body) {
+    var svg = W.stage(body, { w: 620, h: 300, label: "Pigeons distributed into holes with the fullest hole highlighted" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var p = 13, h = 4, counts = [];
+    W.slider(ctl, { label: "Pigeons", min: 1, max: 30, value: p, onInput: function (v) { p = v; spread(); } });
+    W.slider(ctl, { label: "Holes", min: 1, max: 8, value: h, onInput: function (v) { h = v; spread(); } });
+    W.button(ctl2, "Random", function () { counts = []; for (var i = 0; i < h; i++) counts.push(0); for (var j = 0; j < p; j++) counts[Math.floor(Math.random() * h)]++; draw(); });
+    W.button(ctl2, "Spread out (worst case)", spread);
+    function spread() { counts = []; for (var i = 0; i < h; i++) counts.push(Math.floor(p / h) + (i < p % h ? 1 : 0)); draw(); }
+    function draw() {
+      W.clear(svg);
+      var bw = Math.min(110, 580 / h), gap = 8, ox = (620 - h * bw) / 2, base = 260;
+      var mx = Math.max.apply(null, counts), need = Math.ceil(p / h);
+      counts.forEach(function (c, i) {
+        var x = ox + i * bw, full = c === mx;
+        svg.appendChild(W.s("rect", { x: x + gap / 2, y: 30, width: bw - gap, height: base - 30, rx: 10, fill: full ? "color-mix(in srgb, var(--accent) 18%, transparent)" : "var(--surface-2)", stroke: full ? "var(--accent)" : "var(--border-strong)", "stroke-width": full ? 2.5 : 1 }));
+        var per = Math.max(1, Math.floor((bw - gap - 8) / 18));
+        for (var k = 0; k < c; k++) {
+          var cx = x + gap / 2 + 13 + (k % per) * 18, cy = base - 14 - Math.floor(k / per) * 18;
+          svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 7, fill: full ? "var(--accent)" : "var(--plot-2)" }));
+        }
+        svg.appendChild(W.s("text", { x: x + bw / 2, y: base + 24, "text-anchor": "middle", class: "lbl", style: "font-size:14px", text: c }));
+      });
+      svg.appendChild(W.s("text", { x: 310, y: 20, "text-anchor": "middle", class: "lbl", text: "fullest hole: " + mx + "   ·   guaranteed: at least " + need }));
+      out.tex(p + "\\text{ pigeons in } " + h + "\\text{ holes} \\;\\Rightarrow\\; \\text{some hole has at least } \\left\\lceil \\tfrac{" + p + "}{" + h + "} \\right\\rceil = " + need);
+    }
+    spread();
+  });
+
+  /* 28.6 — circle regions: a pattern that breaks */
+  AOPS.registerWidget("circleRegions", function (body) {
+    var svg = W.stage(body, { w: 620, h: 330, label: "Points on a circle joined by all chords, with the number of regions" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 5, ang = [100, 10, 300, 230, 160, 52, 268, 195].map(function (d) { return d * Math.PI / 180; });
+    W.slider(ctl, { label: "Points n", min: 1, max: 8, value: n, onInput: function (v) { n = v; draw(); } });
+    function C(a, b) { if (b < 0 || b > a) return 0; var r = 1; for (var i = 1; i <= b; i++) r = r * (a - b + i) / i; return Math.round(r); }
+    function regions(k) { return 1 + C(k, 2) + C(k, 4); }
+    function draw() {
+      W.clear(svg);
+      var cx = 160, cy = 165, R = 140;
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "color-mix(in srgb, var(--plot-2) 10%, transparent)", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      var pts = ang.slice(0, n).map(function (a) { return [cx + R * Math.cos(a), cy - R * Math.sin(a)]; });
+      for (var i = 0; i < n; i++) for (var j = i + 1; j < n; j++) svg.appendChild(W.s("line", { x1: pts[i][0], y1: pts[i][1], x2: pts[j][0], y2: pts[j][1], stroke: "var(--plot-2)", "stroke-width": 1.6 }));
+      pts.forEach(function (q) { svg.appendChild(W.s("circle", { cx: q[0], cy: q[1], r: 6, fill: "var(--accent)" })); });
+      var tx = 350;
+      [["n", 0], ["regions", 60], ["2^(n−1)", 160]].forEach(function (hd) { svg.appendChild(W.s("text", { x: tx + hd[1], y: 30, class: "lbl", text: hd[0] })); });
+      for (var k = 1; k <= 8; k++) {
+        var y = 30 + k * 32, r = regions(k), g = Math.pow(2, k - 1), cur = k === n;
+        if (cur) svg.appendChild(W.s("rect", { x: tx - 8, y: y - 20, width: 240, height: 28, rx: 6, fill: "color-mix(in srgb, var(--accent) 20%, transparent)" }));
+        var fillc = k > n ? "var(--muted)" : r === g ? "var(--ink)" : "var(--plot-5)";
+        [[String(k), 0], [k > n ? "?" : String(r), 60], [String(g), 160]].forEach(function (c) { svg.appendChild(W.s("text", { x: tx + c[1], y: y, class: "lbl", style: "font-size:15px", fill: fillc, text: c[0] })); });
+      }
+      out.tex("1 + \\binom{" + n + "}{2} + \\binom{" + n + "}{4} = 1 + " + C(n, 2) + " + " + C(n, 4) + " = " + regions(n) + (regions(n) === Math.pow(2, n - 1) ? "\\;=\\; 2^{" + (n - 1) + "}" : "\\;\\ne\\; 2^{" + (n - 1) + "} = " + Math.pow(2, n - 1)));
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

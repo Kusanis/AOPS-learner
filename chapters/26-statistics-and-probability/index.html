@@ -1,0 +1,1005 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 26: Statistics and Probability · AoPS Learner</title>
+  <meta name="description" content="Mean, median, mode and range, probability by counting, multiplying probabilities, casework, odds and expected value, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="26" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 26 · Advanced Topics</span>
+    <h1>Statistics and Probability</h1>
+    <p class="lede">A pile of numbers means little until you summarize it, and a game of chance looks hopeless until you count its outcomes. This chapter gives you the tools for both: averages that describe data, and probabilities, odds and expected values that describe luck.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Mean $=\dfrac{\text{sum}}{\text{count}}$, so <em>sum $=$ mean $\times$ count</em>. Work with sums, not averages, when data are added or removed.</li>
+      <li>Median: the middle value of the sorted list (average the two middle values for an even count). Mode: the most frequent value. Range: largest minus smallest.</li>
+      <li>Geometric mean of $n$ positive numbers: the $n$th root of their product. For two numbers, $\dfrac{a+b}{2} \ge \sqrt{ab}$.</li>
+      <li>With equally likely outcomes, $P(A) = \dfrac{\text{desired outcomes}}{\text{all outcomes}}$, and $P(A) = 1 - P(\text{not } A)$.</li>
+      <li>Independent events multiply: $P(A \text{ and } B) = P(A)\,P(B)$. Without replacement, update the counts before the next factor.</li>
+      <li>Casework: split into non-overlapping cases, find each probability, then add.</li>
+      <li>Odds against $=P(\text{not }A) : P(A)$; odds against $m:n$ means $P(A) = \dfrac{n}{m+n}$.</li>
+      <li>Expected value $=\sum (\text{value}) \times (\text{probability})$: the long-run average result.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 26.1 ===================== -->
+  <section class="lesson" id="s26-1" data-title="Statistics">
+    <h2><span class="sec-num">26.1</span> Statistics</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Ten friends compare weekly allowances. Nine of them get 10 dollars, and one gets 500 dollars. The "average" allowance is 59 dollars, but nobody actually gets anything close to that. Which single number honestly describes this group? The answer depends on the question you are asking, and that is why statisticians keep several different kinds of "middle" in their toolbox.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Given a list of numbers (the <em>data</em>), four quick summaries are:</p>
+      <ul>
+        <li>the <strong>mean</strong> (arithmetic mean, or average): add the numbers and divide by how many there are;</li>
+        <li>the <strong>median</strong>: sort the list; the median is the middle entry, or the average of the two middle entries if the list has even length;</li>
+        <li>the <strong>mode</strong>: the value that occurs most often (a list can have several modes, or none worth mentioning);</li>
+        <li>the <strong>range</strong>: the largest value minus the smallest.</li>
+      </ul>
+      <p>The single most useful fact about the mean is that it can be undone:</p>
+      <div class="rule"><p>$$\text{mean} = \frac{\text{sum}}{n} \quad\Longleftrightarrow\quad \text{sum} = n \times \text{mean}.$$</p></div>
+      <p>Whenever numbers join or leave a list, convert every average to a sum first, do the bookkeeping with sums, and convert back at the end.</p>
+      <p>The <strong>geometric mean</strong> of $n$ positive numbers multiplies instead of adding: it is $\sqrt[n]{x_1 x_2 \cdots x_n}$. Both kinds of mean always lie between the smallest and largest data value. For two positive numbers the arithmetic mean is never smaller than the geometric mean:</p>
+      <div class="rule"><p>$$\frac{a+b}{2} \;\ge\; \sqrt{ab}, \quad\text{with equality only when } a = b.$$</p></div>
+      <div class="note"><p>How many times each value appears is its <em>frequency</em>. A bar chart of frequencies is called a <em>histogram</em>; the dot plot below is a simple version of one.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="statsDots">
+      <figcaption><strong>Explore:</strong> Drag the seven dots (or focus one and use the arrow keys). Watch the triangle: the mean is the balance point of the data. Drag one dot far to the right and notice that the mean chases it while the median barely moves.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Four summaries of one list</h3>
+        <div class="problem"><p>Find the mean, median, mode and range of $9,\ 5,\ 2,\ 12,\ 5,\ 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sort: $2,\ 5,\ 5,\ 6,\ 9,\ 12$.</p></div><p class="why">The median, mode and range are all easiest to read from a sorted list.</p></li>
+          <li><div class="do"><p>Mean $=\dfrac{2+5+5+6+9+12}{6} = \dfrac{39}{6} = 6.5$.</p></div><p class="why">Add all six values and divide by how many there are.</p></li>
+          <li><div class="do"><p>Median $=\dfrac{5+6}{2} = 5.5$.</p></div><p class="why">With six values there is no single middle entry, so average the 3rd and 4th.</p></li>
+          <li><div class="do"><p>Mode $=5$; range $=12-2=10$.</p></div><p class="why">$5$ is the only value that appears twice; the range is largest minus smallest.</p></li>
+        </ol>
+        <p class="answer">Mean $6.5$, median $5.5$, mode $5$, range $10$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A geometric mean</h3>
+        <div class="problem"><p>Find the geometric mean of $2$, $9$ and $12$, and compare it with their arithmetic mean.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Product: $2 \cdot 9 \cdot 12 = 216$.</p></div><p class="why">The geometric mean of three numbers starts with their product.</p></li>
+          <li><div class="do"><p>$\sqrt[3]{216} = 6$, since $6^3 = 216$.</p></div><p class="why">Three numbers, so take the cube root.</p></li>
+          <li><div class="do"><p>Arithmetic mean $=\dfrac{2+9+12}{3} = \dfrac{23}{3} \approx 7.67$.</p></div><p class="why">For comparison. As promised, the arithmetic mean is larger.</p></li>
+        </ol>
+        <p class="answer">Geometric mean $6$; arithmetic mean $\tfrac{23}{3} \approx 7.67$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>What score do I need?</h3>
+        <div class="problem"><p>Priya's average on three tests is $85$. What must she score on the fourth test to bring her average up to $88$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Current total: $3 \times 85 = 255$.</p></div><p class="why">Turn the average back into a sum: sum $=$ count $\times$ mean.</p></li>
+          <li><div class="do"><p>Needed total for four tests: $4 \times 88 = 352$.</p></div><p class="why">The goal is also an average, so convert it to a sum too.</p></li>
+          <li><div class="do"><p>Fourth score $= 352 - 255 = 97$.</p></div><p class="why">The new test must supply the missing points.</p></li>
+        </ol>
+        <p class="answer">$97$</p>
+        <p class="book-next">Next in the book: Example 26-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Combining two classes</h3>
+        <div class="problem"><p>A class of $12$ averages $90$ on a quiz, and a class of $18$ averages $80$. What is the average of all $30$ students?</p></div>
+        <ol class="steps">
+          <li data-think="Is the answer simply $85$, halfway between $90$ and $80$?"><div class="do"><p>Totals: $12 \times 90 = 1080$ and $18 \times 80 = 1440$.</p></div><p class="why">The classes are different sizes, so we can't just average the two averages. Sums handle the sizes correctly.</p></li>
+          <li><div class="do"><p>Overall mean $=\dfrac{1080 + 1440}{30} = \dfrac{2520}{30} = 84$.</p></div><p class="why">All the points divided by all the students.</p></li>
+        </ol>
+        <p class="answer">$84$</p>
+        <p class="key-idea">The combined mean is pulled toward the bigger group: $84$ is closer to $80$ than to $90$.</p>
+        <p class="book-next">Next in the book: Exercise 26-2.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Which number was removed?</h3>
+        <div class="problem"><p>Ten numbers have mean $20$. When one of them is removed, the mean of the other nine is $18$. What number was removed?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sum of all ten: $10 \times 20 = 200$.</p></div><p class="why">Convert the average to a sum.</p></li>
+          <li><div class="do"><p>Sum of the remaining nine: $9 \times 18 = 162$.</p></div><p class="why">The same conversion after the removal.</p></li>
+          <li><div class="do"><p>Removed number $= 200 - 162 = 38$.</p></div><p class="why">The two sums differ by exactly the removed number.</p></li>
+        </ol>
+        <p class="answer">$38$</p>
+        <p class="book-next">Next in the book: Exercise 26-1.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Building a list from its statistics</h3>
+        <div class="problem"><p>Five positive integers have mean $8$, median $9$, and a unique mode of $12$. What is the largest possible range?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sort them as $a \le b \le 9 \le d \le e$. Their sum is $5 \times 8 = 40$.</p></div><p class="why">The median of five sorted numbers is the third one; the mean gives the sum.</p></li>
+          <li data-think="Where can two copies of $12$ go, given that the middle number is $9$?"><div class="do"><p>$12$ must appear at least twice, and it is bigger than $9$, so $d = e = 12$.</p></div><p class="why">Only the two spots above the median can hold numbers larger than $9$.</p></li>
+          <li><div class="do"><p>Then $a + b = 40 - 9 - 24 = 7$, with $a \ne b$.</p></div><p class="why">If $a = b$, that value would also appear twice and $12$ would not be the <em>unique</em> mode.</p></li>
+          <li><div class="do"><p>To maximize $e - a = 12 - a$, make $a$ as small as possible: $a = 1$, $b = 6$. The list $1, 6, 9, 12, 12$ works.</p></div><p class="why">Check: sum $40$, median $9$, and only $12$ repeats.</p></li>
+        </ol>
+        <p class="answer">$11$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two numbers from their means</h3>
+        <div class="problem"><p>Two positive numbers have arithmetic mean $10$ and geometric mean $8$. Find them.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{x+y}{2} = 10 \Rightarrow x + y = 20$, and $\sqrt{xy} = 8 \Rightarrow xy = 64$.</p></div><p class="why">Each mean gives one equation about the sum or product.</p></li>
+          <li><div class="do"><p>$x$ and $y$ are the roots of $t^2 - 20t + 64 = 0$, which factors as $(t-4)(t-16) = 0$.</p></div><p class="why">Knowing a sum and a product is exactly what a quadratic's coefficients encode (Chapter 6).</p></li>
+        </ol>
+        <p class="answer">$4$ and $16$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Why the arithmetic mean wins</h3>
+        <div class="problem"><p>Prove that for positive numbers $a$ and $b$, $\dfrac{a+b}{2} \ge \sqrt{ab}$, with equality only when $a = b$.</p></div>
+        <ol class="steps">
+          <li data-think="What expression involving $\sqrt a$ and $\sqrt b$ can never be negative?"><div class="do"><p>Start from $\left(\sqrt{a} - \sqrt{b}\right)^2 \ge 0$.</p></div><p class="why">Any real number squared is at least zero. This is the whole idea.</p></li>
+          <li><div class="do"><p>Expand: $a - 2\sqrt{ab} + b \ge 0$, so $a + b \ge 2\sqrt{ab}$.</p></div><p class="why">$(\sqrt a)^2 = a$ and $\sqrt a \sqrt b = \sqrt{ab}$.</p></li>
+          <li><div class="do"><p>Divide by $2$: $\dfrac{a+b}{2} \ge \sqrt{ab}$. Equality needs $\sqrt a - \sqrt b = 0$, that is, $a = b$.</p></div><p class="why">A square is zero only when the thing being squared is zero.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{a+b}{2} - \sqrt{ab} = \dfrac{\left(\sqrt a - \sqrt b\right)^2}{2} \ge 0$, with equality exactly when $a = b$.</p>
+        <p class="key-idea">"A square is never negative" proves a surprising number of inequalities.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 26.2 ===================== -->
+  <section class="lesson" id="s26-2" data-title="Probability and Common Sense">
+    <h2><span class="sec-num">26.2</span> Probability and Common Sense</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A game show host says: "Behind one of these five doors is a car." Without any training at all, you would say your chance of picking it is one in five. That instinct is exactly right, and it is the whole definition of probability. The rest of this chapter is learning to count carefully enough that your instinct keeps working when the situation gets complicated.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>When an experiment has finitely many <em>equally likely</em> outcomes, the <strong>probability</strong> of an event $A$ is</p>
+      <div class="rule"><p>$$P(A) = \frac{\text{number of outcomes in } A}{\text{total number of outcomes}}.$$</p></div>
+      <p>So probability is really counting twice, and everything from Chapter 25 applies. Some facts follow at once:</p>
+      <ul>
+        <li>$0 \le P(A) \le 1$: an impossible event has probability $0$ and a certain one has probability $1$.</li>
+        <li>The probabilities of all the possible outcomes add up to $1$.</li>
+        <li>Either $A$ happens or it doesn't, so</li>
+      </ul>
+      <div class="rule"><p>$$P(A) = 1 - P(\text{not } A).$$</p></div>
+      <p>This <em>complement rule</em> is a lifesaver when "not $A$" is easier to count, as with "at least one" questions.</p>
+      <div class="note"><p>A standard deck has $52$ cards: $4$ suits (spades and clubs are black, hearts and diamonds are red) of $13$ values each (A, 2–10, J, Q, K). The jack, queen and king are the <em>face cards</em>, so there are $12$ of them.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="probBag">
+      <figcaption><strong>Explore:</strong> Set how many marbles of each colour are in the bag and pick an event. The exact probability is the fraction of highlighted marbles. Then press "Draw 100" a few times: the experimental fraction wanders, but settles near the exact value.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Marbles in a bag</h3>
+        <div class="problem"><p>A bag holds $3$ red, $5$ blue and $2$ green marbles. One is drawn at random. Find $P(\text{blue})$ and $P(\text{not green})$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>There are $3 + 5 + 2 = 10$ equally likely marbles.</p></div><p class="why">"At random" means each marble is equally likely to be chosen.</p></li>
+          <li><div class="do"><p>$P(\text{blue}) = \dfrac{5}{10} = \dfrac12$.</p></div><p class="why">Five of the ten outcomes are blue.</p></li>
+          <li><div class="do"><p>$P(\text{not green}) = 1 - \dfrac{2}{10} = \dfrac{4}{5}$.</p></div><p class="why">The complement rule; counting the $8$ non-green marbles directly gives the same answer.</p></li>
+        </ol>
+        <p class="answer">$P(\text{blue}) = \tfrac12$, $P(\text{not green}) = \tfrac45$.</p>
+        <p class="book-next">Next in the book: Example 26-4 and Exercise 26-3.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>One die</h3>
+        <div class="problem"><p>A fair six-sided die is rolled. What is the probability of rolling a prime number?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The primes among $1, 2, 3, 4, 5, 6$ are $2, 3, 5$.</p></div><p class="why">Remember that $1$ is not prime.</p></li>
+          <li><div class="do"><p>$P(\text{prime}) = \dfrac{3}{6} = \dfrac12$.</p></div><p class="why">Three desired outcomes out of six equally likely ones.</p></li>
+        </ol>
+        <p class="answer">$\tfrac12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Careful with "or"</h3>
+        <div class="problem"><p>One card is drawn from a standard deck. Find the probability that it is a king or a heart.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>There are $4$ kings and $13$ hearts.</p></div><p class="why">Count each kind of desired card.</p></li>
+          <li data-think="Is the answer $\frac{17}{52}$? Is any card counted twice?"><div class="do"><p>The king of hearts is in both groups, so the number of desired cards is $4 + 13 - 1 = 16$.</p></div><p class="why">Subtract the overlap so no card is counted twice (more on this in Chapter 27).</p></li>
+          <li><div class="do"><p>$P = \dfrac{16}{52} = \dfrac{4}{13}$.</p></div><p class="why">Desired over total, then reduce.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{4}{13}$</p>
+        <p class="book-next">Next in the book: Exercise 26-4.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Drawing two at once</h3>
+        <div class="problem"><p>A box has $4$ red and $2$ blue balls. Two are drawn at the same time. What is the probability both are red?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total pairs: $\dbinom{6}{2} = 15$.</p></div><p class="why">The two balls form an unordered pair, so count combinations.</p></li>
+          <li><div class="do"><p>Red pairs: $\dbinom{4}{2} = 6$.</p></div><p class="why">Both balls must come from the four reds.</p></li>
+          <li><div class="do"><p>$P = \dfrac{6}{15} = \dfrac25$.</p></div><p class="why">Desired pairs over all pairs.</p></li>
+        </ol>
+        <p class="answer">$\tfrac25$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>"At least one" via the complement</h3>
+        <div class="problem"><p>Same box ($4$ red, $2$ blue), two balls drawn. What is the probability that at least one is blue?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>"At least one blue" fails exactly when both balls are red.</p></div><p class="why">Its complement is a single, simple case.</p></li>
+          <li><div class="do"><p>$P(\text{at least one blue}) = 1 - P(\text{both red}) = 1 - \dfrac25 = \dfrac35$.</p></div><p class="why">We found $P(\text{both red})$ in the previous example.</p></li>
+          <li><div class="do"><p>Check directly: one blue in $4 \cdot 2 = 8$ ways, two blue in $1$ way, so $\dfrac{9}{15} = \dfrac35$. ✓</p></div><p class="why">Counting the cases directly gives the same answer, with more work.</p></li>
+        </ol>
+        <p class="answer">$\tfrac35$</p>
+        <p class="book-next">Next in the book: Example 26-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Divisible by 3 or 5</h3>
+        <div class="problem"><p>An integer from $1$ to $100$ is chosen at random. What is the probability it is divisible by $3$ or by $5$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiples of $3$: $\lfloor 100/3 \rfloor = 33$. Multiples of $5$: $20$.</p></div><p class="why">Count each group.</p></li>
+          <li><div class="do"><p>Multiples of both, i.e. of $15$: $\lfloor 100/15 \rfloor = 6$.</p></div><p class="why">These were counted in both groups.</p></li>
+          <li><div class="do"><p>Desired: $33 + 20 - 6 = 47$, so $P = \dfrac{47}{100}$.</p></div><p class="why">Remove the double count, then divide by the $100$ outcomes.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{47}{100}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Digits that climb</h3>
+        <div class="problem"><p>A three-digit number ($100$ to $999$) is chosen at random. What is the probability that its digits are strictly increasing from left to right (like $258$)?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total: $999 - 100 + 1 = 900$ numbers.</p></div><p class="why">Count the sample space first.</p></li>
+          <li data-think="Can the digit $0$ appear in such a number?"><div class="do"><p>The first digit is at least $1$, and the others are bigger, so all three digits come from $\{1, \dots, 9\}$.</p></div><p class="why">$0$ can't lead, and can't follow a larger digit in an increasing list.</p></li>
+          <li><div class="do"><p>Any $3$ distinct digits from $1$–$9$ can be arranged in increasing order in exactly one way, so there are $\dbinom{9}{3} = 84$ such numbers.</p></div><p class="why">Choosing the set of digits decides the number completely.</p></li>
+          <li><div class="do"><p>$P = \dfrac{84}{900} = \dfrac{7}{75}$.</p></div><p class="why">Reduce by $12$.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{7}{75}$</p>
+        <p class="key-idea">When order is forced, an arrangement is just a choice: count with combinations.</p>
+        <p class="book-next">Next in the book: Exercise 26-5.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>One card of every suit</h3>
+        <div class="problem"><p>Four cards are dealt from a standard deck. What is the probability that all four suits are represented?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total hands: $\dbinom{52}{4} = 270725$.</p></div><p class="why">A hand is an unordered set of four cards.</p></li>
+          <li data-think="If each suit appears once, what choices are left to make?"><div class="do"><p>Choose one spade, one heart, one diamond and one club: $13^4 = 28561$ hands.</p></div><p class="why">Each suit contributes exactly one card, chosen in $13$ ways. No ordering issue arises because the suits label the cards.</p></li>
+          <li><div class="do"><p>$P = \dfrac{28561}{270725} = \dfrac{2197}{20825} \approx 0.105$.</p></div><p class="why">Both numbers share a factor of $13$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{2197}{20825} \approx 0.105$</p>
+        <p class="book-next">Next in the book: Examples 26-7 and 26-8 count poker hands the same way.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 26.3 ===================== -->
+  <section class="lesson" id="s26-3" data-title="Multiplying Probabilities">
+    <h2><span class="sec-num">26.3</span> Multiplying Probabilities</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A weather app says there's a 50% chance of rain on Saturday and a 50% chance on Sunday. Does that make rain over the weekend certain? Of course not; but what <em>is</em> the chance of a dry weekend? Multiplying probabilities answers it in one line.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Two events are <strong>independent</strong> when one has no effect on the other, like two different coin flips. If the first experiment has $T_A$ equally likely outcomes, $N_A$ of them good, and the second has $T_B$ outcomes, $N_B$ good, then the multiplication principle gives $T_A T_B$ combined outcomes and $N_A N_B$ good ones. So</p>
+      <div class="rule"><p>$$P(A \text{ and } B) = \frac{N_A N_B}{T_A T_B} = P(A)\,P(B) \qquad (A, B \text{ independent}).$$</p></div>
+      <p>When the first event <em>does</em> change the situation, as when you draw a card and don't put it back, you can still multiply, but the second factor must be computed in the changed situation:</p>
+      <div class="rule"><p>$$P(A \text{ then } B) = P(A) \times P(B \text{, given that } A \text{ happened}).$$</p></div>
+      <p>Combined with the complement rule, this makes "at least one" easy: $P(\text{at least one success}) = 1 - P(\text{every trial fails})$.</p>
+      <div class="note"><p>Never multiply probabilities of events that influence each other as if they were independent. Ask: "after the first thing happens, has anything changed?"</p></div>
+    </div>
+
+    <figure class="explore" data-widget="probArea">
+      <figcaption><strong>Explore:</strong> The square has area $1$. Event $A$ fills a vertical strip of width $P(A)$; event $B$ fills a horizontal strip of height $P(B)$. For independent events the overlap is a rectangle, so its area is the product. Find settings where "at least one" is nearly certain even though each event alone is unlikely.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Coins and a die</h3>
+        <div class="problem"><p>Two coins are flipped and a die is rolled. What is the probability of two heads and a six?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(H) = \tfrac12$ for each coin and $P(6) = \tfrac16$.</p></div><p class="why">Find each individual probability first.</p></li>
+          <li><div class="do"><p>$\tfrac12 \cdot \tfrac12 \cdot \tfrac16 = \tfrac{1}{24}$.</p></div><p class="why">The three results don't affect each other, so multiply.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{1}{24}$</p>
+        <p class="book-next">Next in the book: Example 26-9.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A dry weekend</h3>
+        <div class="problem"><p>Rain on Saturday and rain on Sunday are independent, each with probability $0.5$. What is the probability it rains on at least one day?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(\text{dry both days}) = 0.5 \times 0.5 = 0.25$.</p></div><p class="why">Dry on each day has probability $0.5$, and the days are independent.</p></li>
+          <li><div class="do"><p>$P(\text{rain at least once}) = 1 - 0.25 = 0.75$.</p></div><p class="why">"At least one rainy day" is the complement of "no rainy days."</p></li>
+        </ol>
+        <p class="answer">$0.75$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Make one, miss one</h3>
+        <div class="problem"><p>A player makes $70\%$ of her free throws, independently. What is the probability she makes the first of two shots and misses the second?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(\text{make}) = 0.7$ and $P(\text{miss}) = 1 - 0.7 = 0.3$.</p></div><p class="why">A miss is the complement of a make.</p></li>
+          <li><div class="do"><p>$0.7 \times 0.3 = 0.21$.</p></div><p class="why">The shots are independent, and the order is specified, so there is just one product.</p></li>
+        </ol>
+        <p class="answer">$0.21$</p>
+        <p class="book-next">Next in the book: Exercise 26-6.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Without replacement</h3>
+        <div class="problem"><p>A bag has $5$ red and $3$ blue marbles. Two are drawn one after the other, without replacement. Find the probability the first is red and the second is blue.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(\text{first red}) = \tfrac58$.</p></div><p class="why">Five of the eight marbles are red.</p></li>
+          <li data-think="After a red marble is removed, what does the bag hold?"><div class="do"><p>Given that, the bag has $4$ red and $3$ blue, so $P(\text{second blue}) = \tfrac37$.</p></div><p class="why">The first draw changed the bag, so recompute in the new situation.</p></li>
+          <li><div class="do"><p>$\tfrac58 \cdot \tfrac37 = \tfrac{15}{56}$.</p></div><p class="why">Multiply the first probability by the updated second one.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{15}{56}$</p>
+        <p class="book-next">Next in the book: Example 26-11 and Exercise 26-7.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Either order</h3>
+        <div class="problem"><p>Same bag ($5$ red, $3$ blue), two drawn without replacement. What is the probability of getting one of each colour?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Red then blue: $\tfrac58 \cdot \tfrac37 = \tfrac{15}{56}$. Blue then red: $\tfrac38 \cdot \tfrac57 = \tfrac{15}{56}$.</p></div><p class="why">"One of each" can happen in two different orders; these are separate outcomes.</p></li>
+          <li><div class="do"><p>Total: $\tfrac{15}{56} + \tfrac{15}{56} = \tfrac{30}{56} = \tfrac{15}{28}$.</p></div><p class="why">The two orders can't both happen, so their probabilities add.</p></li>
+          <li><div class="do"><p>Check: $\dfrac{5 \cdot 3}{\binom{8}{2}} = \dfrac{15}{28}$. ✓</p></div><p class="why">Counting unordered pairs gives the same answer.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{15}{28}$</p>
+        <p class="book-next">Next in the book: Exercise 26-8.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>At least one six</h3>
+        <div class="problem"><p>A die is rolled four times. What is the probability of at least one six?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(\text{no six in one roll}) = \tfrac56$.</p></div><p class="why">The complement of a single roll's success.</p></li>
+          <li><div class="do"><p>$P(\text{no six in four rolls}) = \left(\tfrac56\right)^4 = \tfrac{625}{1296}$.</p></div><p class="why">The rolls are independent, so the four failures multiply.</p></li>
+          <li><div class="do"><p>$P(\text{at least one six}) = 1 - \tfrac{625}{1296} = \tfrac{671}{1296} \approx 0.518$.</p></div><p class="why">Complement rule. Counting "exactly one, exactly two, …" would take four separate cases.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{671}{1296} \approx 0.518$</p>
+        <p class="book-next">Next in the book: Example 26-10.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>How many rolls for even money?</h3>
+        <div class="problem"><p>What is the smallest number of rolls of a die for which the chance of at least one six is better than $\tfrac12$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>With $n$ rolls, $P(\text{at least one six}) = 1 - \left(\tfrac56\right)^n$. We need $\left(\tfrac56\right)^n &lt; \tfrac12$.</p></div><p class="why">The same complement idea as the previous example, for general $n$.</p></li>
+          <li><div class="do"><p>$\left(\tfrac56\right)^3 = \tfrac{125}{216} \approx 0.579$, too big. $\left(\tfrac56\right)^4 \approx 0.482$, small enough.</p></div><p class="why">Test values of $n$; the powers shrink as $n$ grows.</p></li>
+        </ol>
+        <p class="answer">$4$ rolls</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Shared birth months</h3>
+        <div class="problem"><p>Five people are chosen at random. Assuming each is equally likely to be born in any of the $12$ months, independently, what is the probability that at least two share a birth month?</p></div>
+        <ol class="steps">
+          <li data-think="Is it easier to count shared months, or all-different months?"><div class="do"><p>Find $P(\text{all different})$ first. Person 1 can have any month; person 2 must avoid one month: $\tfrac{11}{12}$; person 3 must avoid two: $\tfrac{10}{12}$; and so on.</p></div><p class="why">"At least two share" has many cases; its complement is one clean chain of conditions.</p></li>
+          <li><div class="do"><p>$P(\text{all different}) = \tfrac{12}{12} \cdot \tfrac{11}{12} \cdot \tfrac{10}{12} \cdot \tfrac{9}{12} \cdot \tfrac{8}{12} = \tfrac{95040}{248832} = \tfrac{55}{144}$.</p></div><p class="why">Each factor is computed given that the earlier people all differ.</p></li>
+          <li><div class="do"><p>$P(\text{some month shared}) = 1 - \tfrac{55}{144} = \tfrac{89}{144} \approx 0.618$.</p></div><p class="why">Complement rule.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{89}{144} \approx 0.618$</p>
+        <p class="key-idea">With only five people, a shared month is more likely than not. Coincidences are cheaper than intuition suggests.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 26.4 ===================== -->
+  <section class="lesson" id="s26-4" data-title="Casework">
+    <h2><span class="sec-num">26.4</span> Casework</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Roll two dice. Is a total of $7$ more likely than a total of $12$? Gamblers figured out long ago that it is, six times more likely in fact, and the reason is simply that there are more ways to make $7$. Listing those ways, case by case, is the most common technique in all of probability.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To find a complicated probability, split the event into <strong>cases</strong> that don't overlap and together cover everything. Find the probability of each case, often by multiplying, and add:</p>
+      <div class="rule"><p>$$P(A) = P(\text{case 1}) + P(\text{case 2}) + \cdots \qquad (\text{cases mutually exclusive}).$$</p></div>
+      <p>Two common patterns:</p>
+      <ul>
+        <li><strong>Two-stage experiments.</strong> First something random happens (rain or not, which urn), then something else. Split on the first stage: $P(A) = P(\text{stage 1 result}) \times P(A \text{ given it})$, summed over the results.</li>
+        <li><strong>Dice totals.</strong> List the combinations that give the total. With two dice the $36$ ordered outcomes are equally likely, so count ordered pairs: $3$–$4$ and $4$–$3$ are different.</li>
+      </ul>
+      <p>For two dice, the number of ways to roll a total $s$ climbs $1, 2, 3, 4, 5, 6$ for $s = 2, \dots, 7$, then falls back $5, 4, 3, 2, 1$ for $s = 8, \dots, 12$.</p>
+    </div>
+
+    <figure class="explore" data-widget="diceSums">
+      <figcaption><strong>Explore:</strong> Each cell is one of the $36$ equally likely outcomes for a red die and a blue die. Choose a target total and a condition; the matching cells light up, and the histogram on the right shows how the counts rise and fall. Notice the diagonals: every cell on one diagonal has the same total.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Lucky seven</h3>
+        <div class="problem"><p>Two dice are rolled. What is the probability that the total is $7$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Ordered pairs with total $7$: $(1,6)$, $(2,5)$, $(3,4)$, $(4,3)$, $(5,2)$, $(6,1)$, six in all.</p></div><p class="why">List the cases. Order matters because the two dice are different.</p></li>
+          <li><div class="do"><p>$P = \tfrac{6}{36} = \tfrac16$.</p></div><p class="why">Each of the $36$ ordered outcomes is equally likely.</p></li>
+        </ol>
+        <p class="answer">$\tfrac16$</p>
+        <p class="book-next">Next in the book: Exercise 26-9.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A small total</h3>
+        <div class="problem"><p>Two dice are rolled. What is the probability that the total is at most $4$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Cases: total $2$ ($1$ way), total $3$ ($2$ ways), total $4$ ($3$ ways).</p></div><p class="why">Split by the exact total; these cases can't overlap.</p></li>
+          <li><div class="do"><p>$\tfrac{1 + 2 + 3}{36} = \tfrac{6}{36} = \tfrac16$.</p></div><p class="why">Add the cases and divide by $36$.</p></li>
+        </ol>
+        <p class="answer">$\tfrac16$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A late bus</h3>
+        <div class="problem"><p>The bus is late $30\%$ of the time. When it is late, you miss the bell with probability $0.6$; when it is on time, with probability $0.05$. What is the probability you miss the bell?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Late and miss: $0.3 \times 0.6 = 0.18$.</p></div><p class="why">Case 1: the bus is late. Multiply along this branch.</p></li>
+          <li><div class="do"><p>On time and miss: $0.7 \times 0.05 = 0.035$.</p></div><p class="why">Case 2: the bus is on time, with probability $1 - 0.3$.</p></li>
+          <li><div class="do"><p>$0.18 + 0.035 = 0.215$.</p></div><p class="why">The bus can't be both late and on time, so the cases add.</p></li>
+        </ol>
+        <p class="answer">$0.215$</p>
+        <p class="book-next">Next in the book: Example 26-12.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Pick an urn, then a marble</h3>
+        <div class="problem"><p>A coin is flipped. On heads you draw from urn A ($3$ red, $1$ blue); on tails from urn B ($2$ red, $3$ blue). What is the probability of drawing red?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Heads, then red: $\tfrac12 \cdot \tfrac34 = \tfrac38$.</p></div><p class="why">Case 1: urn A is used.</p></li>
+          <li><div class="do"><p>Tails, then red: $\tfrac12 \cdot \tfrac25 = \tfrac15$.</p></div><p class="why">Case 2: urn B is used.</p></li>
+          <li data-think="Why is it wrong to pool all $9$ marbles and say $\frac59$?"><div class="do"><p>$\tfrac38 + \tfrac15 = \tfrac{15}{40} + \tfrac{8}{40} = \tfrac{23}{40}$.</p></div><p class="why">The marbles are not equally likely: each marble in the smaller urn A is more likely to be drawn. Casework respects that.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{23}{40}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three dice, total five</h3>
+        <div class="problem"><p>Three dice are rolled. What is the probability the total is $5$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Unordered ways to write $5$ as three numbers from $1$ to $6$: $1+1+3$ and $1+2+2$.</p></div><p class="why">First find the combinations, ignoring order.</p></li>
+          <li><div class="do"><p>Each can be arranged in $3$ orders ($113, 131, 311$ and $122, 212, 221$), giving $6$ ordered outcomes.</p></div><p class="why">The $216$ equally likely outcomes are ordered, so count orders.</p></li>
+          <li><div class="do"><p>$P = \tfrac{6}{216} = \tfrac{1}{36}$.</p></div><p class="why">There are $6^3 = 216$ outcomes in all.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{1}{36}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The larger die shows 4</h3>
+        <div class="problem"><p>Two dice are rolled. What is the probability that the larger of the two numbers is exactly $4$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Case both are $4$: $1$ outcome.</p></div><p class="why">Split by how many dice show the $4$.</p></li>
+          <li><div class="do"><p>Case exactly one $4$, other die $1$–$3$: $3$ outcomes with the red die showing $4$, and $3$ with the blue die showing it.</p></div><p class="why">The other die must be smaller than $4$ for $4$ to be the larger number.</p></li>
+          <li><div class="do"><p>$\tfrac{1 + 3 + 3}{36} = \tfrac{7}{36}$.</p></div><p class="why">Add the cases. (Shortcut: both dice $\le 4$ in $16$ ways, minus both $\le 3$ in $9$ ways.)</p></li>
+        </ol>
+        <p class="answer">$\tfrac{7}{36}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three dice, total ten</h3>
+        <div class="problem"><p>Three dice are rolled. What is the probability the total is $10$?</p></div>
+        <ol class="steps">
+          <li data-think="Listing all combinations is messy. Can you use the two-dice counts you already know?"><div class="do"><p>Split on the first die $d$: the other two must total $10 - d$.</p></div><p class="why">Conditioning on one die reduces the problem to two-dice totals.</p></li>
+          <li><div class="do"><p>$d = 1, 2, 3, 4, 5, 6$ need two-dice totals $9, 8, 7, 6, 5, 4$, which occur in $4, 5, 6, 5, 4, 3$ ways.</p></div><p class="why">Read these off the two-dice pattern $1,2,3,4,5,6,5,4,3,2,1$.</p></li>
+          <li><div class="do"><p>$4 + 5 + 6 + 5 + 4 + 3 = 27$ outcomes, so $P = \tfrac{27}{216} = \tfrac18$.</p></div><p class="why">Add the cases; there are $216$ outcomes in all.</p></li>
+        </ol>
+        <p class="answer">$\tfrac18$</p>
+        <p class="key-idea">Treat two dice as a unit and the third die as a separate case variable.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>First to roll a six</h3>
+        <div class="problem"><p>Ana and Ben take turns rolling a die, Ana first. The first person to roll a six wins. What is the probability that Ana wins?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Ana wins on her 1st turn with probability $\tfrac16$; on her 2nd turn with probability $\left(\tfrac56\right)^2 \tfrac16$; on her 3rd with $\left(\tfrac56\right)^4 \tfrac16$; and so on.</p></div><p class="why">Split by the turn on which Ana wins. To reach her $k$th turn, both players must have failed $k-1$ times each.</p></li>
+          <li data-think="What kind of series is this, and what is its ratio?"><div class="do"><p>$P = \tfrac16\left(1 + \tfrac{25}{36} + \left(\tfrac{25}{36}\right)^2 + \cdots\right) = \dfrac{1/6}{1 - 25/36}$.</p></div><p class="why">The cases form an infinite geometric series with ratio $\tfrac{25}{36}$ (Chapter 24).</p></li>
+          <li><div class="do"><p>$\dfrac{1/6}{11/36} = \dfrac{6}{11}$.</p></div><p class="why">Simplify. Going first is a real advantage: $\tfrac{6}{11} > \tfrac12$.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{6}{11}$</p>
+        <p class="key-idea">Infinitely many cases are fine if their probabilities form a series you can sum.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 26.5 ===================== -->
+  <section class="lesson" id="s26-5" data-title="Odds">
+    <h2><span class="sec-num">26.5</span> Odds</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A sports commentator announces that an underdog team is "9 to 1 against." That isn't a probability like $0.1$ or $\tfrac{1}{10}$, but it carries exactly the same information in a different package. Learning to unwrap it takes one minute and saves a lifetime of confusion.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>odds against</strong> an event compare the chance it fails to the chance it happens:</p>
+      <div class="rule"><p>$$\text{odds against } A = P(\text{not } A) : P(A).$$</p></div>
+      <p>With equally likely outcomes this is simply (unfavourable outcomes) $:$ (favourable outcomes), written with whole numbers in lowest terms. Rolling a $3$ on a die has $5$ unfavourable outcomes and $1$ favourable, so the odds against are $5 : 1$, read "five to one." The <strong>odds for</strong> an event are the reverse ratio, $P(A) : P(\text{not } A)$. When people just say "odds," they usually mean odds against.</p>
+      <p>To convert back, think of the two numbers as counts of outcomes:</p>
+      <div class="rule"><p>$$\text{odds against } m : n \quad\Longrightarrow\quad P(A) = \frac{n}{m+n}.$$</p></div>
+      <div class="note"><p>A memory aid: "100 to 1" sounds like a long shot, so the big number must describe failure. That is why failure comes first in odds against.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="oddsBar">
+      <figcaption><strong>Explore:</strong> Set the number of favourable and unfavourable outcomes. The strip shows them side by side. The probability compares the gold part to the <em>whole</em> strip; the odds compare the two parts to <em>each other</em>.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>From probability to odds</h3>
+        <div class="problem"><p>A die is rolled. What are the odds against rolling a $5$ or a $6$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Favourable: $2$ outcomes. Unfavourable: $4$ outcomes.</p></div><p class="why">Split the six outcomes into the two groups.</p></li>
+          <li><div class="do"><p>Odds against $= 4 : 2 = 2 : 1$.</p></div><p class="why">Unfavourable first, then reduce like a fraction.</p></li>
+        </ol>
+        <p class="answer">$2 : 1$ against</p>
+        <p class="book-next">Next in the book: Exercise 26-11.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>From odds to probability</h3>
+        <div class="problem"><p>The odds against an event are $3 : 5$. What is its probability?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Think of $3$ unfavourable and $5$ favourable outcomes, $8$ in all.</p></div><p class="why">Odds against list failure first, success second.</p></li>
+          <li><div class="do"><p>$P = \tfrac58$.</p></div><p class="why">Favourable over total. Odds against smaller than $1:1$ mean the event is more likely than not.</p></li>
+        </ol>
+        <p class="answer">$\tfrac58$</p>
+        <p class="book-next">Next in the book: Exercise 26-10.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A decimal probability</h3>
+        <div class="problem"><p>An event has probability $0.2$. Give the odds against it and the odds for it.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(\text{not } A) = 0.8$, so odds against $= 0.8 : 0.2$.</p></div><p class="why">Use the definition directly.</p></li>
+          <li><div class="do"><p>Multiply both parts by $5$: $4 : 1$ against, so $1 : 4$ for.</p></div><p class="why">Odds are written with whole numbers; scaling both parts doesn't change a ratio.</p></li>
+        </ol>
+        <p class="answer">$4 : 1$ against; $1 : 4$ for.</p>
+        <p class="book-next">Next in the book: Exercise 26-12.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Drawing a heart</h3>
+        <div class="problem"><p>What are the odds against drawing a heart from a standard deck?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$13$ hearts and $39$ other cards.</p></div><p class="why">Favourable and unfavourable counts.</p></li>
+          <li><div class="do"><p>$39 : 13 = 3 : 1$.</p></div><p class="why">Divide both parts by $13$.</p></li>
+        </ol>
+        <p class="answer">$3 : 1$ against</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Odds that don't reduce nicely</h3>
+        <div class="problem"><p>A horse has a $7$ in $100$ chance of winning. What are the odds against it?</p></div>
+        <ol class="steps">
+          <li data-think="Is the answer $100 : 7$?"><div class="do"><p>Out of $100$ equally likely "races," it wins $7$ and loses $100 - 7 = 93$.</p></div><p class="why">The second number in odds is not the total; it's the favourable part only.</p></li>
+          <li><div class="do"><p>Odds against $= 93 : 7$.</p></div><p class="why">$93$ and $7$ share no common factor, so this is lowest terms.</p></li>
+        </ol>
+        <p class="answer">$93 : 7$ against</p>
+        <p class="book-next">Next in the book: Exercise 26-13.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Is the bet fair?</h3>
+        <div class="problem"><p>A carnival booth offers: bet 1 dollar on a single die; if it shows $6$ you get your dollar back plus 5 dollars, otherwise you lose the dollar. Is the bet fair?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The true odds against a six are $5 : 1$.</p></div><p class="why">Five losing faces, one winning face.</p></li>
+          <li><div class="do"><p>The payout is also $5$ to $1$: win 5 dollars for each 1 dollar risked.</p></div><p class="why">A bet is fair when the payout ratio matches the true odds against.</p></li>
+          <li><div class="do"><p>Average result per game: $\tfrac16(5) + \tfrac56(-1) = 0$ dollars.</p></div><p class="why">Over many games, wins and losses cancel. (Section 26.6 develops this idea.)</p></li>
+        </ol>
+        <p class="answer">Yes, it is exactly fair.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Odds for two events at once</h3>
+        <div class="problem"><p>Independent events $A$ and $B$ have odds against of $3 : 1$ and $4 : 1$. What are the odds against both happening?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(A) = \tfrac{1}{3+1} = \tfrac14$ and $P(B) = \tfrac{1}{4+1} = \tfrac15$.</p></div><p class="why">Convert odds to probabilities before combining. Odds themselves don't multiply sensibly.</p></li>
+          <li><div class="do"><p>$P(A \text{ and } B) = \tfrac14 \cdot \tfrac15 = \tfrac{1}{20}$.</p></div><p class="why">Independent events multiply.</p></li>
+          <li><div class="do"><p>Odds against $= \tfrac{19}{20} : \tfrac{1}{20} = 19 : 1$.</p></div><p class="why">Convert back. Note it is not $12 : 1$, the product of the odds.</p></li>
+        </ol>
+        <p class="answer">$19 : 1$ against</p>
+        <p class="key-idea">Do the arithmetic in probabilities; translate to odds only at the start and the end.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 26.6 ===================== -->
+  <section class="lesson" id="s26-6" data-title="What Did You Expect?">
+    <h2><span class="sec-num">26.6</span> What Did You Expect?</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A raffle ticket costs 2 dollars and could win 400. A game at the fair costs 1 dollar and pays 5 on a six. Which is the better deal? Neither the price nor the prize alone tells you. What matters is what you'd win <em>on average</em> if you played over and over, a number called the expected value.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>If an experiment has outcomes worth $x_1, x_2, \dots, x_k$ occurring with probabilities $p_1, p_2, \dots, p_k$, its <strong>expected value</strong> is</p>
+      <div class="rule"><p>$$E = x_1 p_1 + x_2 p_2 + \cdots + x_k p_k.$$</p></div>
+      <p>It is a weighted average: each outcome counts in proportion to how often it happens. If you repeat the experiment many times, your average result per trial gets close to $E$. A game is <em>fair</em> when the price to play equals the expected winnings.</p>
+      <p>Two things to keep in mind:</p>
+      <ul>
+        <li>$E$ need not be a possible outcome. A die's expected roll is $3.5$, which never comes up.</li>
+        <li>Expected values add: the expected total of several experiments is the sum of their expected values, even when they are not independent.</li>
+      </ul>
+    </div>
+
+    <figure class="explore" data-widget="evGame">
+      <figcaption><strong>Explore:</strong> In this game you roll a die: on a six you win the prize, otherwise you lose 1 dollar. Set the prize and see the expected value per round. Then play batches of rounds; your running average (the wiggly line) homes in on the dashed expected-value line. Which prize makes the game fair?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The average die roll</h3>
+        <div class="problem"><p>What is the expected value of one roll of a fair die?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$E = \tfrac16(1) + \tfrac16(2) + \cdots + \tfrac16(6) = \tfrac{21}{6}$.</p></div><p class="why">Each face has probability $\tfrac16$; multiply each value by its probability and add.</p></li>
+          <li><div class="do"><p>$\tfrac{21}{6} = 3.5$.</p></div><p class="why">Simplify. The die can never show $3.5$; it is the long-run average.</p></li>
+        </ol>
+        <p class="answer">$3.5$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A spinner game</h3>
+        <div class="problem"><p>A spinner pays nothing with probability $\tfrac12$, 2 dollars with probability $\tfrac13$, and 9 dollars with probability $\tfrac16$. What is the expected payout?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$E = 0 \cdot \tfrac12 + 2 \cdot \tfrac13 + 9 \cdot \tfrac16$.</p></div><p class="why">Value times probability for each outcome.</p></li>
+          <li><div class="do"><p>$= \tfrac23 + \tfrac32 = \tfrac{4}{6} + \tfrac{9}{6} = \tfrac{13}{6}$.</p></div><p class="why">Add with a common denominator.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{13}{6} \approx 2.17$ dollars</p>
+        <p class="book-next">Next in the book: Example 26-13 and Exercise 26-14.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Is the raffle worth it?</h3>
+        <div class="problem"><p>$500$ raffle tickets are sold for 2 dollars each. There is one 400-dollar prize and two 100-dollar prizes. What is the expected net gain from buying one ticket?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Expected prize: $400 \cdot \tfrac{1}{500} + 100 \cdot \tfrac{2}{500} = \tfrac{600}{500} = 1.2$ dollars.</p></div><p class="why">Your ticket wins the big prize with probability $\tfrac{1}{500}$ and a small one with probability $\tfrac{2}{500}$.</p></li>
+          <li><div class="do"><p>Net: $1.2 - 2 = -0.8$ dollars.</p></div><p class="why">Subtract the price paid.</p></li>
+        </ol>
+        <p class="answer">A loss of 80 cents per ticket, on average.</p>
+        <p class="book-next">Next in the book: Exercise 26-15.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Expected heads</h3>
+        <div class="problem"><p>Four fair coins are flipped. What is the expected number of heads?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(k \text{ heads}) = \dbinom{4}{k}\big/16$, giving probabilities $\tfrac{1}{16}, \tfrac{4}{16}, \tfrac{6}{16}, \tfrac{4}{16}, \tfrac{1}{16}$ for $k = 0, \dots, 4$.</p></div><p class="why">Choose which $k$ of the $4$ coins are heads, out of $2^4 = 16$ equally likely outcomes.</p></li>
+          <li><div class="do"><p>$E = \dfrac{0 \cdot 1 + 1 \cdot 4 + 2 \cdot 6 + 3 \cdot 4 + 4 \cdot 1}{16} = \dfrac{32}{16} = 2$.</p></div><p class="why">Weighted average of the possible counts.</p></li>
+          <li><div class="do"><p>Shortcut: each coin contributes $\tfrac12$ head on average, and $4 \cdot \tfrac12 = 2$.</p></div><p class="why">Expected values add, so the expected total is the sum of four expected values.</p></li>
+        </ol>
+        <p class="answer">$2$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A fair price</h3>
+        <div class="problem"><p>A game pays 10 dollars if two dice total $7$ or $11$, and nothing otherwise. What price makes the game fair?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total $7$: $6$ ways; total $11$: $2$ ways. $P(\text{win}) = \tfrac{8}{36} = \tfrac29$.</p></div><p class="why">Casework on the two winning totals.</p></li>
+          <li><div class="do"><p>$E = 10 \cdot \tfrac29 = \tfrac{20}{9} \approx 2.22$ dollars.</p></div><p class="why">The only nonzero outcome is the 10-dollar win.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{20}{9} \approx 2.22$ dollars</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Ten dice at once</h3>
+        <div class="problem"><p>Ten dice are rolled. What is the expected total?</p></div>
+        <ol class="steps">
+          <li data-think="Do you need to know the probability of every possible total from $10$ to $60$?"><div class="do"><p>Each die has expected value $3.5$.</p></div><p class="why">From the first example of this section.</p></li>
+          <li><div class="do"><p>Expected total $= 10 \times 3.5 = 35$.</p></div><p class="why">Expected values add, so we never need the messy distribution of the total.</p></li>
+        </ol>
+        <p class="answer">$35$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Expected maximum of two dice</h3>
+        <div class="problem"><p>Two dice are rolled. What is the expected value of the larger number?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P(\max = k) = \dfrac{k^2 - (k-1)^2}{36} = \dfrac{2k - 1}{36}$.</p></div><p class="why">Both dice $\le k$ in $k^2$ ways; remove the $(k-1)^2$ ways where both are $\le k-1$. (Compare the "larger die shows 4" example in 26.4.)</p></li>
+          <li><div class="do"><p>$$E = \frac{1 \cdot 1 + 2 \cdot 3 + 3 \cdot 5 + 4 \cdot 7 + 5 \cdot 9 + 6 \cdot 11}{36}$$</p><p>$= \dfrac{1 + 6 + 15 + 28 + 45 + 66}{36} = \dfrac{161}{36}$.</p></div><p class="why">Value times probability, summed. The numerators $1, 3, 5, \dots, 11$ add to $36$, as they must.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{161}{36} \approx 4.47$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Waiting for a six</h3>
+        <div class="problem"><p>You roll a die until a six appears. What is the expected number of rolls?</p></div>
+        <ol class="steps">
+          <li data-think="After the first roll, if it is not a six, how does your situation compare with the start?"><div class="do"><p>Let $E$ be the expected number of rolls. Roll once. With probability $\tfrac16$ you are done; with probability $\tfrac56$ you are back where you started, having used one roll.</p></div><p class="why">The die has no memory, so a failed roll resets the game.</p></li>
+          <li><div class="do"><p>$E = 1 + \tfrac56 E$.</p></div><p class="why">One roll always happens; then, with probability $\tfrac56$, you still expect $E$ more.</p></li>
+          <li><div class="do"><p>$\tfrac16 E = 1$, so $E = 6$.</p></div><p class="why">Solve the linear equation.</p></li>
+        </ol>
+        <p class="answer">$6$ rolls</p>
+        <p class="key-idea">When a process restarts itself, write an equation for $E$ in terms of $E$.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-26">
+    <h2 id="further-26">Further reading in the book</h2>
+    <ul>
+      <li><strong>§26.1 Statistics</strong>: Examples 26-1 to 26-3 and Exercises 26-1, 26-2.</li>
+      <li><strong>§26.2 Probability and Common Sense</strong>: Examples 26-4 to 26-8 and Exercises 26-3 to 26-5.</li>
+      <li><strong>§26.3 Multiplying Probabilities</strong>: Examples 26-9 to 26-11 and Exercises 26-6 to 26-8.</li>
+      <li><strong>§26.4 Casework</strong>: Example 26-12, the two- and three-dice totals, and Exercise 26-9.</li>
+      <li><strong>§26.5 Odds</strong>: Exercises 26-10 to 26-13.</li>
+      <li><strong>§26.6 What Did You Expect?</strong>: Example 26-13 and Exercises 26-14, 26-15.</li>
+      <li><strong>Problems to Solve for Chapter 26</strong>: Problems 478–482 are about averages; 483–499 cover probability, odds and expectation, getting harder toward the end.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 26 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 26.1 — draggable dot plot */
+  AOPS.registerWidget("statsDots", function (body) {
+    var svg = W.stage(body, { w: 640, h: 280, label: "Dot plot of seven data values with mean, median and range marked" });
+    var out = W.readout(body);
+    var ctl = W.controls(body);
+    var vals = [2, 4, 4, 5, 7, 9, 12];
+    var x0 = 40, x1 = 600, lo = 0, hi = 20, base = 196;
+    function X(v) { return x0 + (v - lo) / (hi - lo) * (x1 - x0); }
+    function V(px) { return Math.max(lo, Math.min(hi, Math.round(lo + (px - x0) / (x1 - x0) * (hi - lo)))); }
+    function yFor(i) { var c = 0; for (var j = 0; j < i; j++) if (vals[j] === vals[i]) c++; return base - 16 - 24 * c; }
+    var axis = W.s("g");
+    axis.appendChild(W.s("line", { x1: x0 - 10, y1: base, x2: x1 + 10, y2: base, stroke: "var(--border-strong)", "stroke-width": 2 }));
+    for (var v = lo; v <= hi; v++) {
+      axis.appendChild(W.s("line", { x1: X(v), y1: base - 4, x2: X(v), y2: base + 4, stroke: "var(--border-strong)" }));
+      if (v % 2 === 0) axis.appendChild(W.s("text", { x: X(v), y: base + 20, "text-anchor": "middle", class: "lbl", text: v }));
+    }
+    svg.appendChild(axis);
+    var marks = W.s("g"); svg.appendChild(marks);
+    var handles = [];
+    vals.forEach(function (v0, i) {
+      handles.push(W.handle(svg, { x: X(v0), y: yFor(i), r: 10, label: "Data value " + (i + 1) + "; left and right arrows change it", keyStep: (x1 - x0) / (hi - lo),
+        onMove: function (px) { vals[i] = V(px); layout(i); return [X(vals[i]), yFor(i)]; },
+        valueText: function () { return "value " + vals[i]; } }));
+    });
+    W.button(ctl, "Random data", function () {
+      for (var i = 0; i < vals.length; i++) vals[i] = Math.floor(Math.random() * 15) + 1;
+      layout(-1);
+    });
+    W.button(ctl, "Add an outlier", function () { vals[6] = 20; layout(-1); });
+    function layout(skip) {
+      handles.forEach(function (h, i) { if (i !== skip) h.set(X(vals[i]), yFor(i), true); });
+      draw();
+    }
+    function draw() {
+      W.clear(marks);
+      var s = vals.slice().sort(function (a, b) { return a - b; });
+      var sum = s.reduce(function (a, b) { return a + b; }, 0), mean = sum / s.length, med = s[3];
+      var freq = {}, best = 0;
+      s.forEach(function (x) { freq[x] = (freq[x] || 0) + 1; best = Math.max(best, freq[x]); });
+      var modes = Object.keys(freq).filter(function (k) { return freq[k] === best; });
+      // range bracket
+      var ry = 22;
+      marks.appendChild(W.s("path", { d: "M" + X(s[0]) + " " + (ry + 10) + "V" + ry + "H" + X(s[6]) + "V" + (ry + 10), fill: "none", stroke: "var(--plot-3)", "stroke-width": 2 }));
+      marks.appendChild(W.s("text", { x: (X(s[0]) + X(s[6])) / 2, y: ry - 6, "text-anchor": "middle", class: "lbl", fill: "var(--plot-3)", text: "range = " + (s[6] - s[0]) }));
+      // median
+      marks.appendChild(W.s("line", { x1: X(med), y1: 44, x2: X(med), y2: base, stroke: "var(--plot-2)", "stroke-width": 2, "stroke-dasharray": "6 5" }));
+      marks.appendChild(W.s("text", { x: X(med) + 6, y: 56, class: "lbl", fill: "var(--plot-2)", text: "median " + med }));
+      // mean triangle
+      var mx = X(mean);
+      marks.appendChild(W.s("path", { d: "M" + mx + " " + (base + 4) + "l-11 20h22z", fill: "var(--accent)", stroke: "var(--accent)" }));
+      marks.appendChild(W.s("text", { x: Math.max(80, Math.min(560, mx)), y: base + 48, "text-anchor": "middle", class: "lbl", fill: "var(--accent)", text: "mean ≈ " + W.fmt(mean, 2) + " (balance point)" }));
+      out.set("Sorted: $" + s.join(",\\ ") + "$ &nbsp;·&nbsp; mean $= \\tfrac{" + sum + "}{7} \\approx " + W.fmt(mean, 2) + "$, median $=" + med + "$, mode " + (best === 1 ? "none (all different)" : "$=" + modes.join(",\\ ") + "$") + ", range $=" + (s[6] - s[0]) + "$");
+    }
+    draw();
+  });
+
+  /* 26.2 — marble bag */
+  AOPS.registerWidget("probBag", function (body) {
+    var svg = W.stage(body, { w: 640, h: 250, label: "Bag of coloured marbles with the chosen event highlighted, and a bar comparing experiment to exact probability" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var n = { r: 3, b: 5, g: 2 }, ev = "r", trials = 0, hits = 0;
+    var cols = { r: "var(--plot-5)", b: "var(--plot-2)", g: "var(--plot-4)" };
+    function reset() { trials = 0; hits = 0; }
+    W.slider(ctl, { label: "Red", min: 0, max: 10, value: n.r, onInput: function (v) { n.r = v; reset(); draw(); } });
+    W.slider(ctl, { label: "Blue", min: 0, max: 10, value: n.b, onInput: function (v) { n.b = v; reset(); draw(); } });
+    W.slider(ctl, { label: "Green", min: 0, max: 10, value: n.g, onInput: function (v) { n.g = v; reset(); draw(); } });
+    W.segmented(ctl2, { title: "Event", value: ev, options: [{ value: "r", label: "red" }, { value: "b", label: "blue" }, { value: "ng", label: "not green" }], onChange: function (v) { ev = v; reset(); draw(); } });
+    W.button(ctl2, "Draw 100", function () {
+      var list = bag(); if (!list.length) return;
+      for (var i = 0; i < 100; i++) { var c = list[Math.floor(Math.random() * list.length)]; trials++; if (good(c)) hits++; }
+      draw();
+    });
+    W.button(ctl2, "Reset", function () { reset(); draw(); });
+    function bag() { var a = []; ["r", "b", "g"].forEach(function (k) { for (var i = 0; i < n[k]; i++) a.push(k); }); return a; }
+    function good(c) { return ev === "ng" ? c !== "g" : c === ev; }
+    function draw() {
+      W.clear(svg);
+      var list = bag(), tot = list.length, fav = list.filter(good).length;
+      svg.appendChild(W.s("rect", { x: 20, y: 14, width: 360, height: 222, rx: 28, fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+      list.forEach(function (c, i) {
+        var cx = 50 + (i % 10) * 33, cy = 48 + Math.floor(i / 10) * 60;
+        svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 13, fill: cols[c], opacity: good(c) ? 1 : 0.3, stroke: good(c) ? "var(--accent)" : "none", "stroke-width": 3 }));
+      });
+      if (!tot) svg.appendChild(W.s("text", { x: 200, y: 130, "text-anchor": "middle", class: "lbl", text: "The bag is empty" }));
+      // bars
+      var bx = 420, bw = 190;
+      var exact = tot ? fav / tot : 0, emp = trials ? hits / trials : 0;
+      [["exact", exact, "var(--accent)"], ["experiment", emp, "var(--plot-2)"]].forEach(function (row, k) {
+        var y = 60 + k * 80;
+        svg.appendChild(W.s("text", { x: bx, y: y - 10, class: "lbl", text: row[0] + ": " + (k && !trials ? "no draws yet" : W.fmt(row[1], 3)) }));
+        svg.appendChild(W.s("rect", { x: bx, y: y, width: bw, height: 26, rx: 6, fill: "none", stroke: "var(--border-strong)" }));
+        svg.appendChild(W.s("rect", { x: bx, y: y, width: bw * row[1], height: 26, rx: 6, fill: row[2] }));
+      });
+      svg.appendChild(W.s("text", { x: bx, y: 228, class: "lbl", text: trials + " draws (with replacement)" }));
+      out.set(tot ? "$P = \\dfrac{\\text{highlighted}}{\\text{all}} = \\dfrac{" + fav + "}{" + tot + "}" + (W.gcd(fav, tot) > 1 && fav ? " = " + W.frac(fav, tot) : "") + " \\approx " + W.fmt(exact, 3) + "$" + (trials ? " &nbsp;·&nbsp; experiment: $" + hits + "/" + trials + "$" : "") : "Add some marbles to the bag.");
+    }
+    draw();
+  });
+
+  /* 26.3 — area model for independent events */
+  AOPS.registerWidget("probArea", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Unit square split by P of A horizontally and P of B vertically" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var p = 0.5, q = 0.5;
+    W.slider(ctl, { label: "P(A)", min: 0, max: 1, step: 0.05, value: p, format: function (v) { return v.toFixed(2); }, onInput: function (v) { p = v; draw(); } });
+    W.slider(ctl, { label: "P(B)", min: 0, max: 1, step: 0.05, value: q, format: function (v) { return v.toFixed(2); }, onInput: function (v) { q = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var ox = 40, oy = 30, S = 240, a = p * S, b = q * S;
+      var fills = [
+        [ox, oy, a, b, "color-mix(in srgb, var(--accent) 70%, transparent)"],
+        [ox + a, oy, S - a, b, "color-mix(in srgb, var(--plot-2) 40%, transparent)"],
+        [ox, oy + b, a, S - b, "color-mix(in srgb, var(--plot-4) 40%, transparent)"],
+        [ox + a, oy + b, S - a, S - b, "var(--surface-2)"]
+      ];
+      fills.forEach(function (f) { svg.appendChild(W.s("rect", { x: f[0], y: f[1], width: Math.max(0, f[2]), height: Math.max(0, f[3]), fill: f[4] })); });
+      svg.appendChild(W.s("rect", { x: ox, y: oy, width: S, height: S, fill: "none", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      svg.appendChild(W.s("line", { x1: ox + a, y1: oy, x2: ox + a, y2: oy + S, stroke: "var(--ink)", "stroke-dasharray": "4 4" }));
+      svg.appendChild(W.s("line", { x1: ox, y1: oy + b, x2: ox + S, y2: oy + b, stroke: "var(--ink)", "stroke-dasharray": "4 4" }));
+      svg.appendChild(W.s("text", { x: ox + a / 2, y: oy + S + 20, "text-anchor": "middle", class: "lbl", text: "A: " + p.toFixed(2) }));
+      svg.appendChild(W.s("text", { x: ox - 8, y: oy + b / 2 + 4, "text-anchor": "end", class: "lbl", text: "B" }));
+      var rows = [
+        ["A and B", p * q, "color-mix(in srgb, var(--accent) 70%, transparent)"],
+        ["B only", (1 - p) * q, "color-mix(in srgb, var(--plot-2) 40%, transparent)"],
+        ["A only", p * (1 - q), "color-mix(in srgb, var(--plot-4) 40%, transparent)"],
+        ["neither", (1 - p) * (1 - q), "var(--surface-2)"]
+      ];
+      rows.forEach(function (r, i) {
+        var y = 52 + i * 46;
+        svg.appendChild(W.s("rect", { x: 330, y: y - 14, width: 18, height: 18, rx: 4, fill: r[2], stroke: "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: 358, y: y, class: "lbl", style: "font-size:14px", text: r[0] + " = " + r[1].toFixed(4) }));
+      });
+      svg.appendChild(W.s("text", { x: 330, y: 250, class: "lbl", style: "font-size:14px", fill: "var(--accent)", text: "at least one = " + (1 - (1 - p) * (1 - q)).toFixed(4) }));
+      out.tex("P(A\\cap B) = " + p.toFixed(2) + "\\times" + q.toFixed(2) + " = " + (p * q).toFixed(4) + ",\\quad P(\\text{at least one}) = 1 - " + (1 - p).toFixed(2) + "\\times" + (1 - q).toFixed(2) + " = " + (1 - (1 - p) * (1 - q)).toFixed(4));
+    }
+    draw();
+  });
+
+  /* 26.4 — two dice grid and histogram */
+  AOPS.registerWidget("diceSums", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "Six by six grid of two-dice outcomes and histogram of totals" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var t = 7, mode = "eq";
+    W.slider(ctl, { label: "Target total", min: 2, max: 12, value: t, onInput: function (v) { t = v; draw(); } });
+    W.segmented(ctl, { title: "Condition", value: mode, options: [{ value: "eq", label: "= total" }, { value: "le", label: "≤ total" }, { value: "ge", label: "≥ total" }], onChange: function (v) { mode = v; draw(); } });
+    function ok(s) { return mode === "eq" ? s === t : mode === "le" ? s <= t : s >= t; }
+    function draw() {
+      W.clear(svg);
+      var ox = 50, oy = 46, c = 40, count = 0;
+      svg.appendChild(W.s("text", { x: ox + 3 * c, y: 18, "text-anchor": "middle", class: "lbl", fill: "var(--plot-2)", text: "blue die →" }));
+      svg.appendChild(W.s("text", { x: 16, y: oy + 3 * c, "text-anchor": "middle", class: "lbl", fill: "var(--plot-5)", transform: "rotate(-90 16 " + (oy + 3 * c) + ")", text: "red die →" }));
+      for (var i = 1; i <= 6; i++) {
+        svg.appendChild(W.s("text", { x: ox + (i - 0.5) * c, y: oy - 8, "text-anchor": "middle", class: "lbl", text: i }));
+        svg.appendChild(W.s("text", { x: ox - 10, y: oy + (i - 0.5) * c + 4, "text-anchor": "middle", class: "lbl", text: i }));
+        for (var j = 1; j <= 6; j++) {
+          var s = i + j, on = ok(s); if (on) count++;
+          svg.appendChild(W.s("rect", { x: ox + (j - 1) * c + 2, y: oy + (i - 1) * c + 2, width: c - 4, height: c - 4, rx: 6,
+            fill: on ? "color-mix(in srgb, var(--accent) 75%, transparent)" : "var(--surface-2)", stroke: on ? "var(--accent)" : "var(--border-strong)" }));
+          svg.appendChild(W.s("text", { x: ox + (j - 0.5) * c, y: oy + (i - 0.5) * c + 5, "text-anchor": "middle", style: "font: 600 13px var(--font-mono)", fill: on ? "var(--ink)" : "var(--muted)", text: s }));
+        }
+      }
+      // histogram
+      var hx = 340, hb = 290, bw = 25, unit = 34;
+      for (var k = 2; k <= 12; k++) {
+        var ways = 6 - Math.abs(7 - k), x = hx + (k - 2) * (bw + 1);
+        svg.appendChild(W.s("rect", { x: x, y: hb - ways * unit, width: bw - 2, height: ways * unit, rx: 3,
+          fill: ok(k) ? "var(--accent)" : "color-mix(in srgb, var(--plot-2) 30%, transparent)", stroke: ok(k) ? "var(--accent)" : "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: x + bw / 2 - 1, y: hb + 16, "text-anchor": "middle", class: "lbl", text: k }));
+        svg.appendChild(W.s("text", { x: x + bw / 2 - 1, y: hb - ways * unit - 6, "text-anchor": "middle", class: "lbl", text: ways }));
+      }
+      svg.appendChild(W.s("text", { x: hx, y: 30, class: "lbl", text: "ways to roll each total" }));
+      var rel = mode === "eq" ? "=" : mode === "le" ? "\\le" : "\\ge";
+      out.tex("P(\\text{total} " + rel + " " + t + ") = \\frac{" + count + "}{36}" + (W.gcd(count, 36) > 1 && count ? " = " + W.frac(count, 36) : "") + " \\approx " + W.fmt(count / 36, 3));
+    }
+    draw();
+  });
+
+  /* 26.5 — odds strip */
+  AOPS.registerWidget("oddsBar", function (body) {
+    var svg = W.stage(body, { w: 640, h: 170, label: "Strip of favourable and unfavourable outcomes" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 2, b = 4;
+    W.slider(ctl, { label: "Favourable", min: 1, max: 12, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Unfavourable", min: 0, max: 20, value: b, onInput: function (v) { b = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var tot = a + b, cw = Math.min(56, 600 / tot), x0 = 20;
+      for (var i = 0; i < tot; i++) {
+        var fav = i < a;
+        svg.appendChild(W.s("rect", { x: x0 + i * cw + 1, y: 46, width: cw - 2, height: 48, rx: 5,
+          fill: fav ? "var(--accent)" : "color-mix(in srgb, var(--plot-2) 35%, transparent)", stroke: fav ? "var(--accent)" : "var(--plot-2)" }));
+      }
+      svg.appendChild(W.s("path", { d: "M" + x0 + " 110v8H" + (x0 + a * cw) + "v-8", fill: "none", stroke: "var(--accent)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: x0, y: 138, class: "lbl", fill: "var(--accent)", text: "favourable " + a }));
+      if (b) {
+        svg.appendChild(W.s("path", { d: "M" + (x0 + a * cw) + " 34v-8H" + (x0 + tot * cw) + "v8", fill: "none", stroke: "var(--plot-2)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: x0 + tot * cw, y: 18, "text-anchor": "end", class: "lbl", fill: "var(--plot-2)", text: "unfavourable " + b }));
+      }
+      svg.appendChild(W.s("text", { x: 620, y: 160, "text-anchor": "end", class: "lbl", text: "whole strip = " + tot + " equally likely outcomes" }));
+      var g = W.gcd(a, b) || 1;
+      out.tex("P = \\frac{" + a + "}{" + tot + "}" + (W.gcd(a, tot) > 1 ? " = " + W.frac(a, tot) : "") + ",\\qquad \\text{odds against} = " + b + ":" + a + (g > 1 ? " = " + (b / g) + ":" + (a / g) : "") + ",\\qquad \\text{odds for} = " + (a / g) + ":" + (b / g));
+    }
+    draw();
+  });
+
+  /* 26.6 — expected value with a running average */
+  AOPS.registerWidget("evGame", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Running average of winnings per round compared with the expected value" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var X = 3, results = [];
+    W.slider(ctl, { label: "Prize on a six (dollars)", min: 0, max: 12, value: X, onInput: function (v) { X = v; results = []; draw(); } });
+    W.button(ctl, "Play 1 round", function () { play(1); });
+    W.button(ctl, "Play 100 rounds", function () { play(100); });
+    W.button(ctl, "Reset", function () { results = []; draw(); });
+    function play(k) { for (var i = 0; i < k; i++) results.push(Math.floor(Math.random() * 6) === 5 ? X : -1); if (results.length > 2000) results = results.slice(-2000); draw(); }
+    function draw() {
+      W.clear(svg);
+      var ev = X / 6 - 5 / 6, N = Math.max(50, results.length);
+      var ymax = Math.max(2, X), P = W.plane(svg, { x: [0, N], y: [-1, ymax], step: N / 5, ystep: ymax > 6 ? 2 : 1, pad: 34 });
+      svg.appendChild(W.s("line", { x1: P.X(0), y1: P.Y(ev), x2: P.X(N), y2: P.Y(ev), stroke: "var(--accent)", "stroke-width": 2, "stroke-dasharray": "8 6" }));
+      var d = "", sum = 0;
+      results.forEach(function (r, i) { sum += r; d += (i ? "L" : "M") + P.X(i + 1).toFixed(1) + " " + P.Y(sum / (i + 1)).toFixed(1); });
+      if (d) svg.appendChild(W.s("path", { d: d, fill: "none", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      svg.appendChild(W.s("text", { x: 40, y: 20, class: "lbl", text: (results.length ? "rounds: " + results.length + ", average so far: " + W.fmt(sum / results.length, 3) : "Press Play to start") }));
+      svg.appendChild(W.s("text", { x: 600, y: 20, "text-anchor": "end", class: "lbl", fill: "var(--accent)", text: "- - - expected value " + W.fmt(ev, 3) }));
+      out.tex("E = " + X + "\\cdot\\tfrac16 + (-1)\\cdot\\tfrac56 = " + W.frac(X - 5, 6) + (Math.abs(ev) < 1e-9 ? "\\;\\text{(a fair game!)}" : ev > 0 ? "\\;\\text{(favours you)}" : "\\;\\text{(favours the house)}"));
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
