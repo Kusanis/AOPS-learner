@@ -1,0 +1,1679 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 18: Three Dimensional Geometry · AoPS Learner</title>
+  <meta name="description" content="Planes, spheres, boxes, prisms, cylinders, pyramids, cones and polyhedra, with rotatable 3D explorers, folding nets and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="18" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 18 · Geometry</span>
+    <h1>Three Dimensional Geometry</h1>
+    <p class="lede">Step off the page and into space. Here you'll meet planes, spheres, boxes, prisms, cylinders, pyramids, cones and polyhedra, learn how to measure how much wrapping they need and how much they hold, and pick up the single most useful habit in solid geometry: turning a 3D problem into a few flat ones.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Three noncollinear points determine a plane. Two lines in space are parallel, intersecting, or <em>skew</em> (never meet, not parallel).</li>
+      <li>Sphere of radius $r$: surface area $4\pi r^2$, volume $\tfrac43\pi r^3$. A plane at distance $d$ from the center cuts a circle of radius $\sqrt{r^2-d^2}$.</li>
+      <li>Box $l \times w \times h$: surface area $2(lw+wh+hl)$, volume $lwh$, diagonal $\sqrt{l^2+w^2+h^2}$. A cube of edge $s$ has diagonal $s\sqrt3$.</li>
+      <li>Prisms and cylinders: volume $=$ (base area)(height). Lateral area of a right prism $=$ (base perimeter)(height); of a cylinder, $2\pi r h$.</li>
+      <li>Pyramids and cones: volume $=\tfrac13$(base area)(height). Lateral area of a regular pyramid $=\tfrac12 p\ell$; of a cone, $\pi r \ell$, where $\ell$ is the slant height.</li>
+      <li>Euler's formula for any polyhedron: $V - E + F = 2$. Count edges by adding up the sides of all faces and halving.</li>
+      <li>To find a length, area or angle in space, find a flat triangle (very often a right triangle) that contains it. To find a surface path, unfold the surface.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 18.1 ===================== -->
+  <section class="lesson" id="s18-1" data-title="Planes, Surface Area, and Volume">
+    <h2><span class="sec-num">18.1</span> Planes, Surface Area, and Volume</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Why does a three-legged stool never wobble, while a four-legged chair often does? Any three points (the feet) always sit on one flat plane: the floor can always meet all three. A fourth foot has to be lucky enough to lie in that same plane.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>plane</strong> is a flat surface that goes on forever in every direction, the two-dimensional cousin of a line. Three points that are not on one line determine exactly one plane. Four or more points may or may not lie in a common plane; if they do, they are <strong>coplanar</strong>.</p>
+      <p>In a plane, two different lines either meet or are parallel. In space there is a third option: two lines that point in different directions but never meet are <strong>skew</strong>. Think of a road on the ground and a power line overhead crossing it at an angle.</p>
+      <p>A line and a plane can relate in three ways: the line lies <em>in</em> the plane, it crosses the plane at exactly <em>one point</em>, or it is <em>parallel</em> to the plane and never meets it. A line is <strong>perpendicular</strong> to a plane when it is perpendicular to every line in the plane through its foot. The <strong>distance from a point to a plane</strong> is the length of the perpendicular segment from the point to the plane.</p>
+      <div class="rule">
+        <p><strong>Total surface area</strong>: the area of the "skin" of a solid. <strong>Lateral surface area</strong>: the skin minus the top and bottom. <strong>Volume</strong>: the amount of space inside, measured in unit cubes.</p>
+      </div>
+      <div class="note"><p>If a problem just says "surface area," it means the total surface area.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="lineVsPlane">
+      <figcaption><strong>Explore:</strong> Drag the picture (or use the Turn and Tilt sliders) to look from different sides. In <em>line &amp; plane</em> mode, tilt the line and raise it: when does it lie in the plane, cross it, or float parallel to it? Switch to <em>two lines</em> and find a pair of skew lines.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Planes through four points</h3>
+        <div class="problem"><p>Four points in space do not all lie in one plane, and no three of them are on a line. How many different planes pass through three of the four points?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each choice of three points gives a triangle, which lies in exactly one plane.</p></div><p class="why">Three noncollinear points determine a plane.</p></li>
+          <li><div class="do"><p>The number of ways to choose 3 of the 4 points is $\binom{4}{3} = 4$.</p></div><p class="why">Equivalently, choose which one point to leave out.</p></li>
+          <li><div class="do"><p>No two of these planes coincide, since a plane containing all four points would make them coplanar.</p></div><p class="why">We must check we aren't counting the same plane twice.</p></li>
+        </ol>
+        <p class="answer">$4$ planes (they are the four faces of a triangular pyramid).</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Parallel, intersecting or skew?</h3>
+        <div class="problem"><p>A box has bottom face $ABCD$ and top face $EFGH$, with $E$ above $A$, $F$ above $B$, $G$ above $C$ and $H$ above $D$. Classify the line $AB$ against each of the lines $HG$, $BF$ and $CG$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$HG$ is directly above $DC$, and $DC \parallel AB$. So $AB \parallel HG$.</p></div><p class="why">Lines parallel to the same line are parallel; also $A, B, G, H$ lie in one slanted plane.</p></li>
+          <li><div class="do"><p>$AB$ and $BF$ share the point $B$, so they intersect.</p></div><p class="why">Two edges from the same corner always meet there.</p></li>
+          <li data-think="Do $AB$ and $CG$ point the same way? Do they ever meet?"><div class="do"><p>$AB$ runs along the bottom; $CG$ goes straight up from $C$, which is not on $AB$. They are not parallel and never meet, so they are skew.</p></div><p class="why">Skew lines are the uniquely three-dimensional case.</p></li>
+        </ol>
+        <p class="answer">$AB \parallel HG$; $AB$ meets $BF$; $AB$ and $CG$ are skew.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Lateral versus total surface area</h3>
+        <div class="problem"><p>A box is $3$ by $4$ at the base and $5$ tall. Find its lateral surface area and its total surface area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The four side walls are two $3 \times 5$ rectangles and two $4 \times 5$ rectangles: $2(15) + 2(20) = 70$.</p></div><p class="why">"Lateral" means everything except the top and the bottom.</p></li>
+          <li><div class="do"><p>Top and bottom are each $3 \times 4 = 12$, adding $24$.</p></div><p class="why">The total surface area includes them.</p></li>
+          <li><div class="do"><p>Total: $70 + 24 = 94$.</p></div><p class="why">Add the pieces of the skin.</p></li>
+        </ol>
+        <p class="answer">Lateral area $70$, total surface area $94$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A staircase of cubes</h3>
+        <div class="problem"><p>Unit cubes are glued into a staircase one cube deep: columns of heights $1, 2, 3, 4$ stand side by side, left to right. Find the volume and the surface area of the solid.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Volume $= 1 + 2 + 3 + 4 = 10$ cubic units.</p></div><p class="why">Volume counts unit cubes.</p></li>
+          <li><div class="do"><p>Front and back: each is the staircase shape of area $10$, so $20$ in total.</p></div><p class="why">Each cube shows one unit square on the front and one on the back.</p></li>
+          <li data-think="Looking straight down, how many unit squares of roof do you see? Looking from the left?"><div class="do"><p>From above you see $4$ unit squares of roof (at various heights), and from below $4$. From the left you see a $1 \times 4$ strip of risers ($1 + 1 + 1 + 1$), and from the right the $4$-tall wall.</p></div><p class="why">For a staircase, every outward square facing a direction is seen exactly once from that direction.</p></li>
+          <li><div class="do"><p>Surface area $= 20 + 4 + 4 + 4 + 4 = 36$.</p></div><p class="why">Add the six directions.</p></li>
+        </ol>
+        <p class="answer">Volume $10$, surface area $36$.</p>
+        <p class="key-idea">For solids without hidden pockets, count the visible squares from each of the six directions.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Guy wires on a flagpole</h3>
+        <div class="problem"><p>A $12$ m flagpole stands perpendicular to flat ground. Wires $13$ m long run from its top to stakes in the ground. How far from the base of the pole is each stake, and where can the stakes go?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The pole is perpendicular to the ground, so it is perpendicular to the line from its base to any stake.</p></div><p class="why">That is what "perpendicular to a plane" means.</p></li>
+          <li><div class="do"><p>Each wire is the hypotenuse of a right triangle with leg $12$: the other leg is $\sqrt{13^2 - 12^2} = \sqrt{25} = 5$.</p></div><p class="why">A flat right triangle lives inside the 3D picture.</p></li>
+          <li><div class="do"><p>Every stake is $5$ m from the base, so the stakes lie on a circle of radius $5$ centered at the base.</p></div><p class="why">All points of a plane at one fixed distance from a point form a circle.</p></li>
+        </ol>
+        <p class="answer">$5$ m from the base, anywhere on the circle of radius $5$ around it.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Skew edges of a cube</h3>
+        <div class="problem"><p>How many unordered pairs of edges of a cube are skew?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Fix one edge. Of the other $11$ edges, $3$ are parallel to it (the cube has $4$ edges in each direction).</p></div><p class="why">Sort the other edges into the three possible relationships.</p></li>
+          <li><div class="do"><p>$4$ edges meet it: $2$ at each of its endpoints.</p></div><p class="why">Each vertex of a cube has $3$ edges, so $2$ others besides ours.</p></li>
+          <li><div class="do"><p>The remaining $11 - 3 - 4 = 4$ edges are skew to it.</p></div><p class="why">Everything that is neither parallel nor intersecting is skew.</p></li>
+          <li data-think="If you multiply $12$ edges by $4$ skew partners, what has gone wrong?"><div class="do"><p>$12 \times 4 = 48$ counts each pair twice, so there are $48 \div 2 = 24$ pairs.</p></div><p class="why">The pair {edge 1, edge 2} is counted once from each edge.</p></li>
+        </ol>
+        <p class="answer">$24$ pairs</p>
+        <p class="key-idea">Count from one object's point of view, then divide out the double counting.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 18.2 ===================== -->
+  <section class="lesson" id="s18-2" data-title="Spheres">
+    <h2><span class="sec-num">18.2</span> Spheres</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Slice an orange anywhere with a straight knife and the cut face is always a perfect circle, but the size depends on where you cut. Cut through the middle and you get the biggest circle possible; shave near the edge and you get a tiny one. A single right triangle predicts exactly how big.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>sphere</strong> is the set of all points in space at a fixed distance (the <strong>radius</strong> $r$) from a fixed point (the <strong>center</strong>). It is the 3D version of a circle.</p>
+      <div class="rule"><p>$$\text{Surface area} = 4\pi r^2 \qquad\qquad \text{Volume} = \frac{4}{3}\pi r^3$$</p></div>
+      <p>A plane that meets a sphere either touches it at one point (it is <em>tangent</em>) or cuts it in a circle. If the plane is $d$ units from the center $O$, drop the perpendicular $OB$ to the plane and pick any point $A$ on the circle. Then $\triangle OBA$ has a right angle at $B$, $OA = r$ and $OB = d$, so the circle's radius is</p>
+      <div class="rule"><p>$$AB = \sqrt{r^2 - d^2}.$$</p></div>
+      <p>The largest cross-sections, through the center ($d = 0$), are <strong>great circles</strong>, with the same radius as the sphere.</p>
+      <div class="note"><p>Area grows like $r^2$ and volume like $r^3$. Doubling the radius makes the surface $4$ times as big and the volume $8$ times as big.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="sphereSlice">
+      <figcaption><strong>Explore:</strong> Move the slicing plane with <em>d</em>. Watch right triangle $OBA$: its hypotenuse is always the sphere's radius $R$, so the slice shrinks as the plane moves away from the center and vanishes at $d = R$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Area and volume from the radius</h3>
+        <div class="problem"><p>Find the surface area and volume of a sphere of radius $3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Surface area $= 4\pi(3^2) = 36\pi$.</p></div><p class="why">Apply $4\pi r^2$.</p></li>
+          <li><div class="do"><p>Volume $= \tfrac43\pi(3^3) = \tfrac43 \cdot 27\pi = 36\pi$.</p></div><p class="why">Apply $\tfrac43\pi r^3$.</p></li>
+          <li><div class="do"><p>The two numbers match because $4\pi r^2 = \tfrac43\pi r^3$ exactly when $r = 3$.</p></div><p class="why">A curiosity, not a rule: the units (square vs. cubic) are different.</p></li>
+        </ol>
+        <p class="answer">Surface area $36\pi$, volume $36\pi$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Diameter from the volume</h3>
+        <div class="problem"><p>A sphere has volume $972\pi$. Find its diameter.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\tfrac43\pi r^3 = 972\pi \Rightarrow r^3 = 972 \cdot \tfrac34 = 729$.</p></div><p class="why">Divide by $\pi$, then multiply by $\tfrac34$.</p></li>
+          <li><div class="do"><p>$r = \sqrt[3]{729} = 9$, so the diameter is $18$.</p></div><p class="why">$9^3 = 729$, and the diameter is twice the radius.</p></li>
+        </ol>
+        <p class="answer">$18$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Volume from the surface area</h3>
+        <div class="problem"><p>A sphere has surface area $196\pi$. Find its volume.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4\pi r^2 = 196\pi \Rightarrow r^2 = 49 \Rightarrow r = 7$.</p></div><p class="why">Go through the radius: it connects both formulas.</p></li>
+          <li><div class="do"><p>$V = \tfrac43\pi(343) = \dfrac{1372\pi}{3}$.</p></div><p class="why">$7^3 = 343$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{1372\pi}{3}$</p>
+        <p class="book-next">Next in the book: Exercise 18-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A slice of a sphere</h3>
+        <div class="problem"><p>A plane cuts a sphere of radius $10$ at a distance $6$ from its center. Find the area of the circular cross-section.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The center $O$, the foot $B$ of the perpendicular, and a point $A$ on the circle form a right triangle with $OA = 10$, $OB = 6$.</p></div><p class="why">This is the triangle in the explorer.</p></li>
+          <li><div class="do"><p>$AB = \sqrt{10^2 - 6^2} = \sqrt{64} = 8$.</p></div><p class="why">Pythagorean Theorem.</p></li>
+          <li><div class="do"><p>Area $= \pi \cdot 8^2 = 64\pi$.</p></div><p class="why">$AB$ is the radius of the cross-section.</p></li>
+        </ol>
+        <p class="answer">$64\pi$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Scaling a balloon</h3>
+        <div class="problem"><p>A spherical balloon is inflated until its surface area is $9$ times what it was. By what factor did its volume grow?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Surface area is proportional to $r^2$, so $r^2$ grew by $9$ and $r$ grew by $3$.</p></div><p class="why">$4\pi(kr)^2 = k^2 \cdot 4\pi r^2$.</p></li>
+          <li><div class="do"><p>Volume is proportional to $r^3$, so it grew by $3^3 = 27$.</p></div><p class="why">$\tfrac43\pi(kr)^3 = k^3 \cdot \tfrac43\pi r^3$.</p></li>
+        </ol>
+        <p class="answer">$27$ times</p>
+        <p class="key-idea">Scale lengths by $k$: areas scale by $k^2$, volumes by $k^3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two parallel slices</h3>
+        <div class="problem"><p>Two parallel planes cut a sphere of radius $13$ in circles of radii $5$ and $12$. How far apart are the planes?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Distance from the center to the radius-$5$ plane: $\sqrt{13^2 - 5^2} = 12$.</p></div><p class="why">Same right triangle, solved for the other leg.</p></li>
+          <li><div class="do"><p>Distance to the radius-$12$ plane: $\sqrt{13^2 - 12^2} = 5$.</p></div><p class="why">Smaller slices are farther from the center.</p></li>
+          <li data-think="Must both planes be on the same side of the center?"><div class="do"><p>Same side: $12 - 5 = 7$. Opposite sides: $12 + 5 = 17$.</p></div><p class="why">The problem doesn't say, so both arrangements are possible.</p></li>
+        </ol>
+        <p class="answer">$7$ or $17$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A ball resting on a ring</h3>
+        <div class="problem"><p>A ball of radius $5$ rests on a thin circular ring of radius $4$ lying flat on a table. How high above the table is the top of the ball?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The ring is a circle on the ball, cut by the plane of the table. So the ball's center is $\sqrt{5^2 - 4^2} = 3$ above the table.</p></div><p class="why">The plane-slice triangle again: hypotenuse $5$, leg $4$.</p></li>
+          <li><div class="do"><p>The top of the ball is one radius above the center: $3 + 5 = 8$.</p></div><p class="why">The topmost point is directly above the center.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+        <p class="book-next">Next in the book: Exercise 18-1.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A box inside a sphere</h3>
+        <div class="problem"><p>All eight corners of a $2 \times 3 \times 6$ box lie on a sphere. Find the sphere's surface area.</p></div>
+        <ol class="steps">
+          <li data-think="Which segment inside the box must be a diameter of the sphere?"><div class="do"><p>By symmetry the sphere's center is the center of the box, so opposite corners are ends of a diameter: the box's diagonal is a diameter.</p></div><p class="why">The center of the box is equally far from all eight corners.</p></li>
+          <li><div class="do"><p>Diagonal $= \sqrt{2^2 + 3^2 + 6^2} = \sqrt{49} = 7$, so $r = \tfrac72$.</p></div><p class="why">Box diagonal formula (Section 18.3).</p></li>
+          <li><div class="do"><p>Surface area $= 4\pi\left(\tfrac72\right)^2 = 49\pi$.</p></div><p class="why">$4 \cdot \tfrac{49}{4} = 49$.</p></li>
+        </ol>
+        <p class="answer">$49\pi$</p>
+        <p class="key-idea">A box inscribed in a sphere has its space diagonal as a diameter.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 18.3 ===================== -->
+  <section class="lesson" id="s18-3" data-title="Cubes and Boxes">
+    <h2><span class="sec-num">18.3</span> Cubes and Boxes</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Will a 1-metre umbrella fit flat on the floor of a suitcase that is $80$ cm by $60$ cm? The floor's diagonal is $100$ cm, so yes, just. And if the suitcase is $30$ cm deep, the umbrella can slant from a bottom corner to the opposite top corner, an even longer stretch. Two right triangles find it.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>box</strong> (a <em>rectangular solid</em> or right parallelepiped) has six rectangular <strong>faces</strong>, meeting along $12$ <strong>edges</strong> at $8$ <strong>vertices</strong>. Three numbers, the length $l$, width $w$ and height $h$, describe it completely. A <strong>cube</strong> is a box with all edges equal to $s$.</p>
+      <div class="rule"><p>$$\text{Box: } S = 2(lw + wh + hl), \quad V = lwh, \quad d = \sqrt{l^2+w^2+h^2}$$ $$\text{Cube: } S = 6s^2, \quad V = s^3, \quad d = s\sqrt3$$</p></div>
+      <p>The diagonal $d$ joins two opposite corners through the inside. To find it, first cross the floor along the face diagonal $\sqrt{l^2 + w^2}$, then rise $h$: the vertical edge is perpendicular to the floor, so these two make a right triangle, and $d^2 = (l^2+w^2) + h^2$.</p>
+      <div class="note"><p>The names $l$, $w$, $h$ are only labels: any edge can be called any of them.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="boxDiagonal">
+      <figcaption><strong>Explore:</strong> Change the three dimensions. The blue face diagonal and the vertical edge form a right triangle whose hypotenuse is the gold space diagonal.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="netUnfold">
+      <figcaption><strong>Explore:</strong> A <em>net</em> is a flat pattern that folds up into a solid. Slide <em>Fold</em> (or press Play) to fold each pattern. Most fold into a closed cube, but one doesn't. Which, and why? Try the tetrahedron and pyramid nets too.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="paintedCube">
+      <figcaption><strong>Explore:</strong> A big cube built from $n^3$ small cubes is painted on the outside. Highlight the small cubes with $3$, $2$, $1$ or $0$ painted faces. Where does each kind live, and how does each count grow with $n$?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The three measurements of a cube</h3>
+        <div class="problem"><p>A cube has edge $5$. Find its surface area, volume and diagonal.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$S = 6 \cdot 5^2 = 150$.</p></div><p class="why">Six square faces of area $25$.</p></li>
+          <li><div class="do"><p>$V = 5^3 = 125$.</p></div><p class="why">Base area $25$ times height $5$.</p></li>
+          <li><div class="do"><p>$d = 5\sqrt3$.</p></div><p class="why">$\sqrt{5^2+5^2+5^2} = \sqrt{75} = 5\sqrt3$.</p></li>
+        </ol>
+        <p class="answer">$S = 150$, $V = 125$, $d = 5\sqrt3$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A whole-number diagonal</h3>
+        <div class="problem"><p>Find the surface area, volume and diagonal of a $3 \times 4 \times 12$ box.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$S = 2(3\cdot4 + 4\cdot12 + 12\cdot3) = 2(12 + 48 + 36) = 192$.</p></div><p class="why">Three pairs of congruent faces.</p></li>
+          <li><div class="do"><p>$V = 3 \cdot 4 \cdot 12 = 144$.</p></div><p class="why">$lwh$.</p></li>
+          <li><div class="do"><p>Face diagonal of the $3 \times 4$ face: $5$. Then $d = \sqrt{5^2 + 12^2} = 13$.</p></div><p class="why">Two right triangles in a row: $3$-$4$-$5$ then $5$-$12$-$13$.</p></li>
+        </ol>
+        <p class="answer">$S = 192$, $V = 144$, $d = 13$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Working back from surface area</h3>
+        <div class="problem"><p>A cube has surface area $294$. Find its volume and diagonal.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$6s^2 = 294 \Rightarrow s^2 = 49 \Rightarrow s = 7$.</p></div><p class="why">Recover the edge first; everything else follows.</p></li>
+          <li><div class="do"><p>$V = 343$ and $d = 7\sqrt3$.</p></div><p class="why">$s^3$ and $s\sqrt3$.</p></li>
+        </ol>
+        <p class="answer">$V = 343$, $d = 7\sqrt3$.</p>
+        <p class="book-next">Next in the book: Exercise 18-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Corner to the middle of an edge</h3>
+        <div class="problem"><p>A cube has edge $2$. Corner $A$ is at the bottom front left. $M$ is the midpoint of the vertical edge at the back right (the edge above the bottom corner opposite $A$). Find $AM$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $C$ be the bottom corner below $M$. $AC$ is a face diagonal of the bottom: $AC = 2\sqrt2$.</p></div><p class="why">Drop to the floor to find a right triangle.</p></li>
+          <li><div class="do"><p>$CM = 1$ (half an edge), and $CM \perp AC$ since the edge is vertical.</p></div><p class="why">A vertical edge is perpendicular to every line in the floor through its foot.</p></li>
+          <li><div class="do"><p>$AM = \sqrt{(2\sqrt2)^2 + 1^2} = \sqrt{9} = 3$.</p></div><p class="why">Pythagorean Theorem in right triangle $ACM$.</p></li>
+        </ol>
+        <p class="answer">$3$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The painted cube</h3>
+        <div class="problem"><p>A $5 \times 5 \times 5$ cube made of unit cubes is painted on the outside. How many unit cubes have $3$, $2$, $1$ and $0$ painted faces?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Three painted faces: the $8$ corners.</p></div><p class="why">Only a corner touches three faces of the big cube.</p></li>
+          <li><div class="do"><p>Two: along each of the $12$ edges, the $5 - 2 = 3$ non-corner cubes: $36$.</p></div><p class="why">Remove the two corners from each edge.</p></li>
+          <li><div class="do"><p>One: on each of the $6$ faces, the inner $3 \times 3$ square: $54$.</p></div><p class="why">Strip the border of each $5 \times 5$ face.</p></li>
+          <li><div class="do"><p>Zero: peel off the outer layer, leaving a $3 \times 3 \times 3$ core: $27$. Check: $8 + 36 + 54 + 27 = 125 = 5^3$. ✓</p></div><p class="why">The check confirms nothing was missed or double-counted.</p></li>
+        </ol>
+        <p class="answer">$8$, $36$, $54$, $27$</p>
+        <p class="key-idea">For an $n$-cube: $8$, $12(n-2)$, $6(n-2)^2$, $(n-2)^3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Volume from three face areas</h3>
+        <div class="problem"><p>Three faces of a box that meet at a corner have areas $12$, $15$ and $20$. Find the volume.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>With edges $x, y, z$: $xy = 12$, $xz = 15$, $yz = 20$.</p></div><p class="why">Each face is a product of two edges.</p></li>
+          <li data-think="You want $xyz$. What happens if you multiply all three equations?"><div class="do"><p>Multiplying: $x^2y^2z^2 = 12 \cdot 15 \cdot 20 = 3600$.</p></div><p class="why">Each edge appears in exactly two faces.</p></li>
+          <li><div class="do"><p>$xyz = \sqrt{3600} = 60$.</p></div><p class="why">Lengths are positive. (The edges are $3, 4, 5$, but we never needed them.)</p></li>
+        </ol>
+        <p class="answer">$60$</p>
+        <p class="key-idea">Go straight for the quantity you want; here the product of the equations gives $(xyz)^2$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The missing dimension</h3>
+        <div class="problem"><p>A box has diagonal $11$ and two of its edges are $2$ and $6$. Find its volume.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2^2 + 6^2 + h^2 = 11^2 \Rightarrow h^2 = 121 - 40 = 81 \Rightarrow h = 9$.</p></div><p class="why">The diagonal formula involves all three edges.</p></li>
+          <li><div class="do"><p>$V = 2 \cdot 6 \cdot 9 = 108$.</p></div><p class="why">Reject $h = -9$: lengths are positive.</p></li>
+        </ol>
+        <p class="answer">$108$</p>
+        <p class="book-next">Next in the book: Exercises 18-5 and 18-6.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Slicing off a corner</h3>
+        <div class="problem"><p>A cube has edge $4$. A plane passes through the three vertices adjacent to corner $P$, slicing off a small pyramid. Find the area of the triangular cut and the distance from $P$ to the plane.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each side of the cut is a face diagonal, $4\sqrt2$, so the triangle is equilateral: area $\tfrac{\sqrt3}{4}(4\sqrt2)^2 = 8\sqrt3$.</p></div><p class="why">Three equal sides make an equilateral triangle.</p></li>
+          <li><div class="do"><p>Viewed with a face as base, the pyramid has base a right triangle with legs $4, 4$ (area $8$) and height $4$: volume $\tfrac13 \cdot 8 \cdot 4 = \tfrac{32}{3}$.</p></div><p class="why">The three edges at $P$ are mutually perpendicular, so one can serve as the height.</p></li>
+          <li data-think="The same pyramid can also sit on its triangular cut. What is its height then?"><div class="do"><p>Now use the cut as the base: $\tfrac13 \cdot 8\sqrt3 \cdot t = \tfrac{32}{3}$, so $t = \dfrac{4}{\sqrt3} = \dfrac{4\sqrt3}{3}$.</p></div><p class="why">Computing one volume two ways reveals the unknown height.</p></li>
+        </ol>
+        <p class="answer">Area $8\sqrt3$; distance $\dfrac{4\sqrt3}{3}$.</p>
+        <p class="key-idea">The distance is exactly one third of the cube's diagonal $4\sqrt3$.</p>
+        <p class="book-next">Next in the book: Exercise 18-4.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 18.4 ===================== -->
+  <section class="lesson" id="s18-4" data-title="Prisms and Cylinders">
+    <h2><span class="sec-num">18.4</span> Prisms and Cylinders</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Push a neat stack of coins so it leans like a tower in Pisa. Its height hasn't changed, and every coin is still there, so its volume hasn't changed either. That simple idea, "same slices, same volume," is why one formula covers every prism and cylinder.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>prism</strong> has two congruent, parallel <strong>bases</strong> (any polygon), joined by <strong>lateral faces</strong> that are parallelograms. In a <strong>right prism</strong> the lateral edges are perpendicular to the bases and the lateral faces are rectangles; a <strong>regular prism</strong> has regular-polygon bases. The <strong>height</strong> is the perpendicular distance between the bases.</p>
+      <p>A <strong>cylinder</strong> is the same idea with circular bases. Unless told otherwise, "cylinder" means a right circular cylinder, like a can.</p>
+      <div class="rule"><p>$$\text{Any prism or cylinder: } V = (\text{base area}) \times (\text{height})$$ $$\text{Right prism: lateral area} = (\text{base perimeter}) \times h$$ $$\text{Cylinder: } V = \pi r^2 h, \qquad S = 2\pi r h + 2\pi r^2$$</p></div>
+      <p>Why is the curved side of a cylinder $2\pi r h$? Slit it straight down and unroll it: it becomes a rectangle, $h$ tall and as wide as the circumference $2\pi r$.</p>
+    </div>
+
+    <figure class="explore" data-widget="prismCylinder">
+      <figcaption><strong>Explore:</strong> Raise the number of sides and the prism turns into a cylinder. Then <em>Lean</em> it: the faces become parallelograms, but the volume stays (base area) × (height).</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="cylinderUnroll">
+      <figcaption><strong>Explore:</strong> Unroll the side of the can. The gold path is the shortest crawl along the surface from $A$ (top) to $B$ (bottom, on the opposite side). On the flat rectangle it is a straight line.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A triangular prism</h3>
+        <div class="problem"><p>A right prism has a base that is a $3$-$4$-$5$ right triangle and height $10$. Find its volume and total surface area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base area $= \tfrac12 \cdot 3 \cdot 4 = 6$, so $V = 6 \cdot 10 = 60$.</p></div><p class="why">The legs of a right triangle are a base and its height.</p></li>
+          <li><div class="do"><p>Lateral area $= (3 + 4 + 5) \cdot 10 = 120$.</p></div><p class="why">Perimeter times height for a right prism.</p></li>
+          <li><div class="do"><p>Total $= 120 + 2 \cdot 6 = 132$.</p></div><p class="why">Add both triangular bases.</p></li>
+        </ol>
+        <p class="answer">$V = 60$, $S = 132$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A soup can</h3>
+        <div class="problem"><p>A cylinder has radius $3$ and height $7$. Find its volume, lateral area and total surface area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$V = \pi \cdot 9 \cdot 7 = 63\pi$.</p></div><p class="why">$\pi r^2 h$.</p></li>
+          <li><div class="do"><p>Lateral area $= 2\pi \cdot 3 \cdot 7 = 42\pi$.</p></div><p class="why">The unrolled rectangle is $2\pi r$ by $h$.</p></li>
+          <li><div class="do"><p>Total $= 42\pi + 2 \cdot 9\pi = 60\pi$.</p></div><p class="why">Two circular ends of area $9\pi$.</p></li>
+        </ol>
+        <p class="answer">$V = 63\pi$, lateral $42\pi$, total $60\pi$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A hexagonal prism</h3>
+        <div class="problem"><p>A regular hexagonal prism has base edge $2$ and height $5$. Find its volume and lateral area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A regular hexagon splits into $6$ equilateral triangles: base area $= 6 \cdot \tfrac{\sqrt3}{4} \cdot 2^2 = 6\sqrt3$.</p></div><p class="why">Join the center to all six vertices.</p></li>
+          <li><div class="do"><p>$V = 6\sqrt3 \cdot 5 = 30\sqrt3$.</p></div><p class="why">Base area times height.</p></li>
+          <li><div class="do"><p>Lateral area $= (6 \cdot 2) \cdot 5 = 60$.</p></div><p class="why">Six $2 \times 5$ rectangles.</p></li>
+        </ol>
+        <p class="answer">$V = 30\sqrt3$, lateral area $60$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Radius from volume</h3>
+        <div class="problem"><p>A cylinder of height $4$ has volume $100\pi$. Find its total surface area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\pi r^2 \cdot 4 = 100\pi \Rightarrow r^2 = 25 \Rightarrow r = 5$.</p></div><p class="why">Find the radius first.</p></li>
+          <li><div class="do"><p>$S = 2\pi(5)(4) + 2\pi(25) = 40\pi + 50\pi = 90\pi$.</p></div><p class="why">Side plus two ends.</p></li>
+        </ol>
+        <p class="answer">$90\pi$</p>
+        <p class="book-next">Next in the book: Exercise 18-7.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A leaning prism</h3>
+        <div class="problem"><p>An oblique prism has base area $12$. Its lateral edges are $10$ long and make a $60^\circ$ angle with the base. Find its volume.</p></div>
+        <ol class="steps">
+          <li data-think="Is the height of the prism equal to the length of a lateral edge?"><div class="do"><p>The height is the perpendicular distance between the bases. A lateral edge, the height and its shadow on the base form a $30$-$60$-$90$ triangle, so $h = 10 \cdot \tfrac{\sqrt3}{2} = 5\sqrt3$.</p></div><p class="why">The leg opposite the $60^\circ$ angle is $\tfrac{\sqrt3}{2}$ of the hypotenuse.</p></li>
+          <li><div class="do"><p>$V = 12 \cdot 5\sqrt3 = 60\sqrt3$.</p></div><p class="why">Base times <em>perpendicular</em> height, even when the prism leans.</p></li>
+        </ol>
+        <p class="answer">$60\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Drop a ball in a glass</h3>
+        <div class="problem"><p>A cylindrical glass of radius $4$ holds water. A ball of radius $3$ is dropped in and sinks completely under the water. How much does the water level rise?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The ball displaces its own volume: $\tfrac43\pi \cdot 27 = 36\pi$.</p></div><p class="why">The water has to go somewhere: up.</p></li>
+          <li><div class="do"><p>A rise of $x$ adds a cylinder of volume $16\pi x$, so $16\pi x = 36\pi$ and $x = \tfrac94$.</p></div><p class="why">The extra water forms a thin cylinder with the glass's radius.</p></li>
+        </ol>
+        <p class="answer">$\tfrac94 = 2.25$ units</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A ribbon around a can</h3>
+        <div class="problem"><p>A can has radius $3$ and height $8\pi$. A ribbon is glued on, starting at a point on the bottom rim and winding around exactly once to the point on the top rim directly above the start. What is the shortest possible length of ribbon?</p></div>
+        <ol class="steps">
+          <li data-think="What does the ribbon look like if you slit the can along the line from start to finish and unroll it?"><div class="do"><p>Slit the can along the vertical line through the start and unroll: a rectangle $2\pi \cdot 3 = 6\pi$ wide and $8\pi$ tall.</p></div><p class="why">Unrolling turns a curved surface path into a flat one, without stretching.</p></li>
+          <li><div class="do"><p>Winding once from bottom to top becomes the rectangle's diagonal.</p></div><p class="why">The start is one bottom corner, the finish the opposite top corner.</p></li>
+          <li><div class="do"><p>Length $= \sqrt{(6\pi)^2 + (8\pi)^2} = \pi\sqrt{36 + 64} = 10\pi$.</p></div><p class="why">A $3$-$4$-$5$ triangle scaled by $2\pi$.</p></li>
+        </ol>
+        <p class="answer">$10\pi$</p>
+        <p class="key-idea">Shortest paths on a surface become straight lines on its unrolled net.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Longest diagonal of a hexagonal prism</h3>
+        <div class="problem"><p>A regular hexagonal prism has base edge $2$ and height $3$. Find the longest segment joining two of its vertices.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The longest diagonal of a regular hexagon of side $2$ passes through the center: it is $2 + 2 = 4$.</p></div><p class="why">It is made of two radii, and a regular hexagon's radius equals its side.</p></li>
+          <li><div class="do"><p>Go from a bottom vertex to the top vertex above the opposite bottom vertex. With the vertical edge, this makes a right triangle with legs $4$ and $3$.</p></div><p class="why">Lateral edges are perpendicular to the base.</p></li>
+          <li><div class="do"><p>Length $= \sqrt{4^2 + 3^2} = 5$.</p></div><p class="why">Pythagorean Theorem.</p></li>
+        </ol>
+        <p class="answer">$5$</p>
+        <p class="book-next">Next in the book: Exercise 18-8.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 18.5 ===================== -->
+  <section class="lesson" id="s18-5" data-title="Pyramids and Cones">
+    <h2><span class="sec-num">18.5</span> Pyramids and Cones</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Fill a cone-shaped cup with water and pour it into a cylinder with the same base and the same height. You need three cupfuls to fill the cylinder. Not roughly three: exactly three, for every cone and every pyramid.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>pyramid</strong> has one polygonal <strong>base</strong>; all its other faces are triangles meeting at the <strong>apex</strong> (vertex). Its <strong>height</strong> $h$ is the perpendicular distance from the apex to the base. In a <strong>regular pyramid</strong> the base is a regular polygon and the apex sits directly above its center, so the lateral faces are congruent isosceles triangles. Their common height is the <strong>slant height</strong> $\ell$.</p>
+      <p>A <strong>cone</strong> is a pyramid with a circular base. In a right circular cone, $h$, the radius $r$ and the slant height $\ell$ form a right triangle: $h^2 + r^2 = \ell^2$.</p>
+      <div class="rule"><p>$$V = \tfrac13(\text{base area})(h)$$ $$\text{Regular pyramid: lateral area} = \tfrac12 p\,\ell \qquad \text{Cone: lateral area} = \pi r \ell$$</p></div>
+      <p>Cut a cone along a slant line and unroll it: you get a <em>sector</em> of a circle of radius $\ell$ whose arc is the base circumference $2\pi r$. The sector is the fraction $\tfrac{2\pi r}{2\pi\ell} = \tfrac{r}{\ell}$ of the full circle, so its angle is $360^\circ \cdot \tfrac{r}{\ell}$ and its area is $\tfrac{r}{\ell} \cdot \pi\ell^2 = \pi r\ell$.</p>
+    </div>
+
+    <figure class="explore" data-widget="pyramidCone">
+      <figcaption><strong>Explore:</strong> Change the base and the height. Find the right triangle formed by the height, the apothem and the slant height. Turn on the prism to compare volumes: the pyramid always fills exactly one third.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="coneUnroll">
+      <figcaption><strong>Explore:</strong> Unroll the cone's side into a flat sector. How does the sector angle change as the cone gets taller and thinner? (Tilt the view to look down on the flat sector.)</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A square pyramid</h3>
+        <div class="problem"><p>A regular square pyramid has base edge $6$ and height $4$. Find its volume, slant height and total surface area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$V = \tfrac13 \cdot 36 \cdot 4 = 48$.</p></div><p class="why">One third of base area times height.</p></li>
+          <li><div class="do"><p>From the center of the base to the midpoint of an edge is $3$. So $\ell = \sqrt{4^2 + 3^2} = 5$.</p></div><p class="why">Height, apothem and slant height form a right triangle.</p></li>
+          <li><div class="do"><p>Lateral area $= \tfrac12 \cdot 24 \cdot 5 = 60$; total $= 60 + 36 = 96$.</p></div><p class="why">$\tfrac12 p\ell$ is four triangles of area $\tfrac12 \cdot 6 \cdot 5$.</p></li>
+        </ol>
+        <p class="answer">$V = 48$, $\ell = 5$, $S = 96$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A 3-4-5 cone</h3>
+        <div class="problem"><p>A cone has radius $3$ and height $4$. Find its volume and total surface area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$V = \tfrac13\pi \cdot 9 \cdot 4 = 12\pi$.</p></div><p class="why">$\tfrac13\pi r^2 h$.</p></li>
+          <li><div class="do"><p>$\ell = \sqrt{3^2 + 4^2} = 5$; lateral area $= \pi \cdot 3 \cdot 5 = 15\pi$.</p></div><p class="why">The lateral area needs the slant height, not the height.</p></li>
+          <li><div class="do"><p>Total $= 15\pi + 9\pi = 24\pi$.</p></div><p class="why">Add the circular base.</p></li>
+        </ol>
+        <p class="answer">$V = 12\pi$, $S = 24\pi$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>From volume to lateral area</h3>
+        <div class="problem"><p>A cone of height $8$ has volume $96\pi$. Find its lateral area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\tfrac13\pi r^2 \cdot 8 = 96\pi \Rightarrow r^2 = 36 \Rightarrow r = 6$.</p></div><p class="why">Solve for the radius.</p></li>
+          <li><div class="do"><p>$\ell = \sqrt{36 + 64} = 10$; lateral area $= \pi \cdot 6 \cdot 10 = 60\pi$.</p></div><p class="why">A $6$-$8$-$10$ triangle.</p></li>
+        </ol>
+        <p class="answer">$60\pi$</p>
+        <p class="book-next">Next in the book: Exercise 18-9.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The unrolled sector</h3>
+        <div class="problem"><p>A cone has radius $4$ and slant height $12$. Its side is cut along a slant line and laid flat. Find the angle and area of the resulting sector.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The sector has radius $12$ and arc length $2\pi \cdot 4 = 8\pi$.</p></div><p class="why">The arc was the base circle.</p></li>
+          <li><div class="do"><p>The full circle of radius $12$ has circumference $24\pi$, so the sector is $\tfrac{8\pi}{24\pi} = \tfrac13$ of it: angle $120^\circ$.</p></div><p class="why">Angle is proportional to arc length.</p></li>
+          <li><div class="do"><p>Area $= \tfrac13 \cdot \pi \cdot 144 = 48\pi$, matching $\pi r\ell = \pi \cdot 4 \cdot 12$.</p></div><p class="why">Two routes to the same answer: a good check.</p></li>
+        </ol>
+        <p class="answer">$120^\circ$, area $48\pi$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Rolling a sector into a cone</h3>
+        <div class="problem"><p>A $240^\circ$ sector of a circle of radius $9$ is rolled up into a cone. Find the cone's volume.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Arc length $= \tfrac{240}{360} \cdot 2\pi \cdot 9 = 12\pi$. This becomes the base circumference: $2\pi r = 12\pi$, so $r = 6$.</p></div><p class="why">Rolling turns the arc into the base circle.</p></li>
+          <li><div class="do"><p>The sector's radius becomes the slant height: $\ell = 9$, so $h = \sqrt{81 - 36} = \sqrt{45} = 3\sqrt5$.</p></div><p class="why">Every point of the arc is $9$ from the apex.</p></li>
+          <li><div class="do"><p>$V = \tfrac13\pi \cdot 36 \cdot 3\sqrt5 = 36\sqrt5\,\pi$.</p></div><p class="why">$\tfrac13 \cdot 36 \cdot 3 = 36$.</p></li>
+        </ol>
+        <p class="answer">$36\sqrt5\,\pi$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A pyramid known by its edges</h3>
+        <div class="problem"><p>A regular square pyramid has base edge $10$ and lateral edges $13$. Find its lateral area and volume.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each lateral face is isosceles with sides $13, 13, 10$. Its height (the slant height) is $\sqrt{13^2 - 5^2} = 12$.</p></div><p class="why">The altitude of an isosceles triangle bisects the base.</p></li>
+          <li><div class="do"><p>Lateral area $= 4 \cdot \tfrac12 \cdot 10 \cdot 12 = 240$.</p></div><p class="why">Four congruent triangles.</p></li>
+          <li data-think="Which right triangle connects the slant height to the height of the pyramid?"><div class="do"><p>Height: $h = \sqrt{\ell^2 - 5^2} = \sqrt{144 - 25} = \sqrt{119}$.</p></div><p class="why">Apex, base center and edge midpoint form a right triangle with legs $h$ and $5$.</p></li>
+          <li><div class="do"><p>$V = \tfrac13 \cdot 100 \cdot \sqrt{119} = \dfrac{100\sqrt{119}}{3}$.</p></div><p class="why">Base area $100$.</p></li>
+        </ol>
+        <p class="answer">Lateral area $240$, volume $\dfrac{100\sqrt{119}}{3}$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Slicing a cone</h3>
+        <div class="problem"><p>A cone has radius $8$ and height $12$. A plane parallel to the base, $6$ above it, cuts off a small cone at the top. Find the volume of the remaining piece (a <em>frustum</em>).</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The small cone has height $6$, half the original, so it is a half-size copy: radius $4$.</p></div><p class="why">The cross-section of a cone through its axis shows similar triangles.</p></li>
+          <li><div class="do"><p>Big cone: $\tfrac13\pi \cdot 64 \cdot 12 = 256\pi$. Small cone: $\tfrac13\pi \cdot 16 \cdot 6 = 32\pi$.</p></div><p class="why">Volume scales by $\left(\tfrac12\right)^3 = \tfrac18$: indeed $256\pi \div 8 = 32\pi$.</p></li>
+          <li><div class="do"><p>Frustum: $256\pi - 32\pi = 224\pi$.</p></div><p class="why">Subtract the part removed.</p></li>
+        </ol>
+        <p class="answer">$224\pi$</p>
+        <p class="book-next">Next in the book: Exercise 18-10.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Half a cup of water</h3>
+        <div class="problem"><p>A cone-shaped paper cup (point down) is $12$ cm tall. How deep is the water when the cup holds exactly half its capacity?</p></div>
+        <ol class="steps">
+          <li data-think="Half the depth would give what fraction of the volume?"><div class="do"><p>The water forms a smaller cone similar to the cup. If its depth is $k$ times the cup's height, its volume is $k^3$ times the cup's.</p></div><p class="why">All lengths of the water cone scale by $k$. (Half the depth holds only $\tfrac18$ of the cup.)</p></li>
+          <li><div class="do"><p>$k^3 = \tfrac12 \Rightarrow k = \dfrac{1}{\sqrt[3]{2}}$.</p></div><p class="why">Set the volume ratio to one half.</p></li>
+          <li><div class="do"><p>Depth $= \dfrac{12}{\sqrt[3]2} = 6\sqrt[3]{4} \approx 9.52$ cm.</p></div><p class="why">Multiply top and bottom by $\sqrt[3]{4}$: $\sqrt[3]2 \cdot \sqrt[3]4 = 2$.</p></li>
+        </ol>
+        <p class="answer">$6\sqrt[3]{4} \approx 9.52$ cm</p>
+        <p class="key-idea">Similar solids: volume ratio $=$ (length ratio)$^3$. A half-full cone is filled to about $79\%$ of its height.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 18.6 ===================== -->
+  <section class="lesson" id="s18-6" data-title="Polyhedra">
+    <h2><span class="sec-num">18.6</span> Polyhedra</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Take any solid with flat faces, a die, a pyramid, a cut gemstone, a soccer ball, and count its vertices, subtract its edges and add its faces. You'll get $2$ every single time. Shave off a corner and the counts change, but the answer stays $2$.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>polyhedron</strong> is a solid bounded by flat polygonal faces. Boxes, prisms and pyramids are polyhedra; cylinders, cones and spheres are not. A <strong>regular polyhedron</strong> has congruent regular polygons as faces with the same number meeting at each vertex. There are only five:</p>
+      <table style="border-collapse:collapse;margin:10px 0;font-size:0.95em">
+        <thead><tr><th style="text-align:left;padding:4px 12px 4px 0;border-bottom:1px solid var(--border-strong)">Name</th><th style="text-align:left;padding:4px 12px 4px 0;border-bottom:1px solid var(--border-strong)">Faces</th><th style="text-align:left;padding:4px 12px 4px 0;border-bottom:1px solid var(--border-strong)">$F$</th><th style="text-align:left;padding:4px 12px 4px 0;border-bottom:1px solid var(--border-strong)">$V$</th><th style="text-align:left;padding:4px 12px 4px 0;border-bottom:1px solid var(--border-strong)">$E$</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:3px 12px 3px 0">Tetrahedron</td><td style="padding:3px 12px 3px 0">triangles</td><td style="padding:3px 12px 3px 0">4</td><td style="padding:3px 12px 3px 0">4</td><td style="padding:3px 12px 3px 0">6</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">Cube (hexahedron)</td><td style="padding:3px 12px 3px 0">squares</td><td style="padding:3px 12px 3px 0">6</td><td style="padding:3px 12px 3px 0">8</td><td style="padding:3px 12px 3px 0">12</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">Octahedron</td><td style="padding:3px 12px 3px 0">triangles</td><td style="padding:3px 12px 3px 0">8</td><td style="padding:3px 12px 3px 0">6</td><td style="padding:3px 12px 3px 0">12</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">Dodecahedron</td><td style="padding:3px 12px 3px 0">pentagons</td><td style="padding:3px 12px 3px 0">12</td><td style="padding:3px 12px 3px 0">20</td><td style="padding:3px 12px 3px 0">30</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">Icosahedron</td><td style="padding:3px 12px 3px 0">triangles</td><td style="padding:3px 12px 3px 0">20</td><td style="padding:3px 12px 3px 0">12</td><td style="padding:3px 12px 3px 0">30</td></tr>
+        </tbody>
+      </table>
+      <div class="rule"><p><strong>Euler's formula</strong> (for every convex polyhedron): $$V - E + F = 2$$</p></div>
+      <p>Two counting tricks go with it. Each edge borders exactly two faces, so $E$ is half the total number of sides of all the faces. Each edge has two endpoints, so $E$ is also half the sum, over all vertices, of the number of edges meeting there.</p>
+      <p>Volumes of polyhedra come from splitting them into pyramids and prisms. A regular octahedron, for example, is two square pyramids glued base to base.</p>
+    </div>
+
+    <figure class="explore" data-widget="eulerSolids">
+      <figcaption><strong>Explore:</strong> Pick a solid and read off $V$, $E$ and $F$. Then <em>cut the corners</em>: every vertex is sliced off, creating new faces, edges and vertices. Does $V - E + F$ ever change?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Checking Euler on a prism</h3>
+        <div class="problem"><p>Count the vertices, edges and faces of a pentagonal prism and verify Euler's formula.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$V = 5 + 5 = 10$ (two pentagons).</p></div><p class="why">All vertices lie on the two bases.</p></li>
+          <li><div class="do"><p>$E = 5 + 5 + 5 = 15$ (top, bottom, lateral).</p></div><p class="why">Each base has $5$ edges, plus $5$ joining them.</p></li>
+          <li><div class="do"><p>$F = 2 + 5 = 7$, and $10 - 15 + 7 = 2$. ✓</p></div><p class="why">Two bases plus five rectangles.</p></li>
+        </ol>
+        <p class="answer">$V = 10$, $E = 15$, $F = 7$; $V - E + F = 2$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A prism from its edge count</h3>
+        <div class="problem"><p>A prism has $18$ edges. How many faces and vertices does it have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>An $n$-gon prism has $3n$ edges, so $3n = 18$ and $n = 6$.</p></div><p class="why">Generalize the previous example: $n + n + n$.</p></li>
+          <li><div class="do"><p>$F = n + 2 = 8$ and $V = 2n = 12$. Check: $12 - 18 + 8 = 2$. ✓</p></div><p class="why">Euler's formula is a free check.</p></li>
+        </ol>
+        <p class="answer">$8$ faces, $12$ vertices.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Counting edges from faces</h3>
+        <div class="problem"><p>A polyhedron has $6$ square faces and $8$ triangular faces. How many edges and vertices does it have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total sides of all faces: $6 \cdot 4 + 8 \cdot 3 = 48$. Each edge is shared by two faces: $E = 24$.</p></div><p class="why">Every edge gets counted once from each side.</p></li>
+          <li><div class="do"><p>$V = 2 - F + E = 2 - 14 + 24 = 12$.</p></div><p class="why">Euler's formula gives the last count.</p></li>
+        </ol>
+        <p class="answer">$24$ edges, $12$ vertices (a cuboctahedron: cut a cube's corners halfway in the explorer).</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Volume of a regular tetrahedron</h3>
+        <div class="problem"><p>Find the volume of a regular tetrahedron with edge $6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Base: equilateral triangle, area $\tfrac{\sqrt3}{4} \cdot 36 = 9\sqrt3$.</p></div><p class="why">It is a pyramid on a triangular base.</p></li>
+          <li><div class="do"><p>The apex is above the base's center, which is $\tfrac23$ of the way along a median of length $3\sqrt3$: distance $2\sqrt3$ from each base vertex.</p></div><p class="why">All lateral edges are equal, so the foot of the height is equidistant from the base vertices.</p></li>
+          <li><div class="do"><p>Height: $h = \sqrt{6^2 - (2\sqrt3)^2} = \sqrt{24} = 2\sqrt6$.</p></div><p class="why">Right triangle: lateral edge, height, and center-to-vertex segment.</p></li>
+          <li><div class="do"><p>$V = \tfrac13 \cdot 9\sqrt3 \cdot 2\sqrt6 = 6\sqrt{18} = 18\sqrt2$.</p></div><p class="why">$\sqrt3 \cdot \sqrt6 = \sqrt{18} = 3\sqrt2$.</p></li>
+        </ol>
+        <p class="answer">$18\sqrt2$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Volume of a regular octahedron</h3>
+        <div class="problem"><p>Find the volume of a regular octahedron with edge $4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Split it into two square pyramids with base a $4 \times 4$ square (area $16$).</p></div><p class="why">The four "equator" vertices form a square.</p></li>
+          <li data-think="Is there a square that contains the height of each pyramid?"><div class="do"><p>The two apexes and two opposite equator vertices also form a square of side $4$. The pyramid's height is half its diagonal: $2\sqrt2$.</p></div><p class="why">By symmetry, any four vertices in a "belt" of the octahedron form a square.</p></li>
+          <li><div class="do"><p>$V = 2 \cdot \tfrac13 \cdot 16 \cdot 2\sqrt2 = \dfrac{64\sqrt2}{3}$.</p></div><p class="why">Two congruent pyramids.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{64\sqrt2}{3}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The truncated cube</h3>
+        <div class="problem"><p>Slicing every corner off a cube leaves a solid with $8$ triangles and $6$ octagons. How many vertices and edges does it have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$E = \tfrac12(8 \cdot 3 + 6 \cdot 8) = \tfrac12(72) = 36$.</p></div><p class="why">Half the total number of polygon sides.</p></li>
+          <li><div class="do"><p>$V = 2 - F + E = 2 - 14 + 36 = 24$.</p></div><p class="why">Euler's formula.</p></li>
+          <li><div class="do"><p>Check: each of the $8$ cube corners became a triangle with $3$ new vertices: $24$. ✓</p></div><p class="why">An independent count confirms the answer.</p></li>
+        </ol>
+        <p class="answer">$24$ vertices, $36$ edges.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A tetrahedron inside a cube</h3>
+        <div class="problem"><p>Choose four corners of a cube of edge $2$, no two of them joined by an edge. They form a regular tetrahedron. Find its volume.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each edge of the tetrahedron is a face diagonal, $2\sqrt2$, so it is regular.</p></div><p class="why">The four chosen corners are pairwise diagonally across a face.</p></li>
+          <li data-think="What is left of the cube when you remove the tetrahedron?"><div class="do"><p>The cube minus the tetrahedron is four corner pyramids, each with three perpendicular edges of length $2$: volume $\tfrac13 \cdot \tfrac12 \cdot 2 \cdot 2 \cdot 2 = \tfrac43$.</p></div><p class="why">Subtracting from a larger, easy solid is often simpler than direct computation.</p></li>
+          <li><div class="do"><p>$V = 8 - 4 \cdot \tfrac43 = \tfrac83$.</p></div><p class="why">Exactly one third of the cube.</p></li>
+        </ol>
+        <p class="answer">$\tfrac83$</p>
+        <p class="key-idea">Check with the tetrahedron formula: $V = \tfrac{\sqrt2}{12}a^3 = \tfrac{\sqrt2}{12}(2\sqrt2)^3 = \tfrac83$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Five triangles at every vertex</h3>
+        <div class="problem"><p>A polyhedron has only triangular faces, and exactly $5$ faces meet at every vertex. Find $F$, $E$ and $V$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Counting sides of faces: $3F = 2E$, so $E = \tfrac32 F$.</p></div><p class="why">Each triangle has $3$ sides; each edge is shared by $2$ faces.</p></li>
+          <li><div class="do"><p>Counting at vertices: $5V = 2E$ (each vertex has $5$ edges, each edge $2$ ends), so $V = \tfrac25 E = \tfrac35 F$.</p></div><p class="why">Five faces at a vertex means five edges there.</p></li>
+          <li data-think="Now everything is in terms of $F$. Which equation pins it down?"><div class="do"><p>Euler: $\tfrac35 F - \tfrac32 F + F = 2 \Rightarrow \tfrac{6 - 15 + 10}{10}F = 2 \Rightarrow \tfrac{F}{10} = 2$, so $F = 20$.</p></div><p class="why">Substitute both expressions into $V - E + F = 2$.</p></li>
+          <li><div class="do"><p>$E = 30$, $V = 12$.</p></div><p class="why">Back-substitute.</p></li>
+        </ol>
+        <p class="answer">$F = 20$, $E = 30$, $V = 12$: the icosahedron.</p>
+        <p class="key-idea">Two double-counts plus Euler's formula can determine a polyhedron's counts completely.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 18.7 ===================== -->
+  <section class="lesson" id="s18-7" data-title="How to Solve 3D Problems">
+    <h2><span class="sec-num">18.7</span> How to Solve 3D Problems</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Slice a cube with a flat knife. You might expect a square, and you can get one, but you can also get a triangle, a rectangle, a pentagon, or even a perfect regular hexagon. Every 3D question hides flat pictures like these; the art is choosing the right slice.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Almost every 3D problem is a 2D problem in disguise. A few strategies cover most of them:</p>
+      <ul>
+        <li><strong>Find the plane.</strong> To compute a length, angle or area, find a flat figure (often a right triangle) containing it. Perpendicular edges of boxes and heights of pyramids make right angles everywhere.</li>
+        <li><strong>Slice.</strong> A well-chosen cross-section through the important points turns the problem into plane geometry.</li>
+        <li><strong>Dissect or subtract.</strong> Break a complicated solid into prisms and pyramids, or take a simple big solid and subtract what's missing.</li>
+        <li><strong>Unfold.</strong> For shortest paths <em>along a surface</em>, flatten the surface into a net; the path becomes a straight segment.</li>
+        <li><strong>Count volume two ways.</strong> The same pyramid can stand on different faces; equating the volumes finds unknown heights and distances.</li>
+      </ul>
+    </div>
+
+    <figure class="explore" data-widget="cubeSection">
+      <figcaption><strong>Explore:</strong> Slide the cutting plane through the cube and watch the cross-section. With <em>corner-on</em> slices, find the triangle and the regular hexagon. Which directions can make a pentagon?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Two right triangles make a diagonal</h3>
+        <div class="problem"><p>A $2 \times 3 \times 6$ box: find the length of its diagonal by naming the flat triangles you use.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In the $2 \times 3$ floor, the diagonal is $\sqrt{4 + 9} = \sqrt{13}$.</p></div><p class="why">First triangle: two floor edges and the floor diagonal.</p></li>
+          <li><div class="do"><p>The vertical edge $6$ is perpendicular to the floor, so the diagonal is $\sqrt{13 + 36} = 7$.</p></div><p class="why">Second triangle: floor diagonal, vertical edge, space diagonal.</p></li>
+        </ol>
+        <p class="answer">$7$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Midpoints of skew edges</h3>
+        <div class="problem"><p>Put a cube of edge $4$ in coordinates with corners at $(0,0,0)$ and $(4,4,4)$. $M$ is the midpoint of the edge from $(0,0,0)$ to $(4,0,0)$, and $N$ is the midpoint of the skew edge from $(0,0,4)$ to $(0,4,4)$. Find $MN$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$M = (2, 0, 0)$ and $N = (0, 2, 4)$.</p></div><p class="why">Average the endpoints.</p></li>
+          <li><div class="do"><p>Let $P = (0, 2, 0)$, directly below $N$. Then $MP = \sqrt{2^2 + 2^2} = 2\sqrt2$ and $PN = 4$, with $PN \perp MP$.</p></div><p class="why">Drop to the floor: the 3D distance formula is just two Pythagorean steps.</p></li>
+          <li><div class="do"><p>$MN = \sqrt{8 + 16} = \sqrt{24} = 2\sqrt6$.</p></div><p class="why">In general, distance $= \sqrt{\Delta x^2 + \Delta y^2 + \Delta z^2}$.</p></li>
+        </ol>
+        <p class="answer">$2\sqrt6$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A diagonal slice of a cube</h3>
+        <div class="problem"><p>A plane cuts a cube of edge $3$ through two opposite parallel edges (for example, the front-bottom edge and the back-top edge). Describe the cross-section and find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The plane contains both edges (length $3$) and crosses the left and right faces along their diagonals (length $3\sqrt2$).</p></div><p class="why">Connect the ends of the two edges.</p></li>
+          <li><div class="do"><p>The edges are perpendicular to the left and right faces, so the cross-section is a rectangle $3$ by $3\sqrt2$.</p></div><p class="why">An edge is perpendicular to every line in a face it meets at right angles.</p></li>
+          <li><div class="do"><p>Area $= 9\sqrt2$.</p></div><p class="why">Length times width.</p></li>
+        </ol>
+        <p class="answer">A $3 \times 3\sqrt2$ rectangle, area $9\sqrt2$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A tunnel through a cube</h3>
+        <div class="problem"><p>A $2 \times 2$ square hole is drilled straight through the center of a $6 \times 6 \times 6$ cube, from the front face to the back face. Find the volume and the total surface area (inside and out) of what remains.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Volume $= 216 - (2 \cdot 2 \cdot 6) = 216 - 24 = 192$.</p></div><p class="why">Subtract the removed prism from the whole cube.</p></li>
+          <li><div class="do"><p>Outside: $6 \cdot 36 = 216$, minus the two $2 \times 2$ openings: $216 - 8 = 208$.</p></div><p class="why">The front and back faces lose a square each.</p></li>
+          <li><div class="do"><p>Inside: four tunnel walls, each $2 \times 6$: $48$. Total $= 208 + 48 = 256$.</p></div><p class="why">Drilling removes some surface and creates more.</p></li>
+        </ol>
+        <p class="answer">Volume $192$, surface area $256$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Corner to the main diagonal</h3>
+        <div class="problem"><p>A cube has edge $3$. $AG$ is a main diagonal and $B$ is a corner adjacent to $A$. Find the distance from $B$ to the line $AG$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In $\triangle ABG$: $AB = 3$ (edge), $BG = 3\sqrt2$ (face diagonal), $AG = 3\sqrt3$ (main diagonal).</p></div><p class="why">Find a plane containing both the point and the line.</p></li>
+          <li><div class="do"><p>$AB \perp BG$ because edge $AB$ is perpendicular to the face containing $BG$. So the area is $\tfrac12 \cdot 3 \cdot 3\sqrt2$.</p></div><p class="why">Check: $9 + 18 = 27 = (3\sqrt3)^2$.</p></li>
+          <li data-think="The distance you want is a height of this triangle. To which side?"><div class="do"><p>Using $AG$ as the base: $\tfrac12 \cdot 3\sqrt3 \cdot t = \tfrac12 \cdot 3 \cdot 3\sqrt2$, so $t = \dfrac{3\sqrt2}{\sqrt3} = \sqrt6$.</p></div><p class="why">Area two ways, the 2D cousin of volume two ways.</p></li>
+        </ol>
+        <p class="answer">$\sqrt6$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A spider on a box</h3>
+        <div class="problem"><p>A box is $1 \times 1 \times 2$ ($2$ tall). A spider crawls on the surface from a bottom corner to the opposite top corner. What is the shortest path?</p></div>
+        <ol class="steps">
+          <li data-think="Which faces could the spider cross? Can you flatten two of them into one rectangle?"><div class="do"><p>The spider must cross two faces. Unfold those two faces flat; the shortest path is the straight segment in the unfolded rectangle.</p></div><p class="why">Unfolding preserves distances along the surface.</p></li>
+          <li><div class="do"><p>Unfold two side faces ($1 \times 2$ each) side by side: a $2 \times 2$ rectangle. Path $= \sqrt{2^2 + 2^2} = 2\sqrt2 \approx 2.83$.</p></div><p class="why">The corners become opposite corners of the rectangle.</p></li>
+          <li><div class="do"><p>Unfold the bottom with a side instead: a $1 \times 3$ rectangle. Path $= \sqrt{1^2 + 3^2} = \sqrt{10} \approx 3.16$.</p></div><p class="why">Different unfoldings give different paths; compare all of them.</p></li>
+        </ol>
+        <p class="answer">$2\sqrt2$</p>
+        <p class="key-idea">For an $a \times b \times c$ box with $c$ largest, the shortest corner-to-corner surface path is $\sqrt{(a+b)^2 + c^2}$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The ball inside an octahedron</h3>
+        <div class="problem"><p>Find the radius of the largest sphere that fits inside a regular octahedron of edge $6$.</p></div>
+        <ol class="steps">
+          <li data-think="Join the sphere's center to every vertex. What shapes does that cut the octahedron into?"><div class="do"><p>The sphere touches all $8$ faces, and its center $O$ is the octahedron's center. Joining $O$ to the vertices cuts the octahedron into $8$ pyramids, each with a face as base and height $r$.</p></div><p class="why">The radius to a point of tangency is perpendicular to the face.</p></li>
+          <li><div class="do"><p>So $V = \tfrac13 r \cdot (\text{total surface area})$.</p></div><p class="why">Add up the eight pyramid volumes.</p></li>
+          <li><div class="do"><p>$V = \tfrac{\sqrt2}{3} \cdot 6^3 = 72\sqrt2$ and surface area $= 8 \cdot \tfrac{\sqrt3}{4} \cdot 36 = 72\sqrt3$.</p></div><p class="why">Octahedron volume from Section 18.6, scaled to edge $6$.</p></li>
+          <li><div class="do"><p>$72\sqrt2 = \tfrac13 r \cdot 72\sqrt3 \Rightarrow r = \dfrac{3\sqrt2}{\sqrt3} = \sqrt6$.</p></div><p class="why">Solve for $r$.</p></li>
+        </ol>
+        <p class="answer">$\sqrt6$</p>
+        <p class="key-idea">For a solid with an inscribed sphere, $V = \tfrac13 r S$.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve (Problems 303–328).</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-18">
+    <h2 id="further-18">Further reading in the book</h2>
+    <ul>
+      <li><strong>§18.1 Planes, Surface Area, and Volume</strong>: definitions of skew lines, planes, perpendicularity, surface area and volume.</li>
+      <li><strong>§18.2 Spheres</strong>: Examples 18-1 and 18-2; Exercises 18-1 and 18-2.</li>
+      <li><strong>§18.3 Cubes and Boxes</strong>: Examples 18-3 to 18-7; Exercises 18-3 to 18-6.</li>
+      <li><strong>§18.4 Prisms and Cylinders</strong>: Examples 18-8 and 18-9; Exercises 18-7 and 18-8.</li>
+      <li><strong>§18.5 Pyramids and Cones</strong>: Examples 18-10 and 18-11; Exercises 18-9 and 18-10.</li>
+      <li><strong>§18.6 Polyhedra</strong>: the table of regular polyhedra, Euler's formula, and Examples 18-12 and 18-13.</li>
+      <li><strong>§18.7 How to Solve 3D Problems</strong>: the strategy summary, then Problems to Solve for Chapter 18 (Problems 303–328).</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 18 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* ===== tiny 3D toolkit: vectors, orthographic view, painter's renderer ===== */
+  var D2R = Math.PI / 180;
+  function add(a, b) { return [a[0] + b[0], a[1] + b[1], a[2] + b[2]]; }
+  function sub(a, b) { return [a[0] - b[0], a[1] - b[1], a[2] - b[2]]; }
+  function mul(a, k) { return [a[0] * k, a[1] * k, a[2] * k]; }
+  function dot(a, b) { return a[0] * b[0] + a[1] * b[1] + a[2] * b[2]; }
+  function cross(a, b) { return [a[1] * b[2] - a[2] * b[1], a[2] * b[0] - a[0] * b[2], a[0] * b[1] - a[1] * b[0]]; }
+  function len(a) { return Math.sqrt(dot(a, a)); }
+  function unit(a) { var l = len(a) || 1; return mul(a, 1 / l); }
+  function lerp(a, b, t) { return add(a, mul(sub(b, a), t)); }
+  function mean(pts) { var c = [0, 0, 0]; pts.forEach(function (p) { c = add(c, p); }); return mul(c, 1 / pts.length); }
+  function mix(c, p) { return "color-mix(in srgb, " + c + " " + p + "%, transparent)"; }
+  function deg(v) { return v + "°"; }
+  function num(x, d) { return W.fmt(x, d == null ? 2 : d); }
+  var reduceMotion = !!(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches);
+  var COLORS = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)", "var(--plot-5)", "var(--accent-2)"];
+
+  /* TeX for the square root of a positive integer, simplified */
+  function surd(n) {
+    n = Math.round(n);
+    var out = 1, ins = n;
+    for (var k = 2; k * k <= ins; k++) while (ins % (k * k) === 0) { ins /= k * k; out *= k; }
+    if (ins === 1) return String(out);
+    return (out === 1 ? "" : out) + "\\sqrt{" + ins + "}";
+  }
+  function sq(n) { var t = surd(n); return "\\sqrt{" + n + "}" + (t === "\\sqrt{" + n + "}" ? "" : " = " + t); }
+  function isInt(x) { return Math.abs(x - Math.round(x)) < 1e-9; }
+  /* sqrt(n) shown exactly when n is a whole number, with a decimal */
+  function rootTex(n) {
+    if (isInt(n)) { var s = surd(n); return /sqrt/.test(s) ? s + " \\approx " + num(Math.sqrt(n)) : s; }
+    return "\\approx " + num(Math.sqrt(n));
+  }
+
+  function view3d(body, o) {
+    var w = o.w || 640, h = o.h || 380;
+    var svg = W.stage(body, { w: w, h: h, label: o.label });
+    svg.setAttribute("tabindex", "0");
+    svg.style.touchAction = "pan-y";
+    svg.style.cursor = "grab";
+    var v = { svg: svg, w: w, h: h, yaw: o.yaw == null ? -35 : o.yaw, pitch: o.pitch == null ? 22 : o.pitch, s: o.scale || 80,
+      cx: w / 2 + (o.dx || 0), cy: h / 2 + (o.dy || 0), draw: function () {} };
+    var sl = null, quiet = false;
+    v.rot = function (p) {
+      var a = v.yaw * D2R, b = v.pitch * D2R, ca = Math.cos(a), sa = Math.sin(a), cb = Math.cos(b), sb = Math.sin(b);
+      var x1 = p[0] * ca - p[1] * sa, y1 = p[0] * sa + p[1] * ca, z1 = p[2];
+      return [x1, y1 * sb + z1 * cb, y1 * cb - z1 * sb];
+    };
+    v.P = function (p) { var r = v.rot(p); return [v.cx + v.s * r[0], v.cy - v.s * r[1], r[2]]; };
+    v.facing = function (n) { return v.rot(n)[2] < 0; };
+    function changed() {
+      v.yaw = ((v.yaw + 540) % 360) - 180;
+      v.pitch = Math.max(-80, Math.min(85, v.pitch));
+      if (sl) { quiet = true; sl[0].set(Math.round(v.yaw)); sl[1].set(Math.round(v.pitch)); quiet = false; }
+      v.draw();
+    }
+    v.sliders = function (ctl) {
+      sl = [
+        W.slider(ctl, { label: "Turn", min: -180, max: 180, value: Math.round(v.yaw), format: deg, onInput: function (x) { if (quiet) return; v.yaw = x; v.draw(); } }),
+        W.slider(ctl, { label: "Tilt", min: -80, max: 85, value: Math.round(v.pitch), format: deg, onInput: function (x) { if (quiet) return; v.pitch = x; v.draw(); } })
+      ];
+    };
+    var drag = null;
+    svg.addEventListener("pointerdown", function (e) {
+      drag = { x: e.clientX, y: e.clientY, yaw: v.yaw, pitch: v.pitch };
+      try { svg.setPointerCapture(e.pointerId); } catch (err) { /* ignore */ }
+      svg.style.cursor = "grabbing";
+    });
+    svg.addEventListener("pointermove", function (e) {
+      if (!drag) return;
+      v.yaw = drag.yaw + (e.clientX - drag.x) * 0.5;
+      v.pitch = drag.pitch + (e.clientY - drag.y) * 0.4;
+      changed();
+    });
+    function end() { drag = null; svg.style.cursor = "grab"; }
+    svg.addEventListener("pointerup", end);
+    svg.addEventListener("pointercancel", end);
+    svg.addEventListener("keydown", function (e) {
+      var k = e.key;
+      if (k === "ArrowLeft") v.yaw -= 5; else if (k === "ArrowRight") v.yaw += 5;
+      else if (k === "ArrowUp") v.pitch += 5; else if (k === "ArrowDown") v.pitch -= 5;
+      else return;
+      e.preventDefault(); changed();
+    });
+
+    function ptsStr(ps) { return ps.map(function (q) { return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" "); }
+    function make(it) {
+      var p = it._p;
+      if (it.t === "poly") return W.s("polygon", { points: ptsStr(p), fill: it.fill || "none", stroke: it.stroke || "none", "stroke-width": it.sw || 1.5, "stroke-dasharray": it.dash, "stroke-linejoin": "round" });
+      if (it.t === "path") return W.s("polyline", { points: ptsStr(p), fill: "none", stroke: it.stroke || "var(--ink)", "stroke-width": it.sw || 2, "stroke-dasharray": it.dash, "stroke-linejoin": "round", "stroke-linecap": "round" });
+      if (it.t === "line") return W.s("line", { x1: p[0][0].toFixed(1), y1: p[0][1].toFixed(1), x2: p[1][0].toFixed(1), y2: p[1][1].toFixed(1), stroke: it.stroke || "var(--ink)", "stroke-width": it.sw || 2, "stroke-dasharray": it.dash, "stroke-linecap": "round", opacity: it.op });
+      if (it.t === "dot") return W.s("circle", { cx: p[0][0].toFixed(1), cy: p[0][1].toFixed(1), r: it.r || 5, fill: it.fill || "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 });
+      if (it.t === "text") return W.s("text", { x: (p[0][0] + (it.dx || 0)).toFixed(1), y: (p[0][1] + (it.dy || 0)).toFixed(1), "text-anchor": it.anchor || "middle",
+        style: "fill:" + (it.fill || "var(--ink)") + ";font:700 " + (it.size || 15) + "px var(--font-body);paint-order:stroke;stroke:var(--surface-solid);stroke-width:3px;stroke-linejoin:round", text: it.text });
+      return it.el;
+    }
+    v.render = function (items, overlay) {
+      W.clear(svg);
+      var list = items.map(function (it, i) {
+        var d = 0;
+        if (it.t === "poly" || it.t === "path") { it._p = it.pts.map(v.P); d = it._p.reduce(function (s, q) { return s + q[2]; }, 0) / it._p.length; }
+        else if (it.t === "line") { it._p = [v.P(it.a), v.P(it.b)]; d = (it._p[0][2] + it._p[1][2]) / 2; }
+        else if (it.p) { it._p = [v.P(it.p)]; d = it._p[0][2]; }
+        return { it: it, d: d + (it.bias || 0), L: it.layer == null ? 1 : it.layer, i: i };
+      });
+      list.sort(function (a, b) { return a.L - b.L || b.d - a.d || a.i - b.i; });
+      list.forEach(function (e) { svg.appendChild(make(e.it)); });
+      (overlay || []).forEach(function (el) { svg.appendChild(el); });
+    };
+    v.note = function (text, x, y, anchor) { return W.s("text", { x: x == null ? 12 : x, y: y == null ? h - 12 : y, class: "lbl", "text-anchor": anchor || "start", text: text }); };
+    return v;
+  }
+
+  /* Convex solid: back faces faint, front faces tinted, visible edges solid, hidden edges dashed. */
+  function solid(v, verts, faces, o) {
+    o = o || {};
+    var col = o.color || "var(--plot-1)", c = mean(verts), items = [];
+    var front = faces.map(function (f) {
+      var pts = f.map(function (i) { return verts[i]; }), n = [0, 0, 0];
+      for (var k = 0; k < pts.length; k++) {
+        var p = pts[k], q = pts[(k + 1) % pts.length];
+        n[0] += (p[1] - q[1]) * (p[2] + q[2]); n[1] += (p[2] - q[2]) * (p[0] + q[0]); n[2] += (p[0] - q[0]) * (p[1] + q[1]);
+      }
+      if (dot(n, sub(mean(pts), c)) < 0) n = mul(n, -1);
+      return v.facing(n);
+    });
+    faces.forEach(function (f, i) {
+      var fc = o.faceColor ? o.faceColor(i) : col;
+      items.push({ t: "poly", pts: f.map(function (k) { return verts[k]; }), fill: mix(fc, front[i] ? (o.alpha || 26) : (o.backAlpha == null ? 8 : o.backAlpha)), layer: front[i] ? 1 : 0 });
+    });
+    var edges = {}, smooth = o.smooth || function () { return false; };
+    faces.forEach(function (f, i) {
+      for (var k = 0; k < f.length; k++) {
+        var a = f[k], b = f[(k + 1) % f.length], key = a < b ? a + "_" + b : b + "_" + a;
+        (edges[key] = edges[key] || { a: a, b: b, f: [] }).f.push(i);
+      }
+    });
+    Object.keys(edges).forEach(function (key) {
+      var e = edges[key], f1 = e.f[0], f2 = e.f.length > 1 ? e.f[1] : f1;
+      var sharp = !(smooth(f1) && smooth(f2)), vis = front[f1] || front[f2];
+      if (!sharp && front[f1] === front[f2]) return;
+      if (vis) items.push({ t: "line", a: verts[e.a], b: verts[e.b], stroke: o.edge || col, sw: o.sw || 2, layer: 2 });
+      else if (!o.noHidden) items.push({ t: "line", a: verts[e.a], b: verts[e.b], stroke: "var(--muted)", sw: 1.2, dash: "5 5", layer: 2, op: 0.8 });
+    });
+    return items;
+  }
+
+  /* Faces of the convex hull of a point set (each face ordered around its centre). */
+  function hull(pts) {
+    var n = pts.length, faces = [], sets = [], eps = 1e-6;
+    for (var i = 0; i < n; i++) for (var j = i + 1; j < n; j++) for (var k = j + 1; k < n; k++) {
+      var skip = false;
+      for (var q = 0; q < sets.length; q++) { var s = sets[q]; if (s[i] && s[j] && s[k]) { skip = true; break; } }
+      if (skip) continue;
+      var nr = cross(sub(pts[j], pts[i]), sub(pts[k], pts[i])), L = len(nr);
+      if (L < 1e-9) continue;
+      nr = mul(nr, 1 / L);
+      var d = dot(nr, pts[i]), pos = 0, neg = 0, on = [];
+      for (var m = 0; m < n; m++) {
+        var sd = dot(nr, pts[m]) - d;
+        if (sd > eps) pos++; else if (sd < -eps) neg++; else on.push(m);
+        if (pos && neg) break;
+      }
+      if (pos && neg) continue;
+      if (pos) nr = mul(nr, -1);
+      var set = {}; on.forEach(function (x) { set[x] = true; }); sets.push(set);
+      var cc = mean(on.map(function (x) { return pts[x]; })), u = unit(sub(pts[on[0]], cc)), w = cross(nr, u);
+      var ang = {};
+      on.forEach(function (x) { var p = sub(pts[x], cc); ang[x] = Math.atan2(dot(p, w), dot(p, u)); });
+      on.sort(function (a, b) { return ang[a] - ang[b]; });
+      faces.push(on);
+    }
+    return faces;
+  }
+  function edgeList(faces) {
+    var seen = {}, out = [];
+    faces.forEach(function (f) { for (var k = 0; k < f.length; k++) { var a = f[k], b = f[(k + 1) % f.length], key = a < b ? a + "_" + b : b + "_" + a; if (!seen[key]) { seen[key] = 1; out.push([a, b]); } } });
+    return out;
+  }
+  function regularPolygon(n, R, z, phase) {
+    var pts = [];
+    for (var k = 0; k < n; k++) { var a = phase + 2 * Math.PI * k / n; pts.push([R * Math.cos(a), R * Math.sin(a), z]); }
+    return pts;
+  }
+  /* split a 3D polyline into short segments so they depth-sort with surfaces */
+  function segs(pts, style, layer, bias) {
+    var out = [];
+    for (var i = 0; i + 1 < pts.length; i++) out.push({ t: "line", a: pts[i], b: pts[i + 1], stroke: style.stroke, sw: style.sw || 2, dash: style.dash, layer: layer == null ? 1 : layer, bias: bias || 0 });
+    return out;
+  }
+  function newell(pts) {
+    var n = [0, 0, 0];
+    for (var k = 0; k < pts.length; k++) { var p = pts[k], q = pts[(k + 1) % pts.length]; n[0] += (p[1] - q[1]) * (p[2] + q[2]); n[1] += (p[2] - q[2]) * (p[0] + q[0]); n[2] += (p[0] - q[0]) * (p[1] + q[1]); }
+    return n;
+  }
+  /* an opaque surface panel, lighter on its outer side than on its inner side */
+  function panel(v, pts, col) {
+    var out = v.facing(newell(pts)), f = "color-mix(in srgb, " + col + " " + (out ? 34 : 14) + "%, var(--surface-solid))";
+    return { t: "poly", pts: pts, fill: f, stroke: f, sw: 0.8 };
+  }
+  function animate(from, to, ms, step, done) {
+    if (reduceMotion) { step(to); if (done) done(); return; }
+    var t0 = null;
+    function f(ts) {
+      if (t0 == null) t0 = ts;
+      var u = Math.min(1, (ts - t0) / ms), e = u < 0.5 ? 2 * u * u : 1 - Math.pow(-2 * u + 2, 2) / 2;
+      step(from + (to - from) * e);
+      if (u < 1) requestAnimationFrame(f); else if (done) done();
+    }
+    requestAnimationFrame(f);
+  }
+
+  /* ===== 18.1 — lines and planes ===== */
+  AOPS.registerWidget("lineVsPlane", function (body) {
+    var mode = "plane", ang = 40, hgt = 1;
+    var v = view3d(body, { h: 360, scale: 72, yaw: -28, pitch: 24, label: "A plane with a line, or two lines, in space. Drag to rotate." });
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Angle", min: 0, max: 90, step: 5, value: ang, format: deg, onInput: function (x) { ang = x; draw(); } });
+    W.slider(ctl, { label: "Height", min: 0, max: 2, step: 0.25, value: hgt, onInput: function (x) { hgt = x; draw(); } });
+    W.segmented(ctl, { title: "Compare", value: mode, options: [{ value: "plane", label: "line & plane" }, { value: "lines", label: "two lines" }], onChange: function (m) { mode = m; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function draw() {
+      var S = 2.7, T = 2.0, items = [];
+      var above = v.facing([0, 0, 1]);
+      items.push({ t: "poly", pts: [[-S, -T, 0], [S, -T, 0], [S, T, 0], [-S, T, 0]], fill: mix("var(--plot-2)", 16), stroke: "var(--plot-2)", sw: 1.5, layer: 0 });
+      for (var g = -2; g <= 2; g++) items.push({ t: "line", a: [g, -T, 0], b: [g, T, 0], stroke: mix("var(--plot-2)", 45), sw: 1, layer: 0, bias: 9 });
+      var msg;
+      if (mode === "plane") {
+        var a = ang * D2R, P = [0, 0, hgt], d = [Math.cos(a), 0, Math.sin(a)];
+        var tHit = ang > 0 ? hgt / Math.sin(a) : null;
+        var L = 3.2;
+        if (tHit != null && tHit + 0.8 > L) L = Math.min(tHit + 0.8, 5);
+        var A = sub(P, mul(d, L)), B = add(P, mul(d, L));
+        if (tHit != null && tHit <= L) {
+          var X = sub(P, mul(d, tHit));
+          var lowDash = above ? "6 6" : null, highDash = above ? null : "6 6";
+          if (ang === 90) { items.push({ t: "line", a: A, b: X, stroke: "var(--accent)", sw: 3, dash: lowDash, layer: 2 }); items.push({ t: "line", a: X, b: B, stroke: "var(--accent)", sw: 3, dash: highDash, layer: 2 }); }
+          else { items.push({ t: "line", a: A, b: X, stroke: "var(--accent)", sw: 3, dash: lowDash, layer: 2 }); items.push({ t: "line", a: X, b: B, stroke: "var(--accent)", sw: 3, dash: highDash, layer: 2 }); }
+          items.push({ t: "dot", p: X, r: 6, fill: "var(--plot-5)", layer: 3 });
+          items.push({ t: "text", p: X, text: "meets here", dy: 22, size: 13, fill: "var(--plot-5)", layer: 4 });
+        } else items.push({ t: "line", a: A, b: B, stroke: "var(--accent)", sw: 3, dash: above ? null : (hgt === 0 ? null : "6 6"), layer: 2 });
+        if (hgt > 0 && ang < 90) {
+          items.push({ t: "line", a: P, b: [0, 0, 0], stroke: "var(--plot-4)", sw: 2, dash: "3 4", layer: 2 });
+          items.push({ t: "dot", p: [0, 0, 0], r: 4, fill: "var(--plot-4)", layer: 3 });
+          items.push({ t: "text", p: [0, 0, hgt / 2], text: "distance " + hgt, dx: -12, anchor: "end", size: 13, fill: "var(--plot-4)", layer: 4 });
+        }
+        items.push({ t: "dot", p: P, r: 5, fill: "var(--accent)", layer: 3 });
+        items.push({ t: "text", p: P, text: "P", dx: 10, dy: -8, layer: 4 });
+        if (ang === 0 && hgt === 0) msg = "The line lies <strong>in</strong> the plane: every point of the line is in the plane.";
+        else if (ang === 0) msg = "The line is <strong>parallel</strong> to the plane: it never meets it, staying " + hgt + " units above it.";
+        else if (ang === 90) msg = "The line is <strong>perpendicular</strong> to the plane. It meets the plane at one point, the foot of the perpendicular" + (hgt > 0 ? "; $P$ is " + hgt + (hgt === 1 ? " unit" : " units") + " from the plane." : ".");
+        else if (hgt === 0) msg = "The line crosses the plane at exactly <strong>one point</strong> (here, at $P$ itself).";
+        else msg = "Any tilt at all makes the line cross the plane at exactly <strong>one point</strong>. $P$ is " + hgt + (hgt === 1 ? " unit" : " units") + " from the plane (the dotted perpendicular).";
+      } else {
+        var th = ang * D2R, Q = [0, 1.2, hgt], e = [Math.cos(th), Math.sin(th), 0];
+        items.push({ t: "line", a: [-3, 0, 0], b: [3, 0, 0], stroke: "var(--plot-3)", sw: 3, layer: 2 });
+        items.push({ t: "text", p: [3, 0, 0], text: "m", dx: 14, fill: "var(--plot-3)", layer: 4 });
+        var Lq = 2.4, A2 = sub(Q, mul(e, Lq)), B2 = add(Q, mul(e, Lq));
+        if (hgt > 0) items.push({ t: "line", a: [A2[0], A2[1], 0], b: [B2[0], B2[1], 0], stroke: "var(--muted)", sw: 1.5, dash: "2 5", layer: 1 });
+        items.push({ t: "line", a: A2, b: B2, stroke: "var(--accent)", sw: 3, layer: 2 });
+        items.push({ t: "text", p: B2, text: "n", dx: 12, dy: -4, fill: "var(--accent)", layer: 4 });
+        if (ang > 0) {
+          var x0 = -1.2 * Math.cos(th) / Math.sin(th);
+          if (Math.abs(x0) <= 2.6) {
+            if (hgt > 0) {
+              items.push({ t: "line", a: [x0, 0, 0], b: [x0, 0, hgt], stroke: "var(--plot-4)", sw: 2, dash: "4 4", layer: 2 });
+              items.push({ t: "dot", p: [x0, 0, 0], r: 4, fill: "var(--plot-4)", layer: 3 });
+              items.push({ t: "dot", p: [x0, 0, hgt], r: 4, fill: "var(--plot-4)", layer: 3 });
+            } else items.push({ t: "dot", p: [x0, 0, 0], r: 6, fill: "var(--plot-5)", layer: 3 });
+          }
+        }
+        if (hgt === 0 && ang === 0) msg = "Both lines lie in the plane and point the same way: they are <strong>parallel</strong>.";
+        else if (hgt === 0) msg = "Both lines lie in the plane and point different ways, so they <strong>intersect</strong>.";
+        else if (ang === 0) msg = "Line $n$ floats above the plane but points the same way as $m$: still <strong>parallel</strong> (both lie in one slanted plane).";
+        else msg = "Different directions, and they never meet: $m$ and $n$ are <strong>skew</strong>. The dotted shadow of $n$ crosses $m$, but $n$ itself passes " + hgt + " above it" + (Math.abs(-1.2 / Math.tan(th)) <= 2.6 ? " (green segment)." : ".");
+      }
+      v.render(items, [v.note("drag or use arrow keys to rotate")]);
+      out.set("<p>" + msg + "</p>");
+    }
+    draw();
+  });
+
+  /* ===== 18.2 — sphere slice ===== */
+  AOPS.registerWidget("sphereSlice", function (body) {
+    var R = 10, d = 6;
+    var v = view3d(body, { h: 380, scale: 13, yaw: -30, pitch: 18, label: "A sphere cut by a plane, with the right triangle relating the radii" });
+    var ctl = W.controls(body);
+    var dS = W.slider(ctl, { label: "Plane distance d", min: 0, max: 12, step: 0.5, value: d, onInput: function (x) { d = Math.min(x, R); draw(); } });
+    W.slider(ctl, { label: "Sphere radius R", min: 2, max: 12, step: 1, value: R, onInput: function (x) { R = x; if (d > R) { d = R; dS.input.value = R; } draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function circle(center, u, w, r, n) { var pts = []; for (var k = 0; k <= n; k++) { var t = 2 * Math.PI * k / n; pts.push(add(center, add(mul(u, r * Math.cos(t)), mul(w, r * Math.sin(t))))); } return pts; }
+    function sphereCurve(pts, color, sw) {
+      var items = [], run = [pts[0]], fr = v.rot(pts[0])[2] <= 0;
+      for (var i = 1; i < pts.length; i++) {
+        var f = v.rot(pts[i])[2] <= 0;
+        run.push(pts[i]);
+        if (f !== fr || i === pts.length - 1) {
+          items.push({ t: "path", pts: run, stroke: fr ? color : "var(--muted)", sw: fr ? sw : 1.2, dash: fr ? null : "4 5", layer: fr ? 2 : 0 });
+          run = [pts[i]]; fr = f;
+        }
+      }
+      return items;
+    }
+    function draw() {
+      v.s = 140 / R;
+      var items = [], c = [v.cx, v.cy];
+      var outline = W.s("circle", { cx: c[0], cy: c[1], r: R * v.s, fill: mix("var(--plot-2)", 12), stroke: "var(--plot-2)", "stroke-width": 2 });
+      items = items.concat(sphereCurve(circle([0, 0, 0], [1, 0, 0], [0, 1, 0], R, 96), mix("var(--plot-2)", 70), 1.2));
+      var rho = Math.sqrt(Math.max(0, R * R - d * d)), Sq = R * 1.45;
+      items.push({ t: "poly", pts: [[-Sq, -Sq, d], [Sq, -Sq, d], [Sq, Sq, d], [-Sq, Sq, d]], fill: mix("var(--plot-3)", 14), stroke: mix("var(--plot-3)", 60), sw: 1, layer: 0, bias: 50 });
+      if (rho > 1e-6) items = items.concat(sphereCurve(circle([0, 0, d], [1, 0, 0], [0, 1, 0], rho, 96), "var(--plot-3)", 3));
+      var O = [0, 0, 0], B = [0, 0, d], A = [rho, 0, d];
+      items.push({ t: "line", a: O, b: B, stroke: "var(--plot-4)", sw: 2.5, layer: 3 });
+      items.push({ t: "line", a: B, b: A, stroke: "var(--plot-3)", sw: 2.5, layer: 3 });
+      items.push({ t: "line", a: O, b: A, stroke: "var(--accent)", sw: 3, layer: 3 });
+      if (rho > 0.15 * R && d > 0.15 * R) {
+        var m = 0.09 * R;
+        items.push({ t: "path", pts: [[m, 0, d], [m, 0, d - m], [0, 0, d - m]], stroke: "var(--ink)", sw: 1.2, layer: 3 });
+      }
+      [["O", O, -14, 4], ["B", B, -14, -6], ["A", A, 12, -6]].forEach(function (q) { items.push({ t: "dot", p: q[1], r: 4, fill: "var(--ink)", layer: 4 }); items.push({ t: "text", p: q[1], text: q[0], dx: q[2], dy: q[3], layer: 5 }); });
+      items.push({ t: "text", p: lerp(O, A, 0.55), text: "R", dx: 12, dy: 14, fill: "var(--accent)", layer: 5 });
+      items.push({ t: "text", p: lerp(O, B, 0.5), text: "d", dx: -14, fill: "var(--plot-4)", layer: 5 });
+      if (rho > 0.2 * R) items.push({ t: "text", p: lerp(B, A, 0.5), text: "r", dy: -8, fill: "var(--plot-3)", layer: 5 });
+      // the outline goes underneath everything
+      v.render(items, []);
+      v.svg.insertBefore(outline, v.svg.firstChild);
+      var r2 = R * R - d * d;
+      var t = "r = \\sqrt{R^2 - d^2} = \\sqrt{" + R + "^2 - " + num(d) + "^2}" + (r2 <= 0 ? " = 0" : isInt(r2) ? " = " + rootTex(r2) : " \\approx " + num(Math.sqrt(r2)));
+      var area = r2 <= 0 ? "0" : (isInt(r2) ? num(r2) + "\\pi" : "\\approx " + num(Math.PI * r2) );
+      out.set("<p>$" + t + "$</p><p>Slice area $= \\pi r^2 = " + area + "$" + (d === 0 ? " (a great circle)" : d === R ? " (the plane is tangent: the slice is a single point)" : "") +
+        ". Whole sphere: surface $4\\pi R^2 = " + (4 * R * R) + "\\pi$, volume $\\tfrac43\\pi R^3 = " + W.frac(4 * R * R * R, 3) + "\\pi$.</p>");
+    }
+    draw();
+  });
+
+  /* ===== 18.3 — box diagonal ===== */
+  AOPS.registerWidget("boxDiagonal", function (body) {
+    var L = 4, Wd = 3, H = 12;
+    var v = view3d(body, { h: 380, yaw: -38, pitch: 20, label: "A box with its face diagonal and space diagonal" });
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Length l", min: 1, max: 12, value: L, onInput: function (x) { L = x; draw(); } });
+    W.slider(ctl, { label: "Width w", min: 1, max: 12, value: Wd, onInput: function (x) { Wd = x; draw(); } });
+    W.slider(ctl, { label: "Height h", min: 1, max: 12, value: H, onInput: function (x) { H = x; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function draw() {
+      var dg = Math.sqrt(L * L + Wd * Wd + H * H);
+      v.s = 290 / dg;
+      var x = L / 2, y = Wd / 2, z = H / 2;
+      var P = [[-x, -y, -z], [x, -y, -z], [x, y, -z], [-x, y, -z], [-x, -y, z], [x, -y, z], [x, y, z], [-x, y, z]];
+      var F = [[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]];
+      var items = solid(v, P, F, { color: "var(--plot-1)", alpha: 18 });
+      items.push({ t: "line", a: P[0], b: P[2], stroke: "var(--plot-2)", sw: 3, layer: 3 });
+      items.push({ t: "line", a: P[2], b: P[6], stroke: "var(--plot-4)", sw: 3.5, layer: 3 });
+      items.push({ t: "line", a: P[0], b: P[6], stroke: "var(--accent)", sw: 3.5, layer: 3 });
+      items.push({ t: "text", p: lerp(P[0], P[1], 0.5), text: "l = " + L, dy: 20, size: 13, layer: 5 });
+      items.push({ t: "text", p: lerp(P[1], P[2], 0.5), text: "w = " + Wd, dx: 26, dy: 14, size: 13, layer: 5 });
+      items.push({ t: "text", p: lerp(P[2], P[6], 0.5), text: "h = " + H, dx: 10, anchor: "start", size: 13, fill: "var(--plot-4)", layer: 5 });
+      items.push({ t: "dot", p: P[0], r: 4, fill: "var(--ink)", layer: 4 }); items.push({ t: "text", p: P[0], text: "A", dx: -12, dy: 12, layer: 5 });
+      items.push({ t: "dot", p: P[2], r: 4, fill: "var(--ink)", layer: 4 }); items.push({ t: "text", p: P[2], text: "C", dx: 12, dy: 12, layer: 5 });
+      items.push({ t: "dot", p: P[6], r: 4, fill: "var(--ink)", layer: 4 }); items.push({ t: "text", p: P[6], text: "G", dx: 12, dy: -8, layer: 5 });
+      v.render(items, [v.note("blue: face diagonal AC · green: edge CG · gold: space diagonal AG")]);
+      var S = 2 * (L * Wd + Wd * H + H * L), fd = L * L + Wd * Wd, sd = fd + H * H;
+      out.set("<p>$AC = \\sqrt{l^2 + w^2} = " + sq(fd) + "$, &nbsp; $AG = \\sqrt{AC^2 + h^2} = \\sqrt{" + fd + " + " + H * H + "} = " + sq(sd) + "$</p>" +
+        "<p>Surface area $2(lw + wh + hl) = " + S + "$, &nbsp; volume $lwh = " + L * Wd * H + "$</p>");
+    }
+    draw();
+  });
+
+  /* ===== 18.3 — folding nets ===== */
+  AOPS.registerWidget("netUnfold", function (body) {
+    function squares(cells, parents) {
+      return cells.map(function (c, i) { return { poly: [[c[0], -c[1]], [c[0] + 1, -c[1]], [c[0] + 1, -c[1] - 1], [c[0], -c[1] - 1]], parent: parents[i], angle: Math.PI / 2 }; });
+    }
+    var s3 = Math.sqrt(3);
+    var tetraAngle = Math.PI - Math.acos(1 / 3), pyrAngle = Math.PI - Math.atan(Math.SQRT2);
+    var NETS = {
+      cross: { name: "cross", faces: squares([[1, 0], [0, 1], [1, 1], [2, 1], [1, 2], [1, 3]], [2, 2, -1, 2, 2, 4]) },
+      zig: { name: "1-4-1", faces: squares([[0, 0], [0, 1], [1, 1], [2, 1], [3, 1], [3, 2]], [1, 2, -1, 2, 3, 4]) },
+      three: { name: "3-3", faces: squares([[0, 0], [1, 0], [2, 0], [2, 1], [3, 1], [4, 1]], [1, 2, -1, 2, 3, 4]) },
+      stair: { name: "staircase", faces: squares([[0, 0], [1, 0], [1, 1], [2, 1], [2, 2], [3, 2]], [1, 2, -1, 2, 3, 4]) },
+      bad: { name: "2 × 3 block", faces: squares([[0, 0], [1, 0], [2, 0], [0, 1], [1, 1], [2, 1]], [1, -1, 1, 4, 1, 4]) },
+      tetra: { name: "tetrahedron", faces: [
+        { poly: [[1, 0], [1.5, s3 / 2], [0.5, s3 / 2]], parent: -1 },
+        { poly: [[0, 0], [1, 0], [0.5, s3 / 2]], parent: 0, angle: tetraAngle },
+        { poly: [[1, 0], [2, 0], [1.5, s3 / 2]], parent: 0, angle: tetraAngle },
+        { poly: [[0.5, s3 / 2], [1.5, s3 / 2], [1, s3]], parent: 0, angle: tetraAngle }] },
+      pyramid: { name: "square pyramid", faces: [
+        { poly: [[0, 0], [1, 0], [1, 1], [0, 1]], parent: -1 },
+        { poly: [[0, 0], [1, 0], [0.5, -s3 / 2]], parent: 0, angle: pyrAngle },
+        { poly: [[1, 0], [1, 1], [1 + s3 / 2, 0.5]], parent: 0, angle: pyrAngle },
+        { poly: [[1, 1], [0, 1], [0.5, 1 + s3 / 2]], parent: 0, angle: pyrAngle },
+        { poly: [[0, 1], [0, 0], [-s3 / 2, 0.5]], parent: 0, angle: pyrAngle }] }
+    };
+    // hinges: the edge each face shares with its parent, rotation axis chosen so the face folds upward
+    Object.keys(NETS).forEach(function (k) {
+      var fs = NETS[k].faces, all = [];
+      fs.forEach(function (f) { f.poly.forEach(function (p) { all.push(p); }); });
+      var minx = Math.min.apply(null, all.map(function (p) { return p[0]; })), maxx = Math.max.apply(null, all.map(function (p) { return p[0]; }));
+      var miny = Math.min.apply(null, all.map(function (p) { return p[1]; })), maxy = Math.max.apply(null, all.map(function (p) { return p[1]; }));
+      fs.forEach(function (f) { f.p3 = f.poly.map(function (p) { return [p[0] - (minx + maxx) / 2, p[1] - (miny + maxy) / 2, 0]; }); });
+      fs.forEach(function (f) {
+        if (f.parent < 0) return;
+        var par = fs[f.parent], shared = f.p3.filter(function (p) { return par.p3.some(function (q) { return len(sub(p, q)) < 1e-6; }); });
+        var m = lerp(shared[0], shared[1], 0.5), wdir = unit(sub(mean(f.p3), m));
+        f.hinge = { p: shared[0], u: unit(cross(wdir, [0, 0, 1])) };
+      });
+    });
+    function rotAbout(x, p, u, th) {
+      var vv = sub(x, p), c = Math.cos(th), s = Math.sin(th);
+      return add(p, add(add(mul(vv, c), mul(cross(u, vv), s)), mul(u, dot(u, vv) * (1 - c))));
+    }
+    function fold(net, f) {
+      var fs = net.faces, polys = fs.map(function (F, i) {
+        var pts = F.p3.slice(), j = i;
+        while (fs[j].parent >= 0) { var hh = fs[j].hinge, th = fs[j].angle * f; pts = pts.map(function (p) { return rotAbout(p, hh.p, hh.u, th); }); j = fs[j].parent; }
+        return pts;
+      });
+      var c = mean([].concat.apply([], polys));
+      return polys.map(function (pp) { return pp.map(function (p) { return sub(p, c); }); });
+    }
+    var key = "cross", f = 0;
+    var v = view3d(body, { h: 380, scale: 72, yaw: -25, pitch: 40, label: "A flat net folding up into a solid" });
+    v.s = 92;
+    var ctl = W.controls(body);
+    var fS = W.slider(ctl, { label: "Fold", min: 0, max: 100, value: 0, format: function (x) { return x + "%"; }, onInput: function (x) { f = x / 100; draw(); } });
+    var play = W.button(ctl, "Play fold", function () {
+      var target = f < 0.5 ? 1 : 0;
+      play.disabled = true;
+      animate(f, target, 1800, function (x) { fS.set(Math.round(x * 100)); }, function () { play.disabled = false; play.textContent = target ? "Unfold" : "Play fold"; });
+    });
+    var ctlN = W.controls(body);
+    W.segmented(ctlN, { title: "Net", value: key, options: Object.keys(NETS).map(function (k) { return { value: k, label: NETS[k].name }; }), onChange: function (k) { key = k; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function draw() {
+      var net = NETS[key], polys = fold(net, f), items = [];
+      polys.forEach(function (pp, i) {
+        var col = COLORS[i % COLORS.length];
+        items.push({ t: "poly", pts: pp, fill: mix(col, net.faces[i].parent < 0 ? 60 : 42), stroke: col, sw: 2 });
+      });
+      v.render(items, [v.note("the darker face stays on the table")]);
+      var msg, aDeg = num(net.faces[1].angle / D2R, 1);
+      if (f < 0.999) msg = "Each hinge has turned " + num(f * net.faces[1].angle / D2R, 1) + "° of " + aDeg + "°.";
+      else {
+        var cents = polys.map(mean), clash = false;
+        for (var i = 0; i < cents.length; i++) for (var j = i + 1; j < cents.length; j++) if (len(sub(cents[i], cents[j])) < 1e-3) clash = true;
+        if (clash) msg = "<strong>Not a net!</strong> Two faces land on top of each other and one side of the cube is left open.";
+        else if (key === "tetra") msg = "Closed up: a <strong>regular tetrahedron</strong>. Each hinge turned " + aDeg + "°, so neighbouring faces meet at $" + num(180 - net.faces[1].angle / D2R, 1) + "^\\circ$.";
+        else if (key === "pyramid") msg = "Closed up: a <strong>square pyramid</strong> with equilateral triangle sides. $V = 5$, $E = 8$, $F = 5$.";
+        else msg = "Closed up: a <strong>cube</strong>. Every hinge turned exactly $90^\\circ$. This pattern is one of the $11$ different nets of a cube.";
+      }
+      out.set("<p>" + msg + "</p>");
+    }
+    draw();
+  });
+
+  /* ===== 18.3 — painted cube ===== */
+  AOPS.registerWidget("paintedCube", function (body) {
+    var n = 5, hi = "all";
+    var v = view3d(body, { h: 380, yaw: -35, pitch: 28, label: "A painted cube made of small cubes, coloured by how many faces are painted" });
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Cube size n", min: 2, max: 7, value: n, onInput: function (x) { n = x; draw(); } });
+    W.segmented(ctl, { title: "Highlight", value: hi, options: [{ value: "all", label: "all" }, { value: 3, label: "3 faces" }, { value: 2, label: "2" }, { value: 1, label: "1" }, { value: 0, label: "0 (inside)" }], onChange: function (x) { hi = x; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    var CAT = ["var(--plot-4)", "var(--plot-3)", "var(--plot-2)", "var(--plot-1)"];
+    v.draw = draw;
+    function block(m, offset, catFn, items) {
+      // visible outer faces of an m×m×m block of unit cubes, occupying [offset, offset+m]^3 (centred later)
+      var dirs = [[0, 0, 1], [0, 0, -1], [1, 0, 0], [-1, 0, 0], [0, 1, 0], [0, -1, 0]];
+      dirs.forEach(function (dn) {
+        if (!v.facing(dn)) return;
+        var ax = dn[0] ? 0 : dn[1] ? 1 : 2, sgn = dn[ax], u = (ax + 1) % 3, w = (ax + 2) % 3;
+        for (var i = 0; i < m; i++) for (var j = 0; j < m; j++) {
+          var cell = [0, 0, 0]; cell[ax] = sgn > 0 ? m - 1 : 0; cell[u] = i; cell[w] = j;
+          var base = [0, 0, 0]; base[ax] = sgn > 0 ? m : 0;
+          var corners = [[0, 0], [1, 0], [1, 1], [0, 1]].map(function (q) { var p = base.slice(); p[u] = i + q[0]; p[w] = j + q[1]; return add(p, [offset, offset, offset]); });
+          var cat = catFn(cell), on = hi === "all" || hi === 0 || Number(hi) === cat;
+          items.push({ t: "poly", pts: corners, fill: on ? mix(CAT[cat], 70) : "var(--surface-2)", stroke: "var(--surface-solid)", sw: 1.5 });
+        }
+      });
+    }
+    function draw() {
+      v.s = 150 / n;
+      var items = [], half = n / 2;
+      function shift(p) { return sub(p, [half, half, half]); }
+      if (hi === 0) {
+        var m = n - 2;
+        if (m > 0) block(m, 1, function () { return 0; }, items);
+        var P = [[0, 0, 0], [n, 0, 0], [n, n, 0], [0, n, 0], [0, 0, n], [n, 0, n], [n, n, n], [0, n, n]];
+        edgeList([[0, 1, 2, 3], [4, 5, 6, 7], [0, 1, 5, 4], [1, 2, 6, 5], [2, 3, 7, 6], [3, 0, 4, 7]]).forEach(function (e) {
+          items.push({ t: "line", a: P[e[0]], b: P[e[1]], stroke: "var(--muted)", sw: 1.3, dash: "5 5", layer: 2 });
+        });
+      } else {
+        block(n, 0, function (c) { var k = 0; c.forEach(function (x) { if (x === 0 || x === n - 1) k++; }); return k; }, items);
+      }
+      items.forEach(function (it) { if (it.pts) it.pts = it.pts.map(shift); else { it.a = shift(it.a); it.b = shift(it.b); } });
+      v.render(items, [v.note(hi === 0 ? "outer layer peeled away" : "gold 3 · blue 2 · violet 1 painted faces")]);
+      var k = n - 2, rows = [["3 faces (corners)", "8", 8], ["2 faces (edges)", "12(n-2)", 12 * k], ["1 face (face centres)", "6(n-2)^2", 6 * k * k], ["0 faces (hidden core)", "(n-2)^3", k * k * k]];
+      out.set("<p>" + rows.map(function (r) { return r[0] + ": $" + r[1] + " = " + r[2] + "$"; }).join("<br>") + "</p><p>Total: $8 + " + 12 * k + " + " + 6 * k * k + " + " + k * k * k + " = " + n * n * n + " = " + n + "^3$ ✓</p>");
+    }
+    draw();
+  });
+
+  /* ===== 18.4 — prism to cylinder ===== */
+  AOPS.registerWidget("prismCylinder", function (body) {
+    var n = 6, s = 2, H = 5, lean = 0;
+    var v = view3d(body, { h: 380, yaw: -18, pitch: 26, label: "A prism whose number of sides can grow into a cylinder, and which can lean" });
+    var ctl = W.controls(body);
+    var sizeS;
+    W.slider(ctl, { label: "Sides", min: 3, max: 13, value: n, format: function (x) { return x === 13 ? "∞ (cylinder)" : String(x); }, onInput: function (x) { n = x; label(); draw(); } });
+    sizeS = W.slider(ctl, { label: "Base edge", min: 1, max: 6, step: 0.5, value: s, onInput: function (x) { s = x; draw(); } });
+    W.slider(ctl, { label: "Height h", min: 1, max: 10, value: H, onInput: function (x) { H = x; draw(); } });
+    W.slider(ctl, { label: "Lean", min: 0, max: 4, step: 0.5, value: lean, onInput: function (x) { lean = x; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    function label() { sizeS.input.parentNode.querySelector("label span").textContent = n === 13 ? "Radius r" : "Base edge"; }
+    v.draw = draw;
+    function draw() {
+      var cyl = n === 13, N = cyl ? 48 : n, R = cyl ? s : s / (2 * Math.sin(Math.PI / n));
+      v.s = Math.min(250 / (2 * R + lean), 250 / H, 80);
+      var ph = -Math.PI / 2 - Math.PI / N;
+      var bot = regularPolygon(N, R, -H / 2, ph).map(function (p) { return [p[0] - lean / 2, p[1], p[2]]; });
+      var top = bot.map(function (p) { return [p[0] + lean, p[1], H / 2]; });
+      var verts = bot.concat(top), faces = [], k;
+      var b = [], t = [];
+      for (k = 0; k < N; k++) { b.push(k); t.push(N + k); }
+      faces.push(b, t);
+      for (k = 0; k < N; k++) faces.push([k, (k + 1) % N, N + (k + 1) % N, N + k]);
+      var items = solid(v, verts, faces, { color: "var(--plot-2)", alpha: 22, smooth: cyl ? function (i) { return i >= 2; } : null });
+      var tc = [lean / 2, 0, H / 2], foot = [lean / 2, 0, -H / 2];
+      items.push({ t: "line", a: tc, b: foot, stroke: "var(--accent)", sw: 2.5, dash: "6 5", layer: 3 });
+      items.push({ t: "dot", p: foot, r: 4, fill: "var(--accent)", layer: 4 });
+      items.push({ t: "text", p: lerp(tc, foot, 0.5), text: "h", dx: 12, anchor: "start", fill: "var(--accent)", layer: 5 });
+      v.render(items, [v.note(lean ? "the dashed height is shorter than the slanted edges" : "dashed: height")]);
+      var A, p, At, pt;
+      if (cyl) { A = Math.PI * s * s; p = 2 * Math.PI * s; At = num(s * s) + "\\pi"; pt = num(2 * s) + "\\pi"; }
+      else { A = n * s * s / (4 * Math.tan(Math.PI / n)); p = n * s; At = num(A); pt = num(p); }
+      var html = "<p>Base area $B " + (cyl ? "= \\pi r^2 = " : "\\approx ") + At + "$, volume $V = Bh " + (cyl ? "= " + num(s * s * H) + "\\pi" : "\\approx " + num(A * H)) + "$.</p>";
+      if (lean === 0) html += "<p>Lateral area $= (\\text{perimeter})\\cdot h " + (cyl ? "= 2\\pi r h = " + num(2 * s * H) + "\\pi" : "= " + pt + " \\cdot " + H + " = " + num(p * H)) + "$.</p>";
+      else html += "<p>Leaning changes the faces into parallelograms, but every horizontal slice is still a copy of the base, so the volume is unchanged.</p>";
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* ===== 18.4 — unrolling a cylinder ===== */
+  AOPS.registerWidget("cylinderUnroll", function (body) {
+    var t = 0, r = 2, H = 8, ant = true;
+    var v = view3d(body, { h: 380, yaw: -12, pitch: 14, label: "The side of a cylinder unrolling into a rectangle, with the shortest path" });
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Unroll", min: 0, max: 100, value: 0, format: function (x) { return x + "%"; }, onInput: function (x) { t = x / 100; draw(); } });
+    W.slider(ctl, { label: "Radius r", min: 1, max: 4, step: 0.5, value: r, onInput: function (x) { r = x; draw(); } });
+    W.slider(ctl, { label: "Height h", min: 2, max: 12, value: H, onInput: function (x) { H = x; draw(); } });
+    W.segmented(ctl, { title: "Ant path", value: true, options: [{ value: true, label: "show" }, { value: false, label: "hide" }], onChange: function (x) { ant = x; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function pt(s, z) {
+      if (t > 0.999) return [s, 0, z];
+      var rho = r / (1 - t), ph = s / rho;
+      return [rho * Math.sin(ph), rho * (1 - Math.cos(ph)) - r * (1 - t), z];
+    }
+    function draw() {
+      v.s = Math.min(520 / (2 * Math.PI * r), 250 / H, 60);
+      var N = 64, items = [], k, C = Math.PI * r;
+      for (k = 0; k < N; k++) {
+        var s0 = -C + 2 * C * k / N, s1 = -C + 2 * C * (k + 1) / N;
+        for (var q = 0; q < 10; q++) { var z0 = -H / 2 + H * q / 10, z1 = z0 + H / 10; items.push(panel(v, [pt(s0, z0), pt(s1, z0), pt(s1, z1), pt(s0, z1)], "var(--plot-2)")); }
+      }
+      var rimB = [], rimT = [];
+      for (k = 0; k <= N; k++) { var ss = -C + 2 * C * k / N; rimB.push(pt(ss, -H / 2)); rimT.push(pt(ss, H / 2)); }
+      items = items.concat(segs(rimB, { stroke: "var(--plot-2)", sw: 2.5 }, 1, -0.25), segs(rimT, { stroke: "var(--plot-2)", sw: 2.5 }, 1, -0.25));
+      var seamA = [], seamB = [];
+      for (k = 0; k <= 10; k++) { seamA.push(pt(-C, -H / 2 + H * k / 10)); seamB.push(pt(C, -H / 2 + H * k / 10)); }
+      items = items.concat(segs(seamA, { stroke: "var(--plot-2)", sw: 2 }, 1, -0.25), segs(seamB, { stroke: "var(--plot-2)", sw: 2 }, 1, -0.25));
+      if (ant) {
+        var path = [];
+        for (k = 0; k <= 40; k++) { var u = k / 40; path.push(pt(-C * u, H / 2 - H * u)); }
+        items = items.concat(segs(path, { stroke: "var(--accent)", sw: 3.5 }, 1, -0.3));
+        items.push({ t: "dot", p: pt(0, H / 2), r: 5, fill: "var(--accent)", layer: 3 });
+        items.push({ t: "dot", p: pt(-C, -H / 2), r: 5, fill: "var(--accent)", layer: 3 });
+        items.push({ t: "text", p: pt(0, H / 2), text: "A", dy: -12, layer: 4 });
+        items.push({ t: "text", p: pt(-C, -H / 2), text: "B", dx: -6, dy: 22, layer: 4 });
+      }
+      if (t > 0.97) {
+        items.push({ t: "text", p: [0, 0, H / 2], text: "2πr ≈ " + num(2 * C, 1), dy: -14, size: 13, fill: "var(--plot-2)", layer: 4 });
+        items.push({ t: "text", p: [C, 0, 0], text: "h = " + H, dx: 10, anchor: "start", size: 13, fill: "var(--plot-2)", layer: 4 });
+      }
+      v.render(items, [v.note(t < 0.02 ? "slit along the back line through B, then unroll" : "the side flattens into a rectangle, 2πr by h")]);
+      var straight = Math.sqrt(H * H + C * C);
+      out.set("<p>Lateral area $= 2\\pi r \\cdot h = " + num(2 * r * H) + "\\pi \\approx " + num(2 * Math.PI * r * H, 1) + "$.</p>" +
+        (ant ? "<p>Shortest path on the side: $\\sqrt{h^2 + (\\pi r)^2} = \\sqrt{" + H * H + " + " + num(r * r) + "\\pi^2} \\approx " + num(straight) + "$. Going straight down and across the bottom instead: $h + 2r = " + num(H + 2 * r) + "$" + (straight < H + 2 * r ? ", which is longer." : ", which is actually shorter here! (Short, wide cans favour the bottom.)") + "</p>" : ""));
+    }
+    draw();
+  });
+
+  /* ===== 18.5 — pyramids and cones ===== */
+  AOPS.registerWidget("pyramidCone", function (body) {
+    var n = 4, s = 6, H = 4, prism = false;
+    var v = view3d(body, { h: 380, yaw: -28, pitch: 16, label: "A regular pyramid or cone with its height, apothem and slant height" });
+    var ctl = W.controls(body), sizeS;
+    W.slider(ctl, { label: "Base sides", min: 3, max: 13, value: n, format: function (x) { return x === 13 ? "∞ (cone)" : String(x); }, onInput: function (x) { n = x; sizeS.input.parentNode.querySelector("label span").textContent = n === 13 ? "Radius r" : "Base edge"; draw(); } });
+    sizeS = W.slider(ctl, { label: "Base edge", min: 1, max: 10, value: s, onInput: function (x) { s = x; draw(); } });
+    W.slider(ctl, { label: "Height h", min: 1, max: 12, value: H, onInput: function (x) { H = x; draw(); } });
+    W.segmented(ctl, { title: "Enclosing prism", value: false, options: [{ value: false, label: "hide" }, { value: true, label: "show" }], onChange: function (x) { prism = x; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function draw() {
+      var cone = n === 13, N = cone ? 48 : n, R = cone ? s : s / (2 * Math.sin(Math.PI / n));
+      var a = cone ? s : R * Math.cos(Math.PI / N);
+      v.s = Math.min(300 / (2 * R), 260 / H, 80);
+      var ph = -Math.PI / 2 - Math.PI / N;
+      var base = regularPolygon(N, R, -H / 2, ph), apex = [0, 0, H / 2];
+      var verts = base.concat([apex]), faces = [], k, bf = [];
+      for (k = 0; k < N; k++) bf.push(k);
+      faces.push(bf);
+      for (k = 0; k < N; k++) faces.push([k, (k + 1) % N, N]);
+      var items = solid(v, verts, faces, { color: "var(--plot-1)", alpha: 24, smooth: cone ? function (i) { return i >= 1; } : null });
+      if (prism) {
+        var top = base.map(function (p) { return [p[0], p[1], H / 2]; });
+        for (k = 0; k < N; k++) {
+          items.push({ t: "line", a: top[k], b: top[(k + 1) % N], stroke: "var(--plot-3)", sw: 1.5, dash: "3 4", layer: 2 });
+          if (!cone || k % 12 === 0) items.push({ t: "line", a: base[k], b: top[k], stroke: "var(--plot-3)", sw: 1.5, dash: "3 4", layer: 2 });
+        }
+      }
+      var ctr = [0, 0, -H / 2], mid = null, best = Infinity;
+      for (k = 0; k < N; k++) { var mk = lerp(base[k], base[(k + 1) % N], 0.5), rk = v.rot(mk), dk = -rk[0] + 0.6 * rk[2]; if (dk < best) { best = dk; mid = mk; } }
+      items.push({ t: "line", a: apex, b: ctr, stroke: "var(--accent)", sw: 2.5, dash: "6 5", layer: 3 });
+      items.push({ t: "line", a: ctr, b: mid, stroke: "var(--plot-4)", sw: 2.5, layer: 3 });
+      items.push({ t: "line", a: apex, b: mid, stroke: "var(--plot-2)", sw: 3, layer: 3 });
+      items.push({ t: "text", p: lerp(apex, ctr, 0.45), text: "h", dx: 10, anchor: "start", fill: "var(--accent)", layer: 5 });
+      items.push({ t: "text", p: lerp(ctr, mid, 0.5), text: cone ? "r" : "a", dx: -10, dy: 14, fill: "var(--plot-4)", layer: 5 });
+      items.push({ t: "text", p: lerp(apex, mid, 0.55), text: "ℓ", dx: -10, anchor: "end", fill: "var(--plot-2)", layer: 5 });
+      v.render(items, [v.note("dashed h · green " + (cone ? "radius r" : "apothem a") + " · blue slant height ℓ")]);
+      var l2 = H * H + a * a, l = Math.sqrt(l2), html;
+      if (cone) {
+        html = "<p>$\\ell = \\sqrt{h^2 + r^2} = \\sqrt{" + num(l2) + "}" + (isInt(l2) && !/sqrt/.test(surd(l2)) ? " = " + surd(l2) : " \\approx " + num(l)) + "$. Volume $\\tfrac13\\pi r^2 h = " + W.frac(Math.round(s * s * H), 3) + "\\pi$, lateral area $\\pi r \\ell \\approx " + num(Math.PI * s * l) + "$.</p>";
+        if (prism) html += "<p>The cylinder has volume $\\pi r^2 h = " + s * s * H + "\\pi$: exactly $3$ times the cone.</p>";
+      } else {
+        var A = n * s * s / (4 * Math.tan(Math.PI / n));
+        html = "<p>Apothem $a " + (n === 4 ? "= " + num(a) : "\\approx " + num(a)) + "$, slant height $\\ell = \\sqrt{h^2 + a^2} " + (n === 4 && isInt(l2) && !/sqrt/.test(surd(l2)) ? "= " + surd(l2) : "\\approx " + num(l)) + "$.</p>" +
+          "<p>Base area $B " + (n === 4 ? "= " : "\\approx ") + num(A) + "$, volume $\\tfrac13 Bh " + (n === 4 && isInt(s * s * H / 3) ? "= " : "\\approx ") + num(A * H / 3) + "$, lateral area $\\tfrac12 p\\ell " + (n === 4 && isInt(n * s * l / 2) ? "= " : "\\approx ") + num(n * s * l / 2) + "$.</p>";
+        if (prism) html += "<p>The prism has volume $Bh " + (n === 4 ? "= " : "\\approx ") + num(A * H) + "$: exactly $3$ times the pyramid.</p>";
+      }
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* ===== 18.5 — unrolling a cone ===== */
+  AOPS.registerWidget("coneUnroll", function (body) {
+    var t = 0, r = 4, H = 8;
+    var v = view3d(body, { h: 380, yaw: -20, pitch: 28, label: "The curved side of a cone unrolling into a flat sector" });
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Unroll", min: 0, max: 100, value: 0, format: function (x) { return x + "%"; }, onInput: function (x) { t = x / 100; draw(); } });
+    W.slider(ctl, { label: "Radius r", min: 1, max: 6, value: r, onInput: function (x) { r = x; draw(); } });
+    W.slider(ctl, { label: "Height h", min: 1, max: 12, value: H, onInput: function (x) { H = x; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function draw() {
+      var l = Math.sqrt(r * r + H * H), th = 2 * Math.PI * r / l, Phi = 2 * Math.PI * (1 - t) + th * t;
+      var sa = Math.min(1, th / Phi), ca = Math.sqrt(Math.max(0, 1 - sa * sa));
+      v.s = 150 / l;
+      function pt(psi, rho) { var az = (psi / th - 0.5) * Phi + Math.PI / 2; return [rho * sa * Math.cos(az), rho * sa * Math.sin(az), -rho * ca + l * ca / 2]; }
+      var N = 64, items = [], k, rim = [];
+      for (k = 0; k < N; k++) {
+        var p0 = th * k / N, p1 = th * (k + 1) / N;
+        for (var q = 0; q < 8; q++) { var r0 = Math.max(0.001, l * q / 8), r1 = l * (q + 1) / 8; items.push(panel(v, [pt(p0, r0), pt(p0, r1), pt(p1, r1), pt(p1, r0)], "var(--plot-5)")); }
+      }
+      for (k = 0; k <= N; k++) rim.push(pt(th * k / N, l));
+      items = items.concat(segs(rim, { stroke: "var(--plot-5)", sw: 2.5 }, 1, -0.2));
+      var g0 = [], g1 = [];
+      for (k = 0; k <= 8; k++) { g0.push(pt(0, l * k / 8)); g1.push(pt(th, l * k / 8)); }
+      items = items.concat(segs(g0, { stroke: "var(--plot-5)", sw: 2.5 }, 1, -0.2), segs(g1, { stroke: "var(--plot-5)", sw: 2.5 }, 1, -0.2));
+      items.push({ t: "dot", p: pt(0, 0), r: 4, fill: "var(--ink)", layer: 3 });
+      items.push({ t: "text", p: pt(0, l / 2), text: "ℓ", dx: -12, layer: 4 });
+      if (t > 0.97) items.push({ t: "text", p: pt(th / 2, l), text: "arc = 2πr", dy: 20, size: 13, fill: "var(--plot-5)", layer: 4 });
+      v.render(items, [v.note("tilt down to look straight at the flat sector")]);
+      var angle = 360 * r / l, l2 = r * r + H * H;
+      var lt = isInt(l2) && !/sqrt/.test(surd(l2)) ? surd(l2) : "\\sqrt{" + l2 + "}";
+      out.set("<p>Slant height $\\ell = \\sqrt{r^2 + h^2} = " + lt + (/sqrt/.test(lt) ? " \\approx " + num(l) : "") + "$. Sector angle $= 360^\\circ \\cdot \\dfrac{r}{\\ell} \\approx " + num(angle, 1) + "^\\circ$.</p>" +
+        "<p>Sector area $= \\dfrac{r}{\\ell}\\cdot \\pi\\ell^2 = \\pi r \\ell \\approx " + num(Math.PI * r * l) + "$, the cone's lateral area.</p>");
+    }
+    draw();
+  });
+
+  /* ===== 18.6 — Euler's formula ===== */
+  AOPS.registerWidget("eulerSolids", function (body) {
+    var phi = (1 + Math.sqrt(5)) / 2, ip = 1 / phi;
+    function perms(list) { var out = []; list.forEach(function (p) { out.push([p[0], p[1], p[2]], [p[1], p[2], p[0]], [p[2], p[0], p[1]]); }); return out; }
+    function signs(p) { var out = []; [1, -1].forEach(function (a) { [1, -1].forEach(function (b) { [1, -1].forEach(function (c) { var q = [p[0] * a, p[1] * b, p[2] * c], key = q.join(); if (!out.some(function (o) { return o.join() === key; })) out.push(q); }); }); }); return out; }
+    function cyc(p) { return perms([p]).reduce(function (acc, q) { return acc.concat(signs(q)); }, []).filter(function (q, i, arr) { return arr.findIndex(function (o) { return len(sub(o, q)) < 1e-9; }) === i; }); }
+    var SOLIDS = {
+      tetra: { label: "tetra", pts: [[1, 1, 1], [1, -1, -1], [-1, 1, -1], [-1, -1, 1]] },
+      cube: { label: "cube", pts: signs([1, 1, 1]) },
+      octa: { label: "octa", pts: cyc([1, 0, 0]) },
+      dodeca: { label: "dodeca", pts: signs([1, 1, 1]).concat(cyc([0, ip, phi])) },
+      icosa: { label: "icosa", pts: cyc([0, 1, phi]) },
+      prism: { label: "prism", pts: regularPolygon(3, 1, -0.8, Math.PI / 2).concat(regularPolygon(3, 1, 0.8, Math.PI / 2)) },
+      pyramid: { label: "pyramid", pts: regularPolygon(4, 1.2, -0.6, Math.PI / 4).concat([[0, 0, 1]]) }
+    };
+    Object.keys(SOLIDS).forEach(function (k) {
+      var S = SOLIDS[k], c = mean(S.pts), R = Math.max.apply(null, S.pts.map(function (p) { return len(sub(p, c)); }));
+      S.pts = S.pts.map(function (p) { return mul(sub(p, c), 1.5 / R); });
+      S.faces = hull(S.pts);
+    });
+    var key = "cube", cut = 0, cache = {};
+    var v = view3d(body, { h: 380, scale: 95, yaw: -30, pitch: 22, label: "A polyhedron whose corners can be cut off, with vertex, edge and face counts" });
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Cut corners", min: 0, max: 50, step: 5, value: 0, format: function (x) { return x === 0 ? "none" : x === 50 ? "halfway" : x + "%"; }, onInput: function (x) { cut = x / 100; draw(); } });
+    W.segmented(ctl, { title: "Solid", value: key, options: Object.keys(SOLIDS).map(function (k) { return { value: k, label: SOLIDS[k].label }; }), onChange: function (k) { key = k; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    var NAMES = { 3: ["triangle", "triangles"], 4: ["quadrilateral", "quadrilaterals"], 5: ["pentagon", "pentagons"], 6: ["hexagon", "hexagons"], 8: ["octagon", "octagons"], 10: ["decagon", "decagons"] };
+    function shape() {
+      var id = key + ":" + cut;
+      if (cache[id]) return cache[id];
+      var S = SOLIDS[key], pts = S.pts, faces = S.faces;
+      if (cut > 0) {
+        var np = [];
+        edgeList(faces).forEach(function (e) {
+          [lerp(pts[e[0]], pts[e[1]], cut), lerp(pts[e[1]], pts[e[0]], cut)].forEach(function (q) { if (!np.some(function (o) { return len(sub(o, q)) < 1e-6; })) np.push(q); });
+        });
+        pts = np; faces = hull(pts);
+      }
+      return (cache[id] = { pts: pts, faces: faces });
+    }
+    v.draw = draw;
+    function draw() {
+      var sh = shape(), sizes = {};
+      sh.faces.forEach(function (f) { sizes[f.length] = (sizes[f.length] || 0) + 1; });
+      var sizeColor = {}, ci = 0;
+      Object.keys(sizes).sort().forEach(function (k) { sizeColor[k] = COLORS[ci++ % COLORS.length]; });
+      var items = solid(v, sh.pts, sh.faces, { color: "var(--plot-2)", alpha: 34, edge: "var(--ink)", sw: 1.6, faceColor: function (i) { return sizeColor[sh.faces[i].length]; } });
+      sh.pts.forEach(function (p) { items.push({ t: "dot", p: p, r: 3, fill: "var(--ink)", layer: 1, bias: -0.05 }); });
+      v.render(items, []);
+      var V = sh.pts.length, F = sh.faces.length, E = edgeList(sh.faces).length;
+      var desc = Object.keys(sizes).sort().map(function (k) { var nm = NAMES[k] || [k + "-gon", k + "-gons"]; return sizes[k] + " " + nm[sizes[k] === 1 ? 0 : 1]; }).join(", ");
+      out.set("<p>$V = " + V + "$, &nbsp; $E = " + E + "$, &nbsp; $F = " + F + "$ &nbsp; (" + desc + ")</p><p>$V - E + F = " + V + " - " + E + " + " + F + " = " + (V - E + F) + "$</p>");
+    }
+    draw();
+  });
+
+  /* ===== 18.7 — cross-sections of a cube ===== */
+  AOPS.registerWidget("cubeSection", function (body) {
+    var MODES = {
+      face: { label: "face-on", n: [0, 0, 1] },
+      edge: { label: "edge-on", n: unit([1, 1, 0]) },
+      corner: { label: "corner-on", n: unit([1, 1, 1]) },
+      tilt: { label: "tilted", n: unit([0.3, 0.55, 1]) }
+    };
+    var mode = "corner", pos = 30;
+    var P = [], k;
+    for (k = 0; k < 8; k++) P.push([(k & 1) ? 1 : -1, (k & 2) ? 1 : -1, (k & 4) ? 1 : -1]);
+    var F = [[0, 1, 3, 2], [4, 5, 7, 6], [0, 1, 5, 4], [2, 3, 7, 6], [0, 2, 6, 4], [1, 3, 7, 5]];
+    var E = edgeList(F);
+    var v = view3d(body, { h: 380, scale: 100, yaw: -150, pitch: 30, label: "A cube sliced by a plane, showing the cross-section" });
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Plane position", min: 2, max: 98, step: 2, value: pos, format: function (x) { return x + "%"; }, onInput: function (x) { pos = x; draw(); } });
+    W.segmented(ctl, { title: "Slice direction", value: mode, options: Object.keys(MODES).map(function (m) { return { value: m, label: MODES[m].label }; }), onChange: function (m) { mode = m; draw(); } });
+    var ctl2 = W.controls(body); v.sliders(ctl2);
+    var out = W.readout(body);
+    v.draw = draw;
+    function draw() {
+      var nrm = MODES[mode].n, cmax = Math.max.apply(null, P.map(function (p) { return dot(nrm, p); }));
+      var c = -cmax + 2 * cmax * pos / 100, pts = [];
+      P.forEach(function (p) { if (Math.abs(dot(nrm, p) - c) < 1e-9) pts.push(p); });
+      E.forEach(function (e) {
+        var a = P[e[0]], b = P[e[1]], sa = dot(nrm, a) - c, sb = dot(nrm, b) - c;
+        if (sa * sb < 0 && Math.abs(sa) > 1e-9 && Math.abs(sb) > 1e-9) pts.push(lerp(a, b, sa / (sa - sb)));
+      });
+      var items = solid(v, P, F, { color: "var(--plot-2)", alpha: 12, backAlpha: 4 });
+      // plane patch
+      var u = unit(cross(nrm, Math.abs(nrm[2]) > 0.9 ? [1, 0, 0] : [0, 0, 1])), w = cross(nrm, u), o = mul(nrm, c), S = 2.1;
+      items.push({ t: "poly", pts: [add(o, add(mul(u, -S), mul(w, -S))), add(o, add(mul(u, S), mul(w, -S))), add(o, add(mul(u, S), mul(w, S))), add(o, add(mul(u, -S), mul(w, S)))], fill: mix("var(--plot-3)", 10), stroke: mix("var(--plot-3)", 50), sw: 1, dash: "4 4", layer: 0, bias: 20 });
+      var nSides = pts.length, area = 0;
+      if (nSides >= 3) {
+        var cc = mean(pts), u2 = unit(sub(pts[0], cc)), w2 = cross(nrm, u2);
+        pts.sort(function (p, q) { var a = sub(p, cc), b = sub(q, cc); return Math.atan2(dot(a, w2), dot(a, u2)) - Math.atan2(dot(b, w2), dot(b, u2)); });
+        var acc = [0, 0, 0];
+        for (k = 0; k < nSides; k++) acc = add(acc, cross(sub(pts[k], cc), sub(pts[(k + 1) % nSides], cc)));
+        area = len(acc) / 2;
+        items.push({ t: "poly", pts: pts, fill: mix("var(--accent)", 55), stroke: "var(--accent)", sw: 2.5, layer: 3 });
+        pts.forEach(function (p) { items.push({ t: "dot", p: p, r: 4, fill: "var(--accent)", layer: 4 }); });
+      }
+      v.render(items, [v.note("cube edge 2 · gold: the cross-section")]);
+      var names = { 3: "triangle", 4: "quadrilateral", 5: "pentagon", 6: "hexagon" }, nm = names[nSides] || "polygon";
+      var sides = [];
+      for (k = 0; k < nSides; k++) sides.push(len(sub(pts[k], pts[(k + 1) % nSides])));
+      var allEq = sides.every(function (x) { return Math.abs(x - sides[0]) < 1e-6; });
+      if (mode === "face") nm = "square";
+      else if (mode === "edge" && nSides === 4) nm = "rectangle";
+      else if (allEq && nSides === 3) nm = "equilateral triangle";
+      else if (allEq && nSides === 6) nm = "regular hexagon";
+      out.set("<p>Cross-section: <strong>" + nm + "</strong> with " + nSides + " sides, area $\\approx " + num(area) + "$ (cube edge $2$).</p>" +
+        (nm === "regular hexagon" ? "<p>Through the centre, the corner-on slice passes through the midpoints of six edges: side $\\sqrt2$, area $3\\sqrt3 \\approx 5.20$.</p>" :
+          mode === "corner" && nSides === 3 ? "<p>Near a corner the slice cuts only the three edges meeting there.</p>" : ""));
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
