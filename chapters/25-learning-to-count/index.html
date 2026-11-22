@@ -1,0 +1,1751 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 25: Learning to Count · AoPS Learner</title>
+  <meta name="description" content="Counting ranges, the multiplication principle, numbers of divisors, permutations and factorials, casework, complementary counting, combinations, rearrangements and the Binomial Theorem, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="25" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 25 · Advanced Topics</span>
+    <h1>Learning to Count</h1>
+    <p class="lede">Counting to seventeen is easy. Counting the ways to seat twelve people, choose a committee, or rearrange the letters of a word is not, unless you count cleverly. This chapter builds a toolkit: multiply independent choices, handle restrictions slot by slot, split into cases, count the opposite, and divide out overcounting. Combinations, the most important tool of all, then unlock the Binomial Theorem.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Integers from $a$ to $b$: $b - a + 1$ inclusive, $b - a - 1$ exclusive. Shift or scale a list until it reads $1, 2, \ldots, n$.</li>
+      <li>Multiplication principle: independent choices with $m$ and $n$ options give $mn$ outcomes.</li>
+      <li>If $n = p_1^{e_1} p_2^{e_2}\cdots p_k^{e_k}$, then $n$ has $(e_1 + 1)(e_2 + 1)\cdots(e_k + 1)$ divisors.</li>
+      <li>Fill "blanks" one at a time, and fill the most restricted blank first.</li>
+      <li>$n!$ orders $n$ things in a row; ${}_nP_k = \dfrac{n!}{(n-k)!}$; $(n-1)!$ around a circle; $\dfrac{(n-1)!}{2}$ on a keychain.</li>
+      <li>Split into cases that don't overlap and add; or count the complement and subtract from the total.</li>
+      <li>$\dbinom{n}{k} = \dfrac{n!}{k!\,(n-k)!}$ chooses $k$ of $n$ when order doesn't matter: count ordered, then divide by $k!$. Rearrangements of a word: $\dfrac{n!}{k_1!\,k_2!\cdots}$.</li>
+      <li>$(x + y)^n = \displaystyle\sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^k$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 25.1 ===================== -->
+  <section class="lesson" id="s25-1" data-title="What's to Learn?">
+    <h2><span class="sec-num">25.1</span> What's to Learn?</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A $100$-metre fence needs a post every $10$ metres. How many posts? Most people say $10$ and are wrong: there are $11$, because you need one at each end. Counting slips like this one are so common they have a name, the <em>fencepost error</em>. Clever counting starts with not tripping over the ends.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Counting one by one works for a pile of seventeen things, but not for seventeen hundred, or for "all the ways six coins can land." Throughout this chapter we'll replace one-by-one counting with smart grouping. The simplest example is counting the integers in a range.</p>
+      <p>The integers from $1$ to $n$ number exactly $n$. Any other run of consecutive integers can be <em>shifted</em> to look like that. Subtracting $a - 1$ from every number in $a, a+1, \ldots, b$ turns it into $1, 2, \ldots, b - a + 1$, so</p>
+      <div class="rule"><p>$$\#\{a, \ldots, b\} = b - a + 1 \ \text{(inclusive)}, \qquad \#\text{ strictly between } a \text{ and } b = b - a - 1 \ \text{(exclusive)}.$$</p></div>
+      <p>For an evenly spaced list like $4, 7, 10, \ldots, 301$, first shift and then <em>scale</em>: subtract $1$ to get $3, 6, \ldots, 300$, then divide by $3$ to get $1, 2, \ldots, 100$. The count never changed, so there are $100$ terms.</p>
+      <div class="note"><p>When in doubt, test your formula on a tiny case you can count by hand, like the integers from $3$ to $5$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="countRange">
+      <figcaption><strong>Explore:</strong> Set the ends of a range, choose inclusive or exclusive, and count only the multiples of $m$ if you like. The highlighted dots are the ones counted; compare the formula with what you see, especially at the endpoints.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Inclusive or exclusive?</h3>
+        <div class="problem"><p>How many integers are there from $12$ to $40$ inclusive? Strictly between $12$ and $40$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Inclusive: $40 - 12 + 1 = 29$.</p></div><p class="why">Subtracting $11$ from each number turns $12, \ldots, 40$ into $1, \ldots, 29$.</p></li>
+          <li><div class="do"><p>Exclusive: drop both ends, $29 - 2 = 27$.</p></div><p class="why">"Strictly between" removes $12$ and $40$ themselves, giving $b - a - 1$.</p></li>
+        </ol>
+        <p class="answer">$29$ inclusive, $27$ exclusive.</p>
+        <p class="book-next">Next in the book: Example 25-1 and Exercise 25-1.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Pages read</h3>
+        <div class="problem"><p>You read from the top of page $37$ to the bottom of page $113$. How many pages did you read?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Both end pages are read, so count inclusively: $113 - 37 + 1 = 77$.</p></div><p class="why">$113 - 37 = 76$ counts the gaps between pages; the pages themselves are one more.</p></li>
+        </ol>
+        <p class="answer">$77$ pages</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Multiples in a range</h3>
+        <div class="problem"><p>How many multiples of $7$ lie between $100$ and $500$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>First multiple: $105 = 7 \cdot 15$. Last: $497 = 7 \cdot 71$.</p></div><p class="why">$100/7 \approx 14.3$ and $500/7 \approx 71.4$, so round up and round down.</p></li>
+          <li><div class="do"><p>The multiples are $7 \cdot 15, 7 \cdot 16, \ldots, 7 \cdot 71$: as many as $15, \ldots, 71$, which is $71 - 15 + 1 = 57$.</p></div><p class="why">Dividing every multiple by $7$ turns the list into a run of consecutive integers.</p></li>
+        </ol>
+        <p class="answer">$57$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Terms of an evenly spaced list</h3>
+        <div class="problem"><p>How many numbers are in the list $4, 7, 10, \ldots, 301$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Subtract $1$: $3, 6, 9, \ldots, 300$.</p></div><p class="why">Shifting doesn't change how many numbers there are, and makes every entry a multiple of $3$.</p></li>
+          <li><div class="do"><p>Divide by $3$: $1, 2, 3, \ldots, 100$. So there are $100$ numbers.</p></div><p class="why">Scaling doesn't change the count either; now the answer can be read off.</p></li>
+        </ol>
+        <p class="answer">$100$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Fenceposts, straight and round</h3>
+        <div class="problem"><p>Posts are placed every $5$ m along a straight $60$ m fence, including both ends. How many posts? How many if the $60$ m fence instead forms a closed loop?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Straight: posts at $0, 5, 10, \ldots, 60$, which is $\tfrac{60}{5} + 1 = 13$ posts.</p></div><p class="why">There are $12$ gaps and one more post than gaps.</p></li>
+          <li><div class="do"><p>Loop: the post at $60$ m is the same as the post at $0$ m, so $12$ posts.</p></div><p class="why">In a closed loop the number of posts equals the number of gaps.</p></li>
+        </ol>
+        <p class="answer">$13$ posts in a line, $12$ in a loop.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three-digit multiples of 6</h3>
+        <div class="problem"><p>How many three-digit numbers are divisible by $6$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiples of $6$ up to $999$: $\lfloor 999/6 \rfloor = 166$.</p></div><p class="why">$\lfloor x \rfloor$ means "round down"; there are $166$ multiples of $6$ from $6$ to $996$.</p></li>
+          <li><div class="do"><p>Multiples of $6$ up to $99$: $\lfloor 99/6 \rfloor = 16$.</p></div><p class="why">These are the ones that are too small.</p></li>
+          <li><div class="do"><p>$166 - 16 = 150$.</p></div><p class="why">Count "up to the top" and subtract "below the bottom."</p></li>
+        </ol>
+        <p class="answer">$150$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Perfect squares in a range</h3>
+        <div class="problem"><p>How many perfect squares are between $50$ and $2000$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$7^2 = 49 &lt; 50 &lt; 64 = 8^2$ and $44^2 = 1936 &lt; 2000 &lt; 2025 = 45^2$.</p></div><p class="why">Find the smallest and largest square roots that land in the range.</p></li>
+          <li><div class="do"><p>The squares are $8^2, 9^2, \ldots, 44^2$: $44 - 8 + 1 = 37$ of them.</p></div><p class="why">Counting squares is counting their square roots, which are consecutive integers.</p></li>
+        </ol>
+        <p class="answer">$37$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Digits used to number pages</h3>
+        <div class="problem"><p>How many digits are printed when the pages of a book are numbered from $1$ to $150$?</p></div>
+        <ol class="steps">
+          <li data-think="Do all page numbers use the same number of digits?"><div class="do"><p>Split by length: pages $1$–$9$ ($9$ pages), $10$–$99$ ($90$ pages), $100$–$150$ ($51$ pages).</p></div><p class="why">Within each group every page uses the same number of digits.</p></li>
+          <li><div class="do"><p>Digits: $9 \cdot 1 + 90 \cdot 2 + 51 \cdot 3 = 9 + 180 + 153 = 342$.</p></div><p class="why">Multiply each group's size by its digit length, then add.</p></li>
+        </ol>
+        <p class="answer">$342$ digits</p>
+        <p class="key-idea">Group things that behave alike, count each group with a formula, then combine.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.2 ===================== -->
+  <section class="lesson" id="s25-2" data-title="Multiplication">
+    <h2><span class="sec-num">25.2</span> Multiplication</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A café offers $4$ breads, $5$ fillings and $3$ sauces. How many different sandwiches is that? You could write them all down, but notice that for <em>each</em> bread there are the same $5$ fillings, and for each of those the same $3$ sauces. That's $4 \times 5 \times 3 = 60$ sandwiches, counted in one line.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Think of six coins. The first coin lands heads or tails, and whichever it does, the other five can land in the same number of ways. So the total is $2 \times (\text{ways for five coins})$. Repeating the argument gives $2^6 = 64$.</p>
+      <div class="rule"><p><strong>Multiplication principle.</strong> If a task is made of independent choices with $n_1, n_2, \ldots, n_k$ options, the number of outcomes is $n_1 \cdot n_2 \cdots n_k$.</p></div>
+      <p><em>Independent</em> means the number of options for one choice doesn't depend on what was picked for the others. Letters of a "word" (any string of letters), digits of a number, and coin flips are typical examples.</p>
+      <p>Picture it as a tree: the first choice branches $n_1$ ways, each branch splits $n_2$ ways, and so on. The leaves of the tree are the outcomes.</p>
+      <div class="note"><p>Watch for hidden restrictions, like "a number can't start with $0$." The principle still works; that position just has fewer options.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="choiceTree">
+      <figcaption><strong>Explore:</strong> Set the number of options at each of three stages. Every path from the root to a leaf is one outcome, so the leaves number $n_1 n_2 n_3$. Press <em>Trace an outcome</em> to walk the paths one at a time.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Outfits</h3>
+        <div class="problem"><p>You own $4$ shirts, $3$ pairs of trousers and $2$ hats. How many outfits of one shirt, one pair of trousers and one hat can you make?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4 \cdot 3 \cdot 2 = 24$.</p></div><p class="why">Any shirt goes with any trousers and any hat, so the choices are independent.</p></li>
+        </ol>
+        <p class="answer">$24$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Coin flips</h3>
+        <div class="problem"><p>In how many ways can $5$ coins land (in order)?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each coin has $2$ outcomes: $2 \cdot 2 \cdot 2 \cdot 2 \cdot 2 = 2^5 = 32$.</p></div><p class="why">One coin's result doesn't affect another's options.</p></li>
+        </ol>
+        <p class="answer">$32$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>License plates</h3>
+        <div class="problem"><p>A plate shows $3$ letters followed by $3$ digits. How many plates are possible?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Letters: $26 \cdot 26 \cdot 26 = 26^3 = 17{,}576$.</p></div><p class="why">Repeats are allowed, so each letter slot has all $26$ options.</p></li>
+          <li><div class="do"><p>Digits: $10^3 = 1000$. Total: $17{,}576 \cdot 1000 = 17{,}576{,}000$.</p></div><p class="why">Every letter block pairs with every digit block.</p></li>
+        </ol>
+        <p class="answer">$17{,}576{,}000$</p>
+        <p class="book-next">Next in the book: Examples 25-2 and 25-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>All digits odd</h3>
+        <div class="problem"><p>How many four-digit numbers have only odd digits?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each digit is one of $1, 3, 5, 7, 9$: $5$ options per digit.</p></div><p class="why">Since $0$ isn't odd, the leading-zero problem never comes up.</p></li>
+          <li><div class="do"><p>$5^4 = 625$.</p></div><p class="why">Four independent slots with $5$ options each.</p></li>
+        </ol>
+        <p class="answer">$625$</p>
+        <p class="book-next">Next in the book: Exercise 25-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Even three-digit numbers</h3>
+        <div class="problem"><p>How many three-digit numbers are even?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Hundreds digit: $1$–$9$, so $9$ options. Tens digit: $10$ options. Units digit: $0, 2, 4, 6, 8$, so $5$ options.</p></div><p class="why">Each position has its own restriction, but none depends on the others.</p></li>
+          <li><div class="do"><p>$9 \cdot 10 \cdot 5 = 450$.</p></div><p class="why">Check: half of the $900$ three-digit numbers are even. ✓</p></li>
+        </ol>
+        <p class="answer">$450$</p>
+        <p class="book-next">Next in the book: Exercise 25-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Answer sheets with blanks</h3>
+        <div class="problem"><p>A quiz has $10$ multiple-choice questions, each with choices A–D, and a student may also leave any question blank. How many different answer sheets are possible?</p></div>
+        <ol class="steps">
+          <li data-think="How many options does each question really have?"><div class="do"><p>Each question has $5$ options: A, B, C, D or blank.</p></div><p class="why">Leaving a question blank is just one more choice.</p></li>
+          <li><div class="do"><p>$5^{10} = 9{,}765{,}625$.</p></div><p class="why">Ten independent questions.</p></li>
+        </ol>
+        <p class="answer">$5^{10} = 9{,}765{,}625$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Counting subsets</h3>
+        <div class="problem"><p>How many subsets does a set with $6$ elements have (including the empty set and the whole set)?</p></div>
+        <ol class="steps">
+          <li data-think="Instead of listing subsets, what decision do you make about each element?"><div class="do"><p>For each element decide: in the subset or not. That's $2$ options per element.</p></div><p class="why">Every subset corresponds to exactly one sequence of in/out decisions.</p></li>
+          <li><div class="do"><p>$2^6 = 64$.</p></div><p class="why">Six independent yes/no choices.</p></li>
+        </ol>
+        <p class="answer">$64$</p>
+        <p class="key-idea">Turn "build an object" into a sequence of independent decisions, then multiply.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Alternating odd and even digits</h3>
+        <div class="problem"><p>How many five-digit numbers have digits that alternate between odd and even (like $34129$ or $50703$)?</p></div>
+        <ol class="steps">
+          <li data-think="Does the first digit being odd or even change the count of options?"><div class="do"><p>Pattern odd–even–odd–even–odd: $5 \cdot 5 \cdot 5 \cdot 5 \cdot 5 = 3125$.</p></div><p class="why">There are $5$ odd digits and $5$ even digits ($0, 2, 4, 6, 8$), and $0$ is allowed after the first position.</p></li>
+          <li><div class="do"><p>Pattern even–odd–even–odd–even: the first digit can't be $0$, so $4 \cdot 5 \cdot 5 \cdot 5 \cdot 5 = 2500$.</p></div><p class="why">Only the leading position loses an option.</p></li>
+          <li><div class="do"><p>$3125 + 2500 = 5625$.</p></div><p class="why">Every such number follows exactly one of the two patterns, so we add. (Section 25.6 develops this idea.)</p></li>
+        </ol>
+        <p class="answer">$5625$</p>
+        <p class="key-idea">When the options depend on an early choice, split on that choice and add.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.3 ===================== -->
+  <section class="lesson" id="s25-3" data-title="Example: The Number of Divisors">
+    <h2><span class="sec-num">25.3</span> Example: The Number of Divisors</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>How many numbers divide $3600$? Testing $1, 2, 3, \ldots$ one at a time is slow and easy to get wrong. But every divisor of $3600$ is built from the same prime building blocks as $3600$ itself, so building a divisor is just a short series of choices, and the multiplication principle counts them instantly.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Take $540 = 2^2 \cdot 3^3 \cdot 5$. A divisor of $540$ can use only the primes $2$, $3$, $5$, and no more copies of each than $540$ has. So every divisor looks like $2^a 3^b 5^c$ with</p>
+      <div class="rule"><p>$$a \in \{0, 1, 2\}, \quad b \in \{0, 1, 2, 3\}, \quad c \in \{0, 1\} \quad\Longrightarrow\quad 3 \cdot 4 \cdot 2 = 24 \text{ divisors.}$$</p></div>
+      <p>The exponents are chosen independently, and different choices give different divisors (prime factorization is unique). In general,</p>
+      <div class="rule"><p>$$n = p_1^{e_1} p_2^{e_2} \cdots p_k^{e_k} \quad\Longrightarrow\quad d(n) = (e_1 + 1)(e_2 + 1)\cdots(e_k + 1).$$</p></div>
+      <p>The "$+1$" is there because an exponent of $0$ is allowed. Restrictions are just as easy: an <em>odd</em> divisor must use $2^0$, and a <em>perfect-square</em> divisor must use even exponents only.</p>
+    </div>
+
+    <figure class="explore" data-widget="divisorGrid">
+      <figcaption><strong>Explore:</strong> Choose the exponents in $n = 2^a 3^b 5^c$. Each cell is one divisor: move right to multiply by $2$, down to multiply by $3$, and to the next panel to multiply by $5$. The grid has $(a+1)(b+1)(c+1)$ cells. Highlight the odd divisors or the square divisors and count them the same way.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Divisors of 12, two ways</h3>
+        <div class="problem"><p>Count the divisors of $12$ with the formula, then list them.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$12 = 2^2 \cdot 3$, so $d(12) = (2+1)(1+1) = 6$.</p></div><p class="why">Exponent of $2$: $0, 1, 2$. Exponent of $3$: $0, 1$.</p></li>
+          <li><div class="do"><p>List: $1, 2, 4, 3, 6, 12$. ✓</p></div><p class="why">These are $2^0, 2^1, 2^2$ times $3^0$, then times $3^1$.</p></li>
+        </ol>
+        <p class="answer">$6$ divisors: $1, 2, 3, 4, 6, 12$.</p>
+        <p class="book-next">Next in the book: Exercises 25-4 and 25-5.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Divisors of 72</h3>
+        <div class="problem"><p>How many positive divisors does $72$ have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$72 = 8 \cdot 9 = 2^3 \cdot 3^2$.</p></div><p class="why">The formula needs the prime factorization first.</p></li>
+          <li><div class="do"><p>$d(72) = (3+1)(2+1) = 12$.</p></div><p class="why">Add one to each exponent and multiply.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Three primes</h3>
+        <div class="problem"><p>How many positive divisors does $3600$ have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$3600 = 36 \cdot 100 = 2^2 3^2 \cdot 2^2 5^2 = 2^4 \cdot 3^2 \cdot 5^2$.</p></div><p class="why">Factor the friendly pieces, then combine the powers of $2$.</p></li>
+          <li><div class="do"><p>$d(3600) = 5 \cdot 3 \cdot 3 = 45$.</p></div><p class="why">$(4+1)(2+1)(2+1)$.</p></li>
+        </ol>
+        <p class="answer">$45$</p>
+        <p class="book-next">Next in the book: Exercise 25-6.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Even divisors</h3>
+        <div class="problem"><p>How many even divisors does $360$ have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$360 = 2^3 \cdot 3^2 \cdot 5$, so $d(360) = 4 \cdot 3 \cdot 2 = 24$.</p></div><p class="why">Start with all the divisors.</p></li>
+          <li><div class="do"><p>Odd divisors use $2^0$ only: $1 \cdot 3 \cdot 2 = 6$.</p></div><p class="why">An odd number has no factor of $2$, so the exponent of $2$ has one option.</p></li>
+          <li><div class="do"><p>Even divisors: $24 - 6 = 18$.</p></div><p class="why">Equivalently, the exponent of $2$ is $1, 2$ or $3$: $3 \cdot 3 \cdot 2 = 18$.</p></li>
+        </ol>
+        <p class="answer">$18$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Square divisors</h3>
+        <div class="problem"><p>How many divisors of $3600$ are perfect squares?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$3600 = 2^4 3^2 5^2$. A square divisor $2^a3^b5^c$ needs $a, b, c$ even.</p></div><p class="why">A number is a perfect square exactly when every prime exponent is even.</p></li>
+          <li><div class="do"><p>$a \in \{0, 2, 4\}$, $b \in \{0, 2\}$, $c \in \{0, 2\}$: $3 \cdot 2 \cdot 2 = 12$.</p></div><p class="why">Count the allowed exponents for each prime and multiply.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Smallest number with 12 divisors</h3>
+        <div class="problem"><p>What is the smallest positive integer with exactly $12$ divisors?</p></div>
+        <ol class="steps">
+          <li data-think="If $d(n) = 12$, what can the list of exponents look like?"><div class="do"><p>Write $12$ as a product of factors $(e_i + 1)$: $12$, $6 \cdot 2$, $4 \cdot 3$, or $3 \cdot 2 \cdot 2$.</p></div><p class="why">Each factorization gives a possible exponent pattern.</p></li>
+          <li><div class="do"><p>Use the smallest primes, with the biggest exponent on $2$: $2^{11} = 2048$, $2^5 \cdot 3 = 96$, $2^3 \cdot 3^2 = 72$, $2^2 \cdot 3 \cdot 5 = 60$.</p></div><p class="why">Larger exponents on smaller primes keep the number small.</p></li>
+          <li><div class="do"><p>The smallest is $60$.</p></div><p class="why">Compare the four candidates.</p></li>
+        </ol>
+        <p class="answer">$60$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>An odd number of divisors</h3>
+        <div class="problem"><p>Which positive integers have an odd number of divisors? How many of them are at most $500$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$d(n) = (e_1+1)\cdots(e_k+1)$ is odd exactly when every $e_i + 1$ is odd, that is, every $e_i$ is even.</p></div><p class="why">A product is odd only if all its factors are odd.</p></li>
+          <li><div class="do"><p>All exponents even means $n$ is a perfect square.</p></div><p class="why">Another view: divisors pair up as $k$ and $n/k$, except $k = \sqrt n$, which pairs with itself.</p></li>
+          <li><div class="do"><p>Squares up to $500$: $1^2, \ldots, 22^2 = 484$ (since $23^2 = 529$), so $22$ of them.</p></div><p class="why">Count the square roots.</p></li>
+        </ol>
+        <p class="answer">Exactly the perfect squares; $22$ of them are at most $500$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Divisors with a condition</h3>
+        <div class="problem"><p>How many divisors does $12^5$ have, and how many of those are multiples of $6$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$12^5 = (2^2 \cdot 3)^5 = 2^{10} \cdot 3^5$, so $d = 11 \cdot 6 = 66$.</p></div><p class="why">Raise each prime power to the fifth.</p></li>
+          <li data-think="What does a divisor $2^a3^b$ need in order to be a multiple of 6?"><div class="do"><p>A multiple of $6 = 2 \cdot 3$ needs $a \ge 1$ and $b \ge 1$: $a \in \{1, \ldots, 10\}$, $b \in \{1, \ldots, 5\}$.</p></div><p class="why">The condition just removes the exponent $0$ from each list.</p></li>
+          <li><div class="do"><p>$10 \cdot 5 = 50$.</p></div><p class="why">Still independent choices, so multiply.</p></li>
+        </ol>
+        <p class="answer">$66$ divisors, $50$ of them multiples of $6$.</p>
+        <p class="key-idea">A condition on divisors becomes a condition on exponents; count each exponent's options.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.4 ===================== -->
+  <section class="lesson" id="s25-4" data-title="Restrictions on Multiplication">
+    <h2><span class="sec-num">25.4</span> Restrictions on Multiplication</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Five friends each want a different flavour from a tray of five different cupcakes. The first friend picks from $5$, but the second only has $4$ left, then $3$, $2$ and $1$. The choices are no longer independent, yet multiplying still works: $5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 120$ ways.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>When items can't be reused, the <em>specific</em> options for a slot depend on earlier choices, but often the <em>number</em> of options doesn't. That's all the multiplication principle needs. Draw a row of blanks, one per slot, and write in each blank how many options remain when you reach it.</p>
+      <div class="rule"><p>$$\underline{\ 5\ }\ \underline{\ 4\ }\ \underline{\ 3\ }\ \underline{\ 2\ }\ \underline{\ 1\ } \;=\; 120$$</p></div>
+      <p>Each final arrangement is produced by exactly one sequence of picks, so nothing is missed and nothing is counted twice.</p>
+      <p>Trouble starts when some slots have extra restrictions. Count five-digit numbers with no repeated digit that end in $1$, $2$ or $4$: going left to right, by the time you reach the last digit you can't tell whether $0$, $1$, $2$ or $3$ of those digits are still free. The fix is to <strong>fill the most restricted slot first</strong>. Last digit: $3$ options. First digit: not $0$ and not the last digit, $8$ options. Then $8, 7, 6$ for the middle. Total $3 \cdot 8 \cdot 8 \cdot 7 \cdot 6$.</p>
+    </div>
+
+    <figure class="explore" data-widget="slotFiller">
+      <figcaption><strong>Explore:</strong> Choose how many items are available and how many slots to fill. With repetition, every blank has the full number of options; without it, each blank has one fewer than the last. Press <em>Make a random one</em> to see an actual arrangement with the used items crossed out.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Medals</h3>
+        <div class="problem"><p>Five runners race. In how many ways can gold, silver and bronze be awarded?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Gold: $5$ options; silver: $4$ remaining; bronze: $3$ remaining.</p></div><p class="why">One runner can't win two medals.</p></li>
+          <li><div class="do"><p>$5 \cdot 4 \cdot 3 = 60$.</p></div><p class="why">The number of options at each stage is fixed, even though which runners remain is not.</p></li>
+        </ol>
+        <p class="answer">$60$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Books on a shelf</h3>
+        <div class="problem"><p>In how many orders can $4$ different books stand on a shelf?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4 \cdot 3 \cdot 2 \cdot 1 = 24$.</p></div><p class="why">Fill the shelf from left to right; each book used is gone.</p></li>
+        </ol>
+        <p class="answer">$24$</p>
+        <p class="book-next">Next in the book: Exercise 25-7.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Words with no repeated letter</h3>
+        <div class="problem"><p>How many three-letter "words" have three different letters?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$26 \cdot 25 \cdot 24 = 15{,}600$.</p></div><p class="why">Each letter used removes one option for later slots.</p></li>
+        </ol>
+        <p class="answer">$15{,}600$</p>
+        <p class="book-next">Next in the book: Example 25-4 and Exercise 25-8.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Distinct digits</h3>
+        <div class="problem"><p>How many four-digit numbers have four different digits?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>First digit: $1$–$9$, so $9$ options.</p></div><p class="why">The first digit is the restricted slot, so it goes first.</p></li>
+          <li><div class="do"><p>Second: $9$ (zero is back, minus the first digit). Third: $8$. Fourth: $7$.</p></div><p class="why">After the first digit, $9$ of the $10$ digits remain, then $8$, then $7$.</p></li>
+          <li><div class="do"><p>$9 \cdot 9 \cdot 8 \cdot 7 = 4536$.</p></div><p class="why">Multiply the blanks.</p></li>
+        </ol>
+        <p class="answer">$4536$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Consonant, vowel, consonant, vowel</h3>
+        <div class="problem"><p>How many four-letter "words" follow the pattern consonant–vowel–consonant–vowel with no letter repeated? (Vowels: A, E, I, O, U.)</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Consonants: $21$ then $20$. Vowels: $5$ then $4$.</p></div><p class="why">Consonants and vowels never compete for the same letters, so each type just loses one option when reused.</p></li>
+          <li><div class="do"><p>$21 \cdot 5 \cdot 20 \cdot 4 = 8400$.</p></div><p class="why">Write the blanks in position order and multiply.</p></li>
+        </ol>
+        <p class="answer">$8400$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Fill the special slot first</h3>
+        <div class="problem"><p>How many four-digit numbers with all digits different end in $5$?</p></div>
+        <ol class="steps">
+          <li data-think="Which slot has the strongest restriction?"><div class="do"><p>Last digit: must be $5$, so $1$ option.</p></div><p class="why">Handle the most restricted slot first.</p></li>
+          <li><div class="do"><p>First digit: not $0$ and not $5$, so $8$ options.</p></div><p class="why">Now we know exactly which digits are off-limits.</p></li>
+          <li><div class="do"><p>Middle digits: $8$ then $7$. Total: $1 \cdot 8 \cdot 8 \cdot 7 = 448$.</p></div><p class="why">Two digits are used, leaving $8$, then $7$.</p></li>
+        </ol>
+        <p class="answer">$448$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two restricted slots</h3>
+        <div class="problem"><p>How many four-digit numbers with all digits different have an odd first digit and an even last digit?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Last digit even: $0, 2, 4, 6, 8$, so $5$ options. First digit odd: $5$ options.</p></div><p class="why">An odd digit can never equal an even one, so these two choices don't interfere. And an odd first digit is never $0$.</p></li>
+          <li><div class="do"><p>Middle two digits: $8$, then $7$.</p></div><p class="why">Two digits are used up.</p></li>
+          <li><div class="do"><p>$5 \cdot 8 \cdot 7 \cdot 5 = 1400$.</p></div><p class="why">Multiply all four blanks.</p></li>
+        </ol>
+        <p class="answer">$1400$</p>
+        <p class="book-next">Next in the book: Exercises 25-9 and 25-10.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Why left to right can fail</h3>
+        <div class="problem"><p>How many three-digit numbers with different digits have a prime last digit ($2$, $3$, $5$ or $7$)?</p></div>
+        <ol class="steps">
+          <li data-think="If you choose the first two digits first, how many options does the last digit have?"><div class="do"><p>Left to right fails: after choosing, say, $35\_$ only $2$ primes remain for the end, but after $14\_$ all $4$ remain.</p></div><p class="why">The <em>number</em> of options for the last slot depends on earlier choices, so we can't multiply in that order.</p></li>
+          <li><div class="do"><p>Last digit first: $4$ options. First digit: not $0$ and not the last digit: $8$ options.</p></div><p class="why">The last digit is never $0$, so exactly one nonzero digit is excluded from the first slot.</p></li>
+          <li><div class="do"><p>Middle digit: $10 - 2 = 8$ options. Total $4 \cdot 8 \cdot 8 = 256$.</p></div><p class="why">Any digit except the two already used.</p></li>
+        </ol>
+        <p class="answer">$256$</p>
+        <p class="key-idea">Multiply only when each slot's number of options is fixed; ordering the slots well makes that happen.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Alternating seats</h3>
+        <div class="problem"><p>Three boys and three girls sit in a row of $6$ chairs so that boys and girls alternate. How many seatings are there?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The pattern is BGBGBG or GBGBGB: $2$ options.</p></div><p class="why">Once the first chair's gender is set, the whole pattern is fixed.</p></li>
+          <li><div class="do"><p>Seat the boys in their $3$ chairs: $3! = 6$ ways. Girls likewise: $6$ ways.</p></div><p class="why">Within a pattern, boys and girls fill their own chairs independently.</p></li>
+          <li><div class="do"><p>$2 \cdot 6 \cdot 6 = 72$.</p></div><p class="why">Pattern, boys' order and girls' order are independent choices.</p></li>
+        </ol>
+        <p class="answer">$72$</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.5 ===================== -->
+  <section class="lesson" id="s25-5" data-title="Permutations, Arrangements, and !">
+    <h2><span class="sec-num">25.5</span> Permutations, Arrangements, and !</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Shuffle a deck of $52$ cards. The number of possible orders is $52 \cdot 51 \cdot 50 \cdots 2 \cdot 1$, a $68$-digit number. Almost certainly, no shuffled deck in history has ever been in the same order as yours. Products like this come up so often they get their own symbol: the exclamation mark.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The number of ways to line up $n$ different objects is <strong>$n$ factorial</strong>: $n! = n(n-1)(n-2)\cdots 2 \cdot 1$. We define $0! = 1$ (there is one way to arrange nothing). Useful facts:</p>
+      <div class="rule"><p>$$n! = n\cdot(n-1)!, \qquad {}_nP_k = n(n-1)\cdots(n-k+1) = \frac{n!}{(n-k)!}.$$</p></div>
+      <p>${}_nP_k$, the number of <strong>permutations</strong> of size $k$, counts ways to fill $k$ ordered seats from $n$ people. Quotients of factorials simplify by cancelling: $\dfrac{9!}{7!} = 9 \cdot 8 = 72$.</p>
+      <p><em>Trailing zeros.</em> Each zero at the end of $n!$ comes from a factor $10 = 2 \cdot 5$. There are plenty of $2$s, so count the $5$s: one for each multiple of $5$, an extra one for each multiple of $25$, another for each multiple of $125$, and so on.</p>
+      <p><em>Circles.</em> Around a round table, rotations don't change who sits next to whom, so each circular seating corresponds to $n$ different row orders: $\dfrac{n!}{n} = (n-1)!$ seatings. On a keychain or bracelet you can also flip it over, so divide by another $2$: $\dfrac{(n-1)!}{2}$ (for $n \ge 3$).</p>
+    </div>
+
+    <figure class="explore" data-widget="circleSeats">
+      <figcaption><strong>Explore:</strong> Rotate the table: the seats change, but each person still has the same neighbours, and the clockwise reading from A stays the same. All $n$ rotations are listed as row orders that count as one circle. Flip it to see why a keychain is divided by another $2$.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="factorialZeros">
+      <figcaption><strong>Explore:</strong> Slide $n$. Each multiple of $5$ up to $n$ adds one factor of $5$ to $n!$, each multiple of $25$ adds a second, each multiple of $125$ a third. Their total is the number of trailing zeros.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Factorials cancel</h3>
+        <div class="problem"><p>Evaluate $6!$ and $\dfrac{8!}{6!}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$6! = 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 720$.</p></div><p class="why">Multiply down to $1$.</p></li>
+          <li><div class="do"><p>$\dfrac{8!}{6!} = \dfrac{8 \cdot 7 \cdot 6!}{6!} = 56$.</p></div><p class="why">Write the bigger factorial as a product that ends in the smaller one, then cancel.</p></li>
+        </ol>
+        <p class="answer">$720$ and $56$</p>
+        <p class="book-next">Next in the book: Examples 25-5 to 25-7 and Exercise 25-13.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Permutations</h3>
+        <div class="problem"><p>Evaluate ${}_9P_2$ and ${}_6P_4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>${}_9P_2 = 9 \cdot 8 = 72$.</p></div><p class="why">Two factors, counting down from $9$.</p></li>
+          <li><div class="do"><p>${}_6P_4 = 6 \cdot 5 \cdot 4 \cdot 3 = 360$.</p></div><p class="why">Four factors, counting down from $6$; equivalently $\tfrac{6!}{2!}$.</p></li>
+        </ol>
+        <p class="answer">$72$ and $360$</p>
+        <p class="book-next">Next in the book: Exercises 25-11 and 25-12.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Solve a factorial equation</h3>
+        <div class="problem"><p>Find the positive integer $n$ with $\dfrac{n!}{(n-2)!} = 90$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{n!}{(n-2)!} = n(n-1)$.</p></div><p class="why">Everything from $(n-2)$ down to $1$ cancels.</p></li>
+          <li><div class="do"><p>$n(n-1) = 90 = 10 \cdot 9$, so $n = 10$.</p></div><p class="why">Two consecutive integers multiplying to $90$ are $9$ and $10$.</p></li>
+        </ol>
+        <p class="answer">$n = 10$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Officers</h3>
+        <div class="problem"><p>A club of $12$ elects a president, a vice-president and a secretary (all different people). How many outcomes are possible?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>${}_{12}P_3 = 12 \cdot 11 \cdot 10 = 1320$.</p></div><p class="why">The offices are different, so order matters: this is a permutation.</p></li>
+        </ol>
+        <p class="answer">$1320$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Zeros at the end of $250!$</h3>
+        <div class="problem"><p>How many zeros does $250!$ end with?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiples of $5$: $\lfloor 250/5 \rfloor = 50$.</p></div><p class="why">Each contributes at least one factor of $5$.</p></li>
+          <li><div class="do"><p>Multiples of $25$: $\lfloor 250/25 \rfloor = 10$. Multiples of $125$: $\lfloor 250/125 \rfloor = 2$.</p></div><p class="why">These contribute a second and a third $5$, not yet counted.</p></li>
+          <li><div class="do"><p>Total factors of $5$: $50 + 10 + 2 = 62$, so $62$ trailing zeros.</p></div><p class="why">Factors of $2$ are far more plentiful, so each $5$ pairs with a $2$ to make a $10$.</p></li>
+        </ol>
+        <p class="answer">$62$</p>
+        <p class="book-next">Next in the book: Example 25-8 and Exercise 25-14.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A round table</h3>
+        <div class="problem"><p>In how many ways can $7$ people sit around a round table, if only who sits next to whom matters?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In a row: $7! = 5040$.</p></div><p class="why">Start by counting as if the seats were in a line.</p></li>
+          <li><div class="do"><p>Each circular seating appears $7$ times (once per rotation): $\dfrac{5040}{7} = 720 = 6!$.</p></div><p class="why">Alternatively, seat one person anywhere to fix the rotation, then arrange the other $6$ in $6!$ ways.</p></li>
+        </ol>
+        <p class="answer">$720$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Keys on a ring</h3>
+        <div class="problem"><p>In how many distinguishable ways can $5$ different keys be put on a key ring?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Around a circle: $(5-1)! = 24$.</p></div><p class="why">Rotating the ring doesn't create a new arrangement.</p></li>
+          <li><div class="do"><p>A ring can be flipped over, which reverses the order, so each arrangement is counted twice: $\dfrac{24}{2} = 12$.</p></div><p class="why">Clockwise and counterclockwise readings are the same physical ring.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+        <p class="book-next">Next in the book: Example 25-9 and Exercise 25-15.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Powers of 3 in $50!$</h3>
+        <div class="problem"><p>What is the largest $k$ such that $3^k$ divides $50!$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiples of $3$: $\lfloor 50/3 \rfloor = 16$. Of $9$: $\lfloor 50/9 \rfloor = 5$. Of $27$: $\lfloor 50/27 \rfloor = 1$.</p></div><p class="why">Same idea as trailing zeros, with the prime $3$.</p></li>
+          <li><div class="do"><p>$k = 16 + 5 + 1 = 22$.</p></div><p class="why">$81 > 50$, so no higher powers contribute.</p></li>
+        </ol>
+        <p class="answer">$k = 22$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two friends side by side</h3>
+        <div class="problem"><p>Six people sit at a round table. Two of them, Ana and Ben, insist on sitting next to each other. How many seatings are there?</p></div>
+        <ol class="steps">
+          <li data-think="Can you treat Ana and Ben as a single unit?"><div class="do"><p>Glue Ana and Ben into one block. Now $5$ units sit in a circle: $(5-1)! = 24$ ways.</p></div><p class="why">The block guarantees they are adjacent; circular arrangements of $5$ units number $4!$.</p></li>
+          <li><div class="do"><p>Inside the block: Ana–Ben or Ben–Ana, $2$ ways. Total $24 \cdot 2 = 48$.</p></div><p class="why">The order within the block is an independent choice.</p></li>
+        </ol>
+        <p class="answer">$48$</p>
+        <p class="key-idea">"Must be together": glue them into a block, arrange the blocks, then arrange inside the block.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.6 ===================== -->
+  <section class="lesson" id="s25-6" data-title="Mixing it Up">
+    <h2><span class="sec-num">25.6</span> Mixing it Up</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Put two tennis balls into two boxes. How many ways? If the balls are numbered and the boxes are labelled, there are $4$. If the balls are identical, only $3$. If the boxes are identical too, only $2$. The same physical situation gives different answers depending on what you can tell apart, so always ask what counts as "different."</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Casework.</strong> When the number of options depends on an earlier choice, split the problem into cases that don't overlap, count each with the multiplication principle, and add:</p>
+      <div class="rule"><p>$$\text{total} = (\text{case 1}) + (\text{case 2}) + \cdots \qquad \text{(cases must not overlap and must cover everything).}$$</p></div>
+      <p>A good split makes each case easy. For three-digit even numbers with distinct digits, the trouble is whether the last digit is $0$ (which affects the first digit), so split on exactly that.</p>
+      <p><strong>Distinguishability.</strong> Are the objects identical or distinct? Are the containers? Distinct objects in distinct boxes gives the most arrangements. Making the objects identical merges arrangements that differ only by swapping objects; making the boxes identical merges arrangements that differ only by swapping boxes. Problems don't always say which applies, so use context and common sense.</p>
+    </div>
+
+    <figure class="explore" data-widget="ballsBoxes">
+      <figcaption><strong>Explore:</strong> Choose the number of balls and boxes, then make the balls or the boxes identical. Every distinct arrangement is drawn. Watch arrangements merge as you make things indistinguishable, and see the count drop.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Either-or adds</h3>
+        <div class="problem"><p>A snack bar sells $4$ kinds of fruit and $3$ kinds of crackers. You'll buy exactly one item. How many choices do you have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Case fruit: $4$. Case crackers: $3$. Total $4 + 3 = 7$.</p></div><p class="why">"One or the other" means separate cases, so add. "One and the other" would mean multiply.</p></li>
+        </ol>
+        <p class="answer">$7$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Different colours</h3>
+        <div class="problem"><p>You have $2$ different red marbles and $3$ different blue marbles. You give one to Kim and one to Lee, and they must get different colours. How many ways?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Kim red, Lee blue: $2 \cdot 3 = 6$. Kim blue, Lee red: $3 \cdot 2 = 6$.</p></div><p class="why">The two colour assignments are separate cases.</p></li>
+          <li><div class="do"><p>$6 + 6 = 12$.</p></div><p class="why">The cases don't overlap, so add them.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Even, with distinct digits</h3>
+        <div class="problem"><p>How many three-digit even numbers have all digits different?</p></div>
+        <ol class="steps">
+          <li data-think="Why does it matter whether the last digit is 0?"><div class="do"><p>Case last digit $0$: first digit $9$ options, middle $8$: $9 \cdot 8 = 72$.</p></div><p class="why">With $0$ used up, the first digit can be any of $1$–$9$.</p></li>
+          <li><div class="do"><p>Case last digit $2, 4, 6, 8$: $4$ options; first digit not $0$ and not the last: $8$; middle: $8$. So $4 \cdot 8 \cdot 8 = 256$.</p></div><p class="why">Now $0$ is still available but not allowed in front.</p></li>
+          <li><div class="do"><p>$72 + 256 = 328$.</p></div><p class="why">Add the non-overlapping cases.</p></li>
+        </ol>
+        <p class="answer">$328$</p>
+        <p class="book-next">Next in the book: Example 25-10.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Balls and boxes, four ways</h3>
+        <div class="problem"><p>Put $3$ balls into $2$ boxes (boxes may be empty). Count the arrangements when (a) balls and boxes are both distinct, (b) balls identical, boxes distinct, (c) balls distinct, boxes identical, (d) both identical.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Each ball picks a box: $2^3 = 8$.</p></div><p class="why">Independent choices.</p></li>
+          <li><div class="do"><p>(b) Only the number in box $1$ matters: $0, 1, 2, 3$, so $4$.</p></div><p class="why">Identical balls are described by counts alone.</p></li>
+          <li><div class="do"><p>(c) Either all three together ($1$ way) or split $2 + 1$ (choose the lone ball: $3$ ways), so $4$.</p></div><p class="why">With identical boxes only the grouping of balls matters.</p></li>
+          <li><div class="do"><p>(d) Splits $3 + 0$ and $2 + 1$: $2$.</p></div><p class="why">Only the sizes of the groups matter.</p></li>
+        </ol>
+        <p class="answer">(a) $8$, (b) $4$, (c) $4$, (d) $2$.</p>
+        <p class="book-next">Next in the book: Example 25-11 and Exercises 25-16, 25-17.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Dice totals</h3>
+        <div class="problem"><p>Two different dice are rolled. In how many outcomes is the total $7$ or $11$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total $7$: $(1,6)$, $(2,5)$, $(3,4)$, $(4,3)$, $(5,2)$, $(6,1)$, which is $6$ outcomes.</p></div><p class="why">The dice are different, so $(1,6)$ and $(6,1)$ are different outcomes.</p></li>
+          <li><div class="do"><p>Total $11$: $(5,6)$, $(6,5)$, which is $2$. Total $6 + 2 = 8$.</p></div><p class="why">A roll can't total both $7$ and $11$, so add.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Identical candies, different children</h3>
+        <div class="problem"><p>In how many ways can $4$ identical candies be shared among $3$ children (some may get none)?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Only the counts $(a, b, c)$ with $a + b + c = 4$ matter.</p></div><p class="why">The candies are identical; the children are not.</p></li>
+          <li><div class="do"><p>Case on $a$: if $a = 0$, then $(b, c)$ has $5$ options; $a = 1$: $4$; $a = 2$: $3$; $a = 3$: $2$; $a = 4$: $1$.</p></div><p class="why">Once $a$ is fixed, $b$ can be anything from $0$ to $4 - a$ and $c$ is determined.</p></li>
+          <li><div class="do"><p>$5 + 4 + 3 + 2 + 1 = 15$.</p></div><p class="why">Add the cases.</p></li>
+        </ol>
+        <p class="answer">$15$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Four-digit even numbers</h3>
+        <div class="problem"><p>How many four-digit even numbers have all digits different?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Last digit $0$: $9 \cdot 8 \cdot 7 = 504$.</p></div><p class="why">First digit from $1$–$9$, then $8$ and $7$ for the middle.</p></li>
+          <li><div class="do"><p>Last digit $2, 4, 6, 8$: $4 \cdot 8 \cdot 8 \cdot 7 = 1792$.</p></div><p class="why">First digit: not $0$, not the last. Then $8$, $7$.</p></li>
+          <li><div class="do"><p>$504 + 1792 = 2296$.</p></div><p class="why">Same split as the three-digit case.</p></li>
+        </ol>
+        <p class="answer">$2296$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A range plus parity</h3>
+        <div class="problem"><p>How many odd numbers between $3000$ and $6999$ have four different digits?</p></div>
+        <ol class="steps">
+          <li data-think="The first digit is 3, 4, 5 or 6 and the last digit is odd. When do those two choices collide?"><div class="do"><p>Case first digit odd ($3$ or $5$): last digit is odd and different, $4$ options. Middle: $8 \cdot 7$. Count $2 \cdot 8 \cdot 7 \cdot 4 = 448$.</p></div><p class="why">An odd first digit uses up one of the five odd digits.</p></li>
+          <li><div class="do"><p>Case first digit even ($4$ or $6$): last digit any odd, $5$ options. Count $2 \cdot 8 \cdot 7 \cdot 5 = 560$.</p></div><p class="why">No collision is possible here.</p></li>
+          <li><div class="do"><p>$448 + 560 = 1008$.</p></div><p class="why">Every qualifying number falls in exactly one case.</p></li>
+        </ol>
+        <p class="answer">$1008$</p>
+        <p class="key-idea">Split on whatever makes the number of options change.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Identical boxes</h3>
+        <div class="problem"><p>Put $3$ balls into $3$ identical boxes (empty boxes allowed). Count arrangements when the balls are identical, and when they are distinct.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Identical balls: only group sizes matter: $3$, $2 + 1$, $1 + 1 + 1$, so $3$ ways.</p></div><p class="why">With nothing distinguishable, an arrangement is just a way to write $3$ as a sum.</p></li>
+          <li data-think="For distinct balls, list the possible group-size patterns and count each."><div class="do"><p>Distinct balls, pattern $3$: $1$ way. Pattern $2 + 1$: choose the lone ball, $3$ ways. Pattern $1 + 1 + 1$: $1$ way.</p></div><p class="why">Boxes are identical, so we only care which balls share a box.</p></li>
+          <li><div class="do"><p>$1 + 3 + 1 = 5$.</p></div><p class="why">Add over patterns.</p></li>
+        </ol>
+        <p class="answer">$3$ (identical balls) and $5$ (distinct balls).</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.7 ===================== -->
+  <section class="lesson" id="s25-7" data-title="Counting the Wrong Thing, Part I">
+    <h2><span class="sec-num">25.7</span> Counting the Wrong Thing, Part I</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>How many three-digit numbers contain at least one $7$? Directly, you'd need cases: a $7$ in front, or in the middle, or at the end, or two of them, or three… and the overlaps get messy. But numbers with <em>no</em> $7$ are easy: $8 \cdot 9 \cdot 9 = 648$. So $900 - 648 = 252$ of them do have a $7$.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Sometimes the best way to count what you want is to count what you <em>don't</em> want and subtract:</p>
+      <div class="rule"><p>$$\#(\text{wanted}) = \#(\text{total}) - \#(\text{unwanted}).$$</p></div>
+      <p>This is <strong>complementary counting</strong>. It shines with the phrase "<strong>at least one</strong>": the opposite of "at least one" is "none," which is usually a single clean product. It's also handy for "not adjacent" (count "adjacent" instead) and "some repeat" (count "all different" instead).</p>
+      <div class="note"><p>Make sure the total and the unwanted count are counted under the same rules (same order conventions, same restrictions), or the subtraction is meaningless.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="diceComplement">
+      <figcaption><strong>Explore:</strong> Each cell is one roll of two dice. Pick an event: the gold cells are the outcomes you want, the crossed cells are the complement. Notice that the crossed region is often a simple rectangle, which is why counting it and subtracting is quicker.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>At least one head</h3>
+        <div class="problem"><p>Three coins are flipped. In how many outcomes is there at least one head?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total: $2^3 = 8$. No heads (all tails): $1$.</p></div><p class="why">"At least one" is the opposite of "none."</p></li>
+          <li><div class="do"><p>$8 - 1 = 7$.</p></div><p class="why">Subtract the unwanted outcome.</p></li>
+        </ol>
+        <p class="answer">$7$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>At least one six</h3>
+        <div class="problem"><p>Two dice are rolled. How many of the $36$ outcomes include at least one $6$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>No $6$ on either die: $5 \cdot 5 = 25$.</p></div><p class="why">Each die has $5$ non-six faces.</p></li>
+          <li><div class="do"><p>$36 - 25 = 11$.</p></div><p class="why">Check: $6$ outcomes with the first die $6$, $6$ with the second, minus $1$ counted twice: $11$. ✓</p></li>
+        </ol>
+        <p class="answer">$11$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Words with a vowel</h3>
+        <div class="problem"><p>How many four-letter "words" contain at least one vowel (A, E, I, O, U)?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total: $26^4 = 456{,}976$. No vowels: $21^4 = 194{,}481$.</p></div><p class="why">A vowel-free word uses only the $21$ consonants in each slot.</p></li>
+          <li><div class="do"><p>$456{,}976 - 194{,}481 = 262{,}495$.</p></div><p class="why">Everything that isn't vowel-free has a vowel.</p></li>
+        </ol>
+        <p class="answer">$262{,}495$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A digit 7 somewhere</h3>
+        <div class="problem"><p>How many three-digit numbers have at least one digit equal to $7$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>No $7$: first digit from $\{1, \ldots, 9\} \setminus \{7\}$, $8$ options; others $9$ each: $8 \cdot 9 \cdot 9 = 648$.</p></div><p class="why">Leave out $7$ everywhere and $0$ in front.</p></li>
+          <li><div class="do"><p>$900 - 648 = 252$.</p></div><p class="why">There are $900$ three-digit numbers in all.</p></li>
+        </ol>
+        <p class="answer">$252$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>At least one senior</h3>
+        <div class="problem"><p>A captain, vice-captain and treasurer are chosen from $10$ students, $3$ of whom are seniors. In how many ways can this be done if at least one officer is a senior?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total: ${}_{10}P_3 = 10 \cdot 9 \cdot 8 = 720$.</p></div><p class="why">Different offices, so order matters.</p></li>
+          <li><div class="do"><p>No seniors: ${}_7P_3 = 7 \cdot 6 \cdot 5 = 210$.</p></div><p class="why">Choose all three officers from the $7$ non-seniors, counted the same way.</p></li>
+          <li><div class="do"><p>$720 - 210 = 510$.</p></div><p class="why">Both counts treat order the same way, so subtracting is valid.</p></li>
+        </ol>
+        <p class="answer">$510$</p>
+        <p class="book-next">Next in the book: Example 25-12 and Exercise 25-18.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A repeat among four dice</h3>
+        <div class="problem"><p>Four dice are rolled. What fraction of the outcomes show some number at least twice?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>All different: $6 \cdot 5 \cdot 4 \cdot 3 = 360$ out of $6^4 = 1296$.</p></div><p class="why">"Some repeat" is the complement of "all different," which is a simple product.</p></li>
+          <li><div class="do"><p>With a repeat: $1296 - 360 = 936$, and $\dfrac{936}{1296} = \dfrac{13}{18}$.</p></div><p class="why">Divide top and bottom by $72$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{13}{18}$</p>
+        <p class="book-next">Next in the book: Exercise 25-19.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Neither square nor cube</h3>
+        <div class="problem"><p>How many integers from $1$ to $1000$ are neither perfect squares nor perfect cubes?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Squares: $1^2, \ldots, 31^2$ ($31^2 = 961$), so $31$. Cubes: $1^3, \ldots, 10^3$, so $10$.</p></div><p class="why">Count the unwanted numbers by their roots.</p></li>
+          <li data-think="Is any number both a square and a cube?"><div class="do"><p>Both (sixth powers): $1, 64, 729$, so $3$. Unwanted: $31 + 10 - 3 = 38$.</p></div><p class="why">Sixth powers were counted in both lists, so subtract them once.</p></li>
+          <li><div class="do"><p>$1000 - 38 = 962$.</p></div><p class="why">Subtract the unwanted from the total.</p></li>
+        </ol>
+        <p class="answer">$962$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Not side by side</h3>
+        <div class="problem"><p>In how many orders can the letters A, B, C, D, E be arranged so that A and B are <em>not</em> next to each other?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total: $5! = 120$.</p></div><p class="why">All arrangements.</p></li>
+          <li data-think="Adjacent is easier to count than non-adjacent. How?"><div class="do"><p>A and B adjacent: glue them into a block, $4! = 24$ orders of the $4$ units, times $2$ orders inside: $48$.</p></div><p class="why">The block trick from 25.5 counts "together" directly.</p></li>
+          <li><div class="do"><p>$120 - 48 = 72$.</p></div><p class="why">"Not adjacent" is the complement of "adjacent."</p></li>
+        </ol>
+        <p class="answer">$72$</p>
+        <p class="key-idea">"Not together" = total − "together," and "together" is a block.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A repeated digit</h3>
+        <div class="problem"><p>How many five-digit numbers have at least one repeated digit?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total five-digit numbers: $99999 - 10000 + 1 = 90{,}000$.</p></div><p class="why">Count the range inclusively.</p></li>
+          <li><div class="do"><p>All digits different: $9 \cdot 9 \cdot 8 \cdot 7 \cdot 6 = 27{,}216$.</p></div><p class="why">First digit nonzero, then the remaining digits shrink by one each time.</p></li>
+          <li><div class="do"><p>$90{,}000 - 27{,}216 = 62{,}784$.</p></div><p class="why">Directly counting "some repeat" would need many overlapping cases.</p></li>
+        </ol>
+        <p class="answer">$62{,}784$</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.8 ===================== -->
+  <section class="lesson" id="s25-8" data-title="Counting the Wrong Thing, Part II">
+    <h2><span class="sec-num">25.8</span> Counting the Wrong Thing, Part II</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Pick $3$ pizza toppings from $5$. Counting in order gives $5 \cdot 4 \cdot 3 = 60$, but "mushroom, olive, pepper" and "pepper, mushroom, olive" are the same pizza. Every pizza was counted once for each of the $3! = 6$ orders of its toppings. So there are really $60 / 6 = 10$ pizzas. Overcount on purpose, then divide.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>In <strong>overcounting</strong> we count something easier that hits each true object the same number of times, then divide by that number. Choosing $k$ things from $n$ when order doesn't matter: count ordered selections, ${}_nP_k$, and divide by the $k!$ orders of each selection.</p>
+      <div class="rule"><p>$$\binom{n}{k} = \frac{{}_nP_k}{k!} = \frac{n!}{k!\,(n-k)!} \qquad (\text{read "} n \text{ choose } k \text{"}).$$</p></div>
+      <p>These are <strong>combinations</strong>. Choosing $k$ things to take is the same as choosing the $n - k$ things to leave, so $\dbinom{n}{k} = \dbinom{n}{n-k}$.</p>
+      <p>The same trick counts <strong>rearrangements of a word</strong> with repeated letters. Pretend all letters are different ($n!$ orders), then divide by the orders of each group of identical letters:</p>
+      <div class="rule"><p>$$\frac{n!}{k_1!\,k_2!\cdots k_j!} \qquad\text{e.g. BANANA: } \frac{6!}{3!\,2!\,1!} = 60.$$</p></div>
+      <div class="note"><p>Permutation or combination? Ask: if I swap two chosen items, do I get a different outcome? Yes means order matters (permutation); no means combination.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="comboGroups">
+      <figcaption><strong>Explore:</strong> Every ordered selection of $k$ letters from $n$ is shown, stacked in columns by which letters were chosen. Each column has exactly $k!$ entries, so the number of columns, $\binom{n}{k}$, is ${}_nP_k$ divided by $k!$. Switch to <em>collapse</em> to merge each column into one combination.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Two toppings</h3>
+        <div class="problem"><p>In how many ways can you choose $2$ toppings from $5$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In order: $5 \cdot 4 = 20$.</p></div><p class="why">Overcount first, pretending order matters.</p></li>
+          <li><div class="do"><p>Each pair was counted $2! = 2$ times: $\dbinom52 = \dfrac{20}{2} = 10$.</p></div><p class="why">A pair and its reverse are the same choice.</p></li>
+        </ol>
+        <p class="answer">$10$</p>
+        <p class="book-next">Next in the book: Example 25-13 and Exercises 25-20 to 25-22.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Handshakes</h3>
+        <div class="problem"><p>Eight people each shake hands once with everyone else. How many handshakes?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A handshake is an unordered pair of people: $\dbinom82 = \dfrac{8 \cdot 7}{2} = 28$.</p></div><p class="why">Alice-with-Bob is the same handshake as Bob-with-Alice.</p></li>
+        </ol>
+        <p class="answer">$28$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Order matters, or not?</h3>
+        <div class="problem"><p>From $10$ students, how many ways are there to choose (a) a $3$-person team, (b) a president, secretary and treasurer?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(b) Different roles: ${}_{10}P_3 = 10 \cdot 9 \cdot 8 = 720$.</p></div><p class="why">Swapping two officers gives a different outcome, so order matters.</p></li>
+          <li><div class="do"><p>(a) A team has no roles: $\dbinom{10}{3} = \dfrac{720}{3!} = 120$.</p></div><p class="why">Each team corresponds to $3! = 6$ officer assignments.</p></li>
+        </ol>
+        <p class="answer">(a) $120$ teams; (b) $720$ officer slates.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A mixed committee</h3>
+        <div class="problem"><p>A committee needs $3$ of $6$ boys and $2$ of $5$ girls. How many committees are possible?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Boys: $\dbinom63 = 20$. Girls: $\dbinom52 = 10$.</p></div><p class="why">Within each group, order doesn't matter.</p></li>
+          <li><div class="do"><p>$20 \cdot 10 = 200$.</p></div><p class="why">The two choices are independent, so multiply.</p></li>
+        </ol>
+        <p class="answer">$200$</p>
+        <p class="book-next">Next in the book: Examples 25-14, 25-15 and Exercises 25-23 to 25-25.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Rearranging BANANA</h3>
+        <div class="problem"><p>How many distinct arrangements of the letters of BANANA are there?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>If all $6$ letters were different: $6! = 720$.</p></div><p class="why">Overcount by tagging the letters: $A_1 A_2 A_3$, $N_1 N_2$.</p></li>
+          <li><div class="do"><p>Each real word appears $3!$ times (orders of the A's) $\times\ 2!$ (orders of the N's) $= 12$ times.</p></div><p class="why">Swapping identical letters doesn't change the word.</p></li>
+          <li><div class="do"><p>$\dfrac{720}{12} = 60$.</p></div><p class="why">Divide out the overcount.</p></li>
+        </ol>
+        <p class="answer">$60$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Choose what to leave</h3>
+        <div class="problem"><p>Evaluate $\dbinom{20}{18}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dbinom{20}{18} = \dbinom{20}{2}$.</p></div><p class="why">Choosing $18$ to keep is the same as choosing $2$ to leave out.</p></li>
+          <li><div class="do"><p>$\dbinom{20}{2} = \dfrac{20 \cdot 19}{2} = 190$.</p></div><p class="why">Much easier than cancelling $18!$.</p></li>
+        </ol>
+        <p class="answer">$190$</p>
+        <p class="book-next">Next in the book: Example 25-16 and Exercise 25-26.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Lines and triangles</h3>
+        <div class="problem"><p>Ten points are drawn, no three on a line. How many lines pass through two of them? How many triangles have three of them as vertices?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Lines: each is determined by a pair, $\dbinom{10}{2} = 45$.</p></div><p class="why">No three collinear means different pairs give different lines.</p></li>
+          <li><div class="do"><p>Triangles: $\dbinom{10}{3} = \dfrac{10 \cdot 9 \cdot 8}{6} = 120$.</p></div><p class="why">Any three non-collinear points form a triangle, and the order of vertices doesn't matter.</p></li>
+        </ol>
+        <p class="answer">$45$ lines and $120$ triangles.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>MISSISSIPPI</h3>
+        <div class="problem"><p>How many distinct arrangements of MISSISSIPPI are there?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Letters: $11$ total; I appears $4$ times, S $4$ times, P $2$ times, M once.</p></div><p class="why">Count each letter's copies first.</p></li>
+          <li><div class="do"><p>$\dfrac{11!}{4!\,4!\,2!\,1!} = \dfrac{39{,}916{,}800}{24 \cdot 24 \cdot 2} = 34{,}650$.</p></div><p class="why">Divide by the orders of each group of identical letters.</p></li>
+        </ol>
+        <p class="answer">$34{,}650$</p>
+        <p class="book-next">Next in the book: Exercises 25-27 and 25-28.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Diagonals of a 12-gon</h3>
+        <div class="problem"><p>How many diagonals does a convex $12$-sided polygon have?</p></div>
+        <ol class="steps">
+          <li data-think="Every pair of vertices gives a segment. Which of those segments are not diagonals?"><div class="do"><p>Segments joining two vertices: $\dbinom{12}{2} = 66$.</p></div><p class="why">Overcount: include every segment, sides and diagonals alike.</p></li>
+          <li><div class="do"><p>Remove the $12$ sides: $66 - 12 = 54$.</p></div><p class="why">The sides are the segments we didn't want.</p></li>
+        </ol>
+        <p class="answer">$54$</p>
+        <p class="key-idea">Count a bigger, easier set, then remove or divide out what doesn't belong.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Paths on a grid</h3>
+        <div class="problem"><p>Moving only right or up one unit at a time, how many paths go from $(0, 0)$ to $(5, 3)$?</p></div>
+        <ol class="steps">
+          <li data-think="How can you describe a path as a word?"><div class="do"><p>Every path is a word with $5$ R's and $3$ U's, such as RRURRUUR.</p></div><p class="why">You must step right exactly $5$ times and up exactly $3$ times, in some order.</p></li>
+          <li><div class="do"><p>Arrangements of RRRRRUUU: $\dfrac{8!}{5!\,3!} = \dbinom83 = 56$.</p></div><p class="why">Equivalently, choose which $3$ of the $8$ steps are U's.</p></li>
+        </ol>
+        <p class="answer">$56$</p>
+        <p class="key-idea">Turn the object into a word, then count rearrangements.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.9 ===================== -->
+  <section class="lesson" id="s25-9" data-title="Doing it Another Way">
+    <h2><span class="sec-num">25.9</span> Doing it Another Way</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Count the handshakes among $6$ people three ways. Each person shakes $5$ hands, and each handshake involves $2$ people: $6 \cdot 5 / 2 = 15$. Or choose the pair: $\binom62 = 15$. Or let people arrive one at a time and greet everyone already there: $0 + 1 + 2 + 3 + 4 + 5 = 15$. Three routes, one answer, and each one shows something new.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Solving a counting problem a second way is the best check you have, and it keeps you flexible. Rearrangements of a word, for example, can be counted <em>without</em> overcounting: choose positions for one letter at a time.</p>
+      <div class="rule"><p>$$\text{LEVEL:}\quad \binom52 \text{ spots for the L's} \times \binom32 \text{ for the E's} \times \binom11 \text{ for the V} = 10 \cdot 3 \cdot 1 = 30 = \frac{5!}{2!\,2!}.$$</p></div>
+      <p>When two correct methods count the same set, their answers must be equal. Turned around, this proves <em>identities</em>. Counting $k$-person committees from $n$ people by whether a particular person, Pat, is on them gives <strong>Pascal's identity</strong>:</p>
+      <div class="rule"><p>$$\binom{n}{k} = \underbrace{\binom{n-1}{k-1}}_{\text{Pat is in}} + \underbrace{\binom{n-1}{k}}_{\text{Pat is out}}.$$</p></div>
+    </div>
+
+    <figure class="explore" data-widget="anagramPlacer">
+      <figcaption><strong>Explore:</strong> Pick a word and press <em>Place next letter</em>. Each press chooses spots for one letter from the positions still empty, multiplying by a binomial coefficient. When the word is complete, compare the product with the overcount-and-divide answer.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Handshakes, three ways</h3>
+        <div class="problem"><p>Count the handshakes among $7$ people in two different ways.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each of $7$ people shakes $6$ hands; each handshake is counted twice: $\dfrac{7 \cdot 6}{2} = 21$.</p></div><p class="why">Overcount by "handshake ends," then divide by $2$.</p></li>
+          <li><div class="do"><p>Arrivals: $0 + 1 + 2 + 3 + 4 + 5 + 6 = 21$.</p></div><p class="why">The $k$th person to arrive greets the $k - 1$ already there. Agreement is a strong check.</p></li>
+        </ol>
+        <p class="answer">$21$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>LEVEL by positions</h3>
+        <div class="problem"><p>Count the arrangements of LEVEL by choosing positions, and check with the overcount formula.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Choose $2$ of $5$ spots for L: $\dbinom52 = 10$. Choose $2$ of the remaining $3$ for E: $\dbinom32 = 3$. V takes the last spot: $1$.</p></div><p class="why">Placing identical letters as a group never creates duplicates.</p></li>
+          <li><div class="do"><p>$10 \cdot 3 \cdot 1 = 30$, and $\dfrac{5!}{2!\,2!} = \dfrac{120}{4} = 30$. ✓</p></div><p class="why">Two independent methods agree.</p></li>
+        </ol>
+        <p class="answer">$30$</p>
+        <p class="book-next">Next in the book: Example 25-17 and Exercises 25-29, 25-30.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Subsets by size</h3>
+        <div class="problem"><p>Count the subsets of a $5$-element set in two ways.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In or out for each element: $2^5 = 32$.</p></div><p class="why">The method from 25.2.</p></li>
+          <li><div class="do"><p>By size: $\dbinom50 + \dbinom51 + \dbinom52 + \dbinom53 + \dbinom54 + \dbinom55 = 1 + 5 + 10 + 10 + 5 + 1 = 32$.</p></div><p class="why">Every subset has exactly one size, so add over sizes.</p></li>
+        </ol>
+        <p class="answer">$32$, which shows $\displaystyle\sum_{k=0}^{5}\binom5k = 2^5$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A required member, two ways</h3>
+        <div class="problem"><p>How many $3$-person committees chosen from $7$ people include Pat?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Directly: Pat is in; choose the other $2$ from $6$: $\dbinom62 = 15$.</p></div><p class="why">Fix the required person, then choose the rest.</p></li>
+          <li><div class="do"><p>Complement: all committees minus those without Pat: $\dbinom73 - \dbinom63 = 35 - 20 = 15$. ✓</p></div><p class="why">The complementary method from 25.7 gives the same answer.</p></li>
+        </ol>
+        <p class="answer">$15$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Pascal's identity</h3>
+        <div class="problem"><p>Explain why $\dbinom{n}{k} = \dbinom{n-1}{k-1} + \dbinom{n-1}{k}$, and check it for $n = 7$, $k = 3$.</p></div>
+        <ol class="steps">
+          <li data-think="Split the $k$-person committees according to one particular person."><div class="do"><p>Committees containing Pat: choose the other $k - 1$ from $n - 1$: $\dbinom{n-1}{k-1}$.</p></div><p class="why">Splitting on one person creates two non-overlapping cases.</p></li>
+          <li><div class="do"><p>Committees without Pat: all $k$ from the other $n - 1$: $\dbinom{n-1}{k}$.</p></div><p class="why">Every committee is in exactly one case, so the cases add to $\dbinom nk$.</p></li>
+          <li><div class="do"><p>Check: $\dbinom62 + \dbinom63 = 15 + 20 = 35 = \dbinom73$. ✓</p></div><p class="why">The previous example computed both pieces.</p></li>
+        </ol>
+        <p class="answer">Split by whether a fixed person is chosen; for $n = 7$, $k = 3$: $15 + 20 = 35$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Grid paths, two ways</h3>
+        <div class="problem"><p>Count the right/up paths from $(0, 0)$ to $(3, 2)$ in two ways.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>As words: arrangements of RRRUU, $\dbinom52 = 10$.</p></div><p class="why">Choose which $2$ of the $5$ steps go up.</p></li>
+          <li><div class="do"><p>By the last step: paths to $(3, 2)$ arrive from $(2, 2)$ or from $(3, 1)$, so $P(3,2) = P(2,2) + P(3,1)$.</p></div><p class="why">Every path ends with exactly one of those two steps.</p></li>
+          <li><div class="do"><p>Fill a table: $P(2,2) = \dbinom42 = 6$ and $P(3,1) = \dbinom41 = 4$, so $P(3,2) = 6 + 4 = 10$. ✓</p></div><p class="why">The last-step recursion is exactly Pascal's identity.</p></li>
+        </ol>
+        <p class="answer">$10$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A committee with a chair</h3>
+        <div class="problem"><p>Count, in two ways, the ways to choose a $3$-person committee with one member as chair, from $6$ people. What identity does this prove?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Committee first, then chair: $\dbinom63 \cdot 3 = 20 \cdot 3 = 60$.</p></div><p class="why">Any of the $3$ members can be chair.</p></li>
+          <li data-think="What if you choose the chair before the rest of the committee?"><div class="do"><p>Chair first, then the other two: $6 \cdot \dbinom52 = 6 \cdot 10 = 60$. ✓</p></div><p class="why">The chair can be any of $6$, and the other two come from the remaining $5$.</p></li>
+          <li><div class="do"><p>In general, $k\dbinom{n}{k} = n\dbinom{n-1}{k-1}$.</p></div><p class="why">Both sides count the same thing, so they are equal for every $n$ and $k$.</p></li>
+        </ol>
+        <p class="answer">$60$; this proves $k\binom{n}{k} = n\binom{n-1}{k-1}$.</p>
+        <p class="key-idea">Counting one set in two ways proves an identity with no algebra at all.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 25.10 ===================== -->
+  <section class="lesson" id="s25-10" data-title="The Binomial Theorem">
+    <h2><span class="sec-num">25.10</span> The Binomial Theorem</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Compute $11^2 = 121$, $11^3 = 1331$, $11^4 = 14641$. These digits are rows of Pascal's triangle! That's because $11 = 10 + 1$, and powers of a sum like $(10 + 1)^n$ expand using the same numbers that count committees.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Write $(x + y)^5 = (x+y)(x+y)(x+y)(x+y)(x+y)$. Expanding means picking an $x$ or a $y$ from each of the five factors and multiplying. To get $x^3y^2$, you pick $y$ from exactly $2$ of the $5$ factors, which can be done in $\binom52 = 10$ ways. So the coefficient of $x^3y^2$ is $10$. In general:</p>
+      <div class="rule"><p>$$(x + y)^n = \sum_{k=0}^{n}\binom{n}{k}x^{n-k}y^{k} = \binom n0 x^n + \binom n1 x^{n-1}y + \cdots + \binom nn y^n.$$</p></div>
+      <p>The coefficients $\binom nk$ form row $n$ of <strong>Pascal's triangle</strong>, where each entry is the sum of the two above it (Pascal's identity). Two quick checks: putting $x = y = 1$ gives $\sum_k \binom nk = 2^n$, and putting $x = 1$, $y = -1$ gives an alternating sum of $0$ (for $n \ge 1$).</p>
+      <div class="note"><p>When a term has a coefficient or a minus sign, like $(2x - 3)^n$, keep it attached: the $k$th term is $\binom nk (2x)^{n-k}(-3)^k$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="pascalBinomial">
+      <figcaption><strong>Explore:</strong> Choose $n$ and the coefficients in $(ax + by)^n$. Row $n$ of Pascal's triangle is highlighted. Pick a term $k$ to see how its coefficient is built from $\binom nk$, $a^{n-k}$ and $b^k$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Expand a fourth power</h3>
+        <div class="problem"><p>Expand $(x + y)^4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Row $4$ of Pascal's triangle: $1, 4, 6, 4, 1$.</p></div><p class="why">These are $\binom40, \ldots, \binom44$.</p></li>
+          <li><div class="do"><p>$(x+y)^4 = x^4 + 4x^3y + 6x^2y^2 + 4xy^3 + y^4$.</p></div><p class="why">Powers of $x$ count down from $4$ while powers of $y$ count up.</p></li>
+        </ol>
+        <p class="answer">$x^4 + 4x^3y + 6x^2y^2 + 4xy^3 + y^4$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>One coefficient</h3>
+        <div class="problem"><p>Find the coefficient of $x^2y^5$ in $(x + y)^7$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Choose $y$ from $5$ of the $7$ factors: $\dbinom75 = \dbinom72 = 21$.</p></div><p class="why">The exponent of $y$ tells you how many factors contributed a $y$.</p></li>
+        </ol>
+        <p class="answer">$21$</p>
+        <p class="book-next">Next in the book: Example 25-18.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Coefficients inside</h3>
+        <div class="problem"><p>Expand $(2x + 1)^4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Terms: $\binom4k(2x)^{4-k}(1)^k$ for $k = 0, \ldots, 4$.</p></div><p class="why">Treat $2x$ as the first term of the binomial.</p></li>
+          <li><div class="do"><p>$1 \cdot 16x^4 + 4 \cdot 8x^3 + 6 \cdot 4x^2 + 4 \cdot 2x + 1 = 16x^4 + 32x^3 + 24x^2 + 8x + 1$.</p></div><p class="why">Raise the $2$ along with the $x$.</p></li>
+        </ol>
+        <p class="answer">$16x^4 + 32x^3 + 24x^2 + 8x + 1$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Watch the sign</h3>
+        <div class="problem"><p>Find the coefficient of $x^3$ in $(x - 2)^6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The term with $x^3$ has $k = 3$: $\dbinom63 x^3(-2)^3$.</p></div><p class="why">$x$ appears to the power $6 - k$, so $6 - k = 3$.</p></li>
+          <li><div class="do"><p>$20 \cdot (-8) = -160$.</p></div><p class="why">An odd power of $-2$ is negative.</p></li>
+        </ol>
+        <p class="answer">$-160$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Sum of all coefficients</h3>
+        <div class="problem"><p>Find the sum of the coefficients of $(3x - 1)^5$ when expanded.</p></div>
+        <ol class="steps">
+          <li data-think="What value of $x$ turns every term into just its coefficient?"><div class="do"><p>Set $x = 1$: the expansion becomes the sum of its coefficients.</p></div><p class="why">Every power of $x$ becomes $1$.</p></li>
+          <li><div class="do"><p>$(3 - 1)^5 = 2^5 = 32$.</p></div><p class="why">No need to expand at all.</p></li>
+        </ol>
+        <p class="answer">$32$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A constant term</h3>
+        <div class="problem"><p>Find the constant term in the expansion of $\left(x + \dfrac{2}{x}\right)^6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>General term: $\dbinom6k x^{6-k}\left(\dfrac2x\right)^k = \dbinom6k 2^k x^{6-2k}$.</p></div><p class="why">Collect the powers of $x$: $x^{6-k} \cdot x^{-k}$.</p></li>
+          <li><div class="do"><p>Constant means $6 - 2k = 0$, so $k = 3$: $\dbinom63 2^3 = 20 \cdot 8 = 160$.</p></div><p class="why">Set the exponent of $x$ to zero.</p></li>
+        </ol>
+        <p class="answer">$160$</p>
+        <p class="book-next">Next in the book: Example 25-19.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Mental arithmetic with binomials</h3>
+        <div class="problem"><p>Compute $11^4$ and $99^3$ using the Binomial Theorem.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(10 + 1)^4 = 10^4 + 4 \cdot 10^3 + 6 \cdot 10^2 + 4 \cdot 10 + 1 = 14641$.</p></div><p class="why">The coefficients $1, 4, 6, 4, 1$ become the digits because none of them carries.</p></li>
+          <li><div class="do"><p>$(100 - 1)^3 = 100^3 - 3 \cdot 100^2 + 3 \cdot 100 - 1 = 1{,}000{,}000 - 30{,}000 + 300 - 1 = 970{,}299$.</p></div><p class="why">Signs alternate because the second term is $-1$.</p></li>
+        </ol>
+        <p class="answer">$11^4 = 14641$ and $99^3 = 970{,}299$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Every other entry</h3>
+        <div class="problem"><p>Evaluate $\dbinom{10}{0} + \dbinom{10}{2} + \dbinom{10}{4} + \cdots + \dbinom{10}{10}$.</p></div>
+        <ol class="steps">
+          <li data-think="Which two substitutions into $(1 + y)^{10}$ give the full sum and the alternating sum?"><div class="do"><p>$y = 1$: $\displaystyle\sum_k \binom{10}{k} = 2^{10}$. $\ y = -1$: $\displaystyle\sum_k (-1)^k\binom{10}{k} = 0$.</p></div><p class="why">Plugging special values into $(1 + y)^{10} = \sum_k \binom{10}{k}y^k$.</p></li>
+          <li><div class="do"><p>Adding the two equations doubles the even-$k$ terms and cancels the odd ones: $2(\text{even sum}) = 1024$.</p></div><p class="why">Odd $k$ have opposite signs in the two sums.</p></li>
+          <li><div class="do"><p>Even sum $= 512$.</p></div><p class="why">Half of $2^{10}$.</p></li>
+        </ol>
+        <p class="answer">$512$</p>
+        <p class="key-idea">Substituting $1$ and $-1$ into a binomial expansion extracts sums of coefficients.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A specific power with negative exponents</h3>
+        <div class="problem"><p>Find the coefficient of $x^3$ in $\left(x^2 - \dfrac1x\right)^9$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>General term: $\dbinom9k (x^2)^{9-k}\left(-\dfrac1x\right)^k = (-1)^k\dbinom9k x^{18 - 3k}$.</p></div><p class="why">$x^{18-2k}\cdot x^{-k} = x^{18-3k}$, and the sign rides along with $(-1)^k$.</p></li>
+          <li><div class="do"><p>$18 - 3k = 3$ gives $k = 5$.</p></div><p class="why">Match the exponent to the one we want.</p></li>
+          <li><div class="do"><p>$(-1)^5\dbinom95 = -126$.</p></div><p class="why">$\binom95 = \binom94 = 126$, and the odd power makes it negative.</p></li>
+        </ol>
+        <p class="answer">$-126$</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-25">
+    <h2 id="further-25">Further reading in the book</h2>
+    <ul>
+      <li><strong>§25.1 What's to Learn?</strong>: Example 25-1 and Exercise 25-1.</li>
+      <li><strong>§25.2 Multiplication</strong>: Examples 25-2, 25-3 and Exercises 25-2, 25-3.</li>
+      <li><strong>§25.3 Example: The Number of Divisors</strong>: Exercises 25-4 to 25-6.</li>
+      <li><strong>§25.4 Restrictions on Multiplication</strong>: Example 25-4 and Exercises 25-7 to 25-10.</li>
+      <li><strong>§25.5 Permutations, Arrangements, and !</strong>: Examples 25-5 to 25-9 and Exercises 25-11 to 25-15.</li>
+      <li><strong>§25.6 Mixing it Up</strong>: Examples 25-10, 25-11 and Exercises 25-16, 25-17.</li>
+      <li><strong>§25.7 Counting the Wrong Thing, Part I</strong>: Example 25-12 and Exercises 25-18, 25-19.</li>
+      <li><strong>§25.8 Counting the Wrong Thing, Part II</strong>: Examples 25-13 to 25-16 and Exercises 25-20 to 25-28.</li>
+      <li><strong>§25.9 Doing it Another Way</strong>: Example 25-17 and Exercises 25-29, 25-30.</li>
+      <li><strong>§25.10 The Binomial Theorem</strong>: Examples 25-18 and 25-19.</li>
+      <li><strong>Problems to Solve for Chapter 25</strong>: Problems 457–477 mix every section.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 25 explorers ---------- */
+(function () {
+  "use strict";
+  var LET = "ABCDEFGH";
+  function fact(n) { var r = 1; for (var i = 2; i <= n; i++) r *= i; return r; }
+  function choose(n, k) { if (k < 0 || k > n) return 0; var r = 1; for (var i = 1; i <= k; i++) r = r * (n - k + i) / i; return Math.round(r); }
+  function mono(size, weight) { return "font: " + (weight || 600) + " " + (size || 13) + "px var(--font-mono)"; }
+
+  /* 25.1 — counting integers in a range */
+  AOPS.registerWidget("countRange", function (body) {
+    var svg = W.stage(body, { w: 640, h: 200, label: "Number line from a to b with the counted integers highlighted" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 7, b = 38, m = 1, mode = "inc";
+    W.slider(ctl, { label: "Start a", min: 1, max: 25, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "End b", min: 26, max: 50, value: b, onInput: function (v) { b = v; draw(); } });
+    W.slider(ctl, { label: "Count multiples of m", min: 1, max: 7, value: m, onInput: function (v) { m = v; draw(); } });
+    W.segmented(ctl, { title: "Endpoints", value: mode, options: [{ value: "inc", label: "inclusive" }, { value: "exc", label: "exclusive" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var lo = 0, hi = 51, left = 20, right = 620, y = 90;
+      function X(v) { return left + (v - lo) / (hi - lo) * (right - left); }
+      svg.appendChild(W.s("line", { x1: X(0.5), y1: y, x2: X(50.5), y2: y, stroke: "var(--border-strong)", "stroke-width": 2 }));
+      svg.appendChild(W.s("rect", { x: X(a) - 6, y: y - 22, width: X(b) - X(a) + 12, height: 44, rx: 10, fill: "color-mix(in srgb, var(--plot-2) 12%, transparent)", stroke: "var(--plot-2)", "stroke-dasharray": "4 4" }));
+      var cnt = 0;
+      for (var v = 1; v <= 50; v++) {
+        var inRange = mode === "inc" ? (v >= a && v <= b) : (v > a && v < b);
+        var on = inRange && v % m === 0;
+        if (on) cnt++;
+        svg.appendChild(W.s("circle", { cx: X(v), cy: y, r: on ? 5 : 3, fill: on ? "var(--accent)" : "var(--faint)" }));
+        if (v % 5 === 0) svg.appendChild(W.s("text", { x: X(v), y: y + 40, "text-anchor": "middle", class: "lbl", text: v }));
+      }
+      [a, b].forEach(function (e, i) {
+        svg.appendChild(W.s("line", { x1: X(e), y1: y - 34, x2: X(e), y2: y + 12, stroke: "var(--plot-2)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: X(e), y: y - 40, "text-anchor": i ? "end" : "start", style: mono(13, 700), fill: "var(--plot-2)", text: (i ? "b = " : "a = ") + e }));
+      });
+      svg.appendChild(W.s("text", { x: 320, y: 186, "text-anchor": "middle", class: "lbl", text: cnt + " gold dots counted" + (mode === "exc" ? " (endpoints excluded)" : " (endpoints included)") }));
+      var t;
+      if (m === 1) t = mode === "inc" ? "b - a + 1 = " + b + " - " + a + " + 1 = " + (b - a + 1) : "b - a - 1 = " + b + " - " + a + " - 1 = " + (b - a - 1);
+      else {
+        var top = mode === "inc" ? b : b - 1, bot = mode === "inc" ? a - 1 : a;
+        t = "\\left\\lfloor \\tfrac{" + top + "}{" + m + "} \\right\\rfloor - \\left\\lfloor \\tfrac{" + bot + "}{" + m + "} \\right\\rfloor = " + Math.floor(top / m) + " - " + Math.floor(bot / m) + " = " + cnt;
+      }
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 25.2 — tree of choices */
+  AOPS.registerWidget("choiceTree", function (body) {
+    var svg = W.stage(body, { w: 640, h: 420, label: "Tree diagram of a three-stage choice" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var n1 = 3, n2 = 2, n3 = 2, path = -1;
+    W.slider(ctl, { label: "Stage 1 options", min: 1, max: 4, value: n1, onInput: function (v) { n1 = v; path = -1; draw(); } });
+    W.slider(ctl, { label: "Stage 2 options", min: 1, max: 3, value: n2, onInput: function (v) { n2 = v; path = -1; draw(); } });
+    W.slider(ctl, { label: "Stage 3 options", min: 1, max: 3, value: n3, onInput: function (v) { n3 = v; path = -1; draw(); } });
+    W.button(ctl2, "Trace an outcome", function () { path = (path + 1) % (n1 * n2 * n3); draw(); });
+    var NAMES = [["red", "blue", "green", "gold"], ["S", "M", "L"], ["1", "2", "3"]];
+    function draw() {
+      W.clear(svg);
+      var leaves = n1 * n2 * n3, top = 30, bottom = 400, xs = [30, 180, 350, 520];
+      var gap = (bottom - top) / leaves;
+      function leafY(i) { return top + gap * (i + 0.5); }
+      var pi = path >= 0 ? [Math.floor(path / (n2 * n3)), Math.floor(path / n3) % n2, path % n3] : null;
+      var root = { x: xs[0], y: (top + bottom) / 2 };
+      for (var i = 0; i < n1; i++) {
+        var y1 = (leafY(i * n2 * n3) + leafY((i + 1) * n2 * n3 - 1)) / 2;
+        var on1 = pi && pi[0] === i;
+        svg.appendChild(W.s("line", { x1: root.x, y1: root.y, x2: xs[1], y2: y1, stroke: on1 ? "var(--accent)" : "var(--border-strong)", "stroke-width": on1 ? 3 : 1.5 }));
+        for (var j = 0; j < n2; j++) {
+          var base = (i * n2 + j) * n3;
+          var y2 = (leafY(base) + leafY(base + n3 - 1)) / 2;
+          var on2 = on1 && pi[1] === j;
+          svg.appendChild(W.s("line", { x1: xs[1], y1: y1, x2: xs[2], y2: y2, stroke: on2 ? "var(--accent)" : "var(--border-strong)", "stroke-width": on2 ? 3 : 1.5 }));
+          for (var k = 0; k < n3; k++) {
+            var y3 = leafY(base + k), on3 = on2 && pi[2] === k;
+            svg.appendChild(W.s("line", { x1: xs[2], y1: y2, x2: xs[3], y2: y3, stroke: on3 ? "var(--accent)" : "var(--border-strong)", "stroke-width": on3 ? 3 : 1.5 }));
+            svg.appendChild(W.s("circle", { cx: xs[3], cy: y3, r: on3 ? 6 : 4, fill: on3 ? "var(--accent)" : "var(--plot-3)" }));
+            if (leaves <= 18 || on3) svg.appendChild(W.s("text", { x: xs[3] + 12, y: y3 + 4, class: "lbl", fill: on3 ? "var(--accent)" : null, text: NAMES[0][i] + "-" + NAMES[1][j] + "-" + NAMES[2][k] }));
+          }
+          svg.appendChild(W.s("circle", { cx: xs[2], cy: y2, r: 5, fill: "var(--plot-2)" }));
+        }
+        svg.appendChild(W.s("circle", { cx: xs[1], cy: y1, r: 6, fill: "var(--plot-1)" }));
+        svg.appendChild(W.s("text", { x: xs[1] - 10, y: y1 - 10, "text-anchor": "end", class: "lbl", text: NAMES[0][i] }));
+      }
+      svg.appendChild(W.s("circle", { cx: root.x, cy: root.y, r: 7, fill: "var(--ink)" }));
+      ["start", "colour", "size", "number"].forEach(function (t, c) { svg.appendChild(W.s("text", { x: xs[c], y: 16, "text-anchor": "middle", class: "lbl", text: t })); });
+      var t = n1 + " \\times " + n2 + " \\times " + n3 + " = " + leaves + "\\ \\text{outcomes}";
+      if (pi) t += "\\qquad \\text{now tracing: " + NAMES[0][pi[0]] + ", " + NAMES[1][pi[1]] + ", " + NAMES[2][pi[2]] + " (" + (path + 1) + " of " + leaves + ")}";
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 25.3 — divisor grid */
+  AOPS.registerWidget("divisorGrid", function (body) {
+    var svg = W.stage(body, { w: 640, h: 260, label: "Grid of divisors of 2 to the a times 3 to the b times 5 to the c" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 3, b = 2, c = 1, hl = "all";
+    W.slider(ctl, { label: "Exponent of 2 (a)", min: 0, max: 4, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Exponent of 3 (b)", min: 0, max: 2, value: b, onInput: function (v) { b = v; draw(); } });
+    W.slider(ctl, { label: "Exponent of 5 (c)", min: 0, max: 2, value: c, onInput: function (v) { c = v; draw(); } });
+    W.segmented(ctl, { title: "Highlight", value: hl, options: [{ value: "all", label: "all" }, { value: "odd", label: "odd" }, { value: "sq", label: "squares" }, { value: "m6", label: "multiples of 6" }], onChange: function (v) { hl = v; draw(); } });
+    function test(i, j, k) {
+      if (hl === "odd") return i === 0;
+      if (hl === "sq") return i % 2 === 0 && j % 2 === 0 && k % 2 === 0;
+      if (hl === "m6") return i >= 1 && j >= 1;
+      return true;
+    }
+    function draw() {
+      W.clear(svg);
+      var cols = (c + 1) * (a + 1), gapP = 22;
+      var cw = Math.min(64, (600 - gapP * c) / cols), ch = 40;
+      var totalW = cols * cw + gapP * c, x0 = 320 - totalW / 2, y0 = 50;
+      var n = Math.pow(2, a) * Math.pow(3, b) * Math.pow(5, c), count = 0;
+      var H = y0 + (b + 1) * ch + 40; svg.setAttribute("viewBox", "0 0 640 " + H); svg._h = H;
+      for (var k = 0; k <= c; k++) {
+        var px = x0 + k * ((a + 1) * cw + gapP);
+        svg.appendChild(W.s("text", { x: px + (a + 1) * cw / 2, y: 30, "text-anchor": "middle", class: "lbl", text: "× 5^" + k }));
+        for (var j = 0; j <= b; j++) for (var i = 0; i <= a; i++) {
+          var dv = Math.pow(2, i) * Math.pow(3, j) * Math.pow(5, k), on = test(i, j, k);
+          if (on) count++;
+          svg.appendChild(W.s("rect", { x: px + i * cw + 2, y: y0 + j * ch + 2, width: cw - 4, height: ch - 4, rx: 6, fill: on ? "color-mix(in srgb, var(--accent) 35%, transparent)" : "var(--surface-2)", stroke: on ? "var(--accent)" : "var(--border-strong)" }));
+          svg.appendChild(W.s("text", { x: px + i * cw + cw / 2, y: y0 + j * ch + ch / 2 + 5, "text-anchor": "middle", style: mono(12, 700), fill: on ? "var(--ink)" : "var(--muted)", text: dv }));
+        }
+      }
+      svg.appendChild(W.s("text", { x: x0, y: y0 + (b + 1) * ch + 22, class: "lbl", text: "→ ×2 across,  ↓ ×3 down,  next panel ×5" }));
+      var fac = "2^{" + a + "}\\cdot 3^{" + b + "}\\cdot 5^{" + c + "}";
+      var t = "n = " + fac + " = " + n + ",\\quad d(n) = (" + a + "+1)(" + b + "+1)(" + c + "+1) = " + (a + 1) * (b + 1) * (c + 1);
+      var rule = { odd: "1 \\cdot (" + b + "+1)(" + c + "+1)", sq: (Math.floor(a / 2) + 1) + "\\cdot" + (Math.floor(b / 2) + 1) + "\\cdot" + (Math.floor(c / 2) + 1), m6: a + "\\cdot " + b + "\\cdot (" + c + "+1)" }[hl];
+      if (rule) t += ";\\quad \\text{highlighted} = " + rule + " = " + count;
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 25.4 — filling the blanks */
+  AOPS.registerWidget("slotFiller", function (body) {
+    var svg = W.stage(body, { w: 640, h: 230, label: "Row of blanks with the number of choices for each, plus a pool of items" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var n = 6, k = 4, rep = false, sample = null;
+    var kSl;
+    W.slider(ctl, { label: "Items available n", min: 2, max: 8, value: n, onInput: function (v) { n = v; if (!rep && k > n) { kSl.set(n); return; } sample = null; draw(); } });
+    kSl = W.slider(ctl, { label: "Slots to fill k", min: 1, max: 6, value: k, onInput: function (v) { k = rep ? v : Math.min(v, n); sample = null; draw(); } });
+    W.segmented(ctl, { title: "Repeats", value: rep, options: [{ value: false, label: "not allowed" }, { value: true, label: "allowed" }], onChange: function (v) { rep = v; if (!rep && k > n) { kSl.set(n); return; } sample = null; draw(); } });
+    W.button(ctl2, "Make a random one", function () {
+      var pool = []; for (var i = 0; i < n; i++) pool.push(i);
+      sample = [];
+      for (var s = 0; s < k; s++) {
+        var idx = Math.floor(Math.random() * pool.length);
+        sample.push(pool[idx]);
+        if (!rep) pool.splice(idx, 1);
+      }
+      draw();
+    });
+    function draw() {
+      W.clear(svg);
+      var sw = Math.min(90, 580 / k), x0 = 320 - sw * k / 2, product = 1, factors = [];
+      svg.appendChild(W.s("text", { x: 320, y: 22, "text-anchor": "middle", class: "lbl", text: "pool of items" }));
+      var pw = Math.min(60, 560 / n), px0 = 320 - pw * n / 2;
+      for (var p = 0; p < n; p++) {
+        var used = sample && sample.indexOf(p) >= 0;
+        svg.appendChild(W.s("circle", { cx: px0 + pw * (p + 0.5), cy: 52, r: 17, fill: used ? "var(--surface-2)" : "color-mix(in srgb, var(--plot-" + (p % 5 + 1) + ") 55%, transparent)", stroke: "var(--plot-" + (p % 5 + 1) + ")" }));
+        svg.appendChild(W.s("text", { x: px0 + pw * (p + 0.5), y: 57, "text-anchor": "middle", style: mono(13, 700), fill: used ? "var(--muted)" : "var(--ink)", text: LET[p] }));
+        if (used && !rep) svg.appendChild(W.s("line", { x1: px0 + pw * (p + 0.5) - 14, y1: 38, x2: px0 + pw * (p + 0.5) + 14, y2: 66, stroke: "var(--muted)", "stroke-width": 2 }));
+      }
+      for (var s = 0; s < k; s++) {
+        var opts = rep ? n : n - s;
+        factors.push(opts); product *= opts;
+        var x = x0 + s * sw;
+        svg.appendChild(W.s("rect", { x: x + 6, y: 100, width: sw - 12, height: 50, rx: 8, fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+        if (sample) svg.appendChild(W.s("text", { x: x + sw / 2, y: 132, "text-anchor": "middle", style: mono(18, 700), fill: "var(--plot-" + (sample[s] % 5 + 1) + ")", text: LET[sample[s]] }));
+        svg.appendChild(W.s("line", { x1: x + 10, y1: 172, x2: x + sw - 10, y2: 172, stroke: "var(--accent)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: x + sw / 2, y: 166, "text-anchor": "middle", style: mono(15, 700), fill: "var(--accent)", text: opts }));
+        svg.appendChild(W.s("text", { x: x + sw / 2, y: 192, "text-anchor": "middle", class: "lbl", text: "slot " + (s + 1) }));
+      }
+      svg.appendChild(W.s("text", { x: 320, y: 220, "text-anchor": "middle", class: "lbl", text: rep ? "every slot can use any item" : "each slot has one option fewer: an item can't be used twice" }));
+      var t = factors.join(" \\cdot ") + " = " + product;
+      if (!rep) t += (k === n ? " = " + n + "!" : " = {}_{" + n + "}P_{" + k + "}");
+      else t += " = " + n + "^{" + k + "}";
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 25.5 — circular seating */
+  AOPS.registerWidget("circleSeats", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "People seated around a round table, with rotate and flip controls" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var n = 5, order = [0, 1, 2, 3, 4], rot = 0, mode = "circle";
+    W.slider(ctl, { label: "People n", min: 3, max: 7, value: n, onInput: function (v) { n = v; order = []; for (var i = 0; i < n; i++) order.push(i); rot = 0; draw(); } });
+    W.segmented(ctl, { title: "Count as", value: mode, options: [{ value: "line", label: "row" }, { value: "circle", label: "round table" }, { value: "key", label: "keychain" }], onChange: function (v) { mode = v; draw(); } });
+    W.button(ctl2, "Rotate", function () { rot = (rot + 1) % n; draw(); });
+    W.button(ctl2, "Flip over", function () { order = [order[0]].concat(order.slice(1).reverse()); draw(); });
+    W.button(ctl2, "Shuffle", function () { for (var i = n - 1; i > 0; i--) { var j = Math.floor(Math.random() * (i + 1)); var t = order[i]; order[i] = order[j]; order[j] = t; } draw(); });
+    function seatOf(i) { return (i + rot) % n; } // person at position i in "order" sits in seat (i+rot)
+    function readFromA() {
+      var ai = order.indexOf(0), s = "";
+      for (var i = 0; i < n; i++) s += LET[order[(ai + i) % n]];
+      return s;
+    }
+    function draw() {
+      W.clear(svg);
+      var cx = 150, cy = 150, R = 96;
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R - 30, fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+      svg.appendChild(W.s("text", { x: cx, y: cy - 4, "text-anchor": "middle", class: "lbl", text: "table" }));
+      svg.appendChild(W.s("text", { x: cx, y: cy + 14, "text-anchor": "middle", class: "lbl", text: "(numbers = seats)" }));
+      for (var s = 0; s < n; s++) {
+        var ang = -Math.PI / 2 + 2 * Math.PI * s / n;
+        svg.appendChild(W.s("circle", { cx: cx + (R + 38) * Math.cos(ang), cy: cy + (R + 38) * Math.sin(ang), r: 11, fill: "none", stroke: "var(--border-strong)", "stroke-dasharray": "3 3" }));
+        svg.appendChild(W.s("text", { x: cx + (R + 38) * Math.cos(ang), y: cy + (R + 38) * Math.sin(ang) + 4, "text-anchor": "middle", class: "lbl", text: s + 1 }));
+      }
+      order.forEach(function (p, i) {
+        var s = seatOf(i), ang = -Math.PI / 2 + 2 * Math.PI * s / n;
+        var x = cx + R * Math.cos(ang), y = cy + R * Math.sin(ang);
+        svg.appendChild(W.s("circle", { cx: x, cy: y, r: 20, fill: p === 0 ? "var(--accent)" : "color-mix(in srgb, var(--plot-" + (p % 5 + 1) + ") 55%, var(--surface-solid))", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: x, y: y + 5, "text-anchor": "middle", style: mono(15, 700), fill: "var(--ink)", text: LET[p] }));
+      });
+      // rotations listed as rows
+      var rx = 330;
+      svg.appendChild(W.s("text", { x: rx, y: 34, class: "lbl", text: "the same circle, read from seat 1:" }));
+      var seats = []; order.forEach(function (p, i) { seats[seatOf(i)] = p; });
+      for (var r = 0; r < n; r++) {
+        var str = ""; for (var q = 0; q < n; q++) str += LET[seats[(q + r) % n]];
+        var cur = r === 0;
+        svg.appendChild(W.s("text", { x: rx, y: 62 + r * 26, style: mono(15, cur ? 700 : 400), fill: cur ? "var(--accent)" : "var(--ink)", text: str + (cur ? "  ← current seats" : "") }));
+      }
+      svg.appendChild(W.s("text", { x: rx, y: 62 + n * 26 + 8, class: "lbl", text: "clockwise from A: " + readFromA() }));
+      var nf = fact(n), t;
+      if (mode === "line") t = n + "! = " + nf + "\\ \\text{row orders}";
+      else if (mode === "circle") t = "\\frac{" + n + "!}{" + n + "} = (" + n + "-1)! = " + fact(n - 1) + "\\ \\text{round-table seatings}";
+      else t = "\\frac{(" + n + "-1)!}{2} = " + (fact(n - 1) / 2) + "\\ \\text{keychains (a flip is the same ring)}";
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 25.5 — trailing zeros of n! */
+  AOPS.registerWidget("factorialZeros", function (body) {
+    var svg = W.stage(body, { w: 640, h: 280, label: "Multiples of 5 up to n with their factors of 5 marked" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 60;
+    W.slider(ctl, { label: "n", min: 5, max: 1000, value: n, onInput: function (v) { n = v; draw(); } });
+    function v5(k) { var c = 0; while (k % 5 === 0) { k /= 5; c++; } return c; }
+    function draw() {
+      W.clear(svg);
+      var shown = Math.min(n, 150), perRow = 10, cw = 600 / perRow;
+      svg.appendChild(W.s("text", { x: 20, y: 20, class: "lbl", text: "multiples of 5 up to " + n + (n > 150 ? " (first 150 numbers shown)" : "") + ": each dot is one factor of 5" }));
+      var m = 0;
+      for (var k = 5; k <= shown; k += 5) {
+        var col = m % perRow, row = Math.floor(m / perRow);
+        var x = 20 + col * cw + cw / 2, y = 52 + row * 54;
+        var e = v5(k);
+        svg.appendChild(W.s("text", { x: x, y: y, "text-anchor": "middle", style: mono(13, e > 1 ? 700 : 400), fill: e > 1 ? "var(--accent)" : "var(--muted)", text: k }));
+        for (var d = 0; d < e; d++) svg.appendChild(W.s("circle", { cx: x, cy: y + 12 + d * 10, r: 4, fill: d === 0 ? "var(--plot-1)" : d === 1 ? "var(--accent)" : "var(--plot-3)" }));
+        m++;
+      }
+      // summary bars
+      var terms = [], p = 5;
+      while (p <= n) { terms.push([p, Math.floor(n / p)]); p *= 5; }
+      var total = terms.reduce(function (s, t) { return s + t[1]; }, 0);
+      var bx = 20, by = 228, scale = 600 / Math.max(total, 1);
+      var colors = ["var(--plot-1)", "var(--accent)", "var(--plot-3)", "var(--plot-4)"];
+      terms.forEach(function (t, i) {
+        var w = t[1] * scale;
+        svg.appendChild(W.s("rect", { x: bx, y: by, width: Math.max(w - 2, 1), height: 22, rx: 4, fill: "color-mix(in srgb, " + colors[i] + " 55%, transparent)", stroke: colors[i] }));
+        if (w > 70) svg.appendChild(W.s("text", { x: bx + w / 2, y: by + 16, "text-anchor": "middle", style: mono(12, 700), fill: "var(--ink)", text: "÷" + t[0] + ": " + t[1] }));
+        bx += w;
+      });
+      svg.appendChild(W.s("text", { x: 20, y: by - 8, class: "lbl", text: "total factors of 5 = " + total }));
+      out.tex(terms.map(function (t) { return "\\left\\lfloor \\tfrac{" + n + "}{" + t[0] + "} \\right\\rfloor"; }).join(" + ") + " = " + terms.map(function (t) { return t[1]; }).join(" + ") + " = " + total + "\\ \\text{zeros at the end of } " + n + "!");
+    }
+    draw();
+  });
+
+  /* 25.6 — balls in boxes */
+  AOPS.registerWidget("ballsBoxes", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "All distinguishable ways to put balls into boxes" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var nb = 3, nx = 2, ballsSame = false, boxesSame = false;
+    W.slider(ctl, { label: "Balls", min: 1, max: 4, value: nb, onInput: function (v) { nb = v; draw(); } });
+    W.slider(ctl, { label: "Boxes", min: 2, max: 3, value: nx, onInput: function (v) { nx = v; draw(); } });
+    W.segmented(ctl, { title: "Balls are", value: false, options: [{ value: false, label: "distinct" }, { value: true, label: "identical" }], onChange: function (v) { ballsSame = v; draw(); } });
+    W.segmented(ctl, { title: "Boxes are", value: false, options: [{ value: false, label: "distinct" }, { value: true, label: "identical" }], onChange: function (v) { boxesSame = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var total = Math.pow(nx, nb), seen = {}, reps = [];
+      for (var code = 0; code < total; code++) {
+        var f = [], c = code;
+        for (var i = 0; i < nb; i++) { f.push(c % nx); c = Math.floor(c / nx); }
+        var boxes = []; for (var j = 0; j < nx; j++) boxes.push([]);
+        f.forEach(function (bx, ball) { boxes[bx].push(ball); });
+        var desc = boxes.map(function (bl) { return ballsSame ? String(bl.length) : bl.join(""); });
+        var key = boxesSame ? desc.slice().sort().join("|") : desc.join("|");
+        if (!seen[key]) { seen[key] = 1; reps.push(boxes); }
+      }
+      var cardW = nx === 2 ? 118 : 150, cardH = 72, perRow = Math.floor(620 / (cardW + 6));
+      var rows = Math.ceil(reps.length / perRow), H = Math.max(140, 40 + rows * (cardH + 10));
+      svg.setAttribute("viewBox", "0 0 640 " + H); svg._h = H;
+      svg.appendChild(W.s("text", { x: 10, y: 20, class: "lbl", text: reps.length + " distinguishable arrangement" + (reps.length === 1 ? "" : "s") + (boxesSame ? " (boxes unlabelled)" : " (boxes labelled 1, 2" + (nx === 3 ? ", 3" : "") + ")") }));
+      reps.forEach(function (boxes, r) {
+        var col = r % perRow, row = Math.floor(r / perRow);
+        var x0 = 10 + col * (cardW + 6), y0 = 32 + row * (cardH + 10);
+        svg.appendChild(W.s("rect", { x: x0, y: y0, width: cardW, height: cardH, rx: 8, fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+        var bw = (cardW - 8) / nx;
+        boxes.forEach(function (bl, bi) {
+          var bx = x0 + 4 + bi * bw;
+          svg.appendChild(W.s("rect", { x: bx + 2, y: y0 + 16, width: bw - 4, height: cardH - 22, rx: 4, fill: "none", stroke: "var(--plot-2)" }));
+          if (!boxesSame) svg.appendChild(W.s("text", { x: bx + bw / 2, y: y0 + 13, "text-anchor": "middle", class: "lbl", text: bi + 1 }));
+          bl.forEach(function (ball, q) {
+            var bxx = bx + 13 + (q % 2) * 21, byy = y0 + 30 + Math.floor(q / 2) * 21;
+            svg.appendChild(W.s("circle", { cx: bxx, cy: byy, r: 9, fill: ballsSame ? "var(--accent)" : "var(--plot-" + (ball + 1) + ")" }));
+            if (!ballsSame && bw > 40) svg.appendChild(W.s("text", { x: bxx, y: byy + 4, "text-anchor": "middle", style: "font: 700 12px var(--font-mono)", fill: "var(--surface-solid)", text: LET[ball] }));
+          });
+        });
+      });
+      var t = "\\text{balls } " + (ballsSame ? "\\text{identical}" : "\\text{distinct}") + ",\\ \\text{boxes } " + (boxesSame ? "\\text{identical}" : "\\text{distinct}") + ":\\quad " + reps.length + "\\ \\text{ways}";
+      if (!ballsSame && !boxesSame) t += "\\ = " + nx + "^{" + nb + "}";
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 25.7 — complement grid for two dice */
+  AOPS.registerWidget("diceComplement", function (body) {
+    var svg = W.stage(body, { w: 640, h: 380, label: "Grid of all outcomes of two dice, with an event and its complement marked" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var f = 6, ev = "one";
+    W.slider(ctl, { label: "Faces per die", min: 4, max: 8, value: f, onInput: function (v) { f = v; draw(); } });
+    W.segmented(ctl, { title: "Event", value: ev, options: [{ value: "one", label: "at least one top face" }, { value: "diff", label: "dice differ" }, { value: "sum", label: "sum ≥ 5" }], onChange: function (v) { ev = v; draw(); } });
+    function inEvent(i, j) {
+      if (ev === "one") return i === f || j === f;
+      if (ev === "diff") return i !== j;
+      return i + j >= 5;
+    }
+    function draw() {
+      W.clear(svg);
+      var cell = Math.min(40, 300 / f), x0 = 70, y0 = 58, good = 0;
+      for (var i = 1; i <= f; i++) {
+        svg.appendChild(W.s("text", { x: x0 + (i - 0.5) * cell, y: y0 - 10, "text-anchor": "middle", class: "lbl", text: i }));
+        svg.appendChild(W.s("text", { x: x0 - 12, y: y0 + (i - 0.5) * cell + 4, "text-anchor": "end", class: "lbl", text: i }));
+        for (var j = 1; j <= f; j++) {
+          var x = x0 + (i - 1) * cell, y = y0 + (j - 1) * cell, on = inEvent(i, j);
+          if (on) good++;
+          svg.appendChild(W.s("rect", { x: x + 2, y: y + 2, width: cell - 4, height: cell - 4, rx: 4, fill: on ? "color-mix(in srgb, var(--accent) 45%, transparent)" : "color-mix(in srgb, var(--plot-3) 18%, transparent)", stroke: on ? "var(--accent)" : "var(--plot-3)" }));
+          if (!on) {
+            svg.appendChild(W.s("line", { x1: x + 8, y1: y + 8, x2: x + cell - 8, y2: y + cell - 8, stroke: "var(--plot-3)", "stroke-width": 1.5 }));
+            svg.appendChild(W.s("line", { x1: x + cell - 8, y1: y + 8, x2: x + 8, y2: y + cell - 8, stroke: "var(--plot-3)", "stroke-width": 1.5 }));
+          }
+        }
+      }
+      svg.appendChild(W.s("text", { x: x0 + f * cell / 2, y: 18, "text-anchor": "middle", class: "lbl", text: "first die →" }));
+      svg.appendChild(W.s("text", { x: 20, y: y0 + f * cell + 24, class: "lbl", text: "second die ↓" }));
+      var bad = f * f - good, lx = 420;
+      var compDesc = { one: "no " + f + " on either die", diff: "both dice equal", sum: "sum ≤ 4" }[ev];
+      var compHow = { one: (f - 1) + " × " + (f - 1) + " = " + bad, diff: f + " doubles", sum: "list them: " + bad }[ev];
+      [["total", f + " × " + f + " = " + f * f, "var(--ink)"], ["complement (crossed)", compDesc, "var(--plot-3)"], ["", compHow, "var(--plot-3)"], ["wanted (gold)", f * f + " − " + bad + " = " + good, "var(--accent)"]].forEach(function (row, r) {
+        if (row[0]) svg.appendChild(W.s("text", { x: lx, y: 70 + r * 52, class: "lbl", text: row[0] }));
+        svg.appendChild(W.s("text", { x: lx, y: 90 + r * 52 - (row[0] ? 0 : 26), style: mono(14, 700), fill: row[2], text: row[1] }));
+      });
+      out.tex("\\#(\\text{wanted}) = " + (f * f) + " - " + bad + " = " + good);
+    }
+    draw();
+  });
+
+  /* 25.8 — ordered selections grouped into combinations */
+  AOPS.registerWidget("comboGroups", function (body) {
+    var svg = W.stage(body, { w: 640, h: 260, label: "Ordered selections stacked in columns by the set of letters chosen" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 5, k = 3, collapse = false, kSl;
+    W.slider(ctl, { label: "Choose from n", min: 3, max: 6, value: n, onInput: function (v) { n = v; if (k > n) { kSl.set(n); return; } draw(); } });
+    kSl = W.slider(ctl, { label: "Choose k", min: 1, max: 3, value: k, onInput: function (v) { k = Math.min(v, n); draw(); } });
+    W.segmented(ctl, { title: "View", value: false, options: [{ value: false, label: "all orders" }, { value: true, label: "collapse" }], onChange: function (v) { collapse = v; draw(); } });
+    function combos(start, left) {
+      if (!left) return [[]];
+      var res = [];
+      for (var i = start; i < n; i++) combos(i + 1, left - 1).forEach(function (rest) { res.push([i].concat(rest)); });
+      return res;
+    }
+    function perms(arr) {
+      if (arr.length <= 1) return [arr];
+      var res = [];
+      arr.forEach(function (x, i) { perms(arr.slice(0, i).concat(arr.slice(i + 1))).forEach(function (p) { res.push([x].concat(p)); }); });
+      return res;
+    }
+    function draw() {
+      W.clear(svg);
+      var cs = combos(0, k), rows = collapse ? 1 : fact(k);
+      var cw = Math.min(70, 620 / cs.length), rh = 28, x0 = 320 - cw * cs.length / 2, y0 = 40;
+      var H = Math.max(140, y0 + rows * rh + 50);
+      svg.setAttribute("viewBox", "0 0 640 " + H); svg._h = H;
+      cs.forEach(function (c, ci) {
+        var x = x0 + ci * cw;
+        var list = collapse ? [c] : perms(c);
+        svg.appendChild(W.s("rect", { x: x + 2, y: y0 - 6, width: cw - 4, height: list.length * rh + 6, rx: 6, fill: ci % 2 ? "var(--surface-2)" : "color-mix(in srgb, var(--plot-2) 14%, transparent)", stroke: "var(--border-strong)" }));
+        list.forEach(function (p, ri) {
+          svg.appendChild(W.s("text", { x: x + cw / 2, y: y0 + ri * rh + 15, "text-anchor": "middle", style: mono(13, collapse ? 700 : 400), fill: collapse ? "var(--accent)" : "var(--ink)", text: collapse ? "{" + p.map(function (i) { return LET[i]; }).join("") + "}" : p.map(function (i) { return LET[i]; }).join("") }));
+        });
+      });
+      svg.appendChild(W.s("text", { x: 320, y: 22, "text-anchor": "middle", class: "lbl", text: cs.length + " columns" + (collapse ? " = combinations" : " × " + fact(k) + " orders each = " + cs.length * fact(k) + " ordered selections") }));
+      var P = 1; for (var i = 0; i < k; i++) P *= (n - i);
+      out.tex("\\binom{" + n + "}{" + k + "} = \\frac{{}_{" + n + "}P_{" + k + "}}{" + k + "!} = \\frac{" + P + "}{" + fact(k) + "} = " + choose(n, k));
+    }
+    draw();
+  });
+
+  /* 25.9 — place letters by choosing positions */
+  AOPS.registerWidget("anagramPlacer", function (body) {
+    var svg = W.stage(body, { w: 640, h: 220, label: "Positions of a word being filled one letter type at a time" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var WORDS = ["LEVEL", "BANANA", "PEPPER", "COMMITTEE"];
+    var word = "BANANA", groups, slots, step;
+    W.segmented(ctl, { title: "Word", value: word, options: WORDS.map(function (w) { return { value: w, label: w }; }), onChange: function (v) { word = v; reset(); } });
+    var nextBtn = W.button(ctl2, "Place next letter", function () { place(); });
+    W.button(ctl2, "Start over", function () { reset(); });
+    function reset() {
+      var counts = {};
+      word.split("").forEach(function (ch) { counts[ch] = (counts[ch] || 0) + 1; });
+      groups = Object.keys(counts).map(function (ch) { return [ch, counts[ch]]; }).sort(function (x, y) { return y[1] - x[1]; });
+      slots = word.split("").map(function () { return null; });
+      step = 0; draw();
+    }
+    function place() {
+      if (step >= groups.length) return;
+      var g = groups[step], free = [];
+      slots.forEach(function (s, i) { if (s === null) free.push(i); });
+      for (var t = 0; t < g[1]; t++) { var idx = Math.floor(Math.random() * free.length); slots[free[idx]] = step; free.splice(idx, 1); }
+      step++; draw();
+    }
+    function draw() {
+      W.clear(svg);
+      var L = word.length, sw = Math.min(64, 600 / L), x0 = 320 - sw * L / 2;
+      slots.forEach(function (s, i) {
+        var x = x0 + i * sw;
+        svg.appendChild(W.s("rect", { x: x + 4, y: 40, width: sw - 8, height: 56, rx: 8, fill: s === null ? "var(--surface-2)" : "color-mix(in srgb, var(--plot-" + (s % 5 + 1) + ") 40%, transparent)", stroke: s === null ? "var(--border-strong)" : "var(--plot-" + (s % 5 + 1) + ")" }));
+        if (s !== null) svg.appendChild(W.s("text", { x: x + sw / 2, y: 76, "text-anchor": "middle", style: mono(20, 700), fill: "var(--ink)", text: groups[s][0] }));
+        svg.appendChild(W.s("text", { x: x + sw / 2, y: 114, "text-anchor": "middle", class: "lbl", text: i + 1 }));
+      });
+      // factor chips
+      var free = L, fx = 20, terms = [], prod = 1;
+      groups.forEach(function (g, gi) {
+        var c = choose(free, g[1]), done = gi < step;
+        terms.push({ tex: "\\binom{" + free + "}{" + g[1] + "}", val: c, done: done, ch: g[0], cnt: g[1], free: free });
+        if (done) prod *= c;
+        free -= g[1];
+      });
+      var chipW = Math.min(150, 600 / groups.length);
+      terms.forEach(function (t, i) {
+        var x = 20 + i * chipW;
+        svg.appendChild(W.s("rect", { x: x + 3, y: 140, width: chipW - 6, height: 50, rx: 8, fill: t.done ? "color-mix(in srgb, var(--plot-" + (i % 5 + 1) + ") 30%, transparent)" : "none", stroke: t.done ? "var(--plot-" + (i % 5 + 1) + ")" : "var(--border-strong)", "stroke-dasharray": t.done ? null : "4 4" }));
+        svg.appendChild(W.s("text", { x: x + chipW / 2, y: 160, "text-anchor": "middle", class: "lbl", text: t.cnt + "×" + t.ch + " in " + t.free + " free" }));
+        svg.appendChild(W.s("text", { x: x + chipW / 2, y: 181, "text-anchor": "middle", style: mono(13, 700), fill: t.done ? "var(--ink)" : "var(--muted)", text: "C(" + t.free + "," + t.cnt + ") = " + t.val }));
+      });
+      svg.appendChild(W.s("text", { x: 320, y: 214, "text-anchor": "middle", class: "lbl", text: step < groups.length ? "next: choose spots for the " + groups[step][1] + " " + groups[step][0] + (groups[step][1] > 1 ? "'s" : "") : "word complete" }));
+      nextBtn.disabled = step >= groups.length;
+      var den = groups.map(function (g) { return g[1] + "!"; }).join("\\,");
+      var overcount = fact(L) / groups.reduce(function (s, g) { return s * fact(g[1]); }, 1);
+      var t = terms.map(function (x) { return x.tex; }).join("") + (step ? " \\to " + terms.slice(0, step).map(function (x) { return x.val; }).join(" \\cdot ") + (step < groups.length ? " \\cdots" : " = " + prod) : "");
+      if (step >= groups.length) t += "\\qquad \\frac{" + L + "!}{" + den + "} = " + overcount + "\\ \\checkmark";
+      out.tex(t);
+    }
+    reset();
+  });
+
+  /* 25.10 — Pascal's triangle and the binomial theorem */
+  AOPS.registerWidget("pascalBinomial", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Pascal's triangle with row n highlighted" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 5, k = 2, a = 1, b = 1, kSl;
+    W.slider(ctl, { label: "Power n", min: 0, max: 10, value: n, onInput: function (v) { n = v; kSl.input.max = n; if (k > n) { kSl.set(n); return; } draw(); } });
+    kSl = W.slider(ctl, { label: "Term k", min: 0, max: n, value: k, onInput: function (v) { k = Math.min(v, n); draw(); } });
+    W.slider(ctl, { label: "a (in ax)", min: -3, max: 3, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b (in by)", min: -3, max: 3, value: b, onInput: function (v) { b = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var rows = 11, dx = 54, dy = 29, top = 24;
+      for (var r = 0; r < rows; r++) {
+        for (var c = 0; c <= r; c++) {
+          var x = 320 + (c - r / 2) * dx, y = top + r * dy, isRow = r === n, isK = isRow && c === k;
+          var isParent = r === n - 1 && (c === k || c === k - 1);
+          svg.appendChild(W.s("rect", { x: x - 24, y: y - 12, width: 48, height: 24, rx: 6, fill: isK ? "var(--accent)" : isParent ? "color-mix(in srgb, var(--plot-3) 30%, transparent)" : isRow ? "color-mix(in srgb, var(--plot-2) 30%, transparent)" : "transparent", stroke: isRow || isParent ? "var(--border-strong)" : "none" }));
+          svg.appendChild(W.s("text", { x: x, y: y + 5, "text-anchor": "middle", style: mono(12, isRow ? 700 : 400), fill: isK ? "var(--surface-solid)" : isRow ? "var(--ink)" : "var(--muted)", text: choose(r, c) }));
+        }
+      }
+      svg.appendChild(W.s("text", { x: 14, y: 22, class: "lbl", text: "row " + n + " highlighted, entry k = " + k }));
+      if (n >= 1 && k >= 1 && k < n) svg.appendChild(W.s("text", { x: 14, y: 42, class: "lbl", text: "two above it: " + choose(n - 1, k - 1) + " + " + choose(n - 1, k) + " = " + choose(n, k) }));
+      function coef(j) { return choose(n, j) * Math.pow(a, n - j) * Math.pow(b, j); }
+      function mon(j) { var px = n - j, py = j; return (px ? "x" + (px > 1 ? "^{" + px + "}" : "") : "") + (py ? "y" + (py > 1 ? "^{" + py + "}" : "") : ""); }
+      var terms = [];
+      for (var j = 0; j <= n; j++) {
+        var cf = coef(j); if (cf === 0) continue;
+        var m = mon(j), abs = Math.abs(cf);
+        var s = (abs === 1 && m ? "" : String(abs)) + m;
+        terms.push((cf < 0 ? "- " : (terms.length ? "+ " : "")) + (j === k ? "\\boxed{" + s + "}" : s));
+      }
+      var full = terms.join(" ") || "0";
+      var ab = function (v) { return v < 0 ? "(" + v + ")" : String(v); };
+      var termTex = "\\binom{" + n + "}{" + k + "}\\cdot " + ab(a) + "^{" + (n - k) + "}\\cdot " + ab(b) + "^{" + k + "} = " + choose(n, k) + "\\cdot " + Math.pow(a, n - k) + "\\cdot " + Math.pow(b, k) + " = " + coef(k);
+      out.set("<p>$$(" + (a === 1 ? "" : a === -1 ? "-" : a) + "x " + (b < 0 ? "-" : "+") + " " + (Math.abs(b) === 1 ? "" : Math.abs(b)) + "y)^{" + n + "} = " + full + "$$</p><p>$$\\text{term } k = " + k + ":\\ " + termTex + "$$</p>");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
