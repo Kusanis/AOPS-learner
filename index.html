@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AoPS Learner · Course Map</title>
+  <meta name="description" content="An interactive companion for The Art of Problem Solving, Volume 1: The Basics: visual explorers and step-by-step worked examples for all 29 chapters.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body data-page="hub">
+  <main id="main">
+    <section class="hub-hero">
+      <span class="eyebrow">The Art of Problem Solving · Volume 1</span>
+      <h1>Learn the Basics, one star at a time.</h1>
+      <p class="lede">Twenty-nine chapters, each with hands-on explorers and fully solved examples that climb from warm-up to challenge. Reveal each solution one step at a time and go at your own pace. Keep the book beside you; this site is your guided tour through it.</p>
+      <div class="hub-actions">
+        <a class="btn btn-primary" id="continue" href="chapters/01-exponents-and-logarithms/index.html">Begin with Chapter 1 →</a>
+        <a class="btn" href="#groups">Browse chapters</a>
+      </div>
+      <div class="hub-stats" id="hub-stats" aria-live="polite"></div>
+    </section>
+
+    <section class="sky" aria-labelledby="sky-title">
+      <h2 id="sky-title" class="visually-hidden">Constellation map</h2>
+      <div id="sky"></div>
+    </section>
+
+    <div class="groups" id="groups"></div>
+  </main>
+
+  <noscript><p style="padding:24px">This course map needs JavaScript to show your progress. The chapters are in the <code>chapters/</code> folder.</p></noscript>
+  <script src="assets/core.js"></script>
+</body>
+</html>
