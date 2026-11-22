@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 9: An Introduction to Circles · AoPS Learner</title>
+  <meta name="description" content="The parts of a circle, circumference and area with π, tangent circles, and turning angular speed into linear speed, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="9" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 9 · Geometry</span>
+    <h1>An Introduction to Circles</h1>
+    <p class="lede">Geometry starts with the simplest curve there is: all the points at one fixed distance from a center. From that single idea come chords, tangents, arcs and sectors, the number $\pi$ that links a circle's size to its distance around, and the formulas you need for wheels, gears and anything else that spins.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>A circle is every point at distance $r$ (the radius) from its center. The diameter is $d = 2r$, the longest chord.</li>
+      <li>A line at distance $t$ from the center is a secant if $t &lt; r$, a tangent if $t = r$, and misses if $t > r$. The perpendicular from the center bisects any chord.</li>
+      <li>Circumference $C = \pi d = 2\pi r$; area $A = \pi r^2$. To move between them, find $r$ first.</li>
+      <li>Scaling the radius by $k$ multiplies the circumference by $k$ and the area by $k^2$.</li>
+      <li>Arcs and sectors are fractions of the whole: same fraction of the circumference, same fraction of the area.</li>
+      <li>Tangent circles: centers are $r_1 + r_2$ apart (externally) or $|r_1 - r_2|$ apart (internally), and the point of tangency lies on the line of centers.</li>
+      <li>Speed of a point on a spinning circle $=$ (revolutions per unit time) $\times\, 2\pi r$. A wheel rolling without slipping moves $2\pi r$ per turn.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 9.1 ===================== -->
+  <section class="lesson" id="s9-1" data-title="Parts of a Circle">
+    <h2><span class="sec-num">9.1</span> Parts of a Circle</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Tie a goat to a post with a 5-metre rope. The edge of the grass it can reach is a circle: every point exactly 5 metres from the post. Pull a straight fence across that patch and you've drawn a chord; nudge the fence outward until it just grazes the edge and it becomes a tangent. Every word in this section describes something you could build in that field.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>circle</strong> is the set of all points at a fixed distance, the <strong>radius</strong> $r$, from a fixed point, the <strong>center</strong>. We name a circle by its center: circle $O$. Circles with the same center are <strong>concentric</strong>.</p>
+      <ul>
+        <li>A <strong>chord</strong> is a segment with both endpoints on the circle. A <strong>diameter</strong> is a chord through the center; its length is $d = 2r$, and no chord is longer.</li>
+        <li>A <strong>secant</strong> is a line that crosses the circle at two points. A <strong>tangent</strong> touches it at exactly one point.</li>
+        <li>An <strong>arc</strong> is a piece of the circle itself. Two points $A$ and $B$ cut the circle into a shorter <strong>minor arc</strong>, written $\overset{\frown}{AB}$, and a longer <strong>major arc</strong>, named with a third point on it, such as $\overset{\frown}{ACB}$.</li>
+        <li>A <strong>sector</strong> is the region between two radii and their arc (a pizza slice). A <strong>circular segment</strong> is the region between a chord and its arc.</li>
+      </ul>
+      <p>Whether a line is a secant or a tangent depends only on its distance $t$ from the center:</p>
+      <div class="rule"><p>$t &lt; r$: secant (two points) $\qquad t = r$: tangent (one point) $\qquad t > r$: no intersection.</p></div>
+      <p>The perpendicular from the center to a chord meets it at its midpoint. With the Pythagorean theorem (Chapter 11) this gives the chord length: a chord at distance $t$ from the center has half-length $\sqrt{r^2 - t^2}$.</p>
+    </div>
+
+    <figure class="explore" data-widget="circleParts">
+      <figcaption><strong>Explore:</strong> Drag points $A$ and $C$ around circle $O$ (or focus one and use the arrow keys). Choose which part to highlight: chord and diameter, the two arcs, a sector, or a circular segment.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="lineVsCircle">
+      <figcaption><strong>Explore:</strong> Slide the line toward and away from the center. Watch it change from a secant to a tangent to a line that misses, and see how the chord shrinks as the distance grows.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The longest chord</h3>
+        <div class="problem"><p>Circle $O$ has radius $7$. What is its diameter? Could it have a chord of length $3$? Of length $15$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$d = 2r = 14$.</p></div><p class="why">A diameter is made of two radii end to end through the center.</p></li>
+          <li><div class="do"><p>A chord of length $3$ is possible; one of length $15$ is not.</p></div><p class="why">The diameter is the longest chord, so every chord has length between $0$ and $14$.</p></li>
+        </ol>
+        <p class="answer">Diameter $14$; a chord of length $3$ exists, but none of length $15$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Naming arcs</h3>
+        <div class="problem">
+          <p>Points $A$, $B$ and $C$ lie on a circle, with $C$ on the longer of the two arcs between $A$ and $B$. Which arc does $\overset{\frown}{AB}$ name, and how do you name the other?</p>
+          <svg viewBox="0 0 220 150" width="220" role="img" aria-label="Circle with points A and B close together near the top and C at the bottom">
+            <circle cx="110" cy="78" r="58" fill="none" stroke="var(--border-strong)" stroke-width="2"/>
+            <path d="M80.1 28.3 A58 58 0 0 1 139.9 28.3" fill="none" stroke="var(--plot-1)" stroke-width="5"/>
+            <circle cx="80.1" cy="28.3" r="4" fill="var(--ink)"/><circle cx="139.9" cy="28.3" r="4" fill="var(--ink)"/><circle cx="110" cy="136" r="4" fill="var(--ink)"/>
+            <text x="64" y="22" style="font: 14px var(--font-body); fill: var(--ink)">A</text>
+            <text x="146" y="22" style="font: 14px var(--font-body); fill: var(--ink)">B</text>
+            <text x="116" y="148" style="font: 14px var(--font-body); fill: var(--ink)">C</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>$\overset{\frown}{AB}$ is the minor arc (the short, highlighted one).</p></div><p class="why">With only two letters, the shorter arc is meant.</p></li>
+          <li><div class="do"><p>The major arc is $\overset{\frown}{ACB}$.</p></div><p class="why">A third point on the arc says which way around the circle to go.</p></li>
+        </ol>
+        <p class="answer">$\overset{\frown}{AB}$ is the minor arc; the major arc is $\overset{\frown}{ACB}$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Secant, tangent, or neither?</h3>
+        <div class="problem"><p>A circle has radius $6$. Three lines are at distances $4$, $6$ and $9$ from its center. Describe how each meets the circle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Distance $4 &lt; 6$: a secant, meeting the circle at two points.</p></div><p class="why">The closest point of the line is inside the circle, so the line must cross the circle going in and coming out.</p></li>
+          <li><div class="do"><p>Distance $6 = 6$: a tangent, touching at one point.</p></div><p class="why">The closest point is exactly on the circle and every other point of the line is farther away.</p></li>
+          <li><div class="do"><p>Distance $9 > 6$: no intersection.</p></div><p class="why">Even the closest point of the line is outside the circle.</p></li>
+        </ol>
+        <p class="answer">Secant, tangent, and a line that misses the circle.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Length of a chord</h3>
+        <div class="problem"><p>In a circle of radius $5$, a chord is $3$ units from the center. How long is the chord?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Drop the perpendicular from the center $O$ to the chord, meeting it at its midpoint $M$. Then $OM = 3$.</p></div><p class="why">The perpendicular from the center bisects the chord, splitting it into two equal halves.</p></li>
+          <li><div class="do"><p>Join $O$ to an endpoint $A$: $OA = 5$ is a radius, and triangle $OMA$ has a right angle at $M$.</p></div><p class="why">A radius to the endpoint completes a right triangle.</p></li>
+          <li><div class="do"><p>$AM = \sqrt{5^2 - 3^2} = \sqrt{16} = 4$, so the chord is $2 \cdot 4 = 8$.</p></div><p class="why">Pythagorean theorem (Chapter 11), then double the half-chord.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>How far is the chord?</h3>
+        <div class="problem"><p>A chord of length $24$ lies in a circle of radius $13$. How far is it from the center?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Half the chord is $12$.</p></div><p class="why">The perpendicular from the center hits the chord's midpoint.</p></li>
+          <li><div class="do"><p>Distance $= \sqrt{13^2 - 12^2} = \sqrt{169 - 144} = 5$.</p></div><p class="why">Same right triangle as before, now solving for the other leg.</p></li>
+        </ol>
+        <p class="answer">$5$</p>
+        <p class="key-idea">Radius, half-chord and distance to the center form a right triangle.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A chord that avoids an inner circle</h3>
+        <div class="problem"><p>Two concentric circles have radii $3$ and $5$. What is the longest chord of the larger circle that does not pass through the interior of the smaller circle?</p></div>
+        <ol class="steps">
+          <li data-think="Chords get longer as they get closer to the center. How close can this chord get?"><div class="do"><p>The chord must stay at distance at least $3$ from the center, and closer chords are longer. So the longest one is at distance exactly $3$: it is tangent to the small circle.</p></div><p class="why">Half-chord length $\sqrt{r^2 - t^2}$ grows as $t$ shrinks, so we want the smallest allowed $t$.</p></li>
+          <li><div class="do"><p>Half-length $= \sqrt{5^2 - 3^2} = 4$, so the chord has length $8$.</p></div><p class="why">The radius of the small circle to the point of tangency is the perpendicular distance.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+        <p class="key-idea">"Longest" or "shortest" questions about chords become questions about distance from the center.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 9.2 ===================== -->
+  <section class="lesson" id="s9-2" data-title="Circumference, Area, and Pi">
+    <h2><span class="sec-num">9.2</span> Circumference, Area, and $\pi$</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Wrap a string once around a can, then lay it along the can's top, across the middle. However big or small the can, the string covers the width a little more than three times. That "a little more than three" is the same for every circle in the universe, and it is called $\pi$.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>circumference</strong> $C$ is the distance around a circle. Every circle has the same ratio $C/d$; this constant is $\pi \approx 3.14159$. So</p>
+      <div class="rule"><p>$$C = \pi d = 2\pi r \qquad\qquad A = \pi r^2.$$</p></div>
+      <p>Why $\pi r^2$? Cut a circle into many thin wedges and lay them alternately point-up and point-down. They form a shape that is nearly a parallelogram: its height is $r$ and its length is half the circumference, $\pi r$. Its area is $\pi r \cdot r = \pi r^2$, and the more wedges, the better the fit.</p>
+      <p>To go between $C$ and $A$, always pass through the radius: from $A = 49\pi$ get $r = 7$, then $C = 14\pi$. Keep answers exact in terms of $\pi$ unless asked to approximate.</p>
+      <p>An arc or sector that is a fraction $f$ of the whole circle has length $f \cdot 2\pi r$ and area $f \cdot \pi r^2$. And because area grows with $r^2$, doubling the radius doubles the circumference but quadruples the area.</p>
+      <div class="note"><p>Among all shapes with a given perimeter, the circle encloses the most area. Proving it is hard, but you can use the fact.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="unroll">
+      <figcaption><strong>Explore:</strong> Choose a radius and press <em>Roll</em>. The wheel rolls one full turn, laying its rim flat. Compare the length with the diameter marks: about $3.14$ diameters, every time.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="wedges">
+      <figcaption><strong>Explore:</strong> Slice the circle into more and more wedges and rearrange them. The shape on the right straightens into a rectangle of height $r$ and length $\pi r$, so its area, which is the circle's area, is $\pi r^2$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The two formulas</h3>
+        <div class="problem"><p>Find the circumference and area of a circle with radius $5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$C = 2\pi r = 10\pi$.</p></div><p class="why">Circumference uses the radius once.</p></li>
+          <li><div class="do"><p>$A = \pi r^2 = 25\pi$.</p></div><p class="why">Area uses the radius squared.</p></li>
+        </ol>
+        <p class="answer">$C = 10\pi \approx 31.4$, $A = 25\pi \approx 78.5$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>From area to circumference</h3>
+        <div class="problem"><p>A circle has area $49\pi$. Find its circumference.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\pi r^2 = 49\pi$, so $r^2 = 49$ and $r = 7$.</p></div><p class="why">Find the radius first; it unlocks everything else.</p></li>
+          <li><div class="do"><p>$C = 2\pi(7) = 14\pi$.</p></div><p class="why">Now use the circumference formula.</p></li>
+        </ol>
+        <p class="answer">$14\pi$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>From circumference to area, without a nice radius</h3>
+        <div class="problem"><p>A circle has circumference $10$ (not $10\pi$). Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2\pi r = 10$, so $r = \dfrac{5}{\pi}$.</p></div><p class="why">The radius isn't a whole number this time; keep it exact.</p></li>
+          <li><div class="do"><p>$A = \pi\left(\dfrac5\pi\right)^2 = \pi \cdot \dfrac{25}{\pi^2} = \dfrac{25}{\pi}$.</p></div><p class="why">One factor of $\pi$ cancels.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{25}{\pi} \approx 7.96$</p>
+        <p class="book-next">Next in the book: Example 9-1 and Exercise 9-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>When area equals circumference</h3>
+        <div class="problem"><p>For what radius is a circle's area numerically equal to its circumference?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\pi r^2 = 2\pi r$.</p></div><p class="why">Set the two formulas equal.</p></li>
+          <li><div class="do"><p>Divide by $\pi r$ (with $r > 0$): $r = 2$.</p></div><p class="why">A real circle has positive radius, so dividing by $r$ is safe.</p></li>
+        </ol>
+        <p class="answer">$r = 2$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Doubling the radius</h3>
+        <div class="problem"><p>A pizza's radius is doubled. By what factor do its crust length and its area change?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Circumference: $2\pi(2r) = 2 \cdot (2\pi r)$, so it doubles.</p></div><p class="why">Circumference is proportional to $r$.</p></li>
+          <li><div class="do"><p>Area: $\pi(2r)^2 = 4\pi r^2$, so it is multiplied by $4$.</p></div><p class="why">Area is proportional to $r^2$, and $2^2 = 4$.</p></li>
+        </ol>
+        <p class="answer">Crust $\times 2$, area $\times 4$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A circle in a square</h3>
+        <div class="problem"><p>A circle is drawn inside a square of side $10$, touching all four sides. Find the area inside the square but outside the circle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The circle's diameter equals the side, so $r = 5$ and the circle's area is $25\pi$.</p></div><p class="why">The circle touches opposite sides, so its diameter spans the square.</p></li>
+          <li><div class="do"><p>Region area $= 10^2 - 25\pi = 100 - 25\pi$.</p></div><p class="why">Subtract the inner shape from the outer one.</p></li>
+        </ol>
+        <p class="answer">$100 - 25\pi \approx 21.5$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Arcs and sectors as fractions</h3>
+        <div class="problem"><p>Points $A$ and $B$ split a circle of radius $12$ into two arcs whose lengths are in the ratio $1 : 3$. Find both arc lengths and the area of the smaller sector $AOB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The minor arc is $\frac14$ of the circle and the major arc is $\frac34$.</p></div><p class="why">Ratio $1:3$ means $4$ equal parts in all.</p></li>
+          <li><div class="do"><p>$C = 24\pi$, so the arcs are $6\pi$ and $18\pi$.</p></div><p class="why">Take each fraction of the circumference.</p></li>
+          <li><div class="do"><p>Sector area $= \frac14 \cdot \pi (12)^2 = 36\pi$.</p></div><p class="why">The sector is the same fraction of the disk as its arc is of the circle.</p></li>
+        </ol>
+        <p class="answer">Arcs $6\pi$ and $18\pi$; sector area $36\pi$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The best shape for a fence</h3>
+        <div class="problem"><p>With $20$ metres of fencing, how much more area can you enclose with a circle than with a square?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Square: side $5$, area $25$.</p></div><p class="why">The perimeter is shared equally by four sides.</p></li>
+          <li><div class="do"><p>Circle: $2\pi r = 20$, so $r = \dfrac{10}{\pi}$ and $A = \pi \cdot \dfrac{100}{\pi^2} = \dfrac{100}{\pi} \approx 31.8$.</p></div><p class="why">Same route as before: perimeter, then radius, then area.</p></li>
+          <li><div class="do"><p>Difference: $\dfrac{100}{\pi} - 25 \approx 6.8$ square metres.</p></div><p class="why">The circle encloses the most area of any shape with that perimeter.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{100}{\pi} - 25 \approx 6.8$ m² more</p>
+        <p class="book-next">Next in the book: Example 9-2.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>One wire or two?</h3>
+        <div class="problem"><p>A $30$ cm wire is cut into pieces of $10$ cm and $20$ cm, and each piece is bent into a circle. Find the total area of the two circles, and compare it with one circle made from the whole wire.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A circle of circumference $L$ has $r = \dfrac{L}{2\pi}$ and area $\pi\left(\dfrac{L}{2\pi}\right)^2 = \dfrac{L^2}{4\pi}$.</p></div><p class="why">Work out the general formula once instead of three times.</p></li>
+          <li><div class="do"><p>Two circles: $\dfrac{10^2}{4\pi} + \dfrac{20^2}{4\pi} = \dfrac{100 + 400}{4\pi} = \dfrac{125}{\pi} \approx 39.8$ cm².</p></div><p class="why">Substitute $L = 10$ and $L = 20$.</p></li>
+          <li data-think="Before computing, which do you expect to be larger, and why?"><div class="do"><p>One circle: $\dfrac{30^2}{4\pi} = \dfrac{225}{\pi} \approx 71.6$ cm².</p></div><p class="why">Since area grows like $L^2$, and $30^2 > 10^2 + 20^2$, keeping the wire whole wins.</p></li>
+        </ol>
+        <p class="answer">Two circles: $\dfrac{125}{\pi}$ cm²; one circle: $\dfrac{225}{\pi}$ cm², much more.</p>
+        <p class="key-idea">Area from a perimeter $L$ is $\frac{L^2}{4\pi}$: squares of lengths add up to less than the square of their sum.</p>
+        <p class="book-next">Next in the book: Exercise 9-3.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The area of a ring</h3>
+        <div class="problem"><p>Two concentric circles form a ring. A chord of the outer circle is tangent to the inner circle and has length $10$. Find the area of the ring.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the radii be $R$ (outer) and $r$ (inner). The ring's area is $\pi R^2 - \pi r^2 = \pi(R^2 - r^2)$.</p></div><p class="why">Outer disk minus inner disk.</p></li>
+          <li data-think="The radius to the point of tangency is perpendicular to the chord. What right triangle appears?"><div class="do"><p>The inner radius to the point of tangency meets the chord at its midpoint, at a right angle. So $r^2 + 5^2 = R^2$.</p></div><p class="why">Center, point of tangency and chord endpoint form a right triangle with legs $r$ and $5$ and hypotenuse $R$.</p></li>
+          <li><div class="do"><p>$R^2 - r^2 = 25$, so the ring's area is $25\pi$.</p></div><p class="why">We never needed $R$ or $r$ separately, only their squared difference.</p></li>
+        </ol>
+        <p class="answer">$25\pi$</p>
+        <p class="key-idea">Look for the combination the answer needs ($R^2 - r^2$) instead of each unknown.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 9.3 ===================== -->
+  <section class="lesson" id="s9-3" data-title="Tangent Circles">
+    <h2><span class="sec-num">9.3</span> Tangent Circles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Push two coins together on a table until they just touch. Where exactly do they touch? On the straight line joining their centers, and the centers are as far apart as the two radii put together. That one observation solves a surprising number of puzzles about coins, bubbles and gears.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Two circles are <strong>tangent</strong> if they touch at exactly one point. The point of tangency always lies on the line through the two centers.</p>
+      <div class="rule"><p>Externally tangent (side by side): distance between centers $= r_1 + r_2$.<br>Internally tangent (one inside the other): distance between centers $= |r_1 - r_2|$.</p></div>
+      <p>More generally, if $d$ is the distance between the centers: $d > r_1 + r_2$ means the circles are separate; $|r_1 - r_2| &lt; d &lt; r_1 + r_2$ means they cross at two points; $d &lt; |r_1 - r_2|$ means one lies inside the other without touching.</p>
+      <p>When several circles are tangent, join their centers. The segments between centers have lengths that are sums (or differences) of radii, which turns a picture of circles into a polygon you can calculate with.</p>
+    </div>
+
+    <figure class="explore" data-widget="tangentCircles">
+      <figcaption><strong>Explore:</strong> Set the two radii and the distance between centers. The readout compares $d$ with $r_1 + r_2$ and $|r_1 - r_2|$. Use the snap buttons to make the circles exactly tangent, externally or internally, and see the point of tangency land on the line of centers.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Externally tangent</h3>
+        <div class="problem"><p>Circles of radii $3$ and $5$ are externally tangent. How far apart are their centers?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The segment between centers passes through the point of tangency.</p></div><p class="why">The point of tangency lies on the line of centers.</p></li>
+          <li><div class="do"><p>It is one radius of each circle: $3 + 5 = 8$.</p></div><p class="why">From one center to the touching point is $3$; from there to the other center is $5$.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Internally tangent</h3>
+        <div class="problem"><p>A circle of radius $3$ sits inside a circle of radius $8$ and is tangent to it. How far apart are the centers?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>From the big center to the touching point is $8$; the small center lies on that same segment, $3$ from the touching point.</p></div><p class="why">Again the point of tangency is on the line of centers.</p></li>
+          <li><div class="do"><p>Distance $= 8 - 3 = 5$.</p></div><p class="why">For internal tangency the radii overlap, so we subtract.</p></li>
+        </ol>
+        <p class="answer">$5$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Three coins in a triangle</h3>
+        <div class="problem"><p>Circles of radii $1$, $2$ and $3$ are each externally tangent to the other two. Find the side lengths and perimeter of the triangle formed by their centers.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sides: $1 + 2 = 3$, $1 + 3 = 4$ and $2 + 3 = 5$.</p></div><p class="why">Each pair of tangent circles has centers $r_i + r_j$ apart.</p></li>
+          <li><div class="do"><p>Perimeter $= 3 + 4 + 5 = 12$.</p></div><p class="why">Each radius is used twice: $2(1 + 2 + 3) = 12$. (It's a $3$-$4$-$5$ right triangle, too.)</p></li>
+        </ol>
+        <p class="answer">Sides $3, 4, 5$; perimeter $12$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the hidden radius</h3>
+        <div class="problem"><p>Circle $B$ lies inside circle $A$ and is internally tangent to it. Circle $A$ has radius $10$ and the centers are $4$ apart. Find the radius of circle $B$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Internal tangency: $AB = 10 - r_B$.</p></div><p class="why">The distance between centers is the difference of the radii.</p></li>
+          <li><div class="do"><p>$4 = 10 - r_B$, so $r_B = 6$.</p></div><p class="why">Solve the linear equation.</p></li>
+        </ol>
+        <p class="answer">$6$</p>
+        <p class="book-next">Next in the book: Exercise 9-2.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Radii from the distances</h3>
+        <div class="problem"><p>Three circles are mutually externally tangent. Their centers are $5$, $6$ and $7$ apart (for the pairs $PQ$, $QR$, $PR$). Find the three radii.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the radii be $p, q, r$: $p + q = 5$, $q + r = 6$, $p + r = 7$.</p></div><p class="why">Each center distance is a sum of two radii.</p></li>
+          <li data-think="Is there a quick way to get $p + q + r$?"><div class="do"><p>Add all three: $2(p + q + r) = 18$, so $p + q + r = 9$.</p></div><p class="why">Every radius appears in exactly two of the equations.</p></li>
+          <li><div class="do"><p>$r = 9 - 5 = 4$, $p = 9 - 6 = 3$, $q = 9 - 7 = 2$.</p></div><p class="why">Subtract each pair-sum from the total.</p></li>
+        </ol>
+        <p class="answer">$p = 3$, $q = 2$, $r = 4$</p>
+        <p class="key-idea">A symmetric system: add everything, then subtract each equation.</p>
+        <p class="book-next">Next in the book: Exercise 9-4.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A circle nestled among three</h3>
+        <div class="problem"><p>A circle of radius $6$ contains two circles of radius $3$ whose centers lie on one diameter; each small circle is internally tangent to the big one, and they are tangent to each other at the big circle's center. Find the radius of a circle that is internally tangent to the big circle and externally tangent to both small ones.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Put the big center at $O$ and the small centers at $3$ units on either side. By symmetry the new circle's center $X$ lies on the perpendicular to the diameter at $O$. Let its radius be $x$.</p></div><p class="why">The setup is symmetric, so the new circle must be centered on the axis of symmetry.</p></li>
+          <li><div class="do"><p>Internal tangency to the big circle: $OX = 6 - x$. External tangency to a small circle: distance from its center to $X$ is $3 + x$.</p></div><p class="why">Translate each tangency into a distance between centers.</p></li>
+          <li data-think="Which right triangle connects $O$, $X$ and a small circle's center?"><div class="do"><p>The right triangle with legs $3$ and $OX$ gives $3^2 + (6 - x)^2 = (3 + x)^2$.</p></div><p class="why">The segment from $O$ to a small center is perpendicular to $OX$. Pythagorean theorem (Chapter 11).</p></li>
+          <li><div class="do"><p>$9 + 36 - 12x + x^2 = 9 + 6x + x^2$, so $36 = 18x$ and $x = 2$.</p></div><p class="why">The $x^2$ terms cancel, leaving a linear equation. Check: $OX = 4$ and $\sqrt{9 + 16} = 5 = 3 + 2$. ✓</p></li>
+        </ol>
+        <p class="answer">$2$</p>
+        <p class="key-idea">Tangency gives distances between centers; then look for a right triangle.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 9.4 ===================== -->
+  <section class="lesson" id="s9-4" data-title="Spinning and Rolling">
+    <h2><span class="sec-num">9.4</span> Spinning and Rolling</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>On a merry-go-round, the horses on the outside and the ones near the middle both go around once per turn. Yet the outer riders feel the wind much more. They travel a bigger circle in the same time, so they move faster. Turning "how fast it spins" into "how fast it moves" is just circumference times turns.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>angular speed</strong> of a spinning object says how fast it turns, for example in revolutions per minute (rpm). Every point on a rigid spinning disk has the same angular speed. The <strong>linear speed</strong> of a point is how fast it actually moves along its path.</p>
+      <p>In one revolution a point at distance $r$ from the center travels one circumference, $2\pi r$. So</p>
+      <div class="rule"><p>$$\text{linear speed} = (\text{revolutions per unit time}) \times 2\pi r.$$</p></div>
+      <p>A wheel that <strong>rolls without slipping</strong> lays its rim along the ground, so it moves forward $2\pi r$ per revolution. Two pulleys joined by a belt (or two gears in contact) share the same rim speed, so their revolution rates are inversely proportional to their radii.</p>
+      <div class="note"><p>Watch the units: keep track of minutes vs. hours and centimetres vs. metres, and convert at the end (Chapter 4's conversion factors).</p></div>
+    </div>
+
+    <figure class="explore" data-widget="spinSpeed">
+      <figcaption><strong>Explore:</strong> Two ladybugs ride a spinning record. Set their distances from the center and the record's speed, then press <em>Spin</em> (or <em>Quarter turn</em>). Both finish each turn together, but the one farther from the center traces a longer path, so it moves faster.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>One turn of a wheel</h3>
+        <div class="problem"><p>A wheel of radius $30$ cm rolls without slipping through one revolution. How far does it move?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Distance $= 2\pi r = 60\pi$ cm.</p></div><p class="why">Rolling lays the whole rim along the ground once.</p></li>
+          <li><div class="do"><p>$60\pi \approx 188.5$ cm.</p></div><p class="why">Approximate only at the end.</p></li>
+        </ol>
+        <p class="answer">$60\pi \approx 188.5$ cm</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A carousel horse</h3>
+        <div class="problem"><p>A carousel makes $4$ revolutions per minute. How fast does a horse $5$ m from the center move?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>One revolution: $2\pi(5) = 10\pi$ m.</p></div><p class="why">The horse travels one circumference per turn.</p></li>
+          <li><div class="do"><p>Speed $= 4 \times 10\pi = 40\pi \approx 126$ m per minute.</p></div><p class="why">Multiply the distance per turn by the turns per minute.</p></li>
+        </ol>
+        <p class="answer">$40\pi \approx 126$ m/min</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>How many turns?</h3>
+        <div class="problem"><p>A bicycle wheel has diameter $70$ cm. About how many revolutions does it make in $1$ km?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Distance per revolution: $\pi d = 70\pi$ cm.</p></div><p class="why">Here the diameter is given, so use $C = \pi d$.</p></li>
+          <li><div class="do"><p>$1$ km $= 100\,000$ cm, so the number of turns is $\dfrac{100\,000}{70\pi} \approx 454.7$.</p></div><p class="why">Convert to the same units before dividing.</p></li>
+        </ol>
+        <p class="answer">About $455$ revolutions</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Same spin, different speeds</h3>
+        <div class="problem"><p>Two ants sit on a spinning disk, $2$ cm and $6$ cm from the center. How do their speeds compare?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Both complete each revolution at the same time.</p></div><p class="why">The disk is rigid, so all of it has the same angular speed.</p></li>
+          <li><div class="do"><p>Per revolution they travel $4\pi$ and $12\pi$ cm, so the outer ant is $3$ times as fast.</p></div><p class="why">Linear speed is proportional to the distance from the center.</p></li>
+        </ol>
+        <p class="answer">The outer ant is $3$ times as fast.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>From rpm to km/h</h3>
+        <div class="problem"><p>A car's wheels have radius $0.3$ m and turn at $1000$ rpm. How fast is the car going, in km/h?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Per minute: $1000 \times 2\pi(0.3) = 600\pi$ m.</p></div><p class="why">Rolling without slipping: the car moves one circumference per wheel turn.</p></li>
+          <li><div class="do"><p>Per hour: $600\pi \times 60 = 36\,000\pi$ m $= 36\pi$ km.</p></div><p class="why">Multiply by $60$ minutes per hour, then divide by $1000$ metres per kilometre.</p></li>
+          <li><div class="do"><p>$36\pi \approx 113$ km/h.</p></div><p class="why">Approximate at the end.</p></li>
+        </ol>
+        <p class="answer">$36\pi \approx 113$ km/h</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A belt between pulleys</h3>
+        <div class="problem"><p>A belt joins a pulley of radius $4$ cm to one of radius $10$ cm. The small pulley turns at $150$ rpm. How fast does the large one turn?</p></div>
+        <ol class="steps">
+          <li data-think="What do the two pulleys have in common?"><div class="do"><p>The belt moves at one speed, so both rims have the same linear speed.</p></div><p class="why">The belt doesn't stretch or slip, so every point of it moves at the same speed.</p></li>
+          <li><div class="do"><p>Small rim: $150 \times 2\pi(4) = 1200\pi$ cm/min.</p></div><p class="why">Linear speed = turns per minute $\times$ circumference.</p></li>
+          <li><div class="do"><p>Large pulley: $N \times 2\pi(10) = 1200\pi$, so $N = 60$ rpm.</p></div><p class="why">Equivalently, rpm is inversely proportional to radius: $150 \cdot \frac{4}{10} = 60$.</p></li>
+        </ol>
+        <p class="answer">$60$ rpm</p>
+        <p class="key-idea">Connected rims share linear speed; rates of turning scale inversely with radius.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The coin rotation puzzle</h3>
+        <div class="problem"><p>A coin rolls without slipping once around the outside of an identical coin that is held still. How many times does the moving coin turn around its own center?</p></div>
+        <ol class="steps">
+          <li data-think="Most people guess $1$. What path does the moving coin's center follow?"><div class="do"><p>Let each radius be $r$. The moving coin's center stays $2r$ from the fixed center, so it travels a circle of radius $2r$, a distance of $2\pi(2r) = 4\pi r$.</p></div><p class="why">Externally tangent circles have centers $r + r$ apart.</p></li>
+          <li><div class="do"><p>The moving coin's center advances $2\pi r$ along its path for each full turn of the coin.</p></div><p class="why">For a wheel rolling without slipping, one turn moves its center one circumference along its path. (The path is curved, but the count of turns comes from the center's travel.)</p></li>
+          <li><div class="do"><p>Turns $= \dfrac{4\pi r}{2\pi r} = 2$.</p></div><p class="why">Try it with two coins: the head on the moving coin is upright twice.</p></li>
+        </ol>
+        <p class="answer">$2$ turns</p>
+        <p class="key-idea">For rolling, follow the center: turns = (distance the center travels) ÷ (circumference).</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-9">
+    <h2 id="further-9">Further reading in the book</h2>
+    <ul>
+      <li><strong>§9.1 Parts of a Circle</strong>: the chapter's opening definitions (center, radius, chord, diameter, tangent, secant, arcs, sectors, segments).</li>
+      <li><strong>§9.2 Circumference, Area, and π</strong>: Examples 9-1, 9-2 and Exercises 9-1, 9-3.</li>
+      <li><strong>§9.3 Tangent Circles</strong>: Exercises 9-2 and 9-4.</li>
+      <li><strong>§9.4 Spinning and Rolling</strong>: the spinning-record discussion of angular vs. linear speed at the end of the chapter, and the Big Picture on circles in astronomy.</li>
+      <li>Chapter 9 has no separate Problems to Solve; Chapters 10 and 16 return to circles.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 9 explorers ---------- */
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  function arcPath(cx, cy, r, a1, a2, sweepLong) {
+    var x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1), x2 = cx + r * Math.cos(a2), y2 = cy + r * Math.sin(a2);
+    return { x1: x1, y1: y1, x2: x2, y2: y2, d: "M" + x1 + " " + y1 + " A" + r + " " + r + " 0 " + (sweepLong ? 1 : 0) + " 1 " + x2 + " " + y2 };
+  }
+
+  /* 9.1 — parts of a circle with draggable points */
+  AOPS.registerWidget("circleParts", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Circle O with two draggable points A and C and a highlighted part" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var cx = 200, cy = 170, R = 130;
+    var aA = -2.4, aC = -0.3, mode = "chord";
+    var layer = W.s("g");
+    svg.appendChild(layer);
+    var hA = W.handle(svg, { x: cx + R * Math.cos(aA), y: cy + R * Math.sin(aA), label: "Point A on the circle; arrow keys move it", keyStep: 14,
+      onMove: function (px, py) { aA = Math.atan2(py - cy, px - cx); draw(); return [cx + R * Math.cos(aA), cy + R * Math.sin(aA)]; } });
+    var hC = W.handle(svg, { x: cx + R * Math.cos(aC), y: cy + R * Math.sin(aC), label: "Point C on the circle; arrow keys move it", keyStep: 14,
+      onMove: function (px, py) { aC = Math.atan2(py - cy, px - cx); draw(); return [cx + R * Math.cos(aC), cy + R * Math.sin(aC)]; } });
+    W.segmented(ctl, { title: "Highlight", value: mode, options: [{ value: "chord", label: "chord & diameter" }, { value: "arcs", label: "arcs" }, { value: "sector", label: "sector" }, { value: "segment", label: "segment" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(layer);
+      var A = [cx + R * Math.cos(aA), cy + R * Math.sin(aA)], C = [cx + R * Math.cos(aC), cy + R * Math.sin(aC)];
+      var sweep = ((aC - aA) % (2 * Math.PI) + 2 * Math.PI) % (2 * Math.PI); // clockwise (svg) from A to C
+      var minorFromA = sweep <= Math.PI; // arc A->C clockwise is minor?
+      var frac = Math.min(sweep, 2 * Math.PI - sweep) / (2 * Math.PI);
+      var s = minorFromA ? aA : aC, e = minorFromA ? aC : aA;
+      var minor = arcPath(cx, cy, R, s, e, false), major = arcPath(cx, cy, R, e, s, true);
+      if (mode === "sector") layer.appendChild(W.s("path", { d: "M" + cx + " " + cy + " L" + minor.x1 + " " + minor.y1 + minor.d.replace(/^M[^A]*/, " ") + " Z", fill: "color-mix(in srgb, var(--plot-2) 35%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      if (mode === "segment") layer.appendChild(W.s("path", { d: minor.d + " Z", fill: "color-mix(in srgb, var(--plot-3) 40%, transparent)", stroke: "var(--plot-3)", "stroke-width": 2 }));
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "none", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      if (mode === "arcs") {
+        layer.appendChild(W.s("path", { d: major.d, fill: "none", stroke: "var(--plot-2)", "stroke-width": 6, "stroke-linecap": "round" }));
+        layer.appendChild(W.s("path", { d: minor.d, fill: "none", stroke: "var(--plot-1)", "stroke-width": 6, "stroke-linecap": "round" }));
+        var mid = (s + (minorFromA ? sweep : 2 * Math.PI - sweep) / 2), mj = mid + Math.PI;
+        layer.appendChild(W.s("text", { x: cx + (R + 22) * Math.cos(mid), y: cy + (R + 22) * Math.sin(mid) + 4, "text-anchor": "middle", style: "font: 700 13px var(--font-mono); fill: var(--plot-1)", text: "minor" }));
+        layer.appendChild(W.s("text", { x: cx + (R - 26) * Math.cos(mj), y: cy + (R - 26) * Math.sin(mj) + 4, "text-anchor": "middle", style: "font: 700 13px var(--font-mono); fill: var(--plot-2)", text: "major" }));
+      }
+      if (mode === "chord") {
+        var B = [2 * cx - A[0], 2 * cy - A[1]];
+        layer.appendChild(W.s("line", { x1: A[0], y1: A[1], x2: B[0], y2: B[1], stroke: "var(--plot-2)", "stroke-width": 2.5, "stroke-dasharray": "7 5" }));
+        layer.appendChild(W.s("circle", { cx: B[0], cy: B[1], r: 5, fill: "var(--plot-2)" }));
+        layer.appendChild(W.s("text", { x: B[0] + (B[0] - cx) * 0.12, y: B[1] + (B[1] - cy) * 0.12 + 5, "text-anchor": "middle", style: "font: 700 14px var(--font-body); fill: var(--plot-2)", text: "B" }));
+      }
+      if (mode === "chord" || mode === "segment") layer.appendChild(W.s("line", { x1: A[0], y1: A[1], x2: C[0], y2: C[1], stroke: "var(--accent)", "stroke-width": 3 }));
+      if (mode === "sector") [A, C].forEach(function (P) { layer.appendChild(W.s("line", { x1: cx, y1: cy, x2: P[0], y2: P[1], stroke: "var(--plot-2)", "stroke-width": 2.5 })); });
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: 4, fill: "var(--ink)" }));
+      layer.appendChild(W.s("text", { x: cx + 8, y: cy - 8, style: "font: 700 14px var(--font-body); fill: var(--ink)", text: "O" }));
+      [[A, "A"], [C, "C"]].forEach(function (o) {
+        layer.appendChild(W.s("text", { x: o[0][0] + (o[0][0] - cx) * 0.16, y: o[0][1] + (o[0][1] - cy) * 0.16 + 5, "text-anchor": "middle", style: "font: 700 15px var(--font-body); fill: var(--ink)", text: o[1] }));
+      });
+      var info = {
+        chord: ["chord AC: both ends on the circle", "diameter AB: a chord through O", "AB = 2r is the longest chord"],
+        arcs: ["minor arc AC: the shorter way round", "major arc: the longer way round", "minor arc = " + W.fmt(frac * 100, 1) + "% of the circle"],
+        sector: ["sector AOC: between radii OA, OC", "and the minor arc (a pizza slice)", "area = " + W.fmt(frac * 100, 1) + "% of the disk"],
+        segment: ["circular segment: between chord AC", "and the minor arc", "(sector minus triangle AOC)"]
+      }[mode];
+      info.forEach(function (t, i) { layer.appendChild(W.s("text", { x: 372, y: 120 + i * 26, style: "font: " + (i === 0 ? "600 15px" : "14px") + " var(--font-body); fill: " + (i === 0 ? "var(--ink)" : "var(--muted)"), text: t })); });
+      var chordLen = 2 * Math.sin(Math.min(sweep, 2 * Math.PI - sweep) / 2);
+      out.tex("\\text{radius } r = 1:\\quad AC \\approx " + W.fmt(chordLen, 3) + ",\\quad \\text{minor arc} \\approx " + W.fmt(frac, 3) + "\\times 2\\pi \\approx " + W.fmt(frac * 2 * Math.PI, 3));
+    }
+    draw();
+  });
+
+  /* 9.1 — line vs circle */
+  AOPS.registerWidget("lineVsCircle", function (body) {
+    var svg = W.stage(body, { w: 640, h: 320, label: "Circle of radius 5 and a line at adjustable distance from the center" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var r = 5, t = 3, ang = 30, s = 26, cx = 220, cy = 160;
+    W.slider(ctl, { label: "Distance t from center", min: 0, max: 7.5, step: 0.1, value: t, format: function (v) { return v.toFixed(1); }, onInput: function (v) { t = v; draw(); } });
+    W.slider(ctl, { label: "Direction", min: 0, max: 180, step: 5, value: ang, format: function (v) { return v + "°"; }, onInput: function (v) { ang = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var a = ang * Math.PI / 180, nx = Math.cos(a), ny = -Math.sin(a), dx = -ny, dy = nx;
+      var fx = cx + nx * t * s, fy = cy + ny * t * s;
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: r * s, fill: "color-mix(in srgb, var(--plot-2) 8%, transparent)", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      svg.appendChild(W.s("line", { x1: fx - dx * 400, y1: fy - dy * 400, x2: fx + dx * 400, y2: fy + dy * 400, stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      svg.appendChild(W.s("line", { x1: cx, y1: cy, x2: fx, y2: fy, stroke: "var(--muted)", "stroke-width": 1.5, "stroke-dasharray": "4 4" }));
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 4, fill: "var(--ink)" }));
+      svg.appendChild(W.s("text", { x: cx - 16, y: cy + 4, style: "font: 700 14px var(--font-body); fill: var(--ink)", text: "O" }));
+      var kind, tex;
+      if (t < r - 1e-9) {
+        var h = Math.sqrt(r * r - t * t);
+        svg.appendChild(W.s("line", { x1: fx - dx * h * s, y1: fy - dy * h * s, x2: fx + dx * h * s, y2: fy + dy * h * s, stroke: "var(--accent)", "stroke-width": 5, "stroke-linecap": "round" }));
+        [-1, 1].forEach(function (k) { svg.appendChild(W.s("circle", { cx: fx + k * dx * h * s, cy: fy + k * dy * h * s, r: 6, fill: "var(--accent)" })); });
+        kind = "secant (2 points)";
+        tex = "t = " + t.toFixed(1) + " &lt; r = 5:\\ \\text{secant. Chord} = 2\\sqrt{5^2 - " + t.toFixed(1) + "^2} \\approx " + W.fmt(2 * h, 3);
+      } else if (Math.abs(t - r) < 1e-9) {
+        svg.appendChild(W.s("circle", { cx: fx, cy: fy, r: 7, fill: "var(--accent)" }));
+        kind = "tangent (1 point)";
+        tex = "t = r = 5:\\ \\text{tangent; the radius to the touching point is perpendicular to the line}";
+      } else {
+        kind = "misses (0 points)";
+        tex = "t = " + t.toFixed(1) + " > r = 5:\\ \\text{the line misses the circle}";
+      }
+      svg.appendChild(W.s("text", { x: 470, y: 120, style: "font: 600 16px var(--font-body); fill: var(--ink)", text: kind }));
+      svg.appendChild(W.s("text", { x: 470, y: 148, class: "lbl", text: "radius r = 5" }));
+      svg.appendChild(W.s("text", { x: 470, y: 170, class: "lbl", text: "distance t = " + t.toFixed(1) }));
+      out.tex(tex.replace("&lt;", "<"));
+    }
+    draw();
+  });
+
+  /* 9.2 — roll out the circumference */
+  AOPS.registerWidget("unroll", function (body) {
+    var svg = W.stage(body, { w: 640, h: 260, label: "A wheel rolling one turn along a line, compared with its diameter" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var r = 3, t = 0, timer = null, s = 17, x0 = 80, base = 220;
+    W.slider(ctl, { label: "Radius r", min: 1, max: 4, step: 0.5, value: r, format: function (v) { return v.toFixed(1); }, onInput: function (v) { r = v; draw(); } });
+    W.button(ctl, "Roll", function () {
+      if (timer) return;
+      if (reduceMotion) { t = 1; draw(); return; }
+      t = 0; var start = null;
+      function frame(ts) { if (!start) start = ts; t = Math.min(1, (ts - start) / 2200); draw(); if (t < 1) timer = requestAnimationFrame(frame); else timer = null; }
+      timer = requestAnimationFrame(frame);
+    });
+    W.button(ctl, "Reset", function () { if (timer) { cancelAnimationFrame(timer); timer = null; } t = 0; draw(); });
+    function draw() {
+      W.clear(svg);
+      var R = r * s, C = 2 * Math.PI * R, rolled = t * C, wx = x0 + rolled, wy = base - R;
+      svg.appendChild(W.s("line", { x1: 10, y1: base, x2: 630, y2: base, stroke: "var(--border-strong)", "stroke-width": 2 }));
+      // diameter ticks
+      for (var k = 1; k <= 3; k++) {
+        var X = x0 + k * 2 * R;
+        svg.appendChild(W.s("line", { x1: X, y1: base, x2: X, y2: base + 12, stroke: "var(--plot-2)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: X, y: base + 28, "text-anchor": "middle", class: "lbl", style: "fill: var(--plot-2)", text: k + "d" }));
+      }
+      svg.appendChild(W.s("text", { x: x0, y: base + 28, "text-anchor": "middle", class: "lbl", text: "0" }));
+      // unrolled part
+      svg.appendChild(W.s("line", { x1: x0, y1: base, x2: x0 + rolled, y2: base, stroke: "var(--accent)", "stroke-width": 6, "stroke-linecap": "round" }));
+      // wheel
+      var rot = rolled / R; // radians turned
+      svg.appendChild(W.s("circle", { cx: wx, cy: wy, r: R, fill: "color-mix(in srgb, var(--plot-2) 10%, transparent)", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      if (t < 1) { // remaining rim (not yet laid down), drawn in accent
+        var a0 = Math.PI / 2 + rot, a1 = Math.PI / 2 + 2 * Math.PI; // rim not yet laid down: from the marker forward to the contact point
+        var p0 = [wx + R * Math.cos(a0), wy + R * Math.sin(a0)];
+        var steps = 60, d = "M" + p0[0] + " " + p0[1];
+        for (var i = 1; i <= steps; i++) { var a = a0 + (a1 - a0) * i / steps; d += " L" + (wx + R * Math.cos(a)) + " " + (wy + R * Math.sin(a)); }
+        svg.appendChild(W.s("path", { d: d, fill: "none", stroke: "var(--accent)", "stroke-width": 5 }));
+      }
+      var mx = wx + R * Math.cos(Math.PI / 2 + rot), my = wy + R * Math.sin(Math.PI / 2 + rot);
+      svg.appendChild(W.s("line", { x1: wx - R * Math.cos(rot), y1: wy - R * Math.sin(rot), x2: wx + R * Math.cos(rot), y2: wy + R * Math.sin(rot), stroke: "var(--plot-2)", "stroke-width": 2 }));
+      svg.appendChild(W.s("circle", { cx: mx, cy: my, r: 5, fill: "var(--ink)" }));
+      svg.appendChild(W.s("text", { x: 20, y: 22, class: "lbl", text: t >= 1 ? "one full turn: rim length = πd ≈ 3.14 diameters" : "the gold rim is laid flat as the wheel rolls" }));
+      out.tex("r = " + W.fmt(r, 1) + ",\\ d = " + W.fmt(2 * r, 1) + ":\\quad C = \\pi d = " + W.fmt(2 * r, 1) + "\\pi \\approx " + W.fmt(2 * Math.PI * r, 3) + ",\\quad \\frac{C}{d} = \\pi \\approx 3.14159");
+    }
+    draw();
+  });
+
+  /* 9.2 — wedges rearranged into a near-rectangle */
+  AOPS.registerWidget("wedges", function (body) {
+    var svg = W.stage(body, { w: 640, h: 270, label: "A circle cut into wedges and rearranged into a near-parallelogram" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 8, R = 85;
+    W.slider(ctl, { label: "Number of wedges", min: 4, max: 48, step: 2, value: n, onInput: function (v) { n = v; draw(); } });
+    function wedgePath(th) {
+      var a1 = Math.PI / 2 - th / 2, a2 = Math.PI / 2 + th / 2;
+      return "M0 0 L" + (R * Math.cos(a1)) + " " + (R * Math.sin(a1)) + " A" + R + " " + R + " 0 0 1 " + (R * Math.cos(a2)) + " " + (R * Math.sin(a2)) + " Z";
+    }
+    function draw() {
+      W.clear(svg);
+      var th = 2 * Math.PI / n, cols = ["color-mix(in srgb, var(--plot-1) 55%, transparent)", "color-mix(in srgb, var(--plot-2) 55%, transparent)"];
+      var cx = 110, cy = 130;
+      for (var i = 0; i < n; i++) {
+        var rot = (i * th) * 180 / Math.PI - 90;
+        svg.appendChild(W.s("path", { d: wedgePath(th), transform: "translate(" + cx + " " + cy + ") rotate(" + rot + ")", fill: cols[i % 2], stroke: "var(--surface-solid)", "stroke-width": 1 }));
+      }
+      var w = 2 * R * Math.sin(th / 2), x0 = 245, top = 85, h = R * Math.cos(th / 2);
+      for (i = 0; i < n; i++) {
+        var k = Math.floor(i / 2), tr;
+        if (i % 2 === 0) tr = "translate(" + (x0 + w / 2 + k * w) + " " + top + ")";
+        else tr = "translate(" + (x0 + w + k * w) + " " + (top + h) + ") rotate(180)";
+        svg.appendChild(W.s("path", { d: wedgePath(th), transform: tr, fill: cols[i % 2], stroke: "var(--surface-solid)", "stroke-width": 1 }));
+      }
+      var len = Math.PI * R;
+      svg.appendChild(W.s("path", { d: "M" + x0 + " " + (top + R + 22) + "v8H" + (x0 + len) + "v-8", fill: "none", stroke: "var(--accent)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: x0 + len / 2, y: top + R + 50, "text-anchor": "middle", style: "font: 700 14px var(--font-mono); fill: var(--accent)", text: "≈ half the circumference = πr" }));
+      svg.appendChild(W.s("path", { d: "M" + (x0 - 14) + " " + top + "h-8V" + (top + R) + "h8", fill: "none", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: x0 - 30, y: top + R / 2 + 5, "text-anchor": "end", style: "font: 700 14px var(--font-mono); fill: var(--plot-2)", text: "r" }));
+      svg.appendChild(W.s("text", { x: 20, y: 24, class: "lbl", text: n + " wedges: half point up, half point down" }));
+      var exact = n / 2 * R * R * Math.sin(th); // polygon area (triangles)
+      out.tex("\\text{area} \\approx \\pi r \\times r = \\pi r^2 \\qquad (\\text{with } " + n + " \\text{ wedges the straight-edged version already covers } " + W.fmt(100 * exact / (Math.PI * R * R), 1) + "\\%)");
+    }
+    draw();
+  });
+
+  /* 9.3 — tangent circles */
+  AOPS.registerWidget("tangentCircles", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Two circles with adjustable radii and distance between centers" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var r1 = 3, r2 = 2, d = 7, s = 25, dSl;
+    W.slider(ctl, { label: "Radius r₁", min: 1, max: 6, value: r1, onInput: function (v) { r1 = v; draw(); } });
+    W.slider(ctl, { label: "Radius r₂", min: 1, max: 6, value: r2, onInput: function (v) { r2 = v; draw(); } });
+    dSl = W.slider(ctl, { label: "Distance d", min: 0, max: 12, step: 0.1, value: d, format: function (v) { return v.toFixed(1); }, onInput: function (v) { d = v; draw(); } });
+    W.button(ctl, "Snap: external", function () { dSl.set(r1 + r2); });
+    W.button(ctl, "Snap: internal", function () { dSl.set(Math.abs(r1 - r2)); });
+    function close(a, b) { return Math.abs(a - b) < 1e-6; }
+    function draw() {
+      W.clear(svg);
+      var cy = 170, x1 = 320 - d * s / 2, x2 = 320 + d * s / 2;
+      if (r1 + r2 > d) { /* keep inner circles visible */ }
+      svg.appendChild(W.s("circle", { cx: x1, cy: cy, r: r1 * s, fill: "color-mix(in srgb, var(--plot-1) 14%, transparent)", stroke: "var(--plot-1)", "stroke-width": 2.5 }));
+      svg.appendChild(W.s("circle", { cx: x2, cy: cy, r: r2 * s, fill: "color-mix(in srgb, var(--plot-2) 14%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      svg.appendChild(W.s("line", { x1: Math.min(x1 - r1 * s, x2 - r2 * s) - 10, y1: cy, x2: Math.max(x1 + r1 * s, x2 + r2 * s) + 10, y2: cy, stroke: "var(--faint)", "stroke-dasharray": "4 5" }));
+      [[x1, "var(--plot-1)"], [x2, "var(--plot-2)"]].forEach(function (o) { svg.appendChild(W.s("circle", { cx: o[0], cy: cy, r: 4, fill: o[1] })); });
+      var sum = r1 + r2, diff = Math.abs(r1 - r2), kind;
+      if (d === 0 && r1 === r2) kind = "the same circle";
+      else if (close(d, sum)) kind = "externally tangent";
+      else if (d > sum) kind = "separate (no common points)";
+      else if (close(d, diff)) kind = "internally tangent";
+      else if (d < diff) kind = d === 0 ? "concentric, one inside the other" : "one inside the other (no common points)";
+      else kind = "crossing at two points";
+      if (kind.indexOf("tangent") >= 0) {
+        var tx = close(d, sum) ? x1 + r1 * s : (r1 >= r2 ? x1 + r1 * s : x2 + r2 * s);
+        if (!close(d, sum) && r1 >= r2) tx = x1 + r1 * s;
+        if (!close(d, sum) && r2 > r1) tx = x2 - r2 * s;
+        svg.appendChild(W.s("circle", { cx: tx, cy: cy, r: 7, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      }
+      svg.appendChild(W.s("text", { x: 20, y: 26, style: "font: 600 16px var(--font-body); fill: var(--ink)", text: kind }));
+      svg.appendChild(W.s("text", { x: 20, y: 330, class: "lbl", text: "dashed line: the line of centers" }));
+      out.tex("d = " + d.toFixed(1) + ",\\quad r_1 + r_2 = " + sum + ",\\quad |r_1 - r_2| = " + diff);
+    }
+    draw();
+  });
+
+  /* 9.4 — two bugs on a spinning record */
+  AOPS.registerWidget("spinSpeed", function (body) {
+    var svg = W.stage(body, { w: 640, h: 320, label: "A spinning record with two bugs at different distances from the center" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var rA = 10, rB = 4, rpm = 30, angle = 0, travelled = 0, raf = null, last = null;
+    var cx = 170, cy = 160, scale = 13;
+    W.slider(ctl, { label: "Bug A radius (cm)", min: 2, max: 11, value: rA, onInput: function (v) { rA = v; draw(); } });
+    W.slider(ctl, { label: "Bug B radius (cm)", min: 1, max: 11, value: rB, onInput: function (v) { rB = v; draw(); } });
+    W.slider(ctl, { label: "Speed (rpm)", min: 10, max: 90, step: 5, value: rpm, onInput: function (v) { rpm = v; draw(); } });
+    var spinBtn = W.button(ctl, "Spin", function () {
+      if (raf) { cancelAnimationFrame(raf); raf = null; spinBtn.textContent = "Spin"; return; }
+      if (reduceMotion) { step(Math.PI / 2); return; }
+      spinBtn.textContent = "Pause"; last = null;
+      function frame(ts) { if (last != null) step((ts - last) / 1000 * rpm / 60 * 2 * Math.PI / 4); last = ts; raf = requestAnimationFrame(frame); }
+      raf = requestAnimationFrame(frame);
+    });
+    W.button(ctl, "Quarter turn", function () { step(Math.PI / 2); });
+    W.button(ctl, "Reset", function () { angle = 0; travelled = 0; draw(); });
+    function step(da) { angle += da; travelled += da; draw(); }
+    function draw() {
+      W.clear(svg);
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 12 * scale, fill: "var(--surface-2)", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      for (var g = 3; g <= 11; g += 2) svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: g * scale, fill: "none", stroke: "var(--faint)", "stroke-width": 0.6 }));
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 2 * scale, fill: "color-mix(in srgb, var(--plot-5) 45%, transparent)" }));
+      var turn = Math.min(travelled, 2 * Math.PI - 1e-6);
+      [[rA, "var(--accent)"], [rB, "var(--plot-2)"]].forEach(function (o) {
+        var R = o[0] * scale;
+        if (turn > 0.01) {
+          var d = "M" + (cx + R) + " " + cy, n = 60;
+          for (var i = 1; i <= n; i++) { var a = -turn * i / n; d += " L" + (cx + R * Math.cos(a)) + " " + (cy + R * Math.sin(a)); }
+          svg.appendChild(W.s("path", { d: d, fill: "none", stroke: o[1], "stroke-width": 4, opacity: 0.8 }));
+        }
+        svg.appendChild(W.s("circle", { cx: cx + R * Math.cos(-angle), cy: cy + R * Math.sin(-angle), r: 8, fill: o[1], stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      });
+      svg.appendChild(W.s("line", { x1: cx, y1: cy, x2: cx + 12 * scale * Math.cos(-angle), y2: cy + 12 * scale * Math.sin(-angle), stroke: "var(--muted)", "stroke-dasharray": "3 4" }));
+      var vA = rpm * 2 * Math.PI * rA, vB = rpm * 2 * Math.PI * rB, tx = 360;
+      svg.appendChild(W.s("text", { x: tx, y: 70, style: "font: 600 15px var(--font-body); fill: var(--ink)", text: rpm + " revolutions per minute" }));
+      svg.appendChild(W.s("text", { x: tx, y: 110, style: "font: 600 14px var(--font-mono); fill: var(--accent)", text: "A: 2π·" + rA + " = " + W.fmt(2 * Math.PI * rA, 1) + " cm/turn" }));
+      svg.appendChild(W.s("text", { x: tx, y: 134, style: "font: 600 14px var(--font-mono); fill: var(--plot-2)", text: "B: 2π·" + rB + " = " + W.fmt(2 * Math.PI * rB, 1) + " cm/turn" }));
+      svg.appendChild(W.s("text", { x: tx, y: 176, class: "lbl", text: "turns completed: " + W.fmt(travelled / (2 * Math.PI), 2) }));
+      svg.appendChild(W.s("text", { x: tx, y: 200, class: "lbl", text: "same turns, different distances" }));
+      svg.appendChild(W.s("text", { x: tx, y: 290, class: "lbl", text: "(animation slowed 4×)" }));
+      out.tex("v_A = " + rpm + "\\cdot 2\\pi(" + rA + ") = " + (2 * rpm * rA) + "\\pi \\approx " + W.fmt(vA, 0) + "\\ \\tfrac{\\text{cm}}{\\text{min}},\\quad v_B = " + (2 * rpm * rB) + "\\pi \\approx " + W.fmt(vB, 0) + "\\ \\tfrac{\\text{cm}}{\\text{min}}" + (rB ? ",\\quad \\tfrac{v_A}{v_B} = " + W.frac(rA, rB) : ""));
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

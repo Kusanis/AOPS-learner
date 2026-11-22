@@ -1,0 +1,1125 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 10: Angles · AoPS Learner</title>
+  <meta name="description" content="Segments and rays, measuring angles in degrees and radians, parallel lines and the triangle angle sum, arcs and sectors, angles made by chords, secants and tangents, and how to prove them, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="10" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 10 · Geometry</span>
+    <h1>Angles</h1>
+    <p class="lede">Angles are the language of geometry. In this chapter you'll name and measure them, in degrees and in radians; use parallel lines to prove that a triangle's angles add to $180^\circ$; measure arcs and sectors; and discover the surprisingly simple rules for angles made by chords, secants and tangents of a circle, then prove those rules yourself.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>If $X$ is on segment $AB$, then $AX + XB = AB$. The midpoint splits $AB$ into two equal halves.</li>
+      <li>A full turn is $360^\circ = 2\pi$ radians, so multiply by $\frac{\pi}{180^\circ}$ or $\frac{180^\circ}{\pi}$ to convert. $1^\circ = 60'$ and $1' = 60''$.</li>
+      <li>Complementary angles sum to $90^\circ$, supplementary to $180^\circ$. Vertical angles are equal.</li>
+      <li>A transversal of parallel lines makes corresponding angles equal, alternate interior angles equal, and same-side interior angles supplementary. When stuck, draw an extra parallel line.</li>
+      <li>Triangle angles sum to $180^\circ$; an exterior angle equals the sum of the two remote interior angles.</li>
+      <li>Arc length $= r\theta$ and sector area $= \frac12 r^2\theta$ ($\theta$ in radians), or take the fraction $\frac{\theta}{360^\circ}$ of the whole. Segment $=$ sector $-$ triangle.</li>
+      <li>Circle angles: central $=$ arc; inscribed $= \frac12$ arc; tangent-chord $= \frac12$ arc; two chords $= \frac12$(sum of arcs); two secants or tangents from outside $= \frac12$(difference of arcs).</li>
+      <li>Inscribed angles on the same arc are equal; an angle inscribed in a semicircle is $90^\circ$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 10.1 ===================== -->
+  <section class="lesson" id="s10-1" data-title="Lines, Rays, and Segments">
+    <h2><span class="sec-num">10.1</span> Lines, Rays, and Segments</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A laser pointer beam starts at the pointer and runs off forever in one direction. A taut string between two nails stops at both ends. A perfectly straight road that never ends in either direction goes on forever both ways. Geometry has a name for each: a ray, a segment, and a line.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <ul>
+        <li>A <strong>segment</strong> $\overline{AB}$ is the straight path between its two <strong>endpoints</strong> $A$ and $B$. In equations, $AB$ means its length. The <strong>midpoint</strong> is the point of the segment exactly halfway between the endpoints.</li>
+        <li>A <strong>ray</strong> $\overrightarrow{AB}$ starts at its origin $A$ and goes on forever through $B$. Order matters: $\overrightarrow{AB}$ and $\overrightarrow{BA}$ point opposite ways.</li>
+        <li>A <strong>line</strong> $\overleftrightarrow{AB}$ continues forever in both directions. Two points determine exactly one line.</li>
+        <li>Points on the same line are <strong>collinear</strong>.</li>
+      </ul>
+      <div class="rule"><p>If $X$ lies on segment $\overline{AB}$, then $AX + XB = AB$. If $X$ is anywhere else, $AX + XB > AB$.</p></div>
+      <p>The second sentence says the straight path is the shortest one; Chapter 11 calls it the triangle inequality. On a number line, the distance between points at $a$ and $b$ is $|a - b|$, and the midpoint is at $\frac{a+b}{2}$.</p>
+    </div>
+
+    <figure class="explore" data-widget="segmentAddition">
+      <figcaption><strong>Explore:</strong> Drag point $X$. When it sits on segment $\overline{AB}$, the two pieces add up exactly to $AB$. Pull it off the segment and $AX + XB$ grows: the detour is always longer.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Length and midpoint on a number line</h3>
+        <div class="problem"><p>Points $A$ and $B$ are at $-3$ and $7$ on a number line. Find $AB$ and the midpoint of $\overline{AB}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$AB = |7 - (-3)| = 10$.</p></div><p class="why">Distance on a number line is the absolute value of the difference.</p></li>
+          <li><div class="do"><p>Midpoint: $\dfrac{-3 + 7}{2} = 2$.</p></div><p class="why">The midpoint is the average of the coordinates. Check: $2$ is $5$ from each endpoint.</p></li>
+        </ol>
+        <p class="answer">$AB = 10$; midpoint at $2$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Same or different?</h3>
+        <div class="problem"><p>For two points $P$ and $Q$, are $\overline{PQ}$ and $\overline{QP}$ the same? $\overrightarrow{PQ}$ and $\overrightarrow{QP}$? $\overleftrightarrow{PQ}$ and $\overleftrightarrow{QP}$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\overline{PQ} = \overline{QP}$ and $\overleftrightarrow{PQ} = \overleftrightarrow{QP}$.</p></div><p class="why">A segment and a line have no preferred direction; listing the points in the other order describes the same set.</p></li>
+          <li><div class="do"><p>$\overrightarrow{PQ} \ne \overrightarrow{QP}$.</p></div><p class="why">$\overrightarrow{PQ}$ starts at $P$ and heads through $Q$; $\overrightarrow{QP}$ starts at $Q$ and heads the other way. They share only the segment $\overline{PQ}$.</p></li>
+        </ol>
+        <p class="answer">Segments: same. Lines: same. Rays: different.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Adding segments</h3>
+        <div class="problem"><p>$A$, $B$, $C$ are collinear with $B$ between $A$ and $C$. If $AB = 7$ and $BC = 5$, find $AC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Since $B$ is on $\overline{AC}$, $AC = AB + BC$.</p></div><p class="why">Segment addition: the two pieces make up the whole.</p></li>
+          <li><div class="do"><p>$AC = 7 + 5 = 12$.</p></div><p class="why">Substitute.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Algebra with a midpoint</h3>
+        <div class="problem"><p>$M$ is the midpoint of $\overline{AB}$, with $AM = 2x + 3$ and $MB = 5x - 9$. Find $AB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2x + 3 = 5x - 9$, so $3x = 12$ and $x = 4$.</p></div><p class="why">A midpoint makes the two halves equal.</p></li>
+          <li><div class="do"><p>$AM = 11$, so $AB = 2 \cdot 11 = 22$.</p></div><p class="why">Check: $MB = 20 - 9 = 11$ as well. ✓</p></li>
+        </ol>
+        <p class="answer">$22$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Overlapping segments</h3>
+        <div class="problem"><p>Points $A$, $B$, $C$, $D$ lie on a line in that order. $AC = 10$, $BD = 12$ and $AD = 17$. Find $BC$.</p></div>
+        <ol class="steps">
+          <li data-think="If you add $AC$ and $BD$, which piece is counted twice?"><div class="do"><p>$AC + BD = (AB + BC) + (BC + CD) = AD + BC$.</p></div><p class="why">$AB + BC + CD = AD$, and $BC$ is the overlap counted in both.</p></li>
+          <li><div class="do"><p>$BC = 10 + 12 - 17 = 5$.</p></div><p class="why">Subtract the whole from the sum of the overlapping pieces.</p></li>
+        </ol>
+        <p class="answer">$5$</p>
+        <p class="key-idea">Overlapping lengths: (sum of pieces) $-$ (whole) $=$ overlap.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A point that divides in a ratio</h3>
+        <div class="problem"><p>$P$ is on $\overline{AB}$ with $AP : PB = 2 : 3$ and $AB = 20$. $Q$ is the midpoint of $\overline{PB}$. Find $AQ$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$AP = \frac25 \cdot 20 = 8$ and $PB = 12$.</p></div><p class="why">The ratio $2:3$ splits $AB$ into $5$ equal parts.</p></li>
+          <li><div class="do"><p>$PQ = 6$, so $AQ = AP + PQ = 14$.</p></div><p class="why">$Q$ is halfway along $\overline{PB}$, and $P$ is between $A$ and $Q$.</p></li>
+        </ol>
+        <p class="answer">$14$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>How close can the ends be?</h3>
+        <div class="problem"><p>Points $A$, $B$, $C$, $D$ lie on a line (in some order) with $AB = 2$, $BC = 3$ and $CD = 4$. What are the largest and smallest possible values of $AD$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Put $A$ at $0$. Then $B = \pm 2$, $C = B \pm 3$, $D = C \pm 4$, so $AD = |\pm 2 \pm 3 \pm 4|$.</p></div><p class="why">Each step can go left or right along the line.</p></li>
+          <li><div class="do"><p>Largest: $2 + 3 + 4 = 9$ (all in one direction).</p></div><p class="why">The distance can't exceed the total of the steps.</p></li>
+          <li data-think="Can the signed sum ever be $0$? Look at whether it is odd or even."><div class="do"><p>Every choice of signs gives an odd number, since $2 + 3 + 4 = 9$ is odd and flipping a sign changes the sum by an even amount. So $AD \ge 1$, and $2 + 3 - 4 = 1$ achieves it.</p></div><p class="why">Changing $+k$ to $-k$ changes the total by $2k$, which keeps it odd. So $0$ is impossible.</p></li>
+        </ol>
+        <p class="answer">Largest $9$, smallest $1$.</p>
+        <p class="key-idea">On a line, distances are sums with signs; parity can rule out values.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 10.2 ===================== -->
+  <section class="lesson" id="s10-2" data-title="Classification and Measurement">
+    <h2><span class="sec-num">10.2</span> Classification and Measurement</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Why does a full turn have $360$ degrees and not $100$? Because $360$ divides evenly by $2, 3, 4, 5, 6, 8, 9, 10, 12, \ldots$: a third of a turn is a tidy $120^\circ$, a sixth is $60^\circ$. Mathematicians also use a second unit, the radian, which comes straight from the circle itself and makes many formulas simpler.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Two rays with a common origin form an <strong>angle</strong>; the rays are its <strong>sides</strong> and the origin is its <strong>vertex</strong>. We write $\angle AOB$ with the vertex in the middle, or just $\angle O$ when there's no confusion. An angle is measured by the fraction of a circle (centered at the vertex) that it cuts off; we say it <strong>subtends</strong> that arc.</p>
+      <div class="rule"><p>$$360^\circ = 2\pi \text{ radians}, \qquad 1^\circ = 60' \ (\text{minutes}), \qquad 1' = 60'' \ (\text{seconds}).$$</p></div>
+      <p>To convert, multiply by the conversion factor $\dfrac{\pi}{180^\circ}$ (degrees to radians) or $\dfrac{180^\circ}{\pi}$ (radians to degrees).</p>
+      <ul>
+        <li><strong>Acute</strong>: less than $90^\circ$. <strong>Right</strong>: exactly $90^\circ$ (lines meeting at a right angle are <strong>perpendicular</strong>, $\perp$). <strong>Obtuse</strong>: between $90^\circ$ and $180^\circ$. <strong>Straight</strong>: $180^\circ$. <strong>Reflex</strong>: more than $180^\circ$.</li>
+        <li><strong>Complementary</strong> angles add to $90^\circ$; <strong>supplementary</strong> angles add to $180^\circ$.</li>
+      </ul>
+      <p>When two lines cross, angles next to each other form a straight line, so they are supplementary. The angles across from each other, called <strong>vertical angles</strong>, are therefore equal: if $\alpha + \beta = 180^\circ$ and $\beta + \gamma = 180^\circ$, then $\alpha = \gamma$.</p>
+    </div>
+
+    <figure class="explore" data-widget="angleMeter">
+      <figcaption><strong>Explore:</strong> Drag the gold point (or use the slider) to open the angle. The readout gives the measure in degrees and in radians, names the type, and shows its complement and supplement. The dashed ray shows the supplementary angle next door.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Name the type</h3>
+        <div class="problem"><p>Classify angles of $35^\circ$, $90^\circ$, $140^\circ$, $180^\circ$ and $250^\circ$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$35^\circ$: acute. $90^\circ$: right. $140^\circ$: obtuse.</p></div><p class="why">Compare each with $90^\circ$ and $180^\circ$.</p></li>
+          <li><div class="do"><p>$180^\circ$: straight. $250^\circ$: reflex.</p></div><p class="why">A straight angle is a line; anything beyond it is reflex.</p></li>
+        </ol>
+        <p class="answer">Acute, right, obtuse, straight, reflex.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Complement and supplement</h3>
+        <div class="problem"><p>Find the complement and the supplement of a $38^\circ$ angle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Complement: $90^\circ - 38^\circ = 52^\circ$.</p></div><p class="why">Complementary angles sum to $90^\circ$.</p></li>
+          <li><div class="do"><p>Supplement: $180^\circ - 38^\circ = 142^\circ$.</p></div><p class="why">Supplementary angles sum to $180^\circ$. Notice the supplement is always $90^\circ$ more than the complement.</p></li>
+        </ol>
+        <p class="answer">Complement $52^\circ$, supplement $142^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Degrees and radians</h3>
+        <div class="problem"><p>Convert $\dfrac{5\pi}{6}$ radians to degrees and $210^\circ$ to radians.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{5\pi}{6}\cdot\dfrac{180^\circ}{\pi} = 5 \cdot 30^\circ = 150^\circ$.</p></div><p class="why">The factor $\frac{180^\circ}{\pi}$ equals $1$, so multiplying by it changes only the units; the $\pi$'s cancel.</p></li>
+          <li><div class="do"><p>$210^\circ \cdot \dfrac{\pi}{180^\circ} = \dfrac{210\pi}{180} = \dfrac{7\pi}{6}$.</p></div><p class="why">Now the degree units cancel; reduce the fraction.</p></li>
+        </ol>
+        <p class="answer">$150^\circ$ and $\dfrac{7\pi}{6}$</p>
+        <p class="book-next">Next in the book: Example 10-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Minutes and seconds</h3>
+        <div class="problem"><p>Write $47.36^\circ$ in degrees, minutes and seconds.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$0.36^\circ = 0.36 \times 60' = 21.6'$.</p></div><p class="why">There are $60$ minutes in a degree.</p></li>
+          <li><div class="do"><p>$0.6' = 0.6 \times 60'' = 36''$.</p></div><p class="why">There are $60$ seconds in a minute.</p></li>
+          <li><div class="do"><p>$47.36^\circ = 47^\circ\,21'\,36''$.</p></div><p class="why">Collect the whole parts: $47$ degrees, $21$ minutes, $36$ seconds.</p></li>
+        </ol>
+        <p class="answer">$47^\circ\,21'\,36''$</p>
+        <p class="book-next">Next in the book: Example 10-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Vertical angles with algebra</h3>
+        <div class="problem"><p>Two lines cross. One angle measures $(3x + 10)^\circ$ and the angle vertical to it measures $(5x - 30)^\circ$. Find all four angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$3x + 10 = 5x - 30$, so $x = 20$.</p></div><p class="why">Vertical angles are equal.</p></li>
+          <li><div class="do"><p>Those two angles are $70^\circ$; the other two are $180^\circ - 70^\circ = 110^\circ$.</p></div><p class="why">Neighbouring angles at a crossing are supplementary.</p></li>
+        </ol>
+        <p class="answer">$70^\circ, 110^\circ, 70^\circ, 110^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Supplement versus complement</h3>
+        <div class="problem"><p>The supplement of an angle is four times its complement. Find the angle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the angle be $x$: $180 - x = 4(90 - x)$.</p></div><p class="why">Translate the words directly.</p></li>
+          <li><div class="do"><p>$180 - x = 360 - 4x$, so $3x = 180$ and $x = 60$.</p></div><p class="why">Collect like terms.</p></li>
+          <li><div class="do"><p>Check: supplement $120^\circ$, complement $30^\circ$, and $120 = 4 \cdot 30$. ✓</p></div><p class="why">Always substitute back into the words.</p></li>
+        </ol>
+        <p class="answer">$60^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Angle between clock hands</h3>
+        <div class="problem"><p>What is the angle between the hour and minute hands at 3:30?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The minute hand moves $360^\circ/60 = 6^\circ$ per minute; at :30 it points at $180^\circ$ (measured clockwise from 12).</p></div><p class="why">Measure both hands from the 12 o'clock position.</p></li>
+          <li data-think="Is the hour hand exactly on the 3 at 3:30?"><div class="do"><p>The hour hand moves $30^\circ$ per hour, which is $0.5^\circ$ per minute. At 3:30 it is at $3 \cdot 30^\circ + 30 \cdot 0.5^\circ = 105^\circ$.</p></div><p class="why">The hour hand has moved halfway from the 3 toward the 4.</p></li>
+          <li><div class="do"><p>Angle $= 180^\circ - 105^\circ = 75^\circ$.</p></div><p class="why">Subtract the two positions.</p></li>
+        </ol>
+        <p class="answer">$75^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>When do the hands meet?</h3>
+        <div class="problem"><p>At what time after 3:00 do the hour and minute hands first point in exactly the same direction?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>After $t$ minutes, the minute hand is at $6t$ degrees and the hour hand at $90 + 0.5t$ degrees.</p></div><p class="why">At 3:00 the hour hand starts at $90^\circ$; each hand turns at its own steady rate.</p></li>
+          <li><div class="do"><p>Set them equal: $6t = 90 + 0.5t$, so $5.5t = 90$ and $t = \dfrac{180}{11} = 16\tfrac{4}{11}$ minutes.</p></div><p class="why">The minute hand gains $5.5^\circ$ per minute and must make up $90^\circ$.</p></li>
+          <li><div class="do"><p>$\tfrac{4}{11}$ minute $= \tfrac{240}{11} \approx 21.8$ seconds, so the time is about 3:16:22.</p></div><p class="why">Convert the fraction of a minute into seconds.</p></li>
+        </ol>
+        <p class="answer">At $3{:}16\tfrac{4}{11}$, about 3:16:22.</p>
+        <p class="key-idea">Treat moving hands as a rate problem: the gap closes at the difference of the rates.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 10.3 ===================== -->
+  <section class="lesson" id="s10-3" data-title="Angles and Parallel Lines">
+    <h2><span class="sec-num">10.3</span> Angles and Parallel Lines</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Tear the three corners off a paper triangle and line them up point to point. They always make a straight line. Why? Slide one of the triangle's sides along a parallel line and the angles fall into place. Parallel lines turn angle questions into bookkeeping.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Parallel</strong> lines ($\ell \parallel m$) lie in the same plane and never meet. A line crossing both is a <strong>transversal</strong>; it makes eight angles, four at each crossing.</p>
+      <div class="rule"><p><strong>Corresponding</strong> angles are equal. <strong>Alternate interior</strong> angles are equal. <strong>Same-side interior</strong> angles are supplementary.</p></div>
+      <p>In fact, only two angle sizes appear: some angle $\theta$ and its supplement $180^\circ - \theta$. In diagrams, mark equal angles with the same number of small arcs, and equal lengths with the same number of tick marks. A careful, well-marked diagram is the most important tool in geometry.</p>
+      <p><strong>Triangle sum.</strong> Through vertex $C$ of triangle $ABC$, draw the line parallel to $\overline{AB}$. The two angles it makes with $\overline{CA}$ and $\overline{CB}$ are alternate interior angles equal to $\angle A$ and $\angle B$, and together with $\angle C$ they form a straight line. So</p>
+      <div class="rule"><p>$$\angle A + \angle B + \angle C = 180^\circ.$$</p></div>
+      <p><strong>Exterior angle theorem.</strong> Extend a side past a vertex. The <strong>exterior angle</strong> formed is supplementary to the interior angle there, so it equals the sum of the other two (<strong>remote interior</strong>) angles.</p>
+      <div class="note"><p>When the standard moves don't work, look for a good place to draw an extra line parallel to one you already have.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="transversal">
+      <figcaption><strong>Explore:</strong> Tilt the transversal and choose a pair type. The highlighted angles stay equal (or supplementary) at every tilt, and all eight angles take only two values.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="triangleSum">
+      <figcaption><strong>Explore:</strong> Drag the vertices. The dashed line through $C$ is parallel to $\overline{AB}$; the coloured copies of $\angle A$ and $\angle B$ sit beside $\angle C$ on a straight line, so the three always add to $180^\circ$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Fill in all eight angles</h3>
+        <div class="problem"><p>A transversal crosses two parallel lines, making a $65^\circ$ angle at one crossing. What are the eight angles?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>At that crossing: $65^\circ$, its vertical angle $65^\circ$, and two supplements $115^\circ$.</p></div><p class="why">Vertical angles are equal; neighbouring angles are supplementary.</p></li>
+          <li><div class="do"><p>The other crossing has the same four angles in the same positions.</p></div><p class="why">Corresponding angles are equal, so the second crossing copies the first.</p></li>
+        </ol>
+        <p class="answer">Four angles of $65^\circ$ and four of $115^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Same-side interior angles</h3>
+        <div class="problem"><p>Two same-side interior angles of parallel lines measure $3x$ and $2x$ degrees. Find them.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$3x + 2x = 180$, so $x = 36$.</p></div><p class="why">Same-side interior angles are supplementary.</p></li>
+          <li><div class="do"><p>The angles are $108^\circ$ and $72^\circ$.</p></div><p class="why">Substitute $x = 36$.</p></li>
+        </ol>
+        <p class="answer">$108^\circ$ and $72^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The third angle</h3>
+        <div class="problem"><p>Two angles of a triangle are $47^\circ$ and $68^\circ$. Find the third.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$180^\circ - 47^\circ - 68^\circ = 65^\circ$.</p></div><p class="why">The three angles of a triangle sum to $180^\circ$.</p></li>
+        </ol>
+        <p class="answer">$65^\circ$</p>
+        <p class="book-next">Next in the book: Example 10-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Angles in a ratio</h3>
+        <div class="problem"><p>The angles of a triangle are in the ratio $2 : 3 : 4$. Find them.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Write them as $2k, 3k, 4k$: $9k = 180$, so $k = 20$.</p></div><p class="why">A ratio means equal-sized "parts"; there are $9$ parts in $180^\circ$.</p></li>
+          <li><div class="do"><p>$40^\circ, 60^\circ, 80^\circ$.</p></div><p class="why">Multiply each part count by $20^\circ$.</p></li>
+        </ol>
+        <p class="answer">$40^\circ$, $60^\circ$, $80^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An exterior angle</h3>
+        <div class="problem"><p>An exterior angle of a triangle is $120^\circ$. Of the two remote interior angles, one is twice the other. Find all three interior angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Remote interior angles $x$ and $2x$: $x + 2x = 120$, so $x = 40$.</p></div><p class="why">Exterior angle theorem: the exterior angle equals the sum of the remote interior angles.</p></li>
+          <li><div class="do"><p>Interior angles: $40^\circ$, $80^\circ$, and $180^\circ - 120^\circ = 60^\circ$.</p></div><p class="why">The interior angle at the extended vertex is supplementary to the exterior angle. Check: $40 + 80 + 60 = 180$. ✓</p></li>
+        </ol>
+        <p class="answer">$40^\circ$, $80^\circ$, $60^\circ$</p>
+        <p class="book-next">Next in the book: Example 10-4 and Exercise 10-1.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A bend between parallel lines</h3>
+        <div class="problem">
+          <p>Lines $\ell$ and $m$ are parallel. A path goes from a point on $\ell$ to point $P$ between the lines, then to a point on $m$. The first piece makes a $30^\circ$ angle with $\ell$ and the second makes a $45^\circ$ angle with $m$, as shown. Find the angle of the bend at $P$.</p>
+          <svg viewBox="0 0 300 170" width="300" role="img" aria-label="Two horizontal parallel lines with a bent path between them, bending at point P">
+            <line x1="10" y1="30" x2="290" y2="30" stroke="var(--border-strong)" stroke-width="2"/>
+            <line x1="10" y1="140" x2="290" y2="140" stroke="var(--border-strong)" stroke-width="2"/>
+            <text x="270" y="22" style="font: 13px var(--font-body); fill: var(--ink)">ℓ</text>
+            <text x="270" y="160" style="font: 13px var(--font-body); fill: var(--ink)">m</text>
+            <polyline points="60,30 203,82.5 60,140" fill="none" stroke="var(--plot-1)" stroke-width="3"/>
+            <line x1="120" y1="82.5" x2="280" y2="82.5" stroke="var(--plot-2)" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <circle cx="203" cy="82.5" r="4" fill="var(--ink)"/>
+            <text x="210" y="78" style="font: 13px var(--font-body); fill: var(--ink)">P</text>
+            <text x="92" y="46" style="font: 12px var(--font-mono); fill: var(--muted)">30°</text>
+            <text x="92" y="132" style="font: 12px var(--font-mono); fill: var(--muted)">45°</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li data-think="Where could an extra parallel line help?"><div class="do"><p>Draw the line through $P$ parallel to $\ell$ and $m$ (dashed). It splits the bend into two angles.</p></div><p class="why">An extra parallel line creates alternate interior angles with each piece of the path.</p></li>
+          <li><div class="do"><p>The upper part equals $30^\circ$ and the lower part equals $45^\circ$.</p></div><p class="why">Each is an alternate interior angle for a transversal crossing the dashed line and $\ell$ (or $m$).</p></li>
+          <li><div class="do"><p>Bend $= 30^\circ + 45^\circ = 75^\circ$.</p></div><p class="why">The two parts together make the angle at $P$.</p></li>
+        </ol>
+        <p class="answer">$75^\circ$</p>
+        <p class="key-idea">A bend between parallel lines equals the sum of the angles the two pieces make with the lines.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The points of a star</h3>
+        <div class="problem">
+          <p>A five-pointed star has tips $A, B, C, D, E$ in order around it, drawn with the five strokes $\overline{AC}, \overline{CE}, \overline{EB}, \overline{BD}, \overline{DA}$. Show that the five tip angles add to $180^\circ$, whatever the shape of the star.</p>
+          <svg viewBox="0 0 200 190" width="200" role="img" aria-label="Five-pointed star with tips A to E; stroke EB crosses AC at X and AD at Y">
+            <polygon points="100,15 150,168.8 19.2,73.7 180.8,73.7 50,168.8" fill="none" stroke="var(--ink)" stroke-width="2"/>
+            <polygon points="100,15 119.1,73.7 80.9,73.7" fill="color-mix(in srgb, var(--plot-1) 35%, transparent)" stroke="var(--plot-1)" stroke-width="2"/>
+            <text x="95" y="11" style="font: 13px var(--font-body); fill: var(--ink)">A</text>
+            <text x="184" y="72" style="font: 13px var(--font-body); fill: var(--ink)">B</text>
+            <text x="153" y="184" style="font: 13px var(--font-body); fill: var(--ink)">C</text>
+            <text x="38" y="184" style="font: 13px var(--font-body); fill: var(--ink)">D</text>
+            <text x="4" y="72" style="font: 13px var(--font-body); fill: var(--ink)">E</text>
+            <text x="121" y="90" style="font: 12px var(--font-body); fill: var(--plot-1)">X</text>
+            <text x="70" y="90" style="font: 12px var(--font-body); fill: var(--plot-1)">Y</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>Let stroke $\overline{EB}$ cross $\overline{AC}$ at $X$ and $\overline{AD}$ at $Y$. We will show the angles of triangle $AXY$ are $\angle A$, $\angle C + \angle E$ and $\angle B + \angle D$.</p></div><p class="why">The plan: gather all five tip angles into one triangle, whose angles add to $180^\circ$.</p></li>
+          <li data-think="Triangle $CEX$ has two tip angles in it. Which angle outside it equals their sum?"><div class="do"><p>Triangle $CEX$ has angles $\angle C$ and $\angle E$ at the tips. Its exterior angle at $X$ (between ray $XA$, which extends $\overline{CX}$, and ray $XE$) is $\angle AXY = \angle C + \angle E$.</p></div><p class="why">Exterior angle theorem. $Y$ lies on ray $XE$, so this exterior angle is the angle of triangle $AXY$ at $X$.</p></li>
+          <li><div class="do"><p>Likewise triangle $BDY$ has exterior angle $\angle AYX = \angle B + \angle D$ at $Y$.</p></div><p class="why">The same argument with the strokes through $Y$.</p></li>
+          <li><div class="do"><p>In triangle $AXY$: $\angle A + (\angle C + \angle E) + (\angle B + \angle D) = 180^\circ$.</p></div><p class="why">Triangle angle sum.</p></li>
+        </ol>
+        <p class="answer">The tip angles always sum to $180^\circ$.</p>
+        <p class="key-idea">Exterior angles let you gather scattered angles into a single triangle.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 10.4 ===================== -->
+  <section class="lesson" id="s10-4" data-title="Arcs, Segments, Sectors, and Angles">
+    <h2><span class="sec-num">10.4</span> Arcs, Segments, Sectors, and Angles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A pizza of radius $20$ cm is cut into $8$ equal slices. Each slice's crust is one eighth of the circumference and each slice's area is one eighth of the pizza. Measuring arcs and sectors is just a matter of knowing what fraction of the whole circle you have.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>An arc can be measured two ways: by its <strong>angle</strong> (the central angle $\angle AOB$ that cuts it off, written beside the arc in diagrams) or by its <strong>length</strong>. The fraction of the circle is the same either way:</p>
+      <div class="rule"><p>$$\frac{\text{arc length}}{2\pi r} = \frac{\theta}{360^\circ} = \frac{\theta_{\text{rad}}}{2\pi}, \qquad\text{so}\qquad \text{arc length} = r\,\theta_{\text{rad}}.$$</p></div>
+      <p>A sector with central angle $\theta$ is the same fraction of the disk:</p>
+      <div class="rule"><p>$$\text{sector area} = \frac{\theta}{360^\circ}\,\pi r^2 = \frac12 r^2 \theta_{\text{rad}} = \frac12 r \cdot (\text{arc length}).$$</p></div>
+      <p>A <strong>circular segment</strong> (between a chord $\overline{AB}$ and its arc) is the sector $AOB$ minus the triangle $AOB$. Chapter 11 gives the tools for triangle areas; right and equilateral triangles are already within reach.</p>
+      <div class="note"><p>The radian formulas are why radians are "natural": arc length is simply radius times angle.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="sectorExplorer">
+      <figcaption><strong>Explore:</strong> Change the radius and the central angle. Switch between the sector and the segment. The readout shows arc length, sector area, and segment area $=$ sector $-$ triangle.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A sixth of a circle</h3>
+        <div class="problem"><p>In a circle of radius $6$, a central angle of $60^\circ$ cuts off an arc. Find the arc length and the sector area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Fraction: $\dfrac{60^\circ}{360^\circ} = \dfrac16$.</p></div><p class="why">Work out the fraction of the circle once and use it twice.</p></li>
+          <li><div class="do"><p>Arc $= \dfrac16 \cdot 2\pi(6) = 2\pi$; sector $= \dfrac16 \cdot \pi(6)^2 = 6\pi$.</p></div><p class="why">Take the fraction of the circumference and of the area.</p></li>
+        </ol>
+        <p class="answer">Arc $2\pi$; sector area $6\pi$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Using radians directly</h3>
+        <div class="problem"><p>A sector of radius $4$ has central angle $1.5$ radians. Find its arc length and area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Arc $= r\theta = 4(1.5) = 6$.</p></div><p class="why">With radians, arc length is radius times angle.</p></li>
+          <li><div class="do"><p>Area $= \tfrac12 r^2\theta = \tfrac12 (16)(1.5) = 12$.</p></div><p class="why">Or $\tfrac12 r \cdot \text{arc} = \tfrac12 (4)(6) = 12$.</p></li>
+        </ol>
+        <p class="answer">Arc $6$; area $12$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the angle from the arc</h3>
+        <div class="problem"><p>An arc of length $5\pi$ lies on a circle of radius $10$. What is its central angle in degrees?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{5\pi}{2\pi \cdot 10} = \dfrac14$ of the circle.</p></div><p class="why">Compare the arc with the whole circumference $20\pi$.</p></li>
+          <li><div class="do"><p>$\dfrac14 \cdot 360^\circ = 90^\circ$.</p></div><p class="why">The angle is the same fraction of $360^\circ$.</p></li>
+        </ol>
+        <p class="answer">$90^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the angle from the area</h3>
+        <div class="problem"><p>A sector of a circle of radius $6$ has area $15\pi$. Find its central angle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The whole disk has area $36\pi$, so the sector is $\dfrac{15}{36} = \dfrac{5}{12}$ of it.</p></div><p class="why">Area fraction equals angle fraction.</p></li>
+          <li><div class="do"><p>$\dfrac{5}{12}\cdot 360^\circ = 150^\circ$.</p></div><p class="why">Multiply the fraction by a full turn.</p></li>
+        </ol>
+        <p class="answer">$150^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A quarter-circle segment</h3>
+        <div class="problem"><p>In a circle of radius $4$, chord $\overline{AB}$ cuts off a $90^\circ$ arc. Find the area of the circular segment between the chord and that arc.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sector $AOB$: $\dfrac14 \pi (4)^2 = 4\pi$.</p></div><p class="why">A $90^\circ$ sector is a quarter of the disk.</p></li>
+          <li><div class="do"><p>Triangle $AOB$ is a right triangle with legs $4$ and $4$: area $\tfrac12 \cdot 4 \cdot 4 = 8$.</p></div><p class="why">The two radii are perpendicular, so they serve as base and height.</p></li>
+          <li><div class="do"><p>Segment $= 4\pi - 8 \approx 4.57$.</p></div><p class="why">Segment $=$ sector $-$ triangle.</p></li>
+        </ol>
+        <p class="answer">$4\pi - 8$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A sixty-degree segment</h3>
+        <div class="problem"><p>In a circle of radius $6$, chord $\overline{AB}$ cuts off a $60^\circ$ arc. Find the area of the segment. (An equilateral triangle of side $s$ has area $\frac{\sqrt3}{4}s^2$; see Chapter 11.)</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sector: $\dfrac16 \pi (6)^2 = 6\pi$.</p></div><p class="why">$60^\circ$ is one sixth of a turn.</p></li>
+          <li data-think="Triangle $AOB$ has two sides equal to $6$ and a $60^\circ$ angle between them. What kind of triangle is it?"><div class="do"><p>Triangle $AOB$ is equilateral with side $6$, so its area is $\dfrac{\sqrt3}{4}\cdot 36 = 9\sqrt3$.</p></div><p class="why">$OA = OB$, so the other two angles are equal and must each be $60^\circ$.</p></li>
+          <li><div class="do"><p>Segment $= 6\pi - 9\sqrt3 \approx 3.26$.</p></div><p class="why">Sector minus triangle.</p></li>
+        </ol>
+        <p class="answer">$6\pi - 9\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Recover the sector from its arc and area</h3>
+        <div class="problem"><p>A sector has arc length $4\pi$ and area $12\pi$. Find its radius and its central angle in degrees.</p></div>
+        <ol class="steps">
+          <li data-think="Which sector-area formula uses the arc length directly?"><div class="do"><p>Area $= \tfrac12 r \cdot (\text{arc length})$: $12\pi = \tfrac12 r (4\pi) = 2\pi r$, so $r = 6$.</p></div><p class="why">A sector behaves like a triangle with "base" the arc and "height" the radius.</p></li>
+          <li><div class="do"><p>$\theta = \dfrac{\text{arc}}{r} = \dfrac{4\pi}{6} = \dfrac{2\pi}{3}$ radians $= 120^\circ$.</p></div><p class="why">Arc length $= r\theta$ in radians, then convert.</p></li>
+          <li><div class="do"><p>Check: $\dfrac{120}{360}\pi(36) = 12\pi$ ✓ and $\dfrac{120}{360}\cdot 12\pi = 4\pi$ ✓.</p></div><p class="why">Both given facts hold.</p></li>
+        </ol>
+        <p class="answer">$r = 6$, $\theta = 120^\circ$</p>
+        <p class="key-idea">Sector area $= \frac12 r \times$ arc length, just like $\frac12 \times$ base $\times$ height.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 10.5 ===================== -->
+  <section class="lesson" id="s10-5" data-title="Angles Formed by Lines Intersecting a Circle">
+    <h2><span class="sec-num">10.5</span> Angles Formed by Lines Intersecting a Circle</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Stand anywhere on the curved edge of a circular stage and look at the two ends of its straight front edge. Walk along the curve: the ends stay the same angle apart in your view, no matter where you stand. Circles keep angles constant in a way that makes them a geometry superpower.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>central angle</strong> has its vertex at the center; it equals its arc. Every other angle formed by lines meeting a circle is measured by half of an arc, or half a sum or difference of arcs:</p>
+      <div class="rule">
+        <p><strong>Inscribed angle</strong> (vertex on the circle, sides are chords): $\tfrac12$ the intercepted arc.</p>
+        <p><strong>Tangent and chord</strong> (vertex on the circle): $\tfrac12$ the intercepted arc.</p>
+        <p><strong>Two chords</strong> crossing inside: $\tfrac12$ (sum of the arcs cut off by the angle and by its vertical angle).</p>
+        <p><strong>Two secants, a secant and a tangent, or two tangents</strong> meeting outside: $\tfrac12$ (far arc $-$ near arc).</p>
+      </div>
+      <p>Some consequences are used constantly:</p>
+      <ul>
+        <li>An angle inscribed in a semicircle is a right angle (it cuts off $180^\circ$).</li>
+        <li>A radius drawn to the point of tangency is perpendicular to the tangent.</li>
+        <li><strong>Inscribed angles that cut off the same arc are equal.</strong> If you need to show two angles are equal and a circle passes through both vertices and the two points where their sides cross the circle, you're done.</li>
+        <li>Opposite angles of a quadrilateral inscribed in a circle add to $180^\circ$, since their arcs make up the whole circle.</li>
+      </ul>
+    </div>
+
+    <figure class="explore" data-widget="inscribedAngle">
+      <figcaption><strong>Explore:</strong> Drag $P$ around the circle: the inscribed angle $\angle APB$ doesn't change as long as $P$ stays on the same arc, and it is always half the central angle on the arc it cuts off. Drag $A$ and $B$ too; make $\overline{AB}$ a diameter to see a right angle.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="chordsSecants">
+      <figcaption><strong>Explore:</strong> Drag the point $P$ inside or outside the circle and turn the two lines through it. The angle between the lines is computed directly and from the arcs: half the <em>sum</em> when $P$ is inside, half the <em>difference</em> when $P$ is outside, half the arc when $P$ is on the circle. (Outside, the sliders swing each line only through directions that still meet the circle.)</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>An inscribed angle</h3>
+        <div class="problem"><p>An inscribed angle cuts off an arc of $100^\circ$. How big is the angle? How big is the central angle on the same arc?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Inscribed angle $= \tfrac12 \cdot 100^\circ = 50^\circ$.</p></div><p class="why">An inscribed angle is half its arc.</p></li>
+          <li><div class="do"><p>Central angle $= 100^\circ$.</p></div><p class="why">A central angle equals its arc, so it is twice the inscribed angle.</p></li>
+        </ol>
+        <p class="answer">$50^\circ$; the central angle is $100^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A triangle on a diameter</h3>
+        <div class="problem"><p>Triangle $ABC$ is inscribed in a circle with $\overline{AB}$ a diameter. If $\angle A = 35^\circ$, find $\angle B$ and $\angle C$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle C = 90^\circ$.</p></div><p class="why">$\angle C$ is inscribed in a semicircle, cutting off $180^\circ$.</p></li>
+          <li><div class="do"><p>$\angle B = 180^\circ - 90^\circ - 35^\circ = 55^\circ$.</p></div><p class="why">Triangle angle sum.</p></li>
+        </ol>
+        <p class="answer">$\angle B = 55^\circ$, $\angle C = 90^\circ$</p>
+        <p class="book-next">Next in the book: Examples 10-5 and 10-6.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two chords crossing</h3>
+        <div class="problem"><p>Two chords cross inside a circle. The angle at the crossing and its vertical angle cut off arcs of $70^\circ$ and $50^\circ$. Find all four angles at the crossing.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\tfrac12(70^\circ + 50^\circ) = 60^\circ$.</p></div><p class="why">Two chords: half the sum of the arcs cut off by the angle and its vertical angle.</p></li>
+          <li><div class="do"><p>The other pair: $180^\circ - 60^\circ = 120^\circ$.</p></div><p class="why">Neighbouring angles at the crossing are supplementary.</p></li>
+        </ol>
+        <p class="answer">$60^\circ, 120^\circ, 60^\circ, 120^\circ$</p>
+        <p class="book-next">Next in the book: Example 10-7.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two secants from outside</h3>
+        <div class="problem"><p>Two secants from point $P$ outside a circle cut off a far arc of $120^\circ$ and a near arc of $40^\circ$. Find $\angle P$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle P = \tfrac12(120^\circ - 40^\circ) = 40^\circ$.</p></div><p class="why">From outside, the angle is half the difference of the far and near arcs.</p></li>
+        </ol>
+        <p class="answer">$40^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A tangent and a chord</h3>
+        <div class="problem"><p>A tangent at $A$ and a chord $\overline{AB}$ form an angle that cuts off an arc $\overset{\frown}{AB}$ of $140^\circ$. Find the angle, and any inscribed angle on the other side of the chord that cuts off the same arc.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Tangent-chord angle $= \tfrac12 \cdot 140^\circ = 70^\circ$.</p></div><p class="why">A tangent-chord angle is half its arc.</p></li>
+          <li><div class="do"><p>An inscribed angle $\angle ACB$ on $\overset{\frown}{AB}$ is also $70^\circ$.</p></div><p class="why">Both are half the same arc, so they are equal.</p></li>
+        </ol>
+        <p class="answer">$70^\circ$ for both.</p>
+        <p class="book-next">Next in the book: Example 10-8.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two tangents</h3>
+        <div class="problem"><p>Tangents from $P$ touch a circle at $A$ and $B$. The minor arc $\overset{\frown}{AB}$ is $110^\circ$. Find $\angle APB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Major arc $= 360^\circ - 110^\circ = 250^\circ$.</p></div><p class="why">The two tangents cut off both arcs: the far one and the near one.</p></li>
+          <li><div class="do"><p>$\angle P = \tfrac12(250^\circ - 110^\circ) = 70^\circ$.</p></div><p class="why">Half the difference, as for secants.</p></li>
+          <li><div class="do"><p>Check another way: radii $OA$, $OB$ are perpendicular to the tangents, so quadrilateral $OAPB$ has angles $90^\circ + 90^\circ + 110^\circ + \angle P = 360^\circ$, giving $70^\circ$. ✓</p></div><p class="why">A quadrilateral's angles sum to $360^\circ$ (two triangles).</p></li>
+        </ol>
+        <p class="answer">$70^\circ$</p>
+        <p class="key-idea">For two tangents, $\angle P = 180^\circ - (\text{minor arc})$.</p>
+        <p class="book-next">Next in the book: Exercise 10-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Opposite angles of an inscribed quadrilateral</h3>
+        <div class="problem"><p>Quadrilateral $ABCD$ is inscribed in a circle with $\angle A = 75^\circ$ and $\angle B = 100^\circ$. Find $\angle C$ and $\angle D$.</p></div>
+        <ol class="steps">
+          <li data-think="Which arcs do $\angle A$ and $\angle C$ cut off, together?"><div class="do"><p>$\angle A$ cuts off arc $\overset{\frown}{BCD}$ and $\angle C$ cuts off arc $\overset{\frown}{DAB}$; together these arcs are the whole circle.</p></div><p class="why">Each angle opens toward the arc opposite its vertex.</p></li>
+          <li><div class="do"><p>So $\angle A + \angle C = \tfrac12 \cdot 360^\circ = 180^\circ$, giving $\angle C = 105^\circ$. Likewise $\angle D = 80^\circ$.</p></div><p class="why">Each inscribed angle is half its arc. Check: $75 + 100 + 105 + 80 = 360$. ✓</p></li>
+        </ol>
+        <p class="answer">$\angle C = 105^\circ$, $\angle D = 80^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Equal inscribed angles at work</h3>
+        <div class="problem"><p>Points $A, B, C, D$ lie on a circle in that order. $\angle BAC = 30^\circ$ and $\angle CAD = 40^\circ$. Find the three angles of triangle $BCD$.</p></div>
+        <ol class="steps">
+          <li data-think="Which angle of triangle $BCD$ cuts off the same arc as $\angle BAC$?"><div class="do"><p>$\angle BDC$ and $\angle BAC$ both cut off arc $\overset{\frown}{BC}$, so $\angle BDC = 30^\circ$.</p></div><p class="why">Inscribed angles on the same arc are equal.</p></li>
+          <li><div class="do"><p>$\angle CBD$ and $\angle CAD$ both cut off arc $\overset{\frown}{CD}$, so $\angle CBD = 40^\circ$.</p></div><p class="why">Same reason, a different arc.</p></li>
+          <li><div class="do"><p>$\angle BCD = 180^\circ - 30^\circ - 40^\circ = 110^\circ$.</p></div><p class="why">Triangle sum. Also $\angle BCD = 180^\circ - \angle BAD = 180^\circ - 70^\circ$, since $ABCD$ is inscribed. ✓</p></li>
+        </ol>
+        <p class="answer">$\angle BDC = 30^\circ$, $\angle CBD = 40^\circ$, $\angle BCD = 110^\circ$</p>
+        <p class="key-idea">To move an angle somewhere useful, slide its vertex along the circle.</p>
+        <p class="book-next">Next in the book: Example 10-9 and Exercise 10-2.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 10.6 ===================== -->
+  <section class="lesson" id="s10-6" data-title="The Burden of Proof">
+    <h2><span class="sec-num">10.6</span> The Burden of Proof</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Why should an angle on the edge of a circle be exactly half the angle at the center? Measuring a hundred drawings would convince you, but it wouldn't tell you <em>why</em>, or guarantee the hundred-and-first. A proof does both, and the moves it uses (adding a line, spotting isosceles triangles, splitting into cases) will solve problems for years.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The key fact: any triangle with two radii as sides is <strong>isosceles</strong>, so its two base angles are equal (see Chapter 11). To prove the inscribed angle theorem, $\angle ACB = \tfrac12 \angle AOB$:</p>
+      <ol>
+        <li><strong>Simplest case: the center lies on a side</strong>, say on $\overline{CB}$. Triangle $AOC$ is isosceles ($OA = OC$), so $\angle OAC = \angle OCA = x$. The angle $\angle AOB$ is an exterior angle of triangle $AOC$, so it equals $x + x = 2x$.</li>
+        <li><strong>Center inside the angle.</strong> Draw the diameter from $C$ through $O$. It splits $\angle ACB$ into $x + y$, and by case 1 the central angle splits into $2x + 2y$.</li>
+        <li><strong>Center outside the angle.</strong> The same diameter now gives a difference: $\angle ACB = x - y$ and $\angle AOB = 2x - 2y$.</li>
+      </ol>
+      <p>Lessons in technique:</p>
+      <ul>
+        <li><strong>Add a line</strong> that creates triangles you understand (here, the diameter through $C$).</li>
+        <li><strong>Use every given condition</strong>: "points on a circle" means equal radii, which means isosceles triangles.</li>
+        <li><strong>Work backwards</strong> from what you want to what you need to show.</li>
+        <li><strong>Check all cases</strong>: a proof that only works for one picture isn't finished.</li>
+        <li><strong>Avoid circular reasoning</strong>: don't use a fact whose proof depends on what you are proving.</li>
+      </ul>
+      <p>With the inscribed angle theorem in hand, the other rules follow by drawing one extra chord and using the exterior angle theorem.</p>
+    </div>
+
+    <figure class="explore" data-widget="inscribedProof">
+      <figcaption><strong>Explore:</strong> Step through the proof. Then drag $A$, $B$ or $C$ to move the center inside, onto, or outside $\angle ACB$; the readout tells you which case you are in and shows the equation that proves it.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Radii make isosceles triangles</h3>
+        <div class="problem"><p>In circle $O$, chord $\overline{AB}$ makes $\angle OAB = 35^\circ$. Find $\angle OBA$ and $\angle AOB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$OA = OB$ (radii), so $\angle OBA = \angle OAB = 35^\circ$.</p></div><p class="why">Base angles of an isosceles triangle are equal.</p></li>
+          <li><div class="do"><p>$\angle AOB = 180^\circ - 70^\circ = 110^\circ$.</p></div><p class="why">Triangle angle sum.</p></li>
+        </ol>
+        <p class="answer">$\angle OBA = 35^\circ$, $\angle AOB = 110^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Case 1: the center on a side</h3>
+        <div class="problem"><p>$\overline{BC}$ is a diameter of circle $O$ and $A$ is another point on the circle. Prove that $\angle AOB = 2\angle ACB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $\angle ACB = \angle ACO = x$. Since $OA = OC$, triangle $AOC$ is isosceles and $\angle OAC = x$.</p></div><p class="why">$O$ lies on $\overline{CB}$, so $\angle ACB$ and $\angle ACO$ are the same angle.</p></li>
+          <li><div class="do"><p>$\angle AOB$ is an exterior angle of triangle $AOC$ (side $\overline{CO}$ extended through $O$ to $B$).</p></div><p class="why">$C$, $O$, $B$ are collinear.</p></li>
+          <li><div class="do"><p>So $\angle AOB = \angle OAC + \angle OCA = 2x = 2\angle ACB$.</p></div><p class="why">Exterior angle theorem.</p></li>
+        </ol>
+        <p class="answer">$\angle AOB = 2\angle ACB$, as required.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Case 2 with numbers</h3>
+        <div class="problem"><p>The center $O$ is inside $\angle ACB$, with $\angle OCA = 20^\circ$ and $\angle OCB = 30^\circ$. Find $\angle AOB$ by drawing the diameter $\overline{CD}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>By case 1 applied to each half: $\angle AOD = 2 \cdot 20^\circ = 40^\circ$ and $\angle BOD = 2 \cdot 30^\circ = 60^\circ$.</p></div><p class="why">The diameter $\overline{CD}$ puts the center on a side of each smaller angle.</p></li>
+          <li><div class="do"><p>$\angle AOB = 40^\circ + 60^\circ = 100^\circ = 2(20^\circ + 30^\circ)$.</p></div><p class="why">The diameter lies between $\overline{OA}$ and $\overline{OB}$, so the parts add.</p></li>
+        </ol>
+        <p class="answer">$100^\circ$, twice $\angle ACB = 50^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Case 3: the center outside</h3>
+        <div class="problem"><p>The center $O$ is outside $\angle ACB$, with diameter $\overline{CD}$ making $\angle DCB = 50^\circ$ and $\angle DCA = 20^\circ$ (so ray $CA$ lies between rays $CD$ and $CB$). Find $\angle ACB$ and $\angle AOB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle ACB = 50^\circ - 20^\circ = 30^\circ$.</p></div><p class="why">Now the angles subtract instead of add.</p></li>
+          <li><div class="do"><p>Case 1 gives $\angle BOD = 100^\circ$ and $\angle AOD = 40^\circ$, so $\angle AOB = 100^\circ - 40^\circ = 60^\circ$.</p></div><p class="why">Ray $OA$ lies between rays $OD$ and $OB$.</p></li>
+          <li><div class="do"><p>$60^\circ = 2 \cdot 30^\circ$. ✓</p></div><p class="why">The theorem holds in this case too.</p></li>
+        </ol>
+        <p class="answer">$\angle ACB = 30^\circ$, $\angle AOB = 60^\circ$</p>
+        <p class="key-idea">A complete proof handles every position the figure can take.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Prove the two-chord rule</h3>
+        <div class="problem"><p>Chords $\overline{AC}$ and $\overline{BD}$ cross at $E$ inside a circle. Prove that $\angle AEB = \tfrac12\left(\overset{\frown}{AB} + \overset{\frown}{CD}\right)$.</p></div>
+        <ol class="steps">
+          <li data-think="Which extra chord makes a triangle whose angles are inscribed angles on $\overset{\frown}{AB}$ and $\overset{\frown}{CD}$?"><div class="do"><p>Draw chord $\overline{BC}$, forming triangle $EBC$.</p></div><p class="why">Its angles at $B$ and $C$ are inscribed angles on the arcs we want.</p></li>
+          <li><div class="do"><p>$\angle AEB$ is an exterior angle of triangle $EBC$, so $\angle AEB = \angle EBC + \angle ECB$.</p></div><p class="why">$A$, $E$, $C$ are collinear, so $\angle AEB$ is next to $\angle BEC$ on a straight line.</p></li>
+          <li><div class="do"><p>$\angle EBC = \angle DBC = \tfrac12 \overset{\frown}{CD}$ and $\angle ECB = \angle ACB = \tfrac12 \overset{\frown}{AB}$.</p></div><p class="why">Inscribed angle theorem.</p></li>
+          <li><div class="do"><p>So $\angle AEB = \tfrac12\left(\overset{\frown}{AB} + \overset{\frown}{CD}\right)$.</p></div><p class="why">Add the two halves.</p></li>
+        </ol>
+        <p class="answer">Proved: $\angle AEB = \tfrac12\left(\overset{\frown}{AB} + \overset{\frown}{CD}\right)$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Prove the two-secant rule</h3>
+        <div class="problem"><p>From $P$ outside a circle, one secant meets the circle at $A$ then $B$, and another at $C$ then $D$ ($A$, $C$ nearer to $P$). Prove that $\angle P = \tfrac12\left(\overset{\frown}{BD} - \overset{\frown}{AC}\right)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw chord $\overline{BC}$, forming triangle $PBC$.</p></div><p class="why">Again, one extra chord produces inscribed angles on the two arcs.</p></li>
+          <li data-think="Is there an exterior angle of triangle $PBC$ that is also an inscribed angle?"><div class="do"><p>$\angle BCD$ is an exterior angle of triangle $PBC$ at $C$, since $P$, $C$, $D$ are collinear. So $\angle BCD = \angle P + \angle PBC$.</p></div><p class="why">Exterior angle theorem.</p></li>
+          <li><div class="do"><p>$\angle BCD = \tfrac12 \overset{\frown}{BD}$ and $\angle PBC = \angle ABC = \tfrac12 \overset{\frown}{AC}$.</p></div><p class="why">Both are inscribed angles.</p></li>
+          <li><div class="do"><p>So $\angle P = \tfrac12 \overset{\frown}{BD} - \tfrac12 \overset{\frown}{AC} = \tfrac12\left(\overset{\frown}{BD} - \overset{\frown}{AC}\right)$.</p></div><p class="why">Rearrange the equation from the exterior angle.</p></li>
+        </ol>
+        <p class="answer">Proved: $\angle P = \tfrac12\left(\overset{\frown}{BD} - \overset{\frown}{AC}\right)$.</p>
+        <p class="key-idea">Add one chord, find an exterior angle, and replace inscribed angles by half-arcs.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-10">
+    <h2 id="further-10">Further reading in the book</h2>
+    <ul>
+      <li><strong>§10.1 Lines, Rays, and Segments</strong>: definitions of segments, rays, lines and collinear points.</li>
+      <li><strong>§10.2 Classification and Measurement</strong>: Examples 10-1 and 10-2, and the discussion of vertical angles.</li>
+      <li><strong>§10.3 Angles and Parallel Lines</strong>: Examples 10-3 and 10-4 and Exercise 10-1.</li>
+      <li><strong>§10.4 Arcs, Segments, Sectors, and Angles</strong>: the arc-length and sector-area formulas.</li>
+      <li><strong>§10.5 Angles Formed by Lines Intersecting a Circle</strong>: Examples 10-5 to 10-9 and Exercises 10-2, 10-3.</li>
+      <li><strong>§10.6 The Burden of Proof</strong>: the book's proofs of all four circle-angle formulas.</li>
+      <li>Chapter 10 has no separate Problems to Solve; Chapter 14 (Angle Chasing) puts these tools to work.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 10 explorers ---------- */
+(function () {
+  "use strict";
+  var DEG = Math.PI / 180;
+  /* math-angle helpers: a (radians, counter-clockwise, y up) */
+  function pt(cx, cy, r, a) { return [cx + r * Math.cos(a), cy - r * Math.sin(a)]; }
+  function arcD(cx, cy, r, a1, a2) { // ccw from a1 to a2
+    while (a2 < a1) a2 += 2 * Math.PI;
+    var n = Math.max(8, Math.ceil((a2 - a1) / 0.05)), d = "";
+    for (var i = 0; i <= n; i++) { var p = pt(cx, cy, r, a1 + (a2 - a1) * i / n); d += (i ? " L" : "M") + p[0].toFixed(2) + " " + p[1].toFixed(2); }
+    return d;
+  }
+  function norm(a) { a %= 2 * Math.PI; return a < 0 ? a + 2 * Math.PI : a; }
+  function ang(cx, cy, x, y) { return Math.atan2(cy - y, x - cx); }
+  function txt(svg, x, y, s, style, anchor) { svg.appendChild(W.s("text", { x: x, y: y, "text-anchor": anchor || "start", style: style || "font: 600 14px var(--font-body); fill: var(--ink)", text: s })); }
+
+  /* 10.1 — segment addition */
+  AOPS.registerWidget("segmentAddition", function (body) {
+    var svg = W.stage(body, { w: 640, h: 280, label: "Segment AB with a draggable point X" });
+    var out = W.readout(body);
+    var A = [90, 190], B = [550, 190], scale = 40, X = [260, 110];
+    var layer = W.s("g"); svg.appendChild(layer);
+    function dist(P, Q) { return Math.hypot(P[0] - Q[0], P[1] - Q[1]) / scale; }
+    var h = W.handle(svg, { x: X[0], y: X[1], label: "Point X; arrow keys move it", keyStep: 10,
+      onMove: function (px, py) {
+        // snap onto the segment when close
+        var t = Math.max(0, Math.min(1, (px - A[0]) / (B[0] - A[0])));
+        if (Math.abs(py - A[1]) < 10 && px >= A[0] - 5 && px <= B[0] + 5) py = A[1], px = A[0] + t * (B[0] - A[0]);
+        X = [px, py]; draw(); return [px, py];
+      }, valueText: function () { return "AX " + W.fmt(dist(A, X), 2) + ", XB " + W.fmt(dist(X, B), 2); } });
+    function draw() {
+      W.clear(layer);
+      layer.appendChild(W.s("line", { x1: 10, y1: A[1], x2: 630, y2: A[1], stroke: "var(--faint)", "stroke-dasharray": "4 6" }));
+      layer.appendChild(W.s("line", { x1: A[0], y1: A[1], x2: B[0], y2: B[1], stroke: "var(--ink)", "stroke-width": 3 }));
+      var M = [(A[0] + B[0]) / 2, A[1]];
+      layer.appendChild(W.s("line", { x1: M[0], y1: M[1] - 8, x2: M[0], y2: M[1] + 8, stroke: "var(--plot-4)", "stroke-width": 2 }));
+      txt(layer, M[0], M[1] + 26, "M (midpoint)", "font: 12px var(--font-mono); fill: var(--plot-4)", "middle");
+      layer.appendChild(W.s("line", { x1: A[0], y1: A[1], x2: X[0], y2: X[1], stroke: "var(--plot-1)", "stroke-width": 2.5, "stroke-dasharray": "6 4" }));
+      layer.appendChild(W.s("line", { x1: X[0], y1: X[1], x2: B[0], y2: B[1], stroke: "var(--plot-2)", "stroke-width": 2.5, "stroke-dasharray": "6 4" }));
+      [[A, "A"], [B, "B"]].forEach(function (o) { layer.appendChild(W.s("circle", { cx: o[0][0], cy: o[0][1], r: 5, fill: "var(--ink)" })); txt(layer, o[0][0], o[0][1] + 26, o[1], null, "middle"); });
+      txt(layer, X[0] + 12, X[1] - 12, "X");
+      var ax = dist(A, X), xb = dist(X, B), ab = dist(A, B), on = Math.abs(ax + xb - ab) < 0.01;
+      txt(layer, 20, 30, on ? "X is on segment AB: AX + XB = AB" : "X is off the segment: AX + XB > AB", "font: 600 15px var(--font-body); fill: " + (on ? "var(--plot-4)" : "var(--ink)"));
+      out.tex("AX + XB = " + W.fmt(ax, 2) + " + " + W.fmt(xb, 2) + " = " + W.fmt(ax + xb, 2) + (on ? " = " : " > ") + W.fmt(ab, 2) + " = AB");
+    }
+    draw();
+  });
+
+  /* 10.2 — angle meter */
+  AOPS.registerWidget("angleMeter", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "An angle with a draggable side, showing its measure and type" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var O = [190, 180], R = 140, deg = 50, sl, h;
+    var layer = W.s("g"); svg.appendChild(layer);
+    sl = W.slider(ctl, { label: "Angle", min: 0, max: 360, value: deg, format: function (v) { return v + "°"; }, onInput: function (v) { deg = v; var p = pt(O[0], O[1], R, deg * DEG); if (h) h.set(p[0], p[1], true); draw(); } });
+    var p0 = pt(O[0], O[1], R, deg * DEG);
+    h = W.handle(svg, { x: p0[0], y: p0[1], label: "End of the moving side; arrow keys rotate it", keyStep: 8,
+      onMove: function (px, py) { var a = norm(ang(O[0], O[1], px, py)); deg = Math.round(a / DEG) % 360; sl.input.value = deg; sl.input.dispatchEvent(new Event("input")); var p = pt(O[0], O[1], R, deg * DEG); return p; } });
+    function radTex(d) {
+      if (d === 0) return "= 0";
+      var g = W.gcd(d, 180), n = d / g, q = 180 / g;
+      if (q > 36) return "\\approx " + W.fmt(d * DEG, 3);
+      return "= " + (n === 1 ? "" : n) + "\\pi" + (q === 1 ? "" : "/" + q) + " \\approx " + W.fmt(d * DEG, 3);
+    }
+    function draw() {
+      W.clear(layer);
+      var a = deg * DEG;
+      layer.appendChild(W.s("line", { x1: O[0] - 170, y1: O[1], x2: O[0], y2: O[1], stroke: "var(--muted)", "stroke-width": 1.5, "stroke-dasharray": "6 5" }));
+      if (deg > 0 && deg < 360) layer.appendChild(W.s("path", { d: "M" + O[0] + " " + O[1] + " " + arcD(O[0], O[1], 46, 0, a).replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, var(--accent) 28%, transparent)", stroke: "var(--accent)", "stroke-width": 2 }));
+      if (deg > 0 && deg < 180) layer.appendChild(W.s("path", { d: arcD(O[0], O[1], 30, a, Math.PI), fill: "none", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      if (deg === 90) layer.appendChild(W.s("path", { d: "M" + (O[0] + 16) + " " + O[1] + "v-16h-16", fill: "none", stroke: "var(--ink)", "stroke-width": 1.5 }));
+      layer.appendChild(W.s("line", { x1: O[0], y1: O[1], x2: O[0] + 170, y2: O[1], stroke: "var(--ink)", "stroke-width": 3 }));
+      var e = pt(O[0], O[1], R + 25, a);
+      layer.appendChild(W.s("line", { x1: O[0], y1: O[1], x2: e[0], y2: e[1], stroke: "var(--ink)", "stroke-width": 3 }));
+      layer.appendChild(W.s("circle", { cx: O[0], cy: O[1], r: 4, fill: "var(--ink)" }));
+      txt(layer, O[0] - 8, O[1] + 22, "O (vertex)", "font: 12px var(--font-mono); fill: var(--muted)", "middle");
+      var type = deg === 0 ? "zero angle" : deg < 90 ? "acute" : deg === 90 ? "right" : deg < 180 ? "obtuse" : deg === 180 ? "straight" : deg < 360 ? "reflex" : "full turn";
+      var tx = 410;
+      txt(layer, tx, 70, deg + "°  ·  " + type, "font: 700 18px var(--font-body); fill: var(--accent)");
+      var dmsNote = "radians: " + (W.fmt(deg * DEG, 3));
+      txt(layer, tx, 104, dmsNote, "font: 13px var(--font-mono); fill: var(--muted)");
+      txt(layer, tx, 130, "complement: " + (deg <= 90 ? (90 - deg) + "°" : "none (over 90°)"), "font: 13px var(--font-mono); fill: var(--muted)");
+      txt(layer, tx, 156, "supplement: " + (deg <= 180 ? (180 - deg) + "°" : "none (over 180°)"), "font: 13px var(--font-mono); fill: " + (deg < 180 ? "var(--plot-2)" : "var(--muted)"));
+      txt(layer, tx, 190, "fraction of a turn: " + W.frac(deg, 360).replace(/\\tfrac\{(\d+)\}\{(\d+)\}/, "$1/$2"), "font: 13px var(--font-mono); fill: var(--muted)");
+      out.tex(deg + "^\\circ = " + deg + "^\\circ \\cdot \\frac{\\pi}{180^\\circ} " + radTex(deg) + "\\text{ rad}" + (deg < 180 && deg > 0 ? ",\\qquad \\text{supplement } " + (180 - deg) + "^\\circ" : ""));
+    }
+    draw();
+  });
+
+  /* 10.3 — parallel lines and a transversal */
+  AOPS.registerWidget("transversal", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "Two parallel lines cut by a transversal, with eight labelled angles" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var t = 60, mode = "corr";
+    W.slider(ctl, { label: "Transversal tilt", min: 25, max: 155, value: t, format: function (v) { return v + "°"; }, onInput: function (v) { t = v; draw(); } });
+    W.segmented(ctl, { title: "Highlight", value: mode, options: [{ value: "corr", label: "corresponding" }, { value: "alt", label: "alternate interior" }, { value: "same", label: "same-side interior" }, { value: "vert", label: "vertical" }], onChange: function (v) { mode = v; draw(); } });
+    var PAIRS = { corr: [[1, 5], [2, 6], [3, 7], [4, 8]], alt: [[3, 5], [4, 6]], same: [[3, 6], [4, 5]], vert: [[1, 3], [2, 4], [5, 7], [6, 8]] };
+    var COLS = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)"];
+    function draw() {
+      W.clear(svg);
+      var y1 = 100, y2 = 240, cxm = 320;
+      var a = t * DEG, dx = Math.cos(a), dy = Math.sin(a);
+      // transversal passes through (cxm, (y1+y2)/2)
+      var ym = (y1 + y2) / 2, k1 = (ym - y1) / dy, P1 = [cxm + dx * k1, y1], P2 = [cxm - dx * k1, y2];
+      [y1, y2].forEach(function (y, i) {
+        svg.appendChild(W.s("line", { x1: 20, y1: y, x2: 620, y2: y, stroke: "var(--ink)", "stroke-width": 2.5 }));
+        txt(svg, 600, y - 10, i ? "m" : "ℓ", "font: 600 15px var(--font-body); fill: var(--ink)", "middle");
+      });
+      svg.appendChild(W.s("line", { x1: P1[0] + dx * 90, y1: y1 - dy * 90, x2: P2[0] - dx * 90, y2: y2 + dy * 90, stroke: "var(--plot-5)", "stroke-width": 2.5 }));
+      // region k at a point: 1 UR [0,a], 2 UL [a,pi], 3 LL [pi, pi+a], 4 LR [pi+a, 2pi]
+      var ranges = [[0, a], [a, Math.PI], [Math.PI, Math.PI + a], [Math.PI + a, 2 * Math.PI]];
+      var vals = [t, 180 - t, t, 180 - t];
+      var hl = {};
+      PAIRS[mode].forEach(function (p, i) { hl[p[0]] = COLS[i]; hl[p[1]] = COLS[i]; });
+      [P1, P2].forEach(function (P, j) {
+        for (var k = 0; k < 4; k++) {
+          var num = j * 4 + k + 1, r = ranges[k], mid = (r[0] + r[1]) / 2, col = hl[num];
+          if (col) svg.appendChild(W.s("path", { d: "M" + P[0] + " " + P[1] + " " + arcD(P[0], P[1], 30, r[0], r[1]).replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, " + col + " 40%, transparent)", stroke: col, "stroke-width": 2 }));
+          var lp = pt(P[0], P[1], 50, mid);
+          txt(svg, lp[0], lp[1] + 5, vals[k] + "°", "font: 700 13px var(--font-mono); fill: " + (col || "var(--muted)"), "middle");
+          var np = pt(P[0], P[1], 16, mid);
+          txt(svg, np[0], np[1] + 4, String(num), "font: 11px var(--font-mono); fill: var(--muted)", "middle");
+        }
+      });
+      txt(svg, 20, 30, { corr: "corresponding: same position at each crossing → equal", alt: "alternate interior: between the lines, opposite sides → equal", same: "same-side interior: between the lines, same side → add to 180°", vert: "vertical: across from each other at one crossing → equal" }[mode], "font: 600 14px var(--font-body); fill: var(--ink)");
+      var msg = { corr: "\\angle 1 = \\angle 5 = " + t + "^\\circ,\\quad \\angle 2 = \\angle 6 = " + (180 - t) + "^\\circ", alt: "\\angle 3 = \\angle 5 = " + t + "^\\circ,\\quad \\angle 4 = \\angle 6 = " + (180 - t) + "^\\circ", same: "\\angle 3 + \\angle 6 = " + t + "^\\circ + " + (180 - t) + "^\\circ = 180^\\circ", vert: "\\angle 1 = \\angle 3 = " + t + "^\\circ,\\quad \\angle 2 = \\angle 4 = " + (180 - t) + "^\\circ" }[mode];
+      out.tex(msg);
+    }
+    draw();
+  });
+
+  /* 10.3 — triangle angle sum with a parallel line */
+  AOPS.registerWidget("triangleSum", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "Triangle ABC with a line through C parallel to AB" });
+    var out = W.readout(body);
+    var P = { A: [130, 270], B: [500, 270], C: [300, 110] };
+    var layer = W.s("g"); svg.appendChild(layer);
+    function angleAt(V, P1, P2) { var a1 = Math.atan2(-(P1[1] - V[1]), P1[0] - V[0]), a2 = Math.atan2(-(P2[1] - V[1]), P2[0] - V[0]); var d = norm(a2 - a1); return d > Math.PI ? 2 * Math.PI - d : d; }
+    function wedge(V, P1, P2, r, col) {
+      var a1 = Math.atan2(-(P1[1] - V[1]), P1[0] - V[0]), a2 = Math.atan2(-(P2[1] - V[1]), P2[0] - V[0]);
+      if (norm(a2 - a1) > Math.PI) { var tmp = a1; a1 = a2; a2 = tmp; }
+      layer.appendChild(W.s("path", { d: "M" + V[0] + " " + V[1] + " " + arcD(V[0], V[1], r, a1, a2).replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, " + col + " 45%, transparent)", stroke: col, "stroke-width": 1.5 }));
+    }
+    ["A", "B", "C"].forEach(function (k) {
+      W.handle(svg, { x: P[k][0], y: P[k][1], label: "Vertex " + k + "; arrow keys move it", keyStep: 10,
+        onMove: function (px, py) { px = Math.max(20, Math.min(620, px)); py = Math.max(40, Math.min(310, py)); P[k] = [px, py]; draw(); return [px, py]; } });
+    });
+    function draw() {
+      W.clear(layer);
+      var A = P.A, B = P.B, C = P.C;
+      var L = Math.hypot(B[0] - A[0], B[1] - A[1]) || 1, d = [(B[0] - A[0]) / L, (B[1] - A[1]) / L];
+      var far1 = [C[0] - d[0] * 600, C[1] - d[1] * 600], far2 = [C[0] + d[0] * 600, C[1] + d[1] * 600];
+      layer.appendChild(W.s("line", { x1: far1[0], y1: far1[1], x2: far2[0], y2: far2[1], stroke: "var(--muted)", "stroke-width": 1.5, "stroke-dasharray": "7 5" }));
+      var near1 = [C[0] - d[0] * 60, C[1] - d[1] * 60], near2 = [C[0] + d[0] * 60, C[1] + d[1] * 60];
+      wedge(A, B, C, 48, "var(--plot-1)");
+      wedge(B, A, C, 48, "var(--plot-2)");
+      wedge(C, A, B, 44, "var(--plot-3)");
+      wedge(C, A, near1, 56, "var(--plot-1)");
+      wedge(C, B, near2, 56, "var(--plot-2)");
+      layer.appendChild(W.s("polygon", { points: [A, B, C].map(function (p) { return p.join(","); }).join(" "), fill: "none", stroke: "var(--ink)", "stroke-width": 2.5 }));
+      [["A", A, 0, 22], ["B", B, 0, 22], ["C", C, 0, -18]].forEach(function (o) { txt(layer, o[1][0] + o[2], o[1][1] + o[3], o[0], null, "middle"); });
+      var a = angleAt(A, B, C) / DEG, b = angleAt(B, A, C) / DEG, c = angleAt(C, A, B) / DEG;
+      txt(layer, 20, 26, "dashed line through C is parallel to AB", "font: 12px var(--font-mono); fill: var(--muted)");
+      out.tex("\\angle A + \\angle B + \\angle C \\approx " + W.fmt(a, 1) + "^\\circ + " + W.fmt(b, 1) + "^\\circ + " + W.fmt(c, 1) + "^\\circ = " + W.fmt(a + b + c, 1) + "^\\circ");
+    }
+    draw();
+  });
+
+  /* 10.4 — sector and segment */
+  AOPS.registerWidget("sectorExplorer", function (body) {
+    var svg = W.stage(body, { w: 640, h: 360, label: "A circle with a shaded sector or circular segment" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var r = 5, th = 100, mode = "sector", s = 30, cx = 190, cy = 180;
+    W.slider(ctl, { label: "Radius r", min: 2, max: 5.5, step: 0.5, value: r, format: function (v) { return v.toFixed(1); }, onInput: function (v) { r = v; draw(); } });
+    W.slider(ctl, { label: "Central angle θ", min: 10, max: 350, step: 5, value: th, format: function (v) { return v + "°"; }, onInput: function (v) { th = v; draw(); } });
+    W.segmented(ctl, { title: "Shade", value: mode, options: [{ value: "sector", label: "sector" }, { value: "segment", label: "segment" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var R = r * s, a1 = 0, a2 = th * DEG;
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "none", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      var arc = arcD(cx, cy, R, a1, a2), A = pt(cx, cy, R, a1), B = pt(cx, cy, R, a2);
+      if (mode === "sector") svg.appendChild(W.s("path", { d: "M" + cx + " " + cy + " " + arc.replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, var(--plot-2) 35%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      else {
+        svg.appendChild(W.s("path", { d: arc + " Z", fill: "color-mix(in srgb, var(--plot-3) 40%, transparent)", stroke: "var(--plot-3)", "stroke-width": 2 }));
+        svg.appendChild(W.s("polygon", { points: [[cx, cy], A, B].map(function (p) { return p.join(","); }).join(" "), fill: "none", stroke: "var(--muted)", "stroke-dasharray": "5 4" }));
+      }
+      svg.appendChild(W.s("path", { d: arc, fill: "none", stroke: "var(--accent)", "stroke-width": 5 }));
+      [[A, "A"], [B, "B"]].forEach(function (o) { var lp = pt(cx, cy, R + 16, o[1] === "A" ? a1 : a2); txt(svg, lp[0], lp[1] + 5, o[1], null, "middle"); });
+      svg.appendChild(W.s("path", { d: arcD(cx, cy, 22, a1, a2), fill: "none", stroke: "var(--ink)", "stroke-width": 1.5 }));
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 4, fill: "var(--ink)" }));
+      txt(svg, cx - 12, cy + 18, "O", null, "middle");
+      var rad = th * DEG, arcLen = r * rad, sector = 0.5 * r * r * rad, tri = 0.5 * r * r * Math.sin(rad), seg = sector - tri;
+      var tx = 410;
+      txt(svg, tx, 70, "θ = " + th + "° = " + W.fmt(rad, 3) + " rad", "font: 600 15px var(--font-body); fill: var(--ink)");
+      txt(svg, tx, 104, "arc length = rθ ≈ " + W.fmt(arcLen, 2), "font: 13px var(--font-mono); fill: var(--accent)");
+      txt(svg, tx, 130, "sector = ½r²θ ≈ " + W.fmt(sector, 2), "font: 13px var(--font-mono); fill: var(--plot-2)");
+      txt(svg, tx, 156, "triangle OAB ≈ " + W.fmt(Math.abs(tri), 2), "font: 13px var(--font-mono); fill: var(--muted)");
+      txt(svg, tx, 182, "segment ≈ " + W.fmt(seg, 2), "font: 13px var(--font-mono); fill: var(--plot-3)");
+      txt(svg, tx, 216, th > 180 ? "(θ > 180°: segment = sector + triangle)" : "(segment = sector − triangle)", "font: 12px var(--font-mono); fill: var(--muted)");
+      out.tex("\\frac{" + th + "^\\circ}{360^\\circ} = " + W.frac(th, 360) + ":\\quad \\text{arc} = " + W.frac(th, 360) + "\\cdot 2\\pi(" + W.fmt(r, 1) + ") \\approx " + W.fmt(arcLen, 2) + ",\\quad \\text{sector} = " + W.frac(th, 360) + "\\cdot \\pi(" + W.fmt(r, 1) + ")^2 \\approx " + W.fmt(sector, 2));
+    }
+    draw();
+  });
+
+  /* 10.5 — inscribed angle */
+  AOPS.registerWidget("inscribedAngle", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Circle with points A, B and P; inscribed angle APB and central angle AOB" });
+    var out = W.readout(body);
+    var cx = 200, cy = 170, R = 135, aA = 200 * DEG, aB = 330 * DEG, aP = 100 * DEG;
+    var layer = W.s("g"); svg.appendChild(layer);
+    function mk(name, get, set) {
+      var p = pt(cx, cy, R, get());
+      return W.handle(svg, { x: p[0], y: p[1], label: "Point " + name + " on the circle; arrow keys move it", keyStep: 14,
+        onMove: function (px, py) { set(ang(cx, cy, px, py)); draw(); return pt(cx, cy, R, get()); } });
+    }
+    mk("P", function () { return aP; }, function (v) { aP = v; });
+    mk("A", function () { return aA; }, function (v) { aA = v; });
+    mk("B", function () { return aB; }, function (v) { aB = v; });
+    function draw() {
+      W.clear(layer);
+      var A = pt(cx, cy, R, aA), B = pt(cx, cy, R, aB), P = pt(cx, cy, R, aP);
+      // arc from A to B (ccw) contains P?
+      var span = norm(aB - aA), pOff = norm(aP - aA), from = aA, to = aB;
+      if (pOff < span) { from = aB; to = aA; span = 2 * Math.PI - span; } // use arc not containing P
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "none", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      layer.appendChild(W.s("path", { d: arcD(cx, cy, R, from, to), fill: "none", stroke: "var(--accent)", "stroke-width": 6, "stroke-linecap": "round" }));
+      layer.appendChild(W.s("path", { d: "M" + cx + " " + cy + " " + arcD(cx, cy, 28, from, to).replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, var(--plot-2) 30%, transparent)", stroke: "var(--plot-2)" }));
+      [A, B].forEach(function (Q) { layer.appendChild(W.s("line", { x1: cx, y1: cy, x2: Q[0], y2: Q[1], stroke: "var(--plot-2)", "stroke-width": 2 })); });
+      [A, B].forEach(function (Q) { layer.appendChild(W.s("line", { x1: P[0], y1: P[1], x2: Q[0], y2: Q[1], stroke: "var(--ink)", "stroke-width": 2.5 })); });
+      var pa = Math.atan2(-(A[1] - P[1]), A[0] - P[0]), pb = Math.atan2(-(B[1] - P[1]), B[0] - P[0]);
+      if (norm(pb - pa) > Math.PI) { var tmp = pa; pa = pb; pb = tmp; }
+      layer.appendChild(W.s("path", { d: "M" + P[0] + " " + P[1] + " " + arcD(P[0], P[1], 26, pa, pb).replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, var(--accent) 35%, transparent)", stroke: "var(--accent)" }));
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: 4, fill: "var(--ink)" }));
+      txt(layer, cx - 12, cy - 8, "O", null, "middle");
+      [["A", aA], ["B", aB], ["P", aP]].forEach(function (o) { var lp = pt(cx, cy, R + 22, o[1]); txt(layer, lp[0], lp[1] + 5, o[0], null, "middle"); });
+      var arcDeg = span / DEG, insc = norm(pb - pa) / DEG;
+      var tx = 400;
+      txt(layer, tx, 80, "arc AB (not containing P): " + W.fmt(arcDeg, 1) + "°", "font: 600 14px var(--font-body); fill: var(--accent)");
+      txt(layer, tx, 108, "central angle AOB: " + W.fmt(arcDeg, 1) + "°", "font: 13px var(--font-mono); fill: var(--plot-2)");
+      txt(layer, tx, 132, "inscribed angle APB: " + W.fmt(insc, 1) + "°", "font: 13px var(--font-mono); fill: var(--ink)");
+      if (Math.abs(arcDeg - 180) < 1.5) txt(layer, tx, 164, "AB is (nearly) a diameter: right angle!", "font: 600 13px var(--font-body); fill: var(--plot-4)");
+      out.tex("\\angle APB \\approx " + W.fmt(insc, 1) + "^\\circ = \\tfrac12 \\cdot " + W.fmt(2 * insc, 1) + "^\\circ \\approx \\tfrac12 \\overset{\\frown}{AB}");
+    }
+    draw();
+  });
+
+  /* 10.5 — chords and secants through a movable point */
+  AOPS.registerWidget("chordsSecants", function (body) {
+    var svg = W.stage(body, { w: 640, h: 380, label: "Circle with two lines through a movable point P, showing the arcs they cut off" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var cx = 220, cy = 190, R = 115, P = [250, 160], d1 = 20, d2 = 115;
+    svg.appendChild(W.s("defs", null, W.s("clipPath", { id: "cs-clip" }, W.s("rect", { x: 0, y: 0, width: 400, height: 380 }))));
+    var layer = W.s("g"); svg.appendChild(layer);
+    W.slider(ctl, { label: "Turn line 1", min: 0, max: 179, value: d1, format: function (v) { return v + "°"; }, onInput: function (v) { d1 = v; draw(); } });
+    W.slider(ctl, { label: "Turn line 2", min: 0, max: 179, value: d2, format: function (v) { return v + "°"; }, onInput: function (v) { d2 = v; draw(); } });
+    W.handle(svg, { x: P[0], y: P[1], label: "Point P; arrow keys move it", keyStep: 8,
+      onMove: function (px, py) { px = Math.max(10, Math.min(390, px)); py = Math.max(10, Math.min(370, py)); P = [px, py]; draw(); return P; } });
+    function hits(u) { // solve |P + t u - C|^2 = R^2, u is svg-space unit vector
+      var wx = P[0] - cx, wy = P[1] - cy, b = u[0] * wx + u[1] * wy, c = wx * wx + wy * wy - R * R, D = b * b - c;
+      if (D < 0) return null;
+      var s = Math.sqrt(D); return [-b - s, -b + s];
+    }
+    function at(u, t) { return [P[0] + t * u[0], P[1] + t * u[1]]; }
+    function cang(Q) { return ang(cx, cy, Q[0], Q[1]); }
+    function arcNot(Q1, Q2, Z) { // arc from Q1 to Q2 not containing Z; returns [from, to, measure]
+      var a1 = cang(Q1), a2 = cang(Q2), z = cang(Z), span = norm(a2 - a1);
+      if (norm(z - a1) < span) return [a2, a1, 2 * Math.PI - span];
+      return [a1, a2, span];
+    }
+    function draw() {
+      W.clear(layer);
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "color-mix(in srgb, var(--plot-2) 6%, transparent)", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      var e1 = d1 * DEG, e2 = d2 * DEG, dc = Math.hypot(P[0] - cx, P[1] - cy);
+      if (dc >= R - 0.5) { // outside or on: swing each line within the cone of lines that meet the circle
+        var base = ang(P[0], P[1], cx, cy), half = Math.asin(Math.min(1, R / dc)) * 0.97;
+        e1 = base + (d1 - 90) / 90 * half; e2 = base + (d2 - 90) / 90 * half;
+      }
+      var u1 = [Math.cos(e1), -Math.sin(e1)], u2 = [Math.cos(e2), -Math.sin(e2)];
+      [u1, u2].forEach(function (u) { layer.appendChild(W.s("line", { x1: P[0] - u[0] * 700, y1: P[1] - u[1] * 700, x2: P[0] + u[0] * 700, y2: P[1] + u[1] * 700, stroke: "var(--ink)", "stroke-width": 2, "clip-path": "url(#cs-clip)" })); });
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: 3.5, fill: "var(--muted)" }));
+      var h1 = hits(u1), h2 = hits(u2), dist = Math.hypot(P[0] - cx, P[1] - cy), tx = 420;
+      txt(layer, P[0] + 14, P[1] - 12, "P");
+      if (!h1 || !h2) {
+        txt(layer, tx, 80, "A line misses the circle.", "font: 600 14px var(--font-body); fill: var(--ink)");
+        txt(layer, tx, 104, "Turn it so both lines cross it.", "font: 13px var(--font-body); fill: var(--muted)");
+        out.tex("\\text{Both lines must meet the circle.}");
+        return;
+      }
+      var inside = dist < R - 0.5, onC = Math.abs(dist - R) <= 0.5;
+      var F1, F2, N1, N2, arcs, angle, formula, cols = ["var(--plot-1)", "var(--plot-2)"];
+      if (inside) {
+        F1 = at(u1, h1[1]); N1 = at(u1, h1[0]); F2 = at(u2, h2[1]); N2 = at(u2, h2[0]);
+        angle = Math.acos(Math.max(-1, Math.min(1, u1[0] * u2[0] + u1[1] * u2[1])));
+        arcs = [arcNot(F1, F2, N1), arcNot(N1, N2, F1)];
+        formula = "sum";
+      } else {
+        if (u1[0] * (cx - P[0]) + u1[1] * (cy - P[1]) < 0) { u1 = [-u1[0], -u1[1]]; h1 = hits(u1); }
+        if (u2[0] * (cx - P[0]) + u2[1] * (cy - P[1]) < 0) { u2 = [-u2[0], -u2[1]]; h2 = hits(u2); }
+        N1 = at(u1, Math.max(0, h1[0])); F1 = at(u1, h1[1]); N2 = at(u2, Math.max(0, h2[0])); F2 = at(u2, h2[1]);
+        angle = Math.acos(Math.max(-1, Math.min(1, u1[0] * u2[0] + u1[1] * u2[1])));
+        arcs = [arcNot(F1, F2, N1), onC ? [0, 0, 0] : arcNot(N1, N2, F1)];
+        formula = onC ? "half" : "diff";
+      }
+      arcs.forEach(function (a, i) { if (a[2] > 0.001) layer.appendChild(W.s("path", { d: arcD(cx, cy, R, a[0], a[1]), fill: "none", stroke: cols[i], "stroke-width": 6, "stroke-linecap": "round" })); });
+      // angle wedge at P between the rays toward F1 and F2
+      var pa = Math.atan2(-(F1[1] - P[1]), F1[0] - P[0]), pb = Math.atan2(-(F2[1] - P[1]), F2[0] - P[0]);
+      if (norm(pb - pa) > Math.PI) { var tmp = pa; pa = pb; pb = tmp; }
+      layer.appendChild(W.s("path", { d: "M" + P[0] + " " + P[1] + " " + arcD(P[0], P[1], 26, pa, pb).replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, var(--accent) 40%, transparent)", stroke: "var(--accent)" }));
+      [F1, F2, N1, N2].forEach(function (Q) { layer.appendChild(W.s("circle", { cx: Q[0], cy: Q[1], r: 4, fill: "var(--ink)" })); });
+      var A1 = arcs[0][2] / DEG, A2 = arcs[1][2] / DEG, g = angle / DEG, pred;
+      if (formula === "sum") pred = (A1 + A2) / 2; else if (formula === "diff") pred = (A1 - A2) / 2; else pred = A1 / 2;
+      var title = { sum: "P inside: two chords", diff: "P outside: two secants", half: "P on the circle: inscribed angle" }[formula];
+      txt(layer, tx, 70, title, "font: 600 15px var(--font-body); fill: var(--ink)");
+      txt(layer, tx, 100, "gold angle at P: " + W.fmt(g, 1) + "°", "font: 13px var(--font-mono); fill: var(--accent)");
+      txt(layer, tx, 126, (formula === "sum" ? "facing arc: " : "far arc: ") + W.fmt(A1, 1) + "°", "font: 13px var(--font-mono); fill: var(--plot-1)");
+      if (formula !== "half") txt(layer, tx, 150, (formula === "sum" ? "vertical's arc: " : "near arc: ") + W.fmt(A2, 1) + "°", "font: 13px var(--font-mono); fill: var(--plot-2)");
+      var f = formula === "sum" ? "\\tfrac12(" + W.fmt(A1, 1) + "^\\circ + " + W.fmt(A2, 1) + "^\\circ)" : formula === "diff" ? "\\tfrac12(" + W.fmt(A1, 1) + "^\\circ - " + W.fmt(A2, 1) + "^\\circ)" : "\\tfrac12 \\cdot " + W.fmt(A1, 1) + "^\\circ";
+      out.tex("\\text{angle at } P \\approx " + W.fmt(g, 1) + "^\\circ, \\qquad " + f + " \\approx " + W.fmt(pred, 1) + "^\\circ");
+    }
+    draw();
+  });
+
+  /* 10.6 — stepping through the inscribed angle proof */
+  AOPS.registerWidget("inscribedProof", function (body) {
+    var svg = W.stage(body, { w: 640, h: 350, label: "Proof of the inscribed angle theorem with a diameter through C" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var cx = 190, cy = 175, R = 135, aA = 215 * DEG, aB = 330 * DEG, aC = 95 * DEG, step = 0;
+    var layer = W.s("g"); svg.appendChild(layer);
+    function mk(name, get, set) {
+      var p = pt(cx, cy, R, get());
+      W.handle(svg, { x: p[0], y: p[1], label: "Point " + name + " on the circle; arrow keys move it", keyStep: 14,
+        onMove: function (px, py) { set(ang(cx, cy, px, py)); draw(); return pt(cx, cy, R, get()); } });
+    }
+    mk("C", function () { return aC; }, function (v) { aC = v; });
+    mk("A", function () { return aA; }, function (v) { aA = v; });
+    mk("B", function () { return aB; }, function (v) { aB = v; });
+    W.button(ctl, "Next step", function () { step = Math.min(3, step + 1); draw(); });
+    W.button(ctl, "Restart", function () { step = 0; draw(); });
+    function signedAt(V, from, to) { var a1 = Math.atan2(-(from[1] - V[1]), from[0] - V[0]), a2 = Math.atan2(-(to[1] - V[1]), to[0] - V[0]); var d = norm(a2 - a1); return d > Math.PI ? d - 2 * Math.PI : d; }
+    function wedge(V, P1, P2, r, col) {
+      var a1 = Math.atan2(-(P1[1] - V[1]), P1[0] - V[0]), a2 = Math.atan2(-(P2[1] - V[1]), P2[0] - V[0]);
+      if (norm(a2 - a1) > Math.PI) { var tmp = a1; a1 = a2; a2 = tmp; }
+      layer.appendChild(W.s("path", { d: "M" + V[0] + " " + V[1] + " " + arcD(V[0], V[1], r, a1, a2).replace(/^M/, "L") + " Z", fill: "color-mix(in srgb, " + col + " 40%, transparent)", stroke: col, "stroke-width": 1.5 }));
+    }
+    function draw() {
+      W.clear(layer);
+      var O = [cx, cy], A = pt(cx, cy, R, aA), B = pt(cx, cy, R, aB), C = pt(cx, cy, R, aC), D = pt(cx, cy, R, aC + Math.PI);
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "none", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      var x = signedAt(C, D, A), y = signedAt(C, D, B); // signed angles from CD to CA, CB
+      var inside = x * y < 0, onSide = Math.abs(x) < 0.02 || Math.abs(y) < 0.02;
+      var insc = inside ? Math.abs(x) + Math.abs(y) : Math.abs(Math.abs(x) - Math.abs(y));
+      if (step >= 1) layer.appendChild(W.s("line", { x1: C[0], y1: C[1], x2: D[0], y2: D[1], stroke: "var(--plot-5)", "stroke-width": 2, "stroke-dasharray": "7 5" }));
+      if (step >= 2) {
+        [A, B].forEach(function (Q) { layer.appendChild(W.s("line", { x1: cx, y1: cy, x2: Q[0], y2: Q[1], stroke: "var(--plot-2)", "stroke-width": 2 })); });
+        wedge(C, D, A, 54, "var(--plot-1)"); wedge(A, O, C, 40, "var(--plot-1)");
+        wedge(C, D, B, 44, "var(--plot-3)"); wedge(B, O, C, 40, "var(--plot-3)");
+      }
+      if (step >= 3) { wedge(O, D, A, 36, "var(--plot-1)"); wedge(O, D, B, 28, "var(--plot-3)"); }
+      [A, B].forEach(function (Q) { layer.appendChild(W.s("line", { x1: C[0], y1: C[1], x2: Q[0], y2: Q[1], stroke: "var(--ink)", "stroke-width": 2.5 })); });
+      layer.appendChild(W.s("circle", { cx: cx, cy: cy, r: 4, fill: "var(--ink)" }));
+      txt(layer, cx + 10, cy + 18, "O");
+      [["A", aA], ["B", aB], ["C", aC]].forEach(function (o) { var lp = pt(cx, cy, R + 22, o[1]); txt(layer, lp[0], lp[1] + 5, o[0], null, "middle"); });
+      if (step >= 1) { var lp = pt(cx, cy, R + 20, aC + Math.PI); txt(layer, lp[0], lp[1] + 5, "D", "font: 600 14px var(--font-body); fill: var(--plot-5)", "middle"); }
+      var X = Math.abs(x) / DEG, Y = Math.abs(y) / DEG, tx = 380;
+      var lines = [
+        ["Start: inscribed ∠ACB ≈ " + W.fmt(insc / DEG, 1) + "°", "Goal: show ∠AOB = 2∠ACB."],
+        ["Step 1: draw diameter CD.", "It splits the figure into pieces", "with the center on a side."],
+        ["Step 2: OA = OC and OB = OC,", "so triangles AOC, BOC are isosceles:", "∠OAC = ∠OCA = x ≈ " + W.fmt(X, 1) + "°", "∠OBC = ∠OCB = y ≈ " + W.fmt(Y, 1) + "°"],
+        ["Step 3: exterior angles:", "∠AOD = 2x,  ∠BOD = 2y,", inside ? "center inside: ∠AOB = 2x + 2y" : "center outside: ∠AOB = |2x − 2y|", "= 2∠ACB  ✓"]
+      ][step];
+      lines.forEach(function (s, i) { txt(layer, tx, 60 + i * 26, s, i === 0 ? "font: 600 15px var(--font-body); fill: var(--ink)" : "font: 13px var(--font-mono); fill: var(--muted)"); });
+      var caseTxt = onSide ? "\\text{Case: center on a side}" : inside ? "\\text{Case: center inside } \\angle ACB" : "\\text{Case: center outside } \\angle ACB";
+      var eq = inside ? "x + y \\approx " + W.fmt(X, 1) + "^\\circ + " + W.fmt(Y, 1) + "^\\circ" : "|x - y| \\approx |" + W.fmt(X, 1) + "^\\circ - " + W.fmt(Y, 1) + "^\\circ|";
+      out.tex(caseTxt + ":\\quad \\angle ACB = " + eq + " = " + W.fmt(insc / DEG, 1) + "^\\circ,\\quad \\angle AOB \\approx " + W.fmt(2 * insc / DEG, 1) + "^\\circ");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

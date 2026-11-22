@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 7: Special Factorizations and Clever Manipulations · AoPS Learner</title>
+  <meta name="description" content="Difference of squares, sums and differences of cubes, hidden factorizations, telescoping sums and symmetric-sum manipulations, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="7" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 7 · Algebra &amp; Number</span>
+    <h1>Special Factorizations and Clever Manipulations</h1>
+    <p class="lede">A handful of identities show up again and again in contest problems: the difference of squares, the sum and difference of cubes, and the ways $x+y$, $xy$ and $x^2+y^2$ talk to each other. Learn to spot them, sometimes in disguise, and many problems that look like heavy arithmetic take only a line or two.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Difference of squares: $a^2 - b^2 = (a-b)(a+b)$. Use it on numbers too: $53^2 - 47^2 = 6 \cdot 100$.</li>
+      <li>Cubes: $a^3 - b^3 = (a-b)(a^2+ab+b^2)$ and $a^3 + b^3 = (a+b)(a^2-ab+b^2)$. The sign between the cubes matches the sign in the linear factor.</li>
+      <li>Sum of squares as a tool: $a^2 + b^2 = (a+b)^2 - 2ab$. Adding and subtracting a term can turn an expression into a difference of squares.</li>
+      <li>Watch for <em>one factor</em> of an identity hiding in a problem, such as $a^2+ab+b^2$ or $\sqrt{9}+\sqrt{8}$, and multiply by the other factor.</li>
+      <li>Telescoping: $\dfrac{1}{\sqrt{k+1}+\sqrt{k}} = \sqrt{k+1}-\sqrt{k}$, so long sums collapse to two terms.</li>
+      <li>Symmetric sums: $(x+y)^2 = (x^2+y^2) + 2xy$ and $(x+y)^3 = (x^3+y^3) + 3xy(x+y)$. Know two of the quantities, find the third, without solving for $x$ and $y$.</li>
+      <li>Reciprocal sums: square or cube $x + \frac1x$ to climb to $x^n + \frac{1}{x^n}$; also $\frac1A + \frac1B = \frac{A+B}{AB}$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 7.1 ===================== -->
+  <section class="lesson" id="s7-1" data-title="Factorizations">
+    <h2><span class="sec-num">7.1</span> Factorizations</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Compute $1001^2 - 999^2$ in your head. Squaring both numbers is a chore, but the answer is simply $(1001 - 999)(1001 + 999) = 2 \cdot 2000 = 4000$. One identity swapped two big squarings for one easy product.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Four relationships deserve to be memorized:</p>
+      <div class="rule">
+        <p>$$a^2 - b^2 = (a-b)(a+b) \qquad a^2 + b^2 = (a+b)^2 - 2ab$$</p>
+        <p>$$a^3 - b^3 = (a-b)(a^2+ab+b^2) \qquad a^3 + b^3 = (a+b)(a^2-ab+b^2)$$</p>
+      </div>
+      <p>You can check each one by expanding the right side; the explorer below shows the middle terms cancelling. But where do the cube formulas come from? If you set $a = b$, then $a^3 - b^3 = 0$. A value that makes an expression zero signals a factor, so $a - b$ must divide $a^3 - b^3$. The other factor must contain $a^2$ and $b^2$ to produce $a^3$ and $-b^3$; adding the middle term $ab$ cancels the leftovers. In the same way, $a = -b$ makes $a^3 + b^3 = 0$, so $a + b$ is a factor of the sum of cubes.</p>
+      <p>The sum of squares $a^2 + b^2$ has no factorization with real coefficients, but rewriting it as $(a+b)^2 - 2ab$ is often the key move. It can even unlock a factorization: adding and subtracting a well-chosen term may create a difference of squares, as in $x^4 + 4 = (x^2+2)^2 - (2x)^2$.</p>
+      <div class="note"><p><strong>Hidden factors.</strong> Problems often show you only <em>one</em> factor of an identity, such as $x^2 + xy + y^2$, $\sqrt{5} - \sqrt{3}$ or $\sqrt[3]{9} + \sqrt[3]{3} + 1$. Your job is to recognize it and multiply by the missing partner.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="expansionGrid">
+      <figcaption><strong>Explore:</strong> Pick an identity. The grid multiplies every term of the first factor by every term of the second. Matching colours cancel in pairs, and only the two cube (or square) terms survive. Move the sliders to check the identity with actual numbers.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="telescope">
+      <figcaption><strong>Explore:</strong> Each term $\frac{1}{\sqrt{k}+\sqrt{k+1}}$ equals the gap from $\sqrt{k}$ to $\sqrt{k+1}$ on the number line. Add more terms and watch the gaps lay end to end: the total is always $\sqrt{n+1} - 1$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Arithmetic with a difference of squares</h3>
+        <div class="problem"><p>Compute $53^2 - 47^2$ without squaring either number.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$53^2 - 47^2 = (53 - 47)(53 + 47)$.</p></div><p class="why">The expression has the form $a^2 - b^2$ with $a = 53$ and $b = 47$.</p></li>
+          <li><div class="do"><p>$(6)(100) = 600$.</p></div><p class="why">The difference and the sum are both friendly numbers, which is exactly why the identity helps.</p></li>
+        </ol>
+        <p class="answer">$600$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Spot the squares</h3>
+        <div class="problem"><p>Factor $4x^2 - 25$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4x^2 = (2x)^2$ and $25 = 5^2$, so $4x^2 - 25 = (2x)^2 - 5^2$.</p></div><p class="why">Rewrite each term as a square so the pattern $a^2 - b^2$ is visible.</p></li>
+          <li><div class="do"><p>$(2x)^2 - 5^2 = (2x - 5)(2x + 5)$.</p></div><p class="why">Apply the difference of squares with $a = 2x$, $b = 5$.</p></li>
+        </ol>
+        <p class="answer">$(2x-5)(2x+5)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A difference of cubes</h3>
+        <div class="problem"><p>Factor $8x^3 - 27$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$8x^3 - 27 = (2x)^3 - 3^3$.</p></div><p class="why">$8 = 2^3$ and $27 = 3^3$, so both terms are perfect cubes.</p></li>
+          <li><div class="do"><p>With $a = 2x$, $b = 3$: $(a - b)(a^2 + ab + b^2) = (2x - 3)\big((2x)^2 + (2x)(3) + 3^2\big)$.</p></div><p class="why">Difference of cubes: the linear factor has a minus sign, and the quadratic factor is all plus signs.</p></li>
+          <li><div class="do"><p>$= (2x - 3)(4x^2 + 6x + 9)$.</p></div><p class="why">Simplify each term of the quadratic factor.</p></li>
+        </ol>
+        <p class="answer">$(2x-3)(4x^2+6x+9)$</p>
+        <p class="book-next">Next in the book: Example 7-1 and Exercise 7-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A sum of cubes</h3>
+        <div class="problem"><p>Factor $x^3 + 64$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^3 + 64 = x^3 + 4^3$.</p></div><p class="why">$64 = 4^3$.</p></li>
+          <li data-think="Which sign goes in the linear factor, and which in the middle of the quadratic factor?"><div class="do"><p>$x^3 + 4^3 = (x + 4)(x^2 - 4x + 16)$.</p></div><p class="why">For a sum of cubes, the linear factor copies the plus sign and the middle term of the quadratic factor is negative.</p></li>
+          <li><div class="do"><p>Check with $x = 1$: left side $65$; right side $5 \cdot 13 = 65$. ✓</p></div><p class="why">Plugging in a small number is a fast way to catch a sign error.</p></li>
+        </ol>
+        <p class="answer">$(x+4)(x^2-4x+16)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Factor completely</h3>
+        <div class="problem"><p>Factor $x^4 - 81$ as completely as possible using integer coefficients.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^4 - 81 = (x^2)^2 - 9^2 = (x^2 - 9)(x^2 + 9)$.</p></div><p class="why">A fourth power is the square of a square.</p></li>
+          <li><div class="do"><p>$x^2 - 9 = (x - 3)(x + 3)$, so $x^4 - 81 = (x-3)(x+3)(x^2+9)$.</p></div><p class="why">One of the factors is itself a difference of squares, so keep going.</p></li>
+          <li><div class="do"><p>$x^2 + 9$ is a sum of squares and does not factor over the integers (or the reals).</p></div><p class="why">"Completely" means: stop only when no factor can be split further.</p></li>
+        </ol>
+        <p class="answer">$(x-3)(x+3)(x^2+9)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Prime factors of a huge number</h3>
+        <div class="problem"><p>Find all prime factors of $2^{12} - 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2^{12} - 1 = (2^6)^2 - 1^2 = (2^6 - 1)(2^6 + 1) = 63 \cdot 65$.</p></div><p class="why">An even exponent lets us view the number as a difference of squares.</p></li>
+          <li><div class="do"><p>$63 = 3^2 \cdot 7$ and $65 = 5 \cdot 13$.</p></div><p class="why">The two factors are small enough to factor by hand.</p></li>
+          <li><div class="do"><p>So $2^{12} - 1 = 3^2 \cdot 5 \cdot 7 \cdot 13 = 4095$.</p></div><p class="why">Multiplying back gives $4095 = 4096 - 1$, which confirms the factorization.</p></li>
+        </ol>
+        <p class="answer">$3, 5, 7, 13$</p>
+        <p class="key-idea">$2^{2n} - 1 = (2^n-1)(2^n+1)$: big powers minus one split apart easily.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Add zero to factor</h3>
+        <div class="problem"><p>Factor $x^4 + 4$ into two quadratics with integer coefficients.</p></div>
+        <ol class="steps">
+          <li data-think="$x^4 + 4$ is a sum of squares. Which term could you add (and subtract) to make a perfect square?"><div class="do"><p>$x^4 + 4 = (x^4 + 4x^2 + 4) - 4x^2 = (x^2+2)^2 - (2x)^2$.</p></div><p class="why">Adding $4x^2$ completes the square $(x^2+2)^2$; subtracting it keeps the value the same, and $4x^2$ is itself a square.</p></li>
+          <li><div class="do"><p>$(x^2+2)^2 - (2x)^2 = (x^2 + 2 - 2x)(x^2 + 2 + 2x)$.</p></div><p class="why">Now it's a difference of squares with $a = x^2+2$ and $b = 2x$.</p></li>
+          <li><div class="do"><p>$x^4 + 4 = (x^2 - 2x + 2)(x^2 + 2x + 2)$. Check at $x = 1$: $5 = 1 \cdot 5$. ✓</p></div><p class="why">Reorder the terms and verify with a quick substitution.</p></li>
+        </ol>
+        <p class="answer">$(x^2-2x+2)(x^2+2x+2)$</p>
+        <p class="key-idea">The rewrite $a^2+b^2 = (a+b)^2 - 2ab$ can turn a sum of squares into a difference of squares.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A cube-root denominator</h3>
+        <div class="problem"><p>Simplify $\dfrac{1}{\sqrt[3]{9} + \sqrt[3]{3} + 1}$ so that no radical remains in the denominator.</p></div>
+        <ol class="steps">
+          <li data-think="Let $c = \sqrt[3]{3}$. What does the denominator look like in terms of $c$?"><div class="do"><p>Let $c = \sqrt[3]{3}$. The denominator is $c^2 + c + 1$.</p></div><p class="why">$\sqrt[3]{9} = (\sqrt[3]{3})^2$. Naming the radical makes the hidden pattern easier to see.</p></li>
+          <li><div class="do"><p>$c^2 + c + 1$ is one factor of $c^3 - 1 = (c-1)(c^2+c+1)$. Multiply top and bottom by $c - 1$.</p></div><p class="why">The missing partner of $a^2 + ab + b^2$ (here $a = c$, $b = 1$) is $a - b$.</p></li>
+          <li><div class="do"><p>The denominator becomes $c^3 - 1 = 3 - 1 = 2$, so the fraction is $\dfrac{\sqrt[3]{3} - 1}{2}$.</p></div><p class="why">$c^3 = 3$ is rational, so the radical is gone. Numerically both forms are about $0.2211$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{\sqrt[3]{3}-1}{2}$</p>
+        <p class="book-next">Next in the book: Exercise 7-2.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A factor in disguise</h3>
+        <div class="problem"><p>A number $x$ satisfies $x^2 + x + 1 = 0$. Find $x^{100} + \dfrac{1}{x^{100}}$.</p></div>
+        <ol class="steps">
+          <li data-think="$x^2 + x + 1$ is one factor of a famous identity. Which one?"><div class="do"><p>Multiply both sides by $x - 1$: $(x-1)(x^2+x+1) = 0$, so $x^3 - 1 = 0$ and $x^3 = 1$.</p></div><p class="why">$x^2 + x + 1$ is the quadratic factor of $x^3 - 1$. Multiplying by the partner turns a hard equation into a very simple one.</p></li>
+          <li><div class="do"><p>$x^{100} = (x^3)^{33}\cdot x = x$.</p></div><p class="why">Since $x^3 = 1$, powers of $x$ repeat every three steps; $100 = 3 \cdot 33 + 1$.</p></li>
+          <li><div class="do"><p>$\dfrac{1}{x^{100}} = \dfrac{1}{x} = \dfrac{x^3}{x} = x^2$.</p></div><p class="why">We can replace $1$ by $x^3$ whenever it helps.</p></li>
+          <li><div class="do"><p>$x^{100} + \dfrac{1}{x^{100}} = x + x^2 = -1$.</p></div><p class="why">The original equation says $x^2 + x = -1$.</p></li>
+        </ol>
+        <p class="answer">$-1$</p>
+        <p class="key-idea">When you see $a^2 + ab + b^2$, think "multiply by $a - b$."</p>
+        <p class="book-next">Next in the book: Example 7-2.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A telescoping sum</h3>
+        <div class="problem"><p>Evaluate $\dfrac{1}{\sqrt1+\sqrt2} + \dfrac{1}{\sqrt2+\sqrt3} + \dfrac{1}{\sqrt3+\sqrt4} + \cdots + \dfrac{1}{\sqrt{24}+\sqrt{25}}$.</p></div>
+        <ol class="steps">
+          <li data-think="What do you get when you multiply $\sqrt{k+1}+\sqrt{k}$ by $\sqrt{k+1}-\sqrt{k}$?"><div class="do"><p>$(\sqrt{k+1}+\sqrt{k})(\sqrt{k+1}-\sqrt{k}) = (k+1) - k = 1$.</p></div><p class="why">A difference of squares of consecutive integers is always $1$.</p></li>
+          <li><div class="do"><p>So $\dfrac{1}{\sqrt{k}+\sqrt{k+1}} = \sqrt{k+1} - \sqrt{k}$.</p></div><p class="why">If a product is $1$, each factor is the reciprocal of the other.</p></li>
+          <li><div class="do"><p>The sum is $(\sqrt2-\sqrt1) + (\sqrt3-\sqrt2) + \cdots + (\sqrt{25}-\sqrt{24})$.</p></div><p class="why">Rewrite all $24$ terms in the new form.</p></li>
+          <li><div class="do"><p>Everything cancels except $\sqrt{25} - \sqrt{1} = 5 - 1 = 4$.</p></div><p class="why">Each $+\sqrt{k}$ cancels the $-\sqrt{k}$ in the next term; the sum "telescopes."</p></li>
+        </ol>
+        <p class="answer">$4$</p>
+        <p class="key-idea">Rewrite each term as a difference; neighbouring terms then cancel.</p>
+        <p class="book-next">Next in the book: Example 7-3, then Problem 153.</p>
+      </article>
+    </div>
+
+  </section>
+
+  <!-- ===================== 7.2 ===================== -->
+  <section class="lesson" id="s7-2" data-title="Manipulations">
+    <h2><span class="sec-num">7.2</span> Manipulations</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Two numbers add up to $5$ and multiply to $3$. What is the sum of their cubes? You could solve a quadratic and cube two messy radicals, or notice that $(x+y)^3$ already contains $x^3 + y^3$ along with things you know. The answer, $80$, falls out in one line, and you never learn what the numbers are.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Expressions like $x + y$, $xy$, $x^2 + y^2$ and $x^3 + y^3$ don't change when you swap $x$ and $y$; they are <strong>symmetric</strong>. Every symmetric expression can be written using just $x + y$ and $xy$. The two workhorses are</p>
+      <div class="rule"><p>$$(x+y)^2 = (x^2+y^2) + 2xy \qquad (x+y)^3 = (x^3+y^3) + 3xy(x+y).$$</p></div>
+      <p>Each links three quantities. Given any two, solve for the third. Typically you find $xy$ first if it isn't given. Higher powers come from multiplying known pieces, for example $x^4 + y^4 = (x^2+y^2)^2 - 2(xy)^2$. And remember the fraction trick $\dfrac1x + \dfrac1y = \dfrac{x+y}{xy}$.</p>
+      <p>A special case is $y = \frac1x$, where the product $xy = 1$. Then squaring and cubing give</p>
+      <div class="rule"><p>$$\left(x+\tfrac1x\right)^2 = x^2 + \tfrac{1}{x^2} + 2 \qquad \left(x+\tfrac1x\right)^3 = x^3 + \tfrac{1}{x^3} + 3\left(x + \tfrac1x\right).$$</p></div>
+      <div class="note"><p>Work up in small steps: square to get second powers, cube those to get sixth powers, multiply second and third powers to reach fifth powers. Avoid raising to a high power all at once.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="symmetricSums">
+      <figcaption><strong>Explore:</strong> Set the sum $s = x + y$ and product $p = xy$. The parabola $t^2 - st + p$ crosses the axis at $x$ and $y$. Notice that $x^2+y^2$, $x^3+y^3$ and $x^4+y^4$ are computed from $s$ and $p$ alone, and stay real even when the parabola misses the axis and $x$, $y$ become complex.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="reciprocalLadder">
+      <figcaption><strong>Explore:</strong> Choose $k = x + \frac1x$. Each rung $a_n = x^n + \frac{1}{x^n}$ comes from the two below it: $a_{n+1} = k\,a_n - a_{n-1}$ (multiply $a_n$ by $x + \frac1x$ and subtract the leftover). Press <em>Climb</em> to build the ladder one rung at a time.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Sum of squares from sum and product</h3>
+        <div class="problem"><p>If $x + y = 7$ and $xy = 10$, find $x^2 + y^2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x+y)^2 = x^2 + y^2 + 2xy$, so $49 = x^2 + y^2 + 20$.</p></div><p class="why">Squaring the sum produces exactly the quantity we want plus a multiple of the product.</p></li>
+          <li><div class="do"><p>$x^2 + y^2 = 29$.</p></div><p class="why">Check: the numbers are $2$ and $5$, and $4 + 25 = 29$. ✓</p></li>
+        </ol>
+        <p class="answer">$29$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Add the reciprocals</h3>
+        <div class="problem"><p>If $a + b = 10$ and $ab = 4$, find $\dfrac1a + \dfrac1b$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac1a + \dfrac1b = \dfrac{b + a}{ab}$.</p></div><p class="why">Use the common denominator $ab$.</p></li>
+          <li><div class="do"><p>$\dfrac{10}{4} = \dfrac52$.</p></div><p class="why">Both pieces are given, so no solving is needed.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{5}{2}$</p>
+        <p class="book-next">Next in the book: Example 7-6.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Square a number plus its reciprocal</h3>
+        <div class="problem"><p>If $x + \dfrac1x = 4$, find $x^2 + \dfrac{1}{x^2}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\left(x + \dfrac1x\right)^2 = x^2 + 2\cdot x \cdot \dfrac1x + \dfrac{1}{x^2} = x^2 + 2 + \dfrac{1}{x^2}$.</p></div><p class="why">The cross term is $2$ because $x$ and $\frac1x$ multiply to $1$.</p></li>
+          <li><div class="do"><p>$16 = x^2 + \dfrac1{x^2} + 2$, so $x^2 + \dfrac{1}{x^2} = 14$.</p></div><p class="why">Substitute the given value and subtract $2$.</p></li>
+        </ol>
+        <p class="answer">$14$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Sum of cubes without solving</h3>
+        <div class="problem"><p>If $x + y = 5$ and $xy = 3$, find $x^3 + y^3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x+y)^3 = x^3 + y^3 + 3xy(x+y)$.</p></div><p class="why">Expanding $(x+y)^3 = x^3 + 3x^2y + 3xy^2 + y^3$ and grouping the middle terms as $3xy(x+y)$.</p></li>
+          <li><div class="do"><p>$125 = x^3 + y^3 + 3(3)(5) = x^3 + y^3 + 45$.</p></div><p class="why">Every quantity except the one we want is known.</p></li>
+          <li><div class="do"><p>$x^3 + y^3 = 80$.</p></div><p class="why">Here $x$ and $y$ are $\frac{5 \pm \sqrt{13}}{2}$, so solving first would have been far messier.</p></li>
+        </ol>
+        <p class="answer">$80$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Working from a difference</h3>
+        <div class="problem"><p>If $x - y = 3$ and $xy = 4$, find $x^2 + y^2$ and all possible values of $x + y$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x-y)^2 = x^2 + y^2 - 2xy$, so $9 = x^2 + y^2 - 8$ and $x^2 + y^2 = 17$.</p></div><p class="why">Squaring a difference works just like squaring a sum, with a minus sign on the cross term.</p></li>
+          <li data-think="How many numbers have a given square?"><div class="do"><p>$(x+y)^2 = x^2 + y^2 + 2xy = 17 + 8 = 25$, so $x + y = 5$ or $x + y = -5$.</p></div><p class="why">Squaring loses the sign, so both square roots must be kept.</p></li>
+          <li><div class="do"><p>Both happen: $(x, y) = (4, 1)$ gives $5$, and $(x, y) = (-1, -4)$ gives $-5$.</p></div><p class="why">Exhibiting actual pairs confirms that neither value is extraneous.</p></li>
+        </ol>
+        <p class="answer">$x^2+y^2 = 17$; $x + y = \pm 5$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Climbing to fourth powers</h3>
+        <div class="problem"><p>If $a + b = 3$ and $a^2 + b^2 = 5$, find $a^4 + b^4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(a+b)^2 = a^2 + b^2 + 2ab$ gives $9 = 5 + 2ab$, so $ab = 2$.</p></div><p class="why">The product isn't given, so find it first. It is almost always needed.</p></li>
+          <li data-think="Which known quantity, when squared, produces $a^4$ and $b^4$?"><div class="do"><p>$(a^2+b^2)^2 = a^4 + b^4 + 2a^2b^2$, so $25 = a^4 + b^4 + 2(ab)^2 = a^4 + b^4 + 8$.</p></div><p class="why">Squaring the sum of squares gives fourth powers, and the cross term is $2(ab)^2$.</p></li>
+          <li><div class="do"><p>$a^4 + b^4 = 17$.</p></div><p class="why">Check: $a, b$ are $1$ and $2$, and $1 + 16 = 17$. ✓</p></li>
+        </ol>
+        <p class="answer">$17$</p>
+        <p class="book-next">Next in the book: Example 7-4.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Cube a number plus its reciprocal</h3>
+        <div class="problem"><p>If $x + \dfrac1x = 5$, find $x^3 + \dfrac1{x^3}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\left(x + \dfrac1x\right)^3 = x^3 + 3x + \dfrac3x + \dfrac{1}{x^3} = x^3 + \dfrac1{x^3} + 3\left(x + \dfrac1x\right)$.</p></div><p class="why">This is the cube identity with $y = \frac1x$ and $xy = 1$.</p></li>
+          <li><div class="do"><p>$125 = x^3 + \dfrac1{x^3} + 15$, so $x^3 + \dfrac1{x^3} = 110$.</p></div><p class="why">Substitute $x + \frac1x = 5$ twice: once on the left, once in the last term.</p></li>
+        </ol>
+        <p class="answer">$110$</p>
+        <p class="book-next">Next in the book: Example 7-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Roots of a quadratic</h3>
+        <div class="problem"><p>Let $r$ and $s$ be the roots of $x^2 - 6x + 2 = 0$. Find $r^2 + s^2$ and $\dfrac1r + \dfrac1s$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>By Vieta's formulas, $r + s = 6$ and $rs = 2$.</p></div><p class="why">For $x^2 + bx + c$, the roots add to $-b$ and multiply to $c$ (Chapter 6).</p></li>
+          <li><div class="do"><p>$r^2 + s^2 = (r+s)^2 - 2rs = 36 - 4 = 32$.</p></div><p class="why">The sum of squares from the sum and product.</p></li>
+          <li><div class="do"><p>$\dfrac1r + \dfrac1s = \dfrac{r+s}{rs} = \dfrac62 = 3$.</p></div><p class="why">The roots are $3 \pm \sqrt7$, but we never needed them.</p></li>
+        </ol>
+        <p class="answer">$r^2+s^2 = 32$ and $\dfrac1r + \dfrac1s = 3$.</p>
+        <p class="key-idea">Vieta gives you the sum and product of roots for free; symmetric expressions do the rest.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Reaching fifth powers</h3>
+        <div class="problem"><p>Given $x > 0$ and $x^2 + \dfrac{1}{x^2} = 23$, find $x^5 + \dfrac1{x^5}$.</p></div>
+        <ol class="steps">
+          <li data-think="Can you get back down to $x + \frac1x$?"><div class="do"><p>$\left(x + \dfrac1x\right)^2 = x^2 + \dfrac1{x^2} + 2 = 25$, so $x + \dfrac1x = 5$.</p></div><p class="why">Since $x > 0$, the sum $x + \frac1x$ is positive, so we take the positive root.</p></li>
+          <li><div class="do"><p>$x^3 + \dfrac1{x^3} = 5^3 - 3 \cdot 5 = 110$.</p></div><p class="why">The cube identity from the previous example.</p></li>
+          <li data-think="Which two known sums multiply to give fifth powers?"><div class="do"><p>$\left(x^2 + \dfrac1{x^2}\right)\left(x^3 + \dfrac1{x^3}\right) = x^5 + \dfrac1{x^5} + x + \dfrac1x$.</p></div><p class="why">Expand: $x^2 \cdot x^3 = x^5$, $x^2 \cdot \frac1{x^3} = \frac1x$, $\frac1{x^2}\cdot x^3 = x$, and $\frac1{x^2}\cdot\frac1{x^3} = \frac1{x^5}$.</p></li>
+          <li><div class="do"><p>$23 \cdot 110 = x^5 + \dfrac{1}{x^5} + 5$, so $x^5 + \dfrac1{x^5} = 2530 - 5 = 2525$.</p></div><p class="why">Subtract the known value of $x + \frac1x$.</p></li>
+        </ol>
+        <p class="answer">$2525$</p>
+        <p class="key-idea">Multiply two known power sums: the exponents add, and the leftover is another known sum.</p>
+        <p class="book-next">Next in the book: Exercise 7-3.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>All possible values</h3>
+        <div class="problem"><p>Real numbers $a$ and $b$ satisfy $a^2 + b^2 = 10$ and $ab = 3$. Find all possible values of $a^3 + b^3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(a+b)^2 = a^2 + b^2 + 2ab = 16$, so $a + b = 4$ or $a + b = -4$.</p></div><p class="why">The sum isn't given, so recover it from its square, keeping both signs.</p></li>
+          <li><div class="do"><p>$a^3 + b^3 = (a+b)(a^2 - ab + b^2) = (a+b)(10 - 3) = 7(a+b)$.</p></div><p class="why">The sum-of-cubes factorization uses $a^2 + b^2$ and $ab$ directly, both of which we know.</p></li>
+          <li><div class="do"><p>So $a^3 + b^3 = 28$ or $-28$. Both occur: $(a,b) = (3,1)$ and $(-3,-1)$.</p></div><p class="why">Checking actual pairs shows neither sign should be thrown away.</p></li>
+        </ol>
+        <p class="answer">$28$ or $-28$</p>
+        <p class="key-idea">When a sum comes from a square root, carry both signs to the end.</p>
+        <p class="book-next">Next in the book: Exercise 7-4, then the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-7">
+    <h2 id="further-7">Further reading in the book</h2>
+    <ul>
+      <li><strong>§7.1 Factorizations</strong>: Examples 7-1 to 7-3 and Exercises 7-1, 7-2.</li>
+      <li><strong>§7.2 Manipulations</strong>: Examples 7-4 to 7-6 and Exercises 7-3, 7-4.</li>
+      <li><strong>Problems to Solve for Chapter 7</strong>: Problems 138–161 mix both sections. Problems 146, 151, 154, 155, 158 and 159 are symmetric-sum manipulations from §7.2; most of the others are factoring problems from §7.1.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 7 explorers ---------- */
+(function () {
+  "use strict";
+  var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  /* 7.1 — expansion grid with cancelling pairs */
+  AOPS.registerWidget("expansionGrid", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Multiplication grid expanding a special factorization, with cancelling terms coloured in pairs" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 7, b = 3, mode = "dcube";
+    var IDS = {
+      dsq: { name: "a² − b²", rows: ["a", "−b"], cols: ["a", "+b"],
+        cells: [["a²", 0], ["ab", 1], ["−ab", 1], ["−b²", 0]],
+        lhs: function () { return a * a - b * b; }, f1: function () { return a - b; }, f2: function () { return a + b; },
+        tex: function () { return a + "^2-" + b + "^2 = (" + a + "-" + b + ")(" + a + "+" + b + ") = " + (a - b) + "\\cdot" + (a + b); } },
+      dcube: { name: "a³ − b³", rows: ["a", "−b"], cols: ["a²", "+ab", "+b²"],
+        cells: [["a³", 0], ["a²b", 1], ["ab²", 2], ["−a²b", 1], ["−ab²", 2], ["−b³", 0]],
+        lhs: function () { return a * a * a - b * b * b; }, f1: function () { return a - b; }, f2: function () { return a * a + a * b + b * b; },
+        tex: function () { return a + "^3-" + b + "^3 = (" + a + "-" + b + ")(" + a + "^2+" + a + "\\cdot" + b + "+" + b + "^2) = " + (a - b) + "\\cdot" + (a * a + a * b + b * b); } },
+      scube: { name: "a³ + b³", rows: ["a", "+b"], cols: ["a²", "−ab", "+b²"],
+        cells: [["a³", 0], ["−a²b", 1], ["ab²", 2], ["a²b", 1], ["−ab²", 2], ["b³", 0]],
+        lhs: function () { return a * a * a + b * b * b; }, f1: function () { return a + b; }, f2: function () { return a * a - a * b + b * b; },
+        tex: function () { return a + "^3+" + b + "^3 = (" + a + "+" + b + ")(" + a + "^2-" + a + "\\cdot" + b + "+" + b + "^2) = " + (a + b) + "\\cdot" + (a * a - a * b + b * b); } }
+    };
+    W.slider(ctl, { label: "a", min: 1, max: 12, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b", min: 1, max: 12, value: b, onInput: function (v) { b = v; draw(); } });
+    W.segmented(ctl, { title: "Identity", value: mode, options: [{ value: "dsq", label: "a² − b²" }, { value: "dcube", label: "a³ − b³" }, { value: "scube", label: "a³ + b³" }], onChange: function (v) { mode = v; draw(); } });
+    var COL = ["var(--accent)", "var(--plot-2)", "var(--plot-3)"];
+    function draw() {
+      W.clear(svg);
+      var id = IDS[mode], nc = id.cols.length, nr = id.rows.length;
+      var cw = 130, ch = 70, gx = 640 / 2 - (cw * nc) / 2 + 40, gy = 70;
+      svg.appendChild(W.s("text", { x: 20, y: 30, class: "lbl", text: "(" + id.rows.join(" ") + ") × (" + id.cols.join(" ") + ")" }));
+      id.cols.forEach(function (c, j) {
+        svg.appendChild(W.s("text", { x: gx + j * cw + cw / 2, y: gy - 14, "text-anchor": "middle", style: "font: 700 17px var(--font-mono); fill: var(--ink)", text: c }));
+      });
+      id.rows.forEach(function (r, i) {
+        svg.appendChild(W.s("text", { x: gx - 18, y: gy + i * ch + ch / 2 + 6, "text-anchor": "end", style: "font: 700 17px var(--font-mono); fill: var(--ink)", text: r }));
+        for (var j = 0; j < nc; j++) {
+          var cell = id.cells[i * nc + j], grp = cell[1], keep = grp === 0;
+          var col = COL[grp];
+          svg.appendChild(W.s("rect", { x: gx + j * cw + 3, y: gy + i * ch + 3, width: cw - 6, height: ch - 6, rx: 10,
+            fill: keep ? "color-mix(in srgb, var(--accent) 30%, transparent)" : "color-mix(in srgb, " + col + " 16%, transparent)",
+            stroke: col, "stroke-width": keep ? 2.5 : 1.5, "stroke-dasharray": keep ? null : "5 4" }));
+          var tx = gx + j * cw + cw / 2, ty = gy + i * ch + ch / 2 + 6;
+          svg.appendChild(W.s("text", { x: tx, y: ty, "text-anchor": "middle", style: "font: 700 18px var(--font-mono); fill: " + (keep ? "var(--ink)" : "var(--muted)"), text: cell[0] }));
+          if (!keep) svg.appendChild(W.s("line", { x1: tx - 30, y1: ty - 6, x2: tx + 30, y2: ty - 6, stroke: col, "stroke-width": 2 }));
+        }
+      });
+      var by = gy + nr * ch + 34;
+      svg.appendChild(W.s("text", { x: 320, y: by, "text-anchor": "middle", style: "font: 600 15px var(--font-body); fill: var(--ink)", text: "Survivors (solid boxes): " + id.name + ".  Dashed boxes of the same colour cancel." }));
+      var L = id.lhs(), P = id.f1() * id.f2();
+      out.tex(id.tex() + " = " + P + (L === P ? "\\quad \\checkmark" : ""));
+    }
+    draw();
+  });
+
+  /* 7.1 — telescoping gaps on the number line */
+  AOPS.registerWidget("telescope", function (body) {
+    var svg = W.stage(body, { w: 640, h: 230, label: "Number line from 1 to the square root of n plus 1, split into gaps between consecutive square roots" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 8;
+    W.slider(ctl, { label: "Number of terms n", min: 1, max: 48, value: n, onInput: function (v) { n = v; draw(); } });
+    var X0 = 40, X1 = 600, maxV = 7;
+    function X(v) { return X0 + (v - 1) / (maxV - 1) * (X1 - X0); }
+    function draw() {
+      W.clear(svg);
+      var y = 110;
+      svg.appendChild(W.s("line", { x1: X0, y1: y, x2: X1, y2: y, stroke: "var(--border-strong)", "stroke-width": 2 }));
+      for (var v = 1; v <= maxV; v++) {
+        svg.appendChild(W.s("line", { x1: X(v), y1: y - 8, x2: X(v), y2: y + 8, stroke: "var(--muted)" }));
+        svg.appendChild(W.s("text", { x: X(v), y: y + 28, "text-anchor": "middle", class: "lbl", text: "√" + (v * v) + " = " + v }));
+      }
+      var cols = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)"];
+      for (var k = 1; k <= n; k++) {
+        var x1 = X(Math.sqrt(k)), x2 = X(Math.sqrt(k + 1));
+        svg.appendChild(W.s("rect", { x: x1, y: y - 26, width: Math.max(1, x2 - x1 - 1), height: 22, fill: "color-mix(in srgb, " + cols[k % 4] + " 60%, transparent)", stroke: cols[k % 4] }));
+        if (x2 - x1 > 34) svg.appendChild(W.s("text", { x: (x1 + x2) / 2, y: y - 34, "text-anchor": "middle", class: "lbl", text: "k=" + k }));
+      }
+      var end = X(Math.sqrt(n + 1));
+      svg.appendChild(W.s("path", { d: "M" + X(1) + " " + (y + 48) + "V" + (y + 56) + "H" + end + "V" + (y + 48), fill: "none", stroke: "var(--accent)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: (X(1) + end) / 2, y: y + 78, "text-anchor": "middle", style: "font: 600 14px var(--font-mono); fill: var(--accent)", text: "total = √" + (n + 1) + " − 1 " + (Number.isInteger(Math.sqrt(n + 1)) ? "= " : "≈ ") + W.fmt(Math.sqrt(n + 1) - 1, 4) }));
+      svg.appendChild(W.s("text", { x: 20, y: 30, class: "lbl", text: "each coloured block: √(k+1) − √k = 1/(√k + √(k+1))" }));
+      var r = Math.round(Math.sqrt(n + 1)), exact = r * r === n + 1;
+      out.tex("\\sum_{k=1}^{" + n + "} \\frac{1}{\\sqrt{k}+\\sqrt{k+1}} = \\sqrt{" + (n + 1) + "} - 1" + (exact ? " = " + (r - 1) : " \\approx " + W.fmt(Math.sqrt(n + 1) - 1, 4)));
+    }
+    draw();
+  });
+
+  /* 7.2 — symmetric sums from s and p */
+  AOPS.registerWidget("symmetricSums", function (body) {
+    var svg = W.stage(body, { w: 640, h: 344, label: "Parabola t squared minus s t plus p, whose roots are x and y" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var s = 5, p = 3;
+    W.slider(ctl, { label: "Sum s = x + y", min: -6, max: 6, value: s, onInput: function (v) { s = v; draw(); } });
+    W.slider(ctl, { label: "Product p = xy", min: -6, max: 9, value: p, onInput: function (v) { p = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var P = W.plane(svg, { x: [-8, 8], y: [-12, 12], step: 1, ystep: 2, pad: 26, labelEvery: 2 });
+      var noteY = 338;
+      svg.appendChild(W.s("path", { d: W.fnPath(P, function (t) { return t * t - s * t + p; }), fill: "none", stroke: "var(--plot-2)", "stroke-width": 3 }));
+      var D = s * s - 4 * p, rootsTex;
+      if (D >= 0) {
+        var r1 = (s - Math.sqrt(D)) / 2, r2 = (s + Math.sqrt(D)) / 2;
+        [r1, r2].forEach(function (r) { svg.appendChild(W.s("circle", { cx: P.X(r), cy: P.Y(0), r: 7, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 })); });
+        rootsTex = "x, y \\approx " + W.fmt(r1, 3) + ",\\ " + W.fmt(r2, 3);
+        svg.appendChild(W.s("text", { x: 20, y: noteY, class: "lbl", text: "real roots: the parabola crosses the axis at x and y" }));
+      } else {
+        rootsTex = "x, y = " + W.fmt(s / 2, 2) + " \\pm " + W.fmt(Math.sqrt(-D) / 2, 3) + "i";
+        svg.appendChild(W.s("text", { x: 20, y: noteY, class: "lbl", text: "no crossing: x and y are complex, yet the sums below stay real" }));
+      }
+      var q2 = s * s - 2 * p, q3 = s * s * s - 3 * p * s, q4 = q2 * q2 - 2 * p * p;
+      out.set("<p>$" + rootsTex + "$</p>" +
+        "<p>$x^2+y^2 = s^2 - 2p = " + q2 + "$</p>" +
+        "<p>$x^3+y^3 = s^3 - 3ps = " + q3 + "$</p>" +
+        "<p>$x^4+y^4 = (x^2+y^2)^2 - 2p^2 = " + q4 + "$</p>" +
+        (p !== 0 ? "<p>$\\tfrac1x + \\tfrac1y = \\tfrac{s}{p} = " + W.frac(s, p) + "$</p>" : "<p>$p = 0$: one of the numbers is $0$, so $\\tfrac1x + \\tfrac1y$ is undefined.</p>"));
+    }
+    draw();
+  });
+
+  /* 7.2 — ladder of x^n + 1/x^n */
+  AOPS.registerWidget("reciprocalLadder", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Ladder of values of x to the n plus one over x to the n" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var k = 3, shown = 2, MAXN = 6, timer = null;
+    W.slider(ctl, { label: "k = x + 1/x", min: -5, max: 8, value: k, onInput: function (v) { k = v; shown = 2; draw(); } });
+    W.button(ctl, "Climb one rung", function () { if (shown < MAXN) { shown++; draw(); } });
+    W.button(ctl, "Show all", function () {
+      if (timer) return;
+      if (reduceMotion) { shown = MAXN; draw(); return; }
+      timer = setInterval(function () { if (shown >= MAXN) { clearInterval(timer); timer = null; return; } shown++; draw(); }, 450);
+    });
+    W.button(ctl, "Reset", function () { shown = 2; draw(); });
+    function vals() { var a = [2, k]; for (var n = 2; n <= MAXN; n++) a.push(k * a[n - 1] - a[n - 2]); return a; }
+    function draw() {
+      W.clear(svg);
+      var a = vals();
+      var bw = 78, gap = 9, x0 = 20, base = 250;
+      for (var n = 0; n <= MAXN; n++) {
+        var x = x0 + n * (bw + gap), y = base - n * 30, on = n <= shown, isNew = n === shown && n >= 2;
+        svg.appendChild(W.s("rect", { x: x, y: y - 44, width: bw, height: 44, rx: 8,
+          fill: on ? (isNew ? "color-mix(in srgb, var(--accent) 35%, transparent)" : "color-mix(in srgb, var(--plot-2) 22%, transparent)") : "var(--surface-2)",
+          stroke: isNew ? "var(--accent)" : on ? "var(--plot-2)" : "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: x + bw / 2, y: y - 28, "text-anchor": "middle", class: "lbl", text: "a" + n }));
+        svg.appendChild(W.s("text", { x: x + bw / 2, y: y - 9, "text-anchor": "middle", style: "font: 700 " + (String(a[n]).length > 6 ? 12 : 15) + "px var(--font-mono); fill: var(--ink)", text: on ? String(a[n]) : "?" }));
+      }
+      svg.appendChild(W.s("text", { x: 22, y: 286, class: "lbl", text: "a0 = x⁰ + x⁰ = 2,  a1 = k" }));
+      svg.appendChild(W.s("text", { x: 22, y: 24, class: "lbl", text: "aₙ = xⁿ + 1/xⁿ" }));
+      if (shown >= 2) {
+        var m = shown;
+        out.tex("x^{" + m + "} + \\tfrac{1}{x^{" + m + "}} = \\left(x+\\tfrac1x\\right)\\left(x^{" + (m - 1) + "}+\\tfrac{1}{x^{" + (m - 1) + "}}\\right) - \\left(x^{" + (m - 2) + "}+\\tfrac{1}{x^{" + (m - 2) + "}}\\right) = " + k + "\\cdot" + (a[m - 1] < 0 ? "(" + a[m - 1] + ")" : a[m - 1]) + (a[m - 2] < 0 ? "+" + (-a[m - 2]) : "-" + a[m - 2]) + " = " + a[m]);
+      }
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
