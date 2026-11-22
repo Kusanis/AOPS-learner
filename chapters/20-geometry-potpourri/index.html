@@ -1,0 +1,699 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 20: A Potpourri of Geometry · AoPS Learner</title>
+  <meta name="description" content="Mixed geometry: tangent circles and common tangents, hidden right triangles, areas by more than one route, and reflections for shortest paths, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="20" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 20 · Geometry</span>
+    <h1>A Potpourri of Geometry</h1>
+    <p class="lede">In the book this chapter is a single large set of mixed problems, the kind where you are not told which tool to use. This page groups the ideas those problems lean on most into four themes: circles that touch, right triangles hiding in plain sight, areas found by more than one route, and reflections that turn bent paths straight. Each worked example practises recognising which tool a figure is asking for.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>A tangent is perpendicular to the radius at the point of contact. Draw that radius.</li>
+      <li>Tangent circles: the centers and the point of contact are collinear; the distance between centers is $r_1 + r_2$ (outside) or $|r_1 - r_2|$ (inside).</li>
+      <li>Common tangent lengths: external $\sqrt{d^2 - (r_1 - r_2)^2}$, internal $\sqrt{d^2 - (r_1 + r_2)^2}$. Slide the tangent to the center to see the right triangle.</li>
+      <li>Right triangles: the perpendicular from the center bisects a chord; an angle inscribed in a semicircle is right; the altitude to the hypotenuse gives $h^2 = pq$ and $h = \frac{ab}{c}$.</li>
+      <li>Inradius: $r = \dfrac{\text{Area}}{s}$; for a right triangle, also $r = \dfrac{a + b - c}{2}$.</li>
+      <li>Areas: triangles with the same height have areas in the ratio of their bases; compute an area two ways to find a length; perpendicular diagonals give area $\frac12 d_1 d_2$.</li>
+      <li>Shortest paths that touch a line: reflect one endpoint across the line and draw a straight segment.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 20.1 ===================== -->
+  <section class="lesson" id="s20-1" data-title="Circles That Touch">
+    <h2><span class="sec-num">20.1</span> Circles That Touch</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A bicycle chain wraps around two gears of different sizes. The straight runs of chain are common tangents to two circles, and the curved parts hug arcs of the gears. How long is the chain? Every problem about touching circles starts the same way: draw the radii to the points of contact and look for right triangles.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Two facts do almost all the work:</p>
+      <div class="rule">
+        <p>1. A tangent line is perpendicular to the radius drawn to the point of tangency.</p>
+        <p>2. If two circles are tangent, their centers and the point of contact lie on one line, so the distance between centers is $r_1 + r_2$ (externally tangent) or $|r_1 - r_2|$ (internally tangent).</p>
+      </div>
+      <p>A line tangent to both circles is a <strong>common tangent</strong>: <em>external</em> if both circles lie on the same side of it, <em>internal</em> if it passes between them. To find the length between the two points of tangency, draw both radii (they are parallel, since both are perpendicular to the tangent), then slide the tangent segment over until it starts at one center. That makes a right triangle with hypotenuse $d$, the distance between centers:</p>
+      <div class="rule"><p>$$\text{external: } \sqrt{d^2 - (r_1 - r_2)^2}, \qquad \text{internal: } \sqrt{d^2 - (r_1 + r_2)^2}.$$</p></div>
+      <div class="note"><p>The number of common tangents depends only on $d$ compared with $r_1 + r_2$ and $|r_1 - r_2|$: four when the circles are apart, three when externally tangent, two when they cross, one when internally tangent, none when one is inside the other.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="commonTangents">
+      <figcaption><strong>Explore:</strong> Set the radii and drag the two centers. Count the common tangents as the circles move apart, touch, cross and nest, and compare $d$ with $r_1 + r_2$ and $|r_1 - r_2|$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Distance between centers</h3>
+        <div class="problem"><p>Circles of radius $3$ and $5$ are tangent. How far apart are their centers?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Externally tangent (side by side): $d = 3 + 5 = 8$.</p></div><p class="why">The contact point lies on the line of centers, between them, so the two radii add.</p></li>
+          <li><div class="do"><p>Internally tangent (small one inside, touching): $d = 5 - 3 = 2$.</p></div><p class="why">Now both centers are on the same side of the contact point, so the radii subtract.</p></li>
+        </ol>
+        <p class="answer">$8$ if externally tangent, $2$ if internally tangent.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Counting common tangents</h3>
+        <div class="problem"><p>Circles have radii $4$ and $6$. How many common tangents are there if the distance between centers is $12$, $10$, $5$, $2$, or $1$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Compare with $r_1 + r_2 = 10$ and $|r_1 - r_2| = 2$.</p></div><p class="why">These two numbers mark the moments when the circles touch.</p></li>
+          <li><div class="do"><p>$d = 12 > 10$: apart, $4$ tangents. $d = 10$: externally tangent, $3$. $2 &lt; d = 5 &lt; 10$: crossing, $2$.</p></div><p class="why">When the circles touch from outside, the two internal tangents merge into one line through the contact point.</p></li>
+          <li><div class="do"><p>$d = 2$: internally tangent, $1$. $d = 1 &lt; 2$: one inside the other, $0$.</p></div><p class="why">A line tangent to the inner circle cuts through the outer one.</p></li>
+        </ol>
+        <p class="answer">$4, 3, 2, 1, 0$</p>
+        <p class="book-next">Next in the book: Problem 349.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An external tangent</h3>
+        <div class="problem"><p>Circles of radius $9$ and $4$ have centers $13$ apart. Find the length of a common external tangent between its points of tangency.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw radii $O_1T_1$ and $O_2T_2$ to the points of tangency; both are perpendicular to $T_1T_2$, so $O_1T_1T_2O_2$ is a right trapezoid.</p></div><p class="why">Two lines perpendicular to the same line are parallel.</p></li>
+          <li data-think="If you draw a line from $O_2$ parallel to the tangent, what right triangle appears?"><div class="do"><p>From $O_2$, draw a segment parallel to $T_1T_2$ to meet $O_1T_1$. It has length $T_1T_2$ and makes a right triangle with legs $T_1T_2$ and $9 - 4 = 5$, hypotenuse $13$.</p></div><p class="why">The parallel cuts off a rectangle, leaving $r_1 - r_2$ of the bigger radius.</p></li>
+          <li><div class="do"><p>$T_1T_2 = \sqrt{13^2 - 5^2} = 12$.</p></div><p class="why">A $5$-$12$-$13$ right triangle.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An internal tangent</h3>
+        <div class="problem"><p>Circles of radius $2$ and $3$ have centers $10$ apart. Find the length of a common internal tangent between its points of tangency.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Now the radii point in opposite directions from the tangent. Slide the tangent segment to start at $O_2$; it meets the extension of $O_1T_1$ at distance $2 + 3 = 5$ from $O_1$.</p></div><p class="why">For an internal tangent, the circles are on opposite sides, so the radii add.</p></li>
+          <li><div class="do"><p>Length $= \sqrt{10^2 - 5^2} = \sqrt{75} = 5\sqrt3$.</p></div><p class="why">Right triangle with hypotenuse $d = 10$ and one leg $r_1 + r_2 = 5$.</p></li>
+        </ol>
+        <p class="answer">$5\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three coins</h3>
+        <div class="problem"><p>Three circles of radii $1$, $2$ and $3$ are each externally tangent to the other two. Find the area of the triangle formed by their centers.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sides: $1 + 2 = 3$, $1 + 3 = 4$, $2 + 3 = 5$.</p></div><p class="why">Each side joins two tangent centers, so it is the sum of their radii.</p></li>
+          <li><div class="do"><p>$3^2 + 4^2 = 5^2$, so it is a right triangle with area $\tfrac12 \cdot 3 \cdot 4 = 6$.</p></div><p class="why">Recognise the Pythagorean triple; the legs are perpendicular.</p></li>
+        </ol>
+        <p class="answer">$6$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A circle in the corner</h3>
+        <div class="problem"><p>A circle is inscribed in a square of side $2$. A smaller circle sits in one corner, tangent to two sides of the square and to the big circle. Find its radius.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Put the corner at the origin. The big circle has center $(1, 1)$ and radius $1$; the small circle, tangent to both sides, has center $(r, r)$.</p></div><p class="why">A circle tangent to both axes has its center equally far from each, on the diagonal.</p></li>
+          <li data-think="Where is the point of contact of the two circles, relative to their centers?"><div class="do"><p>The circles are externally tangent, so the distance between centers is $1 + r$. That distance is along the diagonal: $\sqrt2\,(1 - r)$.</p></div><p class="why">Both centers lie on the line $y = x$, and moving $(1 - r)$ in each direction covers $\sqrt2(1 - r)$.</p></li>
+          <li><div class="do"><p>$\sqrt2 - \sqrt2\,r = 1 + r$, so $r = \dfrac{\sqrt2 - 1}{\sqrt2 + 1} = (\sqrt2 - 1)^2 = 3 - 2\sqrt2$.</p></div><p class="why">Multiply top and bottom by $\sqrt2 - 1$ to rationalize.</p></li>
+        </ol>
+        <p class="answer">$3 - 2\sqrt2 \approx 0.17$</p>
+        <p class="book-next">Next in the book: Problems 375 and 380 use the same idea.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A belt around two pulleys</h3>
+        <div class="problem"><p>A tight belt goes around two pulleys of radius $3$ and $1$ whose centers are $4$ apart (the belt does not cross itself). Find the length of the belt.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each straight part is an external tangent: $\sqrt{4^2 - (3 - 1)^2} = \sqrt{12} = 2\sqrt3$. There are two, giving $4\sqrt3$.</p></div><p class="why">The external tangent formula.</p></li>
+          <li data-think="In the right triangle you just used, what angle does the line of centers make with the radii?"><div class="do"><p>In that right triangle the leg $2$ is half the hypotenuse $4$, so the radii make a $60^\circ$ angle with the line of centers.</p></div><p class="why">A right triangle with one leg half the hypotenuse is a $30$-$60$-$90$ triangle.</p></li>
+          <li><div class="do"><p>On the big pulley the belt covers $360^\circ - 2 \cdot 60^\circ = 240^\circ$: length $\tfrac{240}{360} \cdot 2\pi \cdot 3 = 4\pi$. On the small pulley it covers $360^\circ - 2 \cdot 120^\circ = 120^\circ$: length $\tfrac{120}{360} \cdot 2\pi = \tfrac{2\pi}{3}$.</p></div><p class="why">The radii to the tangent points are parallel, so on the small pulley they make $180^\circ - 60^\circ = 120^\circ$ with the line pointing back to the big center.</p></li>
+          <li><div class="do"><p>Total: $4\sqrt3 + 4\pi + \tfrac{2\pi}{3} = 4\sqrt3 + \tfrac{14\pi}{3}$.</p></div><p class="why">Add the straight and curved parts. Check: the two arcs, $240^\circ + 120^\circ = 360^\circ$, make one full turn in total.</p></li>
+        </ol>
+        <p class="answer">$4\sqrt3 + \dfrac{14\pi}{3} \approx 21.6$</p>
+        <p class="key-idea">Radii to tangent points are parallel; the angles they make decide the arcs.</p>
+        <p class="book-next">Next in the book: Problem 353.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 20.2 ===================== -->
+  <section class="lesson" id="s20-2" data-title="Right Triangles Everywhere">
+    <h2><span class="sec-num">20.2</span> Right Triangles Everywhere</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Many geometry problems look as if they have nothing to do with right triangles, until you draw one extra segment: a radius, a perpendicular, a diameter. Then a right triangle appears and Pythagoras finishes the job. Learning which segment to draw is most of the skill.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Ways a right angle sneaks into a figure:</p>
+      <div class="rule">
+        <p>The perpendicular from a circle's center to a chord bisects the chord: half-chord, distance and radius form a right triangle.</p>
+        <p>An angle inscribed in a semicircle is a right angle (it cuts off an arc of $180^\circ$).</p>
+        <p>A tangent meets the radius at a right angle.</p>
+      </div>
+      <p>In a right triangle with legs $a, b$, hypotenuse $c$ and altitude $h$ to the hypotenuse, splitting it into pieces $p$ and $q$, all three triangles are similar. That gives</p>
+      <div class="rule"><p>$$h = \frac{ab}{c}, \qquad h^2 = pq, \qquad a^2 = qc, \qquad b^2 = pc$$</p><p>(with $q$ the piece next to leg $a$, and $p$ the piece next to leg $b$).</p></div>
+      <p>For the inscribed circle, the area of any triangle equals $rs$ (split it into three triangles from the incenter), so $r = \frac{\text{Area}}{s}$. In a right triangle the tangent lengths also give $r = \frac{a + b - c}{2}$.</p>
+      <div class="note"><p>The formula $h = \frac{ab}{c}$ is just the area computed two ways: $\frac12 ab = \frac12 ch$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="thalesAltitude">
+      <figcaption><strong>Explore:</strong> Drag $C$ along the semicircle: the angle at $C$ stays $90^\circ$. Watch the altitude split the hypotenuse into $p$ and $q$ with $h^2 = pq$, then switch to the incircle and check $r = \frac{a + b - c}{2}$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>How far is the chord?</h3>
+        <div class="problem"><p>A chord of length $24$ lies in a circle of radius $13$. How far is it from the center?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The perpendicular from the center bisects the chord, giving a right triangle with hypotenuse $13$ and one leg $12$.</p></div><p class="why">Radius to an endpoint, half the chord, and the distance form a right triangle.</p></li>
+          <li><div class="do"><p>Distance $= \sqrt{13^2 - 12^2} = 5$.</p></div><p class="why">A $5$-$12$-$13$ triangle.</p></li>
+        </ol>
+        <p class="answer">$5$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The altitude to the hypotenuse</h3>
+        <div class="problem"><p>A right triangle has legs $6$ and $8$. Find the altitude to the hypotenuse and the two pieces it cuts the hypotenuse into.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Hypotenuse $c = 10$. Area two ways: $\tfrac12 \cdot 6 \cdot 8 = \tfrac12 \cdot 10 \cdot h$, so $h = 4.8$.</p></div><p class="why">Either leg can serve as a base for the other; the hypotenuse is a base for $h$.</p></li>
+          <li><div class="do"><p>Piece next to leg $6$: $\tfrac{6^2}{10} = 3.6$. Piece next to leg $8$: $\tfrac{8^2}{10} = 6.4$.</p></div><p class="why">From $a^2 = qc$: each leg squared equals the hypotenuse times the adjacent piece.</p></li>
+          <li><div class="do"><p>Check: $3.6 + 6.4 = 10$ and $3.6 \times 6.4 = 23.04 = 4.8^2$.</p></div><p class="why">The relation $h^2 = pq$ confirms the numbers.</p></li>
+        </ol>
+        <p class="answer">$h = 4.8$; pieces $3.6$ and $6.4$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An inradius</h3>
+        <div class="problem"><p>Find the inradius of the right triangle with sides $9$, $40$, $41$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area $= \tfrac12 \cdot 9 \cdot 40 = 180$, semiperimeter $s = \tfrac{90}{2} = 45$.</p></div><p class="why">The legs are perpendicular, so they serve as base and height.</p></li>
+          <li><div class="do"><p>$r = \tfrac{180}{45} = 4$.</p></div><p class="why">Area $= rs$. Check with $\tfrac{a + b - c}{2} = \tfrac{9 + 40 - 41}{2} = 4$. ✓</p></li>
+        </ol>
+        <p class="answer">$4$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Circles of an equilateral triangle</h3>
+        <div class="problem"><p>An equilateral triangle has side $12$. Find the radii of its inscribed and circumscribed circles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Altitude $= \sqrt{12^2 - 6^2} = 6\sqrt3$.</p></div><p class="why">The altitude bisects the base, making a right triangle with legs $6$ and $h$.</p></li>
+          <li><div class="do"><p>In an equilateral triangle the incenter, circumcenter and centroid coincide, and the centroid is $\tfrac23$ of the way down each median. So $R = \tfrac23 \cdot 6\sqrt3 = 4\sqrt3$ and $r = \tfrac13 \cdot 6\sqrt3 = 2\sqrt3$.</p></div><p class="why">The altitude is also a median, and the centroid splits medians $2 : 1$.</p></li>
+        </ol>
+        <p class="answer">$r = 2\sqrt3$, $R = 4\sqrt3$.</p>
+        <p class="book-next">Next in the book: Problems 360 and 362.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The sliding ladder</h3>
+        <div class="problem"><p>A $25$-foot ladder leans against a wall with its foot $7$ feet from the wall. The top slides down $4$ feet. How far does the foot slide out?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Top height at first: $\sqrt{25^2 - 7^2} = 24$.</p></div><p class="why">Wall, ground and ladder form a right triangle.</p></li>
+          <li><div class="do"><p>New height $20$, so the new distance is $\sqrt{25^2 - 20^2} = 15$.</p></div><p class="why">The ladder's length is unchanged; it is still the hypotenuse.</p></li>
+          <li><div class="do"><p>The foot moves $15 - 7 = 8$ feet.</p></div><p class="why">Notice the top moved $4$ but the foot moved $8$: the changes are not equal.</p></li>
+        </ol>
+        <p class="answer">$8$ feet</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two parallel chords</h3>
+        <div class="problem"><p>Parallel chords of length $10$ and $24$ lie on opposite sides of the center of a circle, $17$ apart. Find the radius.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the distances from the center be $d_1$ (to the chord of length $10$) and $d_2$. Then $d_1 + d_2 = 17$, and $r^2 = 5^2 + d_1^2 = 12^2 + d_2^2$.</p></div><p class="why">Each chord gives a right triangle with its half-chord; the chords are on opposite sides, so the distances add.</p></li>
+          <li data-think="You have $d_1^2 - d_2^2$ and $d_1 + d_2$. How do they combine?"><div class="do"><p>$d_1^2 - d_2^2 = 144 - 25 = 119$, and $d_1^2 - d_2^2 = (d_1 + d_2)(d_1 - d_2) = 17(d_1 - d_2)$, so $d_1 - d_2 = 7$.</p></div><p class="why">Difference of squares turns two equations into a linear pair.</p></li>
+          <li><div class="do"><p>$d_1 = 12$, $d_2 = 5$, and $r = \sqrt{25 + 144} = 13$.</p></div><p class="why">Check the other chord: $\sqrt{144 + 25} = 13$. ✓</p></li>
+        </ol>
+        <p class="answer">$13$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Incenter to circumcenter</h3>
+        <div class="problem"><p>In a right triangle with sides $5$, $12$, $13$, find the distance between the center of the inscribed circle and the center of the circumscribed circle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Place the right angle at the origin, the leg of length $12$ along the $x$-axis and the leg of length $5$ along the $y$-axis: vertices $(0, 0)$, $(12, 0)$, $(0, 5)$.</p></div><p class="why">Coordinates work well when there is a right angle to put the axes on (Chapter 16).</p></li>
+          <li><div class="do"><p>Inradius $r = \tfrac{5 + 12 - 13}{2} = 2$. The incircle touches both axes, so the incenter is $(2, 2)$.</p></div><p class="why">The incenter is $r$ away from each leg.</p></li>
+          <li data-think="Where is the center of the circle through the three vertices of a right triangle?"><div class="do"><p>The circumcenter is the midpoint of the hypotenuse: $(6, 2.5)$.</p></div><p class="why">The hypotenuse is a diameter of the circumcircle, because the right angle is inscribed in a semicircle.</p></li>
+          <li><div class="do"><p>Distance $= \sqrt{(6 - 2)^2 + (2.5 - 2)^2} = \sqrt{16.25} = \dfrac{\sqrt{65}}{2}$.</p></div><p class="why">Distance formula.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{\sqrt{65}}{2} \approx 4.03$</p>
+        <p class="key-idea">Mix tools: a right angle invites coordinates, and the semicircle fact locates the circumcenter.</p>
+        <p class="book-next">Next in the book: Problem 368.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 20.3 ===================== -->
+  <section class="lesson" id="s20-3" data-title="Areas by More Than One Route">
+    <h2><span class="sec-num">20.3</span> Areas by More Than One Route</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Push a triangle's top vertex sideways, keeping it at the same height, and the triangle leans over like a tipped-up book. It looks completely different, yet its area never changes. Area is stubborn in useful ways, and those ways let you find lengths and areas that seem out of reach.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Three habits for area problems:</p>
+      <div class="rule">
+        <p>1. <strong>Same height:</strong> triangles with the same height have areas in the ratio of their bases. Triangles with the same base and height have equal area.</p>
+        <p>2. <strong>Two ways:</strong> compute one area with two different base-height pairs, then solve for the unknown length.</p>
+        <p>3. <strong>Split or surround:</strong> cut a region into pieces you know, or enclose it in a rectangle and subtract the corners.</p>
+      </div>
+      <p>Useful consequences: a median splits a triangle into two equal areas; the three medians split it into six equal areas; a quadrilateral with perpendicular diagonals $d_1, d_2$ has area $\frac12 d_1 d_2$; a trapezoid's area is its height times its median (the average of the bases).</p>
+      <div class="note"><p>If $D$ is on side $AB$ and $E$ on side $AC$, then $\dfrac{[ADE]}{[ABC]} = \dfrac{AD}{AB} \cdot \dfrac{AE}{AC}$. Square brackets $[\;]$ denote area.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="areaRatios">
+      <figcaption><strong>Explore:</strong> Drag $A$ along the dashed line: the area of $\triangle ABC$ never changes. Drag $D$ along the base: the two smaller triangles share the height, so their areas are always in the ratio $BD : DC$. Change the height with the slider.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Splitting by a cevian</h3>
+        <div class="problem"><p>Point $D$ lies on side $BC$ of $\triangle ABC$ with $BD = 3$ and $DC = 5$. If $[ABC] = 40$, find $[ABD]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\triangle ABD$ and $\triangle ABC$ share the height from $A$ to line $BC$.</p></div><p class="why">Same height means the areas are in the ratio of the bases.</p></li>
+          <li><div class="do"><p>$[ABD] = \tfrac{3}{8} \cdot 40 = 15$.</p></div><p class="why">$BD$ is $3$ of the $8$ units of $BC$.</p></li>
+        </ol>
+        <p class="answer">$15$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A length from an area</h3>
+        <div class="problem"><p>A right triangle has sides $15$, $20$, $25$. Find the altitude to the hypotenuse.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area with the legs: $\tfrac12 \cdot 15 \cdot 20 = 150$.</p></div><p class="why">The legs are a base-height pair.</p></li>
+          <li><div class="do"><p>Area with the hypotenuse: $\tfrac12 \cdot 25 \cdot h = 150$, so $h = 12$.</p></div><p class="why">Same area, different base: solve for the height.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Triangle versus trapezoid</h3>
+        <div class="problem"><p>A triangle and a trapezoid have the same area and the same height. The triangle's base is $14$. Find the trapezoid's median.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Triangle: $\tfrac12 \cdot 14 \cdot h = 7h$. Trapezoid: $m \cdot h$, where $m$ is the median.</p></div><p class="why">Trapezoid area = average of the bases times height, and the median is that average.</p></li>
+          <li><div class="do"><p>$7h = mh$, so $m = 7$.</p></div><p class="why">The common height cancels.</p></li>
+        </ol>
+        <p class="answer">$7$</p>
+        <p class="book-next">Next in the book: Problem 354.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Perpendicular diagonals</h3>
+        <div class="problem"><p>A rhombus has diagonals $10$ and $24$. Find its area and side length.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The diagonals of a rhombus are perpendicular, so the area is $\tfrac12 \cdot 10 \cdot 24 = 120$.</p></div><p class="why">The diagonals cut it into four right triangles that rearrange into half of a $10 \times 24$ rectangle.</p></li>
+          <li><div class="do"><p>The diagonals bisect each other, so each right triangle has legs $5$ and $12$ and hypotenuse (the side) $13$.</p></div><p class="why">Pythagoras on one of the four triangles.</p></li>
+        </ol>
+        <p class="answer">Area $120$, side $13$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Six equal pieces</h3>
+        <div class="problem"><p>The medians of $\triangle ABC$, of area $36$, meet at the centroid $G$. Let $M$, $N$, $P$ be the midpoints of $BC$, $AB$, $AC$. Find $[GBC]$ and the area of quadrilateral $ANGP$.</p></div>
+        <ol class="steps">
+          <li data-think="Which pairs of small triangles share a base length and a height?"><div class="do"><p>The three medians cut the triangle into six small triangles of equal area, each $36 / 6 = 6$.</p></div><p class="why">The two small triangles on either side of a midpoint have equal bases and the same height from $G$, so they match in pairs; and each median halves the whole triangle, which forces all three pairs to be equal.</p></li>
+          <li><div class="do"><p>$\triangle GBC$ is made of two of them, $\triangle GBM$ and $\triangle GMC$: $[GBC] = 12$.</p></div><p class="why">The median from $A$ passes through $G$ and $M$, splitting $\triangle GBC$ in two.</p></li>
+          <li><div class="do"><p>Quadrilateral $ANGP$ is made of $\triangle ANG$ and $\triangle AGP$, two more of the pieces: area $12$.</p></div><p class="why">Segment $AG$ lies along the median from $A$ and splits the quadrilateral into two of the six small triangles.</p></li>
+        </ol>
+        <p class="answer">$[GBC] = 12$ and $[ANGP] = 12$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A trapezoid with perpendicular diagonals</h3>
+        <div class="problem"><p>An isosceles trapezoid has bases $10$ and $6$, and its diagonals are perpendicular. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the diagonals meet at $E$. By symmetry, $E$ is equally far from the two ends of each base, so the triangles $E$ makes with each base are isosceles right triangles.</p></div><p class="why">In an isosceles trapezoid the diagonals are equal and cut each other into matching pieces; with a right angle at $E$, the base angles are $45^\circ$.</p></li>
+          <li><div class="do"><p>An isosceles right triangle's height to its hypotenuse is half the hypotenuse: $5$ for the long base and $3$ for the short base. The trapezoid's height is $5 + 3 = 8$.</p></div><p class="why">The two heights from $E$ lie on the same line (the axis of symmetry).</p></li>
+          <li><div class="do"><p>Area $= \tfrac{10 + 6}{2} \cdot 8 = 64$.</p></div><p class="why">Check: each diagonal is $5\sqrt2 + 3\sqrt2 = 8\sqrt2$, and $\tfrac12 (8\sqrt2)^2 = 64$. ✓</p></li>
+        </ol>
+        <p class="answer">$64$</p>
+        <p class="book-next">Next in the book: Problems 351 and 399.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A corner triangle</h3>
+        <div class="problem"><p>In $\triangle ABC$ of area $30$, $D$ is on $AB$ with $AD : DB = 2 : 3$, and $E$ is the midpoint of $AC$. Find $[ADE]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$[ABE] = \tfrac12 [ABC] = 15$.</p></div><p class="why">$BE$ is a median: triangles $ABE$ and $CBE$ have equal bases $AE = EC$ and the same height from $B$.</p></li>
+          <li data-think="Inside $\triangle ABE$, which two triangles share a height from $E$?"><div class="do"><p>Inside $\triangle ABE$, triangles $ADE$ and $DBE$ share the height from $E$ to $AB$, so $[ADE] = \tfrac{2}{5} \cdot 15 = 6$.</p></div><p class="why">$AD$ is $2$ of the $5$ parts of $AB$.</p></li>
+        </ol>
+        <p class="answer">$6$</p>
+        <p class="key-idea">Chain same-height ratios: $[ADE] = \frac{AD}{AB} \cdot \frac{AE}{AC} \cdot [ABC]$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Surround and subtract</h3>
+        <div class="problem"><p>Find the area of the triangle with vertices $(1, 1)$, $(7, 3)$, $(3, 8)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Enclose it in the rectangle $1 \le x \le 7$, $1 \le y \le 8$: area $6 \times 7 = 42$.</p></div><p class="why">The triangle touches all four sides of this box.</p></li>
+          <li><div class="do"><p>The three right-triangle corners outside it have areas $\tfrac12 \cdot 6 \cdot 2 = 6$, $\tfrac12 \cdot 4 \cdot 5 = 10$ and $\tfrac12 \cdot 2 \cdot 7 = 7$.</p></div><p class="why">Each corner triangle has legs along the box: for example, from $(1, 1)$ to $(7, 3)$ is $6$ across and $2$ up.</p></li>
+          <li><div class="do"><p>$42 - (6 + 10 + 7) = 19$.</p></div><p class="why">What is left after removing the corners is the triangle.</p></li>
+        </ol>
+        <p class="answer">$19$</p>
+        <p class="book-next">Next in the book: Problems 347, 361, 383 and 400.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 20.4 ===================== -->
+  <section class="lesson" id="s20-4" data-title="Symmetry and Shortest Paths">
+    <h2><span class="sec-num">20.4</span> Symmetry and Shortest Paths</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>You are camping, and before walking back to your tent you must fetch water from a straight river. Where along the bank should you go to make the walk as short as possible? Picture the river as a mirror: the trip to the tent's reflection is a straight line, and straight lines are shortest.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Reflecting across a line $\ell$ preserves distances, and every point $P$ of $\ell$ is equally far from $B$ and from its mirror image $B'$. So for any path $A \to P \to B$ with $P$ on $\ell$,</p>
+      <div class="rule"><p>$$AP + PB = AP + PB' \ \ge\ AB',$$</p><p>with equality exactly when $P$ lies on segment $AB'$ (here $A$ and $B$ are on the same side of $\ell$).</p></div>
+      <p>The best path bounces off $\ell$ like light off a mirror: the angles it makes with $\ell$ on the way in and out are equal. For a path that must touch two lines, reflect twice.</p>
+      <p>Symmetry also explains folding: when paper is folded so that point $A$ lands on point $C$, the crease is the perpendicular bisector of $AC$, because every point of the crease is equally far from $A$ and $C$.</p>
+      <div class="note"><p>Reflections are studied in full in Chapter 19. In coordinates, reflecting in the $x$-axis just flips the sign of $y$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="reflectionPath">
+      <figcaption><strong>Explore:</strong> Drag the camp $A$, the tent $B$ and the water point $P$ on the river. Show the reflection $B'$ and slide $P$ until the dashed path $A \to P \to B'$ is straight: that is the shortest trip.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A point and its mirror image</h3>
+        <div class="problem"><p>Reflect $B = (3, 5)$ in the $x$-axis. Show that the point $P = (7, 0)$ is equally far from $B$ and its image.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$B' = (3, -5)$.</p></div><p class="why">Reflecting in the $x$-axis keeps $x$ and flips the sign of $y$.</p></li>
+          <li><div class="do"><p>$PB = \sqrt{4^2 + 5^2} = \sqrt{41}$ and $PB' = \sqrt{4^2 + (-5)^2} = \sqrt{41}$.</p></div><p class="why">The mirror line is the perpendicular bisector of $BB'$, so every point on it is equidistant from $B$ and $B'$.</p></li>
+        </ol>
+        <p class="answer">$B' = (3, -5)$, and $PB = PB' = \sqrt{41}$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The river problem</h3>
+        <div class="problem"><p>Camp is at $A = (0, 3)$ and the tent at $B = (8, 3)$; the river is the $x$-axis. Find the shortest walk from camp to the river to the tent.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflect the tent: $B' = (8, -3)$.</p></div><p class="why">Any path $A \to P \to B$ has the same length as $A \to P \to B'$.</p></li>
+          <li><div class="do"><p>Shortest: $AB' = \sqrt{8^2 + 6^2} = 10$.</p></div><p class="why">A straight segment is the shortest path from $A$ to $B'$.</p></li>
+          <li><div class="do"><p>The segment crosses the $x$-axis halfway, at $P = (4, 0)$.</p></div><p class="why">$A$ is $3$ above and $B'$ is $3$ below, so by symmetry the crossing is in the middle.</p></li>
+        </ol>
+        <p class="answer">$10$, fetching water at $(4, 0)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An uneven river trip</h3>
+        <div class="problem"><p>Now $A = (1, 2)$ and $B = (7, 6)$, with the river along the $x$-axis. Find the shortest walk and where to touch the river.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$B' = (7, -6)$, so the shortest length is $\sqrt{6^2 + 8^2} = 10$.</p></div><p class="why">Reflect, then measure straight.</p></li>
+          <li><div class="do"><p>The segment from $(1, 2)$ to $(7, -6)$ has slope $-\tfrac43$. It drops $2$ to reach $y = 0$, which takes a run of $2 \cdot \tfrac34 = 1.5$: $P = (2.5, 0)$.</p></div><p class="why">Walk along the line from $A$ until $y = 0$.</p></li>
+        </ol>
+        <p class="answer">$10$, touching the river at $(2.5, 0)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A bank shot</h3>
+        <div class="problem"><p>A ball at $(2, 3)$ is aimed at the cushion along the $x$-axis so that it bounces and hits a ball at $(6, 1)$. Where should it hit the cushion, and how far does it travel?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Aim at the mirror image $(6, -1)$. The line from $(2, 3)$ has slope $\tfrac{-4}{4} = -1$ and reaches $y = 0$ at $x = 5$.</p></div><p class="why">A ball bounces with equal angles, which is exactly the reflected straight path.</p></li>
+          <li><div class="do"><p>Distance $= \sqrt{4^2 + 4^2} = 4\sqrt2$.</p></div><p class="why">The bent path has the same length as the straight one to the image.</p></li>
+        </ol>
+        <p class="answer">Hit $(5, 0)$; the ball travels $4\sqrt2$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Touching two walls</h3>
+        <div class="problem"><p>Walk from $A = (1, 4)$ to the $y$-axis, then to the $x$-axis, then to $B = (5, 2)$. Find the shortest such walk.</p></div>
+        <ol class="steps">
+          <li data-think="Which point should be reflected in which axis?"><div class="do"><p>Reflect $A$ in the $y$-axis: $A' = (-1, 4)$. Reflect $B$ in the $x$-axis: $B' = (5, -2)$.</p></div><p class="why">The first leg touches the $y$-axis, so mirror $A$ there; the last leg touches the $x$-axis, so mirror $B$ there.</p></li>
+          <li><div class="do"><p>Length $\ge A'B' = \sqrt{6^2 + 6^2} = 6\sqrt2$.</p></div><p class="why">The three legs unfold into a path from $A'$ to $B'$.</p></li>
+          <li><div class="do"><p>Line $A'B'$ is $y = 3 - x$: it crosses the $y$-axis at $(0, 3)$ and the $x$-axis at $(3, 0)$, in the right order. Check: $\sqrt2 + 3\sqrt2 + 2\sqrt2 = 6\sqrt2$.</p></div><p class="why">The crossing points must lie on the correct parts of the walls for the unfolded path to be a real walk.</p></li>
+        </ol>
+        <p class="answer">$6\sqrt2$, via $(0, 3)$ and $(3, 0)$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Distances to the sides</h3>
+        <div class="problem"><p>$P$ is any point inside an equilateral triangle of side $2$. Show that the sum of its distances to the three sides is always $\sqrt3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Join $P$ to the three vertices, splitting the triangle into three triangles with bases $2$ (the sides) and heights $d_1, d_2, d_3$ (the distances).</p></div><p class="why">Split the region into pieces whose areas involve the unknown distances.</p></li>
+          <li><div class="do"><p>Total area: $\tfrac12 \cdot 2 (d_1 + d_2 + d_3) = d_1 + d_2 + d_3$.</p></div><p class="why">The three bases are equal, so the areas combine neatly.</p></li>
+          <li><div class="do"><p>But the area is also $\tfrac{\sqrt3}{4} \cdot 2^2 = \sqrt3$. So $d_1 + d_2 + d_3 = \sqrt3$, the altitude.</p></div><p class="why">Area computed two ways, using the symmetry that all three sides are equal.</p></li>
+        </ol>
+        <p class="answer">The sum is always $\sqrt3$, the height of the triangle.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The crease of a fold</h3>
+        <div class="problem"><p>A $8 \times 6$ rectangle is folded so that two opposite corners meet. How long is the crease?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Place corners at $A = (0, 0)$ and $C = (8, 6)$. The crease is the perpendicular bisector of $AC$: it passes through the midpoint $(4, 3)$ with slope $-\tfrac43$.</p></div><p class="why">Folding $A$ onto $C$ means every point of the crease is equally far from both, and $AC$ has slope $\tfrac34$.</p></li>
+          <li data-think="Where does this line meet the bottom edge $y = 0$ and the top edge $y = 6$?"><div class="do"><p>At $y = 0$: $-3 = -\tfrac43(x - 4)$, so $x = \tfrac{25}{4}$. At $y = 6$: $3 = -\tfrac43(x - 4)$, so $x = \tfrac74$.</p></div><p class="why">The crease runs across the paper between those two edges.</p></li>
+          <li><div class="do"><p>Length $= \sqrt{\left(\tfrac{25}{4} - \tfrac74\right)^2 + 6^2} = \sqrt{\tfrac{81}{4} + 36} = \sqrt{\tfrac{225}{4}} = \tfrac{15}{2}$.</p></div><p class="why">Distance formula between $(\tfrac{25}{4}, 0)$ and $(\tfrac74, 6)$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{15}{2}$</p>
+        <p class="key-idea">A fold is a reflection; its crease is a perpendicular bisector.</p>
+        <p class="book-next">Next in the book: Problems 363, 366 and 376.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-20">
+    <h2 id="further-20">Further reading in the book</h2>
+    <ul>
+      <li><strong>Chapter 20</strong> has no text sections; it is the list Problems to Solve for Chapter 20, Problems 343–401. The groupings below are this page's suggestions.</li>
+      <li><strong>§20.1 Circles That Touch</strong>: Problems 343, 349, 353, 357, 375, 380, 387 and 389.</li>
+      <li><strong>§20.2 Right Triangles Everywhere</strong>: Problems 344, 346, 359, 360, 362, 364, 368, 370 and 388.</li>
+      <li><strong>§20.3 Areas by More Than One Route</strong>: Problems 347, 348, 351, 354, 361, 383, 395, 399 and 400.</li>
+      <li><strong>§20.4 Symmetry and Shortest Paths</strong>: Problems 363, 365, 366, 376 and 391.</li>
+      <li>The proof problems (385, 386, 390, 392, 394, 396) mix all of these ideas and are the most demanding.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 20 explorers ---------- */
+(function () {
+  "use strict";
+
+  function lbl(g, x, y, t, o) {
+    o = o || {};
+    g.appendChild(W.s("text", { x: x, y: y, class: "lbl", "text-anchor": o.anchor || "middle", fill: o.fill, style: "font: 700 " + (o.size || 15) + "px var(--font-mono);paint-order:stroke;stroke:var(--surface-solid);stroke-width:4px;stroke-linejoin:round", text: t }));
+  }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function f2(x) { return W.fmt(x, 2); }
+
+  /* 20.1 — common tangents of two circles */
+  AOPS.registerWidget("commonTangents", function (body) {
+    var Wd = 640, Ht = 380, u = 20;
+    var svg = W.stage(body, { w: Wd, h: Ht, label: "Two circles with draggable centers and all their common tangent lines" });
+    var ctl = W.controls(body), out = W.readout(body);
+    var r1 = 4, r2 = 2;
+    var G = W.s("g"); svg.appendChild(G);
+    function snapH(x0, y0, name, col) {
+      var h = W.handle(svg, { x: x0, y: y0, label: name + "; arrow keys move it one unit", keyStep: u, color: col,
+        onMove: function (px, py) { var x = clamp(Math.round(px / u) * u, u, Wd - u), y = clamp(Math.round(py / u) * u, u, Ht - u); h.pos.x = x; h.pos.y = y; draw(); return [x, y]; },
+        valueText: function (x, y) { return name + " at " + Math.round(x / u) + ", " + Math.round(y / u); } });
+      return h;
+    }
+    var C1 = snapH(220, 200, "Center of circle 1"), C2 = snapH(440, 180, "Center of circle 2", "var(--plot-3)");
+    W.slider(ctl, { label: "Radius r₁", min: 1, max: 7, value: r1, onInput: function (v) { r1 = v; draw(); } });
+    W.slider(ctl, { label: "Radius r₂", min: 1, max: 7, value: r2, onInput: function (v) { r2 = v; draw(); } });
+    function tangents(a, b, R1, R2, internal) {
+      var dx = b[0] - a[0], dy = b[1] - a[1], d = Math.hypot(dx, dy);
+      var k = internal ? -(R1 + R2) / d : (R2 - R1) / d;
+      if (Math.abs(k) > 1 + 1e-9) return [];
+      var s = Math.sqrt(Math.max(0, 1 - k * k)), ux = dx / d, uy = dy / d, vx = -uy, vy = ux;
+      var res = [];
+      [1, -1].forEach(function (sg) {
+        var nx = k * ux + sg * s * vx, ny = k * uy + sg * s * vy;
+        var T1 = [a[0] - R1 * nx, a[1] - R1 * ny];
+        var T2 = internal ? [b[0] + R2 * nx, b[1] + R2 * ny] : [b[0] - R2 * nx, b[1] - R2 * ny];
+        res.push({ n: [nx, ny], T1: T1, T2: T2 });
+      });
+      if (s < 1e-9) res = res.slice(0, 1);
+      return res;
+    }
+    function draw() {
+      if (!C2) return;
+      var a = [C1.pos.x, C1.pos.y], b = [C2.pos.x, C2.pos.y], R1 = r1 * u, R2 = r2 * u;
+      var dU = Math.hypot(b[0] - a[0], b[1] - a[1]) / u;
+      W.clear(G);
+      G.appendChild(W.s("circle", { cx: a[0], cy: a[1], r: R1, fill: "color-mix(in srgb, var(--plot-1) 12%, transparent)", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      G.appendChild(W.s("circle", { cx: b[0], cy: b[1], r: R2, fill: "color-mix(in srgb, var(--plot-3) 12%, transparent)", stroke: "var(--plot-3)", "stroke-width": 3 }));
+      G.appendChild(W.s("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: "var(--faint)", "stroke-dasharray": "4 5" }));
+      var same = dU < 1e-9;
+      var ext = same ? [] : tangents(a, b, R1, R2, false), inn = same ? [] : tangents(a, b, R1, R2, true);
+      function drawT(t, col) {
+        var dir = [-t.n[1], t.n[0]];
+        G.appendChild(W.s("line", { x1: t.T1[0] - dir[0] * 1200, y1: t.T1[1] - dir[1] * 1200, x2: t.T1[0] + dir[0] * 1200, y2: t.T1[1] + dir[1] * 1200, stroke: col, "stroke-width": 1.6, opacity: 0.75 }));
+        G.appendChild(W.s("line", { x1: t.T1[0], y1: t.T1[1], x2: t.T2[0], y2: t.T2[1], stroke: col, "stroke-width": 4 }));
+        [t.T1, t.T2].forEach(function (p) { G.appendChild(W.s("circle", { cx: p[0], cy: p[1], r: 4.5, fill: col })); });
+      }
+      ext.forEach(function (t) { drawT(t, "var(--accent-2)"); });
+      inn.forEach(function (t) { drawT(t, "var(--plot-4)"); });
+      var n = ext.length + inn.length, sum = r1 + r2, diff = Math.abs(r1 - r2);
+      var state;
+      if (same && r1 === r2) state = "The circles coincide: every tangent line is common.";
+      else if (same) state = "Concentric circles: no common tangents.";
+      else state = n + " common tangent" + (n === 1 ? "" : "s") + " (" + ext.length + " external, " + inn.length + " internal)";
+      var s = "$d \\approx " + f2(dU) + "$, &nbsp; $r_1 + r_2 = " + sum + "$, &nbsp; $|r_1 - r_2| = " + diff + "$<br>" + state;
+      if (ext.length && !same) s += "<br>External tangent length $\\sqrt{d^2 - (r_1 - r_2)^2} \\approx " + f2(Math.sqrt(Math.max(0, dU * dU - diff * diff))) + "$";
+      if (inn.length) s += " &nbsp;·&nbsp; internal $\\sqrt{d^2 - (r_1 + r_2)^2} \\approx " + f2(Math.sqrt(Math.max(0, dU * dU - sum * sum))) + "$";
+      out.set(s);
+    }
+    draw();
+  });
+
+  /* 20.2 — Thales semicircle, altitude and incircle */
+  AOPS.registerWidget("thalesAltitude", function (body) {
+    var Wd = 640, Ht = 340, cx = 320, by = 300, R = 250, u = 25;
+    var svg = W.stage(body, { w: Wd, h: Ht, label: "Right triangle ABC with C on a semicircle over diameter AB" });
+    var ctl = W.controls(body), out = W.readout(body);
+    var mode = "alt";
+    svg.appendChild(W.s("path", { d: "M" + (cx - R) + " " + by + "A" + R + " " + R + " 0 0 1 " + (cx + R) + " " + by + "Z", fill: "none", stroke: "var(--border-strong)", "stroke-width": 2, "stroke-dasharray": "5 5" }));
+    var G = W.s("g"); svg.appendChild(G);
+    var ang = 2.2;
+    var C = W.handle(svg, { x: cx + R * Math.cos(ang), y: by - R * Math.sin(ang), label: "Vertex C on the semicircle; arrow keys move it", keyStep: 10,
+      onMove: function (px, py) { ang = clamp(Math.atan2(by - py, px - cx), 0.12, Math.PI - 0.12); draw(); return [cx + R * Math.cos(ang), by - R * Math.sin(ang)]; },
+      valueText: function () { return "C at " + Math.round(ang * 180 / Math.PI) + " degrees"; } });
+    W.segmented(ctl, { title: "Show", value: mode, options: [{ value: "alt", label: "Altitude" }, { value: "inc", label: "Incircle" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      var A = [cx - R, by], B = [cx + R, by], Cp = [cx + R * Math.cos(ang), by - R * Math.sin(ang)], H = [Cp[0], by];
+      var c = 2 * R / u, b = Math.hypot(Cp[0] - A[0], Cp[1] - A[1]) / u, a = Math.hypot(Cp[0] - B[0], Cp[1] - B[1]) / u;
+      var p = (H[0] - A[0]) / u, q = (B[0] - H[0]) / u, h = (by - Cp[1]) / u;
+      W.clear(G);
+      G.appendChild(W.s("polygon", { points: [A, B, Cp].map(function (t) { return t.join(","); }).join(" "), fill: "color-mix(in srgb, var(--plot-1) 14%, transparent)", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      // right-angle mark at C
+      var ua = [(A[0] - Cp[0]) / (b * u), (A[1] - Cp[1]) / (b * u)], ub = [(B[0] - Cp[0]) / (a * u), (B[1] - Cp[1]) / (a * u)], m = 14;
+      G.appendChild(W.s("path", { d: "M" + (Cp[0] + ua[0] * m) + " " + (Cp[1] + ua[1] * m) + "L" + (Cp[0] + ua[0] * m + ub[0] * m) + " " + (Cp[1] + ua[1] * m + ub[1] * m) + "L" + (Cp[0] + ub[0] * m) + " " + (Cp[1] + ub[1] * m), fill: "none", stroke: "var(--ink)", "stroke-width": 1.5 }));
+      if (mode === "alt") {
+        G.appendChild(W.s("line", { x1: Cp[0], y1: Cp[1], x2: H[0], y2: H[1], stroke: "var(--accent-2)", "stroke-width": 2.5 }));
+        G.appendChild(W.s("path", { d: "M" + (H[0] - 10) + " " + by + "V" + (by - 10) + "H" + H[0], fill: "none", stroke: "var(--ink)", "stroke-width": 1.5 }));
+        lbl(G, (A[0] + H[0]) / 2, by + 26, "p", { fill: "var(--plot-2)" });
+        lbl(G, (B[0] + H[0]) / 2, by + 26, "q", { fill: "var(--plot-3)" });
+        G.appendChild(W.s("line", { x1: A[0], y1: by + 6, x2: H[0], y2: by + 6, stroke: "var(--plot-2)", "stroke-width": 4 }));
+        G.appendChild(W.s("line", { x1: H[0], y1: by + 6, x2: B[0], y2: by + 6, stroke: "var(--plot-3)", "stroke-width": 4 }));
+        lbl(G, H[0] + 12, (by + Cp[1]) / 2 + 5, "h", { fill: "var(--accent-2)", anchor: "start" });
+        lbl(G, H[0], by + 26, "H", { size: 13 });
+      } else {
+        var per = a + b + c, I = [(a * A[0] + b * B[0] + c * Cp[0]) / per, (a * A[1] + b * B[1] + c * Cp[1]) / per], r = (a + b - c) / 2;
+        G.appendChild(W.s("circle", { cx: I[0], cy: I[1], r: r * u, fill: "color-mix(in srgb, var(--plot-4) 18%, transparent)", stroke: "var(--plot-4)", "stroke-width": 2.5 }));
+        G.appendChild(W.s("line", { x1: I[0], y1: I[1], x2: I[0], y2: by, stroke: "var(--plot-4)", "stroke-width": 2, "stroke-dasharray": "4 4" }));
+        G.appendChild(W.s("circle", { cx: I[0], cy: I[1], r: 4, fill: "var(--plot-4)" }));
+        lbl(G, I[0] + 10, (I[1] + by) / 2 + 5, "r", { fill: "var(--plot-4)", anchor: "start" });
+      }
+      lbl(G, A[0] - 14, by + 6, "A", { anchor: "end" });
+      lbl(G, B[0] + 14, by + 6, "B", { anchor: "start" });
+      lbl(G, Cp[0], Cp[1] - 18, "C");
+      var s = "Angle at $C$: $90^\\circ$ &nbsp;·&nbsp; $a = BC \\approx " + f2(a) + "$, $b = AC \\approx " + f2(b) + "$, $c = AB = 10$<br>";
+      if (mode === "alt") s += "$h \\approx " + f2(h) + "$, $p \\approx " + f2(p) + "$, $q \\approx " + f2(q) + "$: &nbsp; $h^2 \\approx " + f2(h * h) + "$, $pq \\approx " + f2(p * q) + "$, &nbsp; $\\dfrac{ab}{c} \\approx " + f2(a * b / c) + "$";
+      else s += "$r = \\dfrac{a + b - c}{2} \\approx " + f2((a + b - c) / 2) + "$ &nbsp;·&nbsp; $\\dfrac{\\text{Area}}{s} = \\dfrac{" + f2(a * b / 2) + "}{" + f2((a + b + c) / 2) + "} \\approx " + f2((a * b / 2) / ((a + b + c) / 2)) + "$";
+      out.set(s);
+    }
+    draw();
+  });
+
+  /* 20.3 — area ratios with a shared height */
+  AOPS.registerWidget("areaRatios", function (body) {
+    var Wd = 640, Ht = 340, u = 40, x0 = 80, by = 300;
+    var svg = W.stage(body, { w: Wd, h: Ht, label: "Triangle ABC with apex A sliding on a parallel line and point D on base BC" });
+    var ctl = W.controls(body), out = W.readout(body);
+    var hU = 5, ax = 4, dx = 5;
+    var G = W.s("g"); svg.appendChild(G);
+    function X(x) { return x0 + x * u; }
+    var Ah = W.handle(svg, { x: X(ax), y: by - hU * u, label: "Apex A; it slides along a line parallel to BC", keyStep: u / 2,
+      onMove: function (px) { ax = clamp(Math.round((px - x0) / (u / 2)) / 2, -1.5, 13.5); draw(); return [X(ax), by - hU * u]; },
+      valueText: function () { return "A above x = " + ax; } });
+    var Dh = W.handle(svg, { x: X(dx), y: by, label: "Point D on base BC", keyStep: u, color: "var(--plot-3)",
+      onMove: function (px) { dx = clamp(Math.round((px - x0) / u), 1, 11); draw(); return [X(dx), by]; },
+      valueText: function () { return "BD = " + dx; } });
+    W.slider(ctl, { label: "Height", min: 1, max: 6, value: hU, onInput: function (v) { hU = v; Ah.set(X(ax), by - hU * u, true); draw(); } });
+    function draw() {
+      var A = [X(ax), by - hU * u], B = [X(0), by], C = [X(12), by], D = [X(dx), by];
+      W.clear(G);
+      G.appendChild(W.s("line", { x1: 10, y1: A[1], x2: Wd - 10, y2: A[1], stroke: "var(--faint)", "stroke-dasharray": "6 6" }));
+      G.appendChild(W.s("polygon", { points: [A, B, D].map(function (t) { return t.join(","); }).join(" "), fill: "color-mix(in srgb, var(--plot-2) 30%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      G.appendChild(W.s("polygon", { points: [A, D, C].map(function (t) { return t.join(","); }).join(" "), fill: "color-mix(in srgb, var(--plot-4) 30%, transparent)", stroke: "var(--plot-4)", "stroke-width": 2 }));
+      G.appendChild(W.s("line", { x1: B[0], y1: by, x2: C[0], y2: by, stroke: "var(--plot-1)", "stroke-width": 4 }));
+      G.appendChild(W.s("line", { x1: A[0], y1: A[1], x2: A[0], y2: by, stroke: "var(--accent-2)", "stroke-width": 2, "stroke-dasharray": "4 4" }));
+      if (A[0] < B[0] || A[0] > C[0]) G.appendChild(W.s("line", { x1: A[0], y1: by, x2: A[0] < B[0] ? B[0] : C[0], y2: by, stroke: "var(--accent-2)", "stroke-width": 1.5, "stroke-dasharray": "2 4" }));
+      lbl(G, A[0] + 10, (A[1] + by) / 2, "h = " + hU, { fill: "var(--accent-2)", anchor: "start", size: 13 });
+      lbl(G, A[0], A[1] - 16, "A");
+      lbl(G, B[0] - 12, by + 6, "B", { anchor: "end" });
+      lbl(G, C[0] + 12, by + 6, "C", { anchor: "start" });
+      lbl(G, D[0], by + 30, "D", { fill: "var(--plot-3)" });
+      var tot = 6 * hU, a1 = dx * hU / 2, a2 = (12 - dx) * hU / 2;
+      out.set("$[ABC] = \\tfrac12 \\cdot 12 \\cdot " + hU + " = " + tot + "$ (no matter where $A$ slides)<br>$[ABD] = \\tfrac12 \\cdot " + dx + " \\cdot " + hU + " = " + W.fmt(a1, 1) + "$, &nbsp; $[ADC] = \\tfrac12 \\cdot " + (12 - dx) + " \\cdot " + hU + " = " + W.fmt(a2, 1) + "$<br>Ratio $[ABD] : [ADC] = " + W.fmt(a1, 1) + " : " + W.fmt(a2, 1) + " = BD : DC = " + dx + " : " + (12 - dx) + "$");
+    }
+    draw();
+  });
+
+  /* 20.4 — shortest path via reflection */
+  AOPS.registerWidget("reflectionPath", function (body) {
+    var Wd = 640, Ht = 440, u = 30, x0 = 50, ry = 230;
+    var svg = W.stage(body, { w: Wd, h: Ht, label: "Camp A and tent B above a river; a path touching the river at P, with the mirror image of B" });
+    var ctl = W.controls(body), out = W.readout(body);
+    var showR = true;
+    function X(x) { return x0 + x * u; }
+    function Y(y) { return ry - y * u; }
+    svg.appendChild(W.s("rect", { x: 0, y: ry, width: Wd, height: Ht - ry, fill: "color-mix(in srgb, var(--plot-2) 12%, transparent)" }));
+    svg.appendChild(W.s("line", { x1: 0, y1: ry, x2: Wd, y2: ry, stroke: "var(--plot-2)", "stroke-width": 3 }));
+    lbl(svg, Wd - 14, ry + 22, "river (mirror)", { anchor: "end", fill: "var(--plot-2)", size: 13 });
+    var G = W.s("g"); svg.appendChild(G);
+    var st = { ax: 3, ay: 5, bx: 15, by: 3, px: 7 };
+    function gh(key, name, col) {
+      var kx = key + "x", ky = key + "y";
+      var h = W.handle(svg, { x: X(st[kx]), y: Y(st[ky]), label: name + "; arrow keys move it", keyStep: u, color: col,
+        onMove: function (px, py) { st[kx] = clamp(Math.round((px - x0) / u), 0, 18); st[ky] = clamp(Math.round((ry - py) / u), 1, 6); draw(); return [X(st[kx]), Y(st[ky])]; },
+        valueText: function () { return name + " at " + st[kx] + ", " + st[ky]; } });
+      return h;
+    }
+    var Ahd = gh("a", "Camp A"), Bhd = gh("b", "Tent B", "var(--plot-3)");
+    var Ph = W.handle(svg, { x: X(st.px), y: ry, label: "Water point P on the river", keyStep: u / 2, color: "var(--plot-4)",
+      onMove: function (px) { st.px = clamp(Math.round((px - x0) / (u / 10)) / 10, -1.5, 19.5); draw(); return [X(st.px), ry]; },
+      valueText: function () { return "P at x = " + st.px; } });
+    W.segmented(ctl, { title: "Reflection of B", value: "show", options: [{ value: "show", label: "Show" }, { value: "hide", label: "Hide" }], onChange: function (v) { showR = v === "show"; draw(); } });
+    W.button(ctl, "Move P to the best spot", function () { st.px = Math.round(best() * 10) / 10; Ph.set(X(st.px), ry, true); draw(); });
+    function best() { return st.ax + (st.bx - st.ax) * st.ay / (st.ay + st.by); }
+    function draw() {
+      if (!Ph) return;
+      var A = [X(st.ax), Y(st.ay)], B = [X(st.bx), Y(st.by)], Bp = [X(st.bx), Y(-st.by)], P = [X(st.px), ry];
+      W.clear(G);
+      if (showR) {
+        G.appendChild(W.s("line", { x1: B[0], y1: B[1], x2: Bp[0], y2: Bp[1], stroke: "var(--faint)", "stroke-dasharray": "3 5" }));
+        G.appendChild(W.s("line", { x1: P[0], y1: P[1], x2: Bp[0], y2: Bp[1], stroke: "var(--plot-3)", "stroke-width": 2, "stroke-dasharray": "7 5" }));
+        G.appendChild(W.s("line", { x1: A[0], y1: A[1], x2: Bp[0], y2: Bp[1], stroke: "var(--accent-3)", "stroke-width": 1.5, opacity: 0.6 }));
+        G.appendChild(W.s("circle", { cx: Bp[0], cy: Bp[1], r: 8, fill: "none", stroke: "var(--plot-3)", "stroke-width": 2.5, "stroke-dasharray": "3 3" }));
+        lbl(G, Bp[0] + 14, Bp[1] + 5, "B′", { anchor: "start", fill: "var(--plot-3)" });
+      }
+      G.appendChild(W.s("polyline", { points: [A, P, B].map(function (t) { return t.join(","); }).join(" "), fill: "none", stroke: "var(--accent)", "stroke-width": 3.5 }));
+      lbl(G, A[0], A[1] - 18, "A");
+      lbl(G, B[0], B[1] - 18, "B", { fill: "var(--plot-3)" });
+      lbl(G, P[0], ry - 16, "P", { fill: "var(--plot-4)" });
+      var ap = Math.hypot(st.px - st.ax, st.ay), pb = Math.hypot(st.bx - st.px, st.by), mn = Math.hypot(st.bx - st.ax, st.ay + st.by);
+      var gap = ap + pb - mn;
+      out.set("$AP + PB \\approx " + f2(ap) + " + " + f2(pb) + " = " + f2(ap + pb) + "$ &nbsp;·&nbsp; shortest possible $AB' = \\sqrt{" + (st.bx - st.ax) + "^2 + " + (st.ay + st.by) + "^2} \\approx " + f2(mn) + "$<br>" +
+        (gap < 0.005 ? "<strong>Shortest!</strong> $P$ lies on segment $AB'$, so the path bounces at equal angles." : "Extra distance $\\approx " + f2(gap) + "$. Slide $P$ to where the dashed path $A \\to P \\to B'$ is straight."));
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

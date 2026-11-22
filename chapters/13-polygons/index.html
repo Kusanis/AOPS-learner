@@ -1,0 +1,774 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 13: Polygons · AoPS Learner</title>
+  <meta name="description" content="Naming polygons, counting diagonals, interior and exterior angle sums, regular polygons with their inradius, circumradius and area, and the regular hexagon, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="13" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 13 · Geometry</span>
+    <h1>Polygons</h1>
+    <p class="lede">Triangles and quadrilaterals are just the start. A polygon can have any number of sides, and a handful of counting arguments tell you a surprising amount about all of them at once: how many diagonals, how the angles add up, and, for regular polygons, exactly how big everything is. The regular hexagon, built from six equilateral triangles, gets a section of its own.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>An $n$-gon has $n - 3$ diagonals from each vertex and $\dfrac{n(n-3)}{2}$ diagonals in all (divide by $2$ because each diagonal has two ends).</li>
+      <li>Interior angles add to $180^\circ(n - 2)$: the diagonals from one vertex cut the polygon into $n - 2$ triangles.</li>
+      <li>Exterior angles of any convex polygon add to $360^\circ$, whatever $n$ is.</li>
+      <li>Regular $n$-gon: each exterior angle is $\dfrac{360^\circ}{n}$ and each interior angle is $180^\circ - \dfrac{360^\circ}{n}$.</li>
+      <li>Split a regular polygon into $2n$ right triangles at the centre, each with angle $\dfrac{180^\circ}{n}$: $\tan\dfrac{180^\circ}{n} = \dfrac{l/2}{r}$, $\sin\dfrac{180^\circ}{n} = \dfrac{l/2}{R}$, and Area $= \tfrac12 \cdot$ perimeter $\cdot\, r$.</li>
+      <li>Regular hexagon with side $s$: six equilateral triangles, area $\dfrac{3\sqrt3}{2}s^2$, short diagonal $s\sqrt3$, long diagonal $2s$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 13.1 ===================== -->
+  <section class="lesson" id="s13-1" data-title="Types of Polygons">
+    <h2><span class="sec-num">13.1</span> Types of Polygons</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Ten people stand in a circle, and every pair who are <em>not</em> neighbours shakes hands across the middle. How many handshakes happen? It sounds like a counting puzzle, but it's really a geometry question: you are counting the diagonals of a decagon.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>polygon</strong> is a closed figure in a plane made of straight segments that don't cross each other. A polygon with $n$ sides is an <strong>$n$-gon</strong>, and the common ones have names:</p>
+      <div class="rule"><p>$3$ triangle · $4$ quadrilateral · $5$ pentagon · $6$ hexagon · $7$ heptagon · $8$ octagon · $9$ nonagon · $10$ decagon · $12$ dodecagon</p></div>
+      <p>A polygon is <strong>regular</strong> if all its sides are equal <em>and</em> all its angles are equal. One condition is not enough: a rhombus has equal sides but needn't have equal angles, and a rectangle has equal angles but needn't have equal sides.</p>
+      <p>A <strong>diagonal</strong> joins two vertices that aren't neighbours. From one vertex there are $n - 1$ other vertices; two of them are neighbours (those segments are sides), so $n - 3$ diagonals start there. Multiplying by $n$ vertices counts every diagonal <em>twice</em>, once from each end, so</p>
+      <div class="rule"><p>$$\text{number of diagonals} = \frac{n(n-3)}{2}.$$</p></div>
+      <div class="note"><p>Check with a quadrilateral: $\tfrac{4 \cdot 1}{2} = 2$. Forgetting to divide by $2$ would give $4$, which is clearly wrong.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="diagonalCounter">
+      <figcaption><strong>Explore:</strong> Choose the number of sides, then drag the orange point around the circle to pick a vertex. Its $n - 3$ diagonals are highlighted. Every diagonal gets highlighted from both of its ends, which is why we divide by $2$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Diagonals from one vertex</h3>
+        <div class="problem"><p>How many diagonals can be drawn from one vertex of a decagon?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A decagon has $10$ vertices; one vertex can be joined to the other $9$.</p></div><p class="why">Count every possible segment from the chosen vertex first.</p></li>
+          <li><div class="do"><p>Two of those are sides, leaving $9 - 2 = 7$ diagonals.</p></div><p class="why">Segments to the two neighbours are sides, not diagonals. In general this is $n - 3$.</p></li>
+        </ol>
+        <p class="answer">$7$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>All the diagonals of a hexagon</h3>
+        <div class="problem"><p>How many diagonals does a hexagon have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each of the $6$ vertices starts $6 - 3 = 3$ diagonals, giving $6 \times 3 = 18$ counts.</p></div><p class="why">Count from every vertex.</p></li>
+          <li><div class="do"><p>Each diagonal was counted twice, so there are $18 / 2 = 9$.</p></div><p class="why">A diagonal is counted once from each endpoint.</p></li>
+        </ol>
+        <p class="answer">$9$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Equal sides, or equal angles, isn't enough</h3>
+        <div class="problem"><p>Give a polygon with all sides equal that is not regular, and one with all angles equal that is not regular.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A rhombus with angles $60^\circ$ and $120^\circ$ has four equal sides but unequal angles.</p></div><p class="why">Pushing a square sideways keeps the side lengths but changes the angles.</p></li>
+          <li><div class="do"><p>A $2 \times 5$ rectangle has four $90^\circ$ angles but unequal sides.</p></div><p class="why">Stretching a square keeps the angles but changes the sides.</p></li>
+        </ol>
+        <p class="answer">A non-square rhombus (equal sides) and a non-square rectangle (equal angles).</p>
+        <p class="key-idea">"Regular" needs both conditions.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Diagonals of a 20-gon</h3>
+        <div class="problem"><p>How many diagonals does a $20$-sided polygon have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{20(20 - 3)}{2} = \dfrac{20 \cdot 17}{2} = 170$.</p></div><p class="why">Apply the formula: $17$ diagonals from each of $20$ vertices, halved for double counting.</p></li>
+        </ol>
+        <p class="answer">$170$</p>
+        <p class="book-next">Next in the book: Problem 218.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Working backward</h3>
+        <div class="problem"><p>A polygon has $35$ diagonals. How many sides does it have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{n(n-3)}{2} = 35 \Rightarrow n(n - 3) = 70$.</p></div><p class="why">Set the formula equal to the given count.</p></li>
+          <li><div class="do"><p>$n^2 - 3n - 70 = 0 \Rightarrow (n - 10)(n + 7) = 0$, so $n = 10$.</p></div><p class="why">A number of sides must be positive. (Or spot that $10 \times 7 = 70$.)</p></li>
+        </ol>
+        <p class="answer">$10$ sides (a decagon)</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three times as many diagonals as sides</h3>
+        <div class="problem"><p>Which polygon has exactly three times as many diagonals as sides?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{n(n-3)}{2} = 3n$.</p></div><p class="why">Translate the condition.</p></li>
+          <li><div class="do"><p>Divide by $n$ (it isn't zero): $\dfrac{n - 3}{2} = 3$, so $n = 9$.</p></div><p class="why">Dividing out $n$ leaves a linear equation.</p></li>
+          <li><div class="do"><p>Check: a nonagon has $\tfrac{9 \cdot 6}{2} = 27 = 3 \times 9$ diagonals.</p></div><p class="why">Always confirm with the original condition.</p></li>
+        </ol>
+        <p class="answer">The nonagon ($9$ sides)</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Diagonals through the centre</h3>
+        <div class="problem"><p>How many diagonals of a regular dodecagon do <em>not</em> pass through its centre?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total: $\dfrac{12 \cdot 9}{2} = 54$ diagonals.</p></div><p class="why">Start with all diagonals.</p></li>
+          <li data-think="Which diagonals of a regular polygon go through the centre?"><div class="do"><p>A diagonal passes through the centre exactly when it joins opposite vertices. The $12$ vertices form $6$ opposite pairs.</p></div><p class="why">The vertices lie on a circle centred at the centre, so a chord through the centre is a diameter, joining vertices half-way around.</p></li>
+          <li><div class="do"><p>$54 - 6 = 48$.</p></div><p class="why">Subtract the ones we don't want; counting the complement is easier.</p></li>
+        </ol>
+        <p class="answer">$48$</p>
+        <p class="key-idea">When "not" appears, count everything and subtract.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Where diagonals cross</h3>
+        <div class="problem"><p>In a convex hexagon where no three diagonals meet at one point, how many points inside the hexagon are crossing points of two diagonals? What changes for a regular hexagon?</p></div>
+        <ol class="steps">
+          <li data-think="Take any crossing point. How many vertices are involved in the two diagonals that cross there?"><div class="do"><p>Two crossing diagonals have four different endpoints. Conversely, any four vertices of a convex polygon form a convex quadrilateral whose two diagonals cross exactly once.</p></div><p class="why">So crossing points match up one-to-one with choices of $4$ vertices.</p></li>
+          <li><div class="do"><p>Choosing $4$ of $6$ vertices can be done in $\dbinom{6}{4} = 15$ ways, so there are $15$ crossing points.</p></div><p class="why">Choosing which $2$ to leave out gives $\tfrac{6 \cdot 5}{2} = 15$. Chapter 25 covers this kind of counting.</p></li>
+          <li><div class="do"><p>In a regular hexagon the three long diagonals all meet at the centre: their $3$ crossings merge into $1$ point, leaving $15 - 3 + 1 = 13$.</p></div><p class="why">The "no three meet" assumption fails there, so we correct the count.</p></li>
+        </ol>
+        <p class="answer">$15$ crossing points in general; $13$ for a regular hexagon.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 13.2 ===================== -->
+  <section class="lesson" id="s13-2" data-title="Angles in a Polygon">
+    <h2><span class="sec-num">13.2</span> Angles in a Polygon</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Walk around the edge of a park shaped like any convex polygon. At each corner you turn left by some amount. When you get back to the start, facing the way you began, you've turned through exactly one full circle, whether the park had $3$ corners or $300$.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Draw the $n - 3$ diagonals from one vertex of a convex $n$-gon. They cut it into $n - 2$ triangles, and the triangles' angles exactly fill the polygon's angles:</p>
+      <div class="rule"><p>$$\text{sum of interior angles} = 180^\circ (n - 2).$$</p></div>
+      <p>An <strong>exterior angle</strong> is formed by one side and the extension of its neighbour; it is the amount you turn at that corner. At each vertex, interior $+$ exterior $= 180^\circ$. Adding over all $n$ vertices, the interior and exterior angles together make $180^\circ n$, so the exterior angles make $180^\circ n - 180^\circ(n - 2)$:</p>
+      <div class="rule"><p>$$\text{sum of exterior angles} = 360^\circ.$$</p></div>
+      <div class="note"><p>For a concave polygon the interior sum is still $180^\circ(n-2)$. The exterior-angle sum is still $360^\circ$ if you count the turn at a reflex corner as <em>negative</em> (you turn the other way there).</p></div>
+    </div>
+
+    <figure class="explore" data-widget="polygonAngles">
+      <figcaption><strong>Explore:</strong> Pick the number of sides and drag the vertices. <em>Triangles</em> shows the $n - 2$ triangles from vertex $A$; <em>Exterior</em> shows the turn at each corner. Watch the totals: $180^\circ(n-2)$ and $360^\circ$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Angle sum of a heptagon</h3>
+        <div class="problem"><p>Find the sum of the interior angles of a heptagon.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$180^\circ(7 - 2) = 180^\circ \times 5 = 900^\circ$.</p></div><p class="why">A heptagon has $7$ sides and splits into $5$ triangles.</p></li>
+        </ol>
+        <p class="answer">$900^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Exterior angles never change</h3>
+        <div class="problem"><p>Find the sum of the exterior angles of a convex $11$-gon. If it is regular, find each exterior angle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The sum is $360^\circ$.</p></div><p class="why">The exterior angles of every convex polygon add to one full turn.</p></li>
+          <li><div class="do"><p>Regular: each is $\dfrac{360^\circ}{11} \approx 32.7^\circ$.</p></div><p class="why">Equal interior angles mean equal exterior angles, sharing $360^\circ$ equally.</p></li>
+        </ol>
+        <p class="answer">$360^\circ$; each is $\tfrac{360}{11}^\circ$ if regular.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>How many sides?</h3>
+        <div class="problem"><p>The interior angles of a polygon add to $1980^\circ$. How many sides does it have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$180(n - 2) = 1980 \Rightarrow n - 2 = 11 \Rightarrow n = 13$.</p></div><p class="why">Divide by $180$ to find the number of triangles, then add $2$.</p></li>
+        </ol>
+        <p class="answer">$13$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The sixth angle of a hexagon</h3>
+        <div class="problem"><p>Five angles of a hexagon are $100^\circ$, $110^\circ$, $120^\circ$, $130^\circ$ and $140^\circ$. Find the sixth.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Hexagon total: $180^\circ \times 4 = 720^\circ$.</p></div><p class="why">$n - 2 = 4$ triangles.</p></li>
+          <li><div class="do"><p>Known angles: $100 + 110 + 120 + 130 + 140 = 600$, so the sixth is $720^\circ - 600^\circ = 120^\circ$.</p></div><p class="why">Subtract from the total.</p></li>
+        </ol>
+        <p class="answer">$120^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Interior is four times exterior</h3>
+        <div class="problem"><p>At every vertex of a convex polygon, the interior angle is $4$ times the exterior angle. How many sides does it have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>If the exterior angle is $x$, then $4x + x = 180^\circ$, so $x = 36^\circ$.</p></div><p class="why">Interior and exterior angles at a vertex are supplementary.</p></li>
+          <li><div class="do"><p>All exterior angles equal $36^\circ$ and add to $360^\circ$, so $n = 360 / 36 = 10$.</p></div><p class="why">Exterior angles always total $360^\circ$.</p></li>
+        </ol>
+        <p class="answer">$10$</p>
+        <p class="key-idea">Exterior angles are often the quickest route to $n$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A pentagon's angles in a ratio</h3>
+        <div class="problem"><p>The angles of a pentagon are in the ratio $3 : 3 : 3 : 4 : 5$. Find them.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Pentagon total: $180^\circ \times 3 = 540^\circ$.</p></div><p class="why">$n - 2 = 3$ triangles.</p></li>
+          <li><div class="do"><p>$3k + 3k + 3k + 4k + 5k = 18k = 540^\circ$, so $k = 30^\circ$.</p></div><p class="why">Write each angle as a multiple of $k$.</p></li>
+        </ol>
+        <p class="answer">$90^\circ, 90^\circ, 90^\circ, 120^\circ, 150^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>One angle left out</h3>
+        <div class="problem"><p>The interior angles of a convex polygon, all except one, add to $1000^\circ$. How many sides does it have, and what is the missing angle?</p></div>
+        <ol class="steps">
+          <li data-think="What do you know about the size of the missing angle?"><div class="do"><p>The full sum $180(n - 2)$ is more than $1000$, but by less than $180$, because the missing angle is between $0^\circ$ and $180^\circ$.</p></div><p class="why">A convex polygon's angles are all less than $180^\circ$.</p></li>
+          <li><div class="do"><p>Multiples of $180$: $900, 1080, 1260, \dots$ Only $1080$ lies strictly between $1000$ and $1180$.</p></div><p class="why">The full sum must be a multiple of $180$.</p></li>
+          <li><div class="do"><p>$180(n - 2) = 1080 \Rightarrow n = 8$, and the missing angle is $1080^\circ - 1000^\circ = 80^\circ$.</p></div><p class="why">Solve for $n$ and subtract.</p></li>
+        </ol>
+        <p class="answer">$8$ sides; the missing angle is $80^\circ$.</p>
+        <p class="book-next">Next in the book: Problem 234.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>How many acute angles?</h3>
+        <div class="problem"><p>What is the largest number of acute interior angles a convex polygon can have?</p></div>
+        <ol class="steps">
+          <li data-think="If an interior angle is acute, what can you say about its exterior angle?"><div class="do"><p>An acute interior angle (less than $90^\circ$) has an exterior angle greater than $90^\circ$.</p></div><p class="why">They add to $180^\circ$.</p></li>
+          <li><div class="do"><p>Four such exterior angles would add to more than $360^\circ$, which is impossible since all exterior angles together make exactly $360^\circ$ (and the rest are positive).</p></div><p class="why">The fixed exterior total limits how many big exterior angles fit.</p></li>
+          <li><div class="do"><p>Three is possible: any acute triangle has three acute angles.</p></div><p class="why">Showing an example proves the bound is reached.</p></li>
+        </ol>
+        <p class="answer">$3$</p>
+        <p class="key-idea">The $360^\circ$ exterior total is a powerful constraint for any $n$.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 13.3 ===================== -->
+  <section class="lesson" id="s13-3" data-title="Regular Polygons">
+    <h2><span class="sec-num">13.3</span> Regular Polygons</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Stop signs are octagons, honeycomb cells are hexagons, and a 50-pence coin is a curved heptagon. Regular polygons are everywhere because they are so symmetric, and that symmetry means one small right triangle tells you everything about them.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>In a regular $n$-gon all angles are equal, so each one is the total divided by $n$:</p>
+      <div class="rule"><p>$$\text{exterior angle} = \frac{360^\circ}{n}, \qquad \text{interior angle} = \frac{180^\circ(n-2)}{n} = 180^\circ - \frac{360^\circ}{n}.$$</p></div>
+      <p>A few to recognise: triangle $60^\circ$, square $90^\circ$, pentagon $108^\circ$, hexagon $120^\circ$, octagon $135^\circ$, decagon $144^\circ$, dodecagon $150^\circ$.</p>
+      <p>Every regular polygon has a <strong>centre</strong> $O$, equally far from all vertices (the <strong>circumradius</strong> $R$) and from all sides (the <strong>inradius</strong> or <strong>apothem</strong> $r$). The circumscribed and inscribed circles share this centre. Joining $O$ to a vertex $A$ and to the midpoint $X$ of a side creates a right triangle $OXA$; $2n$ copies of it fill the polygon, so the angle at $O$ is $\theta = \dfrac{360^\circ}{2n} = \dfrac{180^\circ}{n}$. With side $l$:</p>
+      <div class="rule"><p>$$\tan\theta = \frac{l/2}{r}, \qquad \sin\theta = \frac{l/2}{R}, \qquad \text{Area} = 2n \cdot \frac12 \cdot \frac{l}{2} \cdot r = \frac{n\,l\,r}{2} = \frac12 (\text{perimeter})(r).$$</p></div>
+    </div>
+
+    <figure class="explore" data-widget="regularPolygon">
+      <figcaption><strong>Explore:</strong> Slide $n$ and drag the vertex to resize. The shaded right triangle $OXA$ has angle $180^\circ / n$ at the centre. As $n$ grows, $r$ and $R$ squeeze together and the area approaches the circle's.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Angles of a regular 15-gon</h3>
+        <div class="problem"><p>Find each exterior and interior angle of a regular $15$-gon.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Exterior: $\dfrac{360^\circ}{15} = 24^\circ$.</p></div><p class="why">Exterior angles share $360^\circ$ equally.</p></li>
+          <li><div class="do"><p>Interior: $180^\circ - 24^\circ = 156^\circ$.</p></div><p class="why">Interior and exterior are supplementary; this is quicker than $\tfrac{180 \cdot 13}{15}$.</p></li>
+        </ol>
+        <p class="answer">Exterior $24^\circ$, interior $156^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>From angle to number of sides</h3>
+        <div class="problem"><p>Each interior angle of a regular polygon is $140^\circ$. How many sides does it have?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each exterior angle is $180^\circ - 140^\circ = 40^\circ$.</p></div><p class="why">Switch to exterior angles; their total is fixed.</p></li>
+          <li><div class="do"><p>$n = \dfrac{360}{40} = 9$.</p></div><p class="why">Nine equal turns of $40^\circ$ make a full circle.</p></li>
+        </ol>
+        <p class="answer">$9$</p>
+        <p class="book-next">Next in the book: Exercise 13-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Which angles are possible?</h3>
+        <div class="problem"><p>Can a regular polygon have interior angles of $150^\circ$? Of $130^\circ$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$150^\circ$: exterior $30^\circ$, and $360 / 30 = 12$. Yes, the regular dodecagon.</p></div><p class="why">We need $360$ divided by the exterior angle to be a whole number.</p></li>
+          <li><div class="do"><p>$130^\circ$: exterior $50^\circ$, and $360 / 50 = 7.2$. Not a whole number, so no.</p></div><p class="why">A polygon can't have $7.2$ sides.</p></li>
+        </ol>
+        <p class="answer">$150^\circ$ yes ($12$ sides); $130^\circ$ no.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Check the formulas on a square</h3>
+        <div class="problem"><p>A square has side $10$. Use $\theta = 180^\circ / n$ to find $r$ and $R$, then check that $\tfrac12(\text{perimeter})(r)$ gives the area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\theta = 45^\circ$. $\tan 45^\circ = \dfrac{5}{r}$ gives $r = 5$.</p></div><p class="why">Half the side is $5$; the apothem reaches the middle of a side.</p></li>
+          <li><div class="do"><p>$\sin 45^\circ = \dfrac{5}{R}$ gives $R = \dfrac{5}{\sqrt2/2} = 5\sqrt2$.</p></div><p class="why">$R$ is half the diagonal, which matches $\tfrac12 \cdot 10\sqrt2$.</p></li>
+          <li><div class="do"><p>$\tfrac12 \cdot 40 \cdot 5 = 100 = 10^2$. ✓</p></div><p class="why">The general formula agrees with what we already know.</p></li>
+        </ol>
+        <p class="answer">$r = 5$, $R = 5\sqrt2$, area $100$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The equilateral triangle</h3>
+        <div class="problem"><p>An equilateral triangle has side $6$. Find its inradius, circumradius and area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\theta = 60^\circ$, half-side $3$. $\tan 60^\circ = \dfrac{3}{r} \Rightarrow r = \dfrac{3}{\sqrt3} = \sqrt3$.</p></div><p class="why">Right triangle $OXA$ with the $60^\circ$ angle at the centre.</p></li>
+          <li><div class="do"><p>$\sin 60^\circ = \dfrac{3}{R} \Rightarrow R = \dfrac{3}{\sqrt3/2} = 2\sqrt3$.</p></div><p class="why">Note $R = 2r$: the centre is the centroid, two-thirds of the way down each median.</p></li>
+          <li><div class="do"><p>Area $= \tfrac12 \cdot 18 \cdot \sqrt3 = 9\sqrt3$.</p></div><p class="why">Matches $\tfrac{\sqrt3}{4} \cdot 6^2 = 9\sqrt3$.</p></li>
+        </ol>
+        <p class="answer">$r = \sqrt3$, $R = 2\sqrt3$, area $9\sqrt3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A dodecagon from its circumradius</h3>
+        <div class="problem"><p>A regular dodecagon is inscribed in a circle of radius $4$. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Joining $O$ to all $12$ vertices makes $12$ congruent isosceles triangles with two sides $4$ and apex angle $\dfrac{360^\circ}{12} = 30^\circ$.</p></div><p class="why">Here we know $R$, so whole triangles from the centre are simplest.</p></li>
+          <li><div class="do"><p>Each has area $\tfrac12 \cdot 4 \cdot 4 \cdot \sin 30^\circ = 4$.</p></div><p class="why">Triangle area $\tfrac12 ab\sin C$.</p></li>
+          <li><div class="do"><p>Total: $12 \times 4 = 48$.</p></div><p class="why">In general this gives area $3R^2$ for a regular dodecagon.</p></li>
+        </ol>
+        <p class="answer">$48$</p>
+        <p class="book-next">Next in the book: Problem 224.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The width of an octagon</h3>
+        <div class="problem"><p>A regular octagon has side $4$. Find the distance between two opposite (parallel) sides.</p>
+          <svg class="stage" viewBox="0 0 220 220" style="max-width:220px;display:block;margin:10px auto 0" role="img" aria-label="Regular octagon inside a square, with the four corner triangles cut off">
+            <rect x="20" y="20" width="180" height="180" fill="none" stroke="var(--muted)" stroke-dasharray="5 4"/>
+            <polygon points="72.7,20 147.3,20 200,72.7 200,147.3 147.3,200 72.7,200 20,147.3 20,72.7" fill="color-mix(in srgb, var(--plot-2) 22%, transparent)" stroke="var(--plot-2)" stroke-width="2"/>
+            <text x="110" y="14" text-anchor="middle" class="lbl">4</text>
+            <text x="44" y="14" text-anchor="middle" class="lbl">x</text>
+            <text x="176" y="14" text-anchor="middle" class="lbl">x</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>Extend four alternate sides to form a square. Each cut-off corner is a right triangle with hypotenuse $4$.</p></div><p class="why">Each interior angle is $135^\circ$, so each corner triangle has angles $45^\circ$, $45^\circ$, $90^\circ$.</p></li>
+          <li><div class="do"><p>Its legs are $x = \dfrac{4}{\sqrt2} = 2\sqrt2$.</p></div><p class="why">In a $45$-$45$-$90$ triangle, hypotenuse $=$ leg $\times\sqrt2$.</p></li>
+          <li><div class="do"><p>Width $= x + 4 + x = 4 + 4\sqrt2$.</p></div><p class="why">The square's side is the distance between opposite octagon sides.</p></li>
+        </ol>
+        <p class="answer">$4 + 4\sqrt2$</p>
+        <p class="key-idea">Octagons live inside squares with their corners clipped.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A square on a pentagon</h3>
+        <div class="problem"><p>Regular pentagon $ABCDE$ has square $ABFG$ built outward on side $AB$. Find $\angle AEG$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>At $A$: $\angle EAB = 108^\circ$ (pentagon) and $\angle BAG = 90^\circ$ (square).</p></div><p class="why">Regular pentagon interior angle: $180^\circ - 72^\circ = 108^\circ$.</p></li>
+          <li data-think="The square is outside the pentagon. How do the angles around $A$ fit together?"><div class="do"><p>Going around $A$ the other way: $\angle EAG = 360^\circ - 108^\circ - 90^\circ = 162^\circ$.</p></div><p class="why">The three angles around point $A$ make a full turn.</p></li>
+          <li><div class="do"><p>$AE = AB = AG$, so triangle $AEG$ is isosceles and $\angle AEG = \dfrac{180^\circ - 162^\circ}{2} = 9^\circ$.</p></div><p class="why">The pentagon and square share side $AB$, so all three lengths match.</p></li>
+        </ol>
+        <p class="answer">$9^\circ$</p>
+        <p class="key-idea">Shared sides of regular polygons create isosceles triangles.</p>
+        <p class="book-next">Next in the book: Problem 221.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 13.4 ===================== -->
+  <section class="lesson" id="s13-4" data-title="Regular Hexagons">
+    <h2><span class="sec-num">13.4</span> Regular Hexagons</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Bees build hexagonal cells, and so do soap bubbles squeezed between two plates. Mathematicians like hexagons for a simpler reason: chop one up from the centre and every piece is an equilateral triangle, so all the numbers come out friendly.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Join the centre $O$ of a regular hexagon to its six vertices. Each central angle is $360^\circ / 6 = 60^\circ$, and $OA = OB$, so each of the six triangles is isosceles with a $60^\circ$ apex, which makes it <strong>equilateral</strong>. So the circumradius equals the side: $R = s$. Everything follows:</p>
+      <div class="rule"><p>$$[ABCDEF] = 6 \cdot \frac{\sqrt3}{4}s^2 = \frac{3\sqrt3}{2}s^2, \qquad AD = 2s, \qquad AC = s\sqrt3, \qquad r = \frac{\sqrt3}{2}s.$$</p></div>
+      <p>The long diagonals (like $AD$) pass through the centre and are two sides long. The short diagonals (like $AC$) are $s\sqrt3$: in triangle $ACD$, $AD$ is a diameter of the circumcircle, so $\angle ACD = 90^\circ$ and $ACD$ is a $30$-$60$-$90$ triangle.</p>
+      <div class="note"><p>Attack hexagon problems by cutting them into equilateral triangles, or into $30$-$60$-$90$ triangles.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="hexagonParts">
+      <figcaption><strong>Explore:</strong> Drag vertex $A$ to resize the hexagon and switch views: the six equilateral triangles, the short and long diagonals, or triangle $ACE$, which turns out to be exactly half the hexagon.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Area from the side</h3>
+        <div class="problem"><p>Find the area of a regular hexagon with side $4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each equilateral triangle has area $\dfrac{\sqrt3}{4} \cdot 16 = 4\sqrt3$.</p></div><p class="why">The hexagon is six equilateral triangles of side $4$.</p></li>
+          <li><div class="do"><p>Total: $6 \times 4\sqrt3 = 24\sqrt3$.</p></div><p class="why">Same as $\tfrac{3\sqrt3}{2} \cdot 16$.</p></li>
+        </ol>
+        <p class="answer">$24\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Long diagonal to perimeter</h3>
+        <div class="problem"><p>The longest diagonal of a regular hexagon is $14$. Find its perimeter.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Long diagonal $= 2s = 14$, so $s = 7$.</p></div><p class="why">It runs through the centre, across two equilateral triangles.</p></li>
+          <li><div class="do"><p>Perimeter $= 6 \times 7 = 42$.</p></div><p class="why">Six equal sides.</p></li>
+        </ol>
+        <p class="answer">$42$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The short diagonal</h3>
+        <div class="problem"><p>Find the length of diagonal $AC$ in regular hexagon $ABCDEF$ with side $5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In triangle $ABC$, $AB = BC = 5$ and $\angle ABC = 120^\circ$, so the base angles are $30^\circ$.</p></div><p class="why">Isosceles triangle with a $120^\circ$ apex.</p></li>
+          <li><div class="do"><p>The altitude from $B$ splits it into two $30$-$60$-$90$ triangles with hypotenuse $5$, so half of $AC$ is $\tfrac{5\sqrt3}{2}$.</p></div><p class="why">The side opposite $60^\circ$ is $\tfrac{\sqrt3}{2}$ of the hypotenuse.</p></li>
+          <li><div class="do"><p>$AC = 5\sqrt3$.</p></div><p class="why">Double the half.</p></li>
+        </ol>
+        <p class="answer">$5\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>From area to apothem</h3>
+        <div class="problem"><p>A regular hexagon has area $54\sqrt3$. Find its inradius (apothem).</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{3\sqrt3}{2}s^2 = 54\sqrt3 \Rightarrow s^2 = 36 \Rightarrow s = 6$.</p></div><p class="why">Solve the area formula for $s$.</p></li>
+          <li><div class="do"><p>$r = \dfrac{\sqrt3}{2} \cdot 6 = 3\sqrt3$.</p></div><p class="why">The apothem is the height of one equilateral triangle.</p></li>
+        </ol>
+        <p class="answer">$3\sqrt3$</p>
+        <p class="book-next">Next in the book: Exercise 13-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Triangle $ACE$ is half</h3>
+        <div class="problem"><p>In regular hexagon $ABCDEF$, what fraction of the hexagon's area does triangle $ACE$ cover?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$ACE$ is equilateral with side $s\sqrt3$ (three short diagonals), so its area is $\dfrac{\sqrt3}{4} \cdot 3s^2 = \dfrac{3\sqrt3}{4}s^2$.</p></div><p class="why">All three sides are short diagonals of the same length.</p></li>
+          <li><div class="do"><p>$\dfrac{3\sqrt3 s^2/4}{3\sqrt3 s^2/2} = \dfrac12$.</p></div><p class="why">Divide by the hexagon's area.</p></li>
+          <li><div class="do"><p>A picture proof: each of the three triangles cut off ($ABC$, $CDE$, $EFA$) is congruent to one of the three pieces $OAC$, $OCE$, $OEA$ of $ACE$.</p></div><p class="why">Each cut-off triangle has sides $s$, $s$ and angle $120^\circ$, exactly like $OAC$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac12$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A right triangle hiding in a hexagon</h3>
+        <div class="problem"><p>Regular hexagon $ABCDEF$ has side $6$. Find the area of triangle $ABD$.</p></div>
+        <ol class="steps">
+          <li data-think="$AD$ is a long diagonal. What does that tell you about the angle at $B$?"><div class="do"><p>$AD$ is a diameter of the circumcircle (it passes through $O$), and $B$ is on that circle, so $\angle ABD = 90^\circ$.</p></div><p class="why">An angle inscribed in a semicircle is a right angle.</p></li>
+          <li><div class="do"><p>$AB = 6$ and $AD = 12$, so $BD = \sqrt{144 - 36} = 6\sqrt3$.</p></div><p class="why">Pythagoras (or: $BD$ is a short diagonal, $s\sqrt3$).</p></li>
+          <li><div class="do"><p>Area $= \tfrac12 \cdot 6 \cdot 6\sqrt3 = 18\sqrt3$.</p></div><p class="why">The legs of a right triangle are a base and its height.</p></li>
+        </ol>
+        <p class="answer">$18\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>To the middle of a far side</h3>
+        <div class="problem"><p>Regular hexagon $ABCDEF$ has side $1$, and $M$ is the midpoint of $CD$. Find $AM$.</p></div>
+        <ol class="steps">
+          <li data-think="Which triangle containing $A$ and side $CD$ has a right angle?"><div class="do"><p>$\angle ACD = 90^\circ$, because $AD$ is a diameter of the circumcircle.</p></div><p class="why">The same fact as in the previous example, now with $C$.</p></li>
+          <li><div class="do"><p>$AC = \sqrt3$ (short diagonal) and $CM = \tfrac12$.</p></div><p class="why">$M$ is halfway along a side of length $1$.</p></li>
+          <li><div class="do"><p>$AM = \sqrt{3 + \tfrac14} = \sqrt{\tfrac{13}{4}} = \dfrac{\sqrt{13}}{2}$.</p></div><p class="why">Pythagoras in right triangle $ACM$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{\sqrt{13}}{2}$</p>
+        <p class="key-idea">Long diagonals are diameters: look for the right angles they create.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-13">
+    <h2 id="further-13">Further reading in the book</h2>
+    <ul>
+      <li><strong>§13.1 Types of Polygons</strong>: the table of names and the derivation of $\tfrac{n(n-3)}{2}$ diagonals.</li>
+      <li><strong>§13.2 Angles in a Polygon</strong>: the interior and exterior angle sums.</li>
+      <li><strong>§13.3 Regular Polygons</strong>: Examples 13-1 to 13-3, Exercises 13-1, 13-2, and the inradius, circumradius and area formulas.</li>
+      <li><strong>§13.4 Regular Hexagons</strong>: Example 13-4 and Exercise 13-3.</li>
+      <li><strong>Problems to Solve for Chapter 13</strong>: Problems 218–235; 219, 222 and 233 are hexagon problems, and 226 and 232 use exterior angles.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 13 explorers ---------- */
+(function () {
+  "use strict";
+
+  function snap(v, s) { return Math.round(v / s) * s; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function sub(p, q) { return { x: p.x - q.x, y: p.y - q.y }; }
+  function len(v) { return Math.hypot(v.x, v.y); }
+  function cross(a, b) { return a.x * b.y - a.y * b.x; }
+  function dot(a, b) { return a.x * b.x + a.y * b.y; }
+  function mid(p, q) { return { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }; }
+  function pts(P) { return P.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" "); }
+  function signedArea(P) { var s = 0; for (var i = 0; i < P.length; i++) s += cross(P[i], P[(i + 1) % P.length]); return s / 2; }
+  function angleBetween(u, w) { var l = len(u) * len(w); if (!l) return 0; return Math.acos(clamp(dot(u, w) / l, -1, 1)) * 180 / Math.PI; }
+  function wedge(V, P1, P2, deg, r) {
+    var a1 = Math.atan2(P1.y - V.y, P1.x - V.x), a2 = Math.atan2(P2.y - V.y, P2.x - V.x);
+    var d = (a2 - a1) % (2 * Math.PI); if (d < 0) d += 2 * Math.PI;
+    var rad = deg * Math.PI / 180;
+    var sweep = Math.abs(d - rad) <= Math.abs(2 * Math.PI - d - rad) ? 1 : 0;
+    var m = sweep ? a1 + rad / 2 : a1 - rad / 2;
+    var S = { x: V.x + r * Math.cos(a1), y: V.y + r * Math.sin(a1) }, E = { x: V.x + r * Math.cos(a2), y: V.y + r * Math.sin(a2) };
+    return { d: "M" + V.x + " " + V.y + "L" + S.x.toFixed(1) + " " + S.y.toFixed(1) + "A" + r + " " + r + " 0 " + (rad > Math.PI ? 1 : 0) + " " + sweep + " " + E.x.toFixed(1) + " " + E.y.toFixed(1) + "Z", mid: m };
+  }
+  function crosses(p1, p2, p3, p4) {
+    var d1 = cross(sub(p4, p3), sub(p1, p3)), d2 = cross(sub(p4, p3), sub(p2, p3));
+    var d3 = cross(sub(p2, p1), sub(p3, p1)), d4 = cross(sub(p2, p1), sub(p4, p1));
+    return d1 * d2 < 0 && d3 * d4 < 0;
+  }
+  function isSimple(P) {
+    var n = P.length;
+    for (var i = 0; i < n; i++) for (var j = i + 2; j < n; j++) {
+      if (i === 0 && j === n - 1) continue;
+      if (crosses(P[i], P[(i + 1) % n], P[j], P[(j + 1) % n])) return false;
+    }
+    return true;
+  }
+  function txt(svg, x, y, t, attrs) {
+    var a = { x: x, y: y, "text-anchor": "middle", style: "font: 600 14px var(--font-mono)", text: t };
+    if (attrs) Object.keys(attrs).forEach(function (k) { a[k] = attrs[k]; });
+    var e = W.s("text", a); svg.appendChild(e); return e;
+  }
+  function regular(n, c, R, rot) {
+    var out = [];
+    for (var k = 0; k < n; k++) { var a = rot + 2 * Math.PI * k / n; out.push({ x: c.x + R * Math.cos(a), y: c.y + R * Math.sin(a) }); }
+    return out;
+  }
+  var NAMES = { 3: "triangle", 4: "quadrilateral", 5: "pentagon", 6: "hexagon", 7: "heptagon", 8: "octagon", 9: "nonagon", 10: "decagon", 12: "dodecagon" };
+  function nameOf(n) { return NAMES[n] || n + "-gon"; }
+  var LET = "ABCDEFGHIJKLMNOP";
+  var deg = "°";
+
+  /* 13.1 — diagonal counter */
+  AOPS.registerWidget("diagonalCounter", function (body) {
+    var c = { x: 320, y: 200 }, R = 160;
+    var svg = W.stage(body, { w: 640, h: 400, label: "Regular polygon with all diagonals; diagonals from the chosen vertex are highlighted" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 8, sel = 0, all = true;
+    W.slider(ctl, { label: "Number of sides n", min: 3, max: 14, value: n, onInput: function (v) { n = v; sel = sel % n; place(); draw(); } });
+    W.segmented(ctl, { title: "Other diagonals", value: "show", options: [{ value: "show", label: "Show" }, { value: "hide", label: "Hide" }], onChange: function (v) { all = v === "show"; draw(); } });
+    var layer = W.s("g"); svg.appendChild(layer);
+    var P = [];
+    function vtx() { P = regular(n, c, R, -Math.PI / 2); }
+    vtx();
+    var h = W.handle(svg, { x: P[0].x, y: P[0].y, label: "Chosen vertex; arrow keys move to the next vertex", onMove: function (x, y) {
+      var a = Math.atan2(y - c.y, x - c.x) + Math.PI / 2;
+      sel = ((Math.round(a / (2 * Math.PI / n)) % n) + n) % n;
+      draw(); return [P[sel].x, P[sel].y];
+    }, valueText: function () { return "vertex " + LET[sel]; } });
+    svg.addEventListener("keydown", function (e) {
+      if (e.target !== h.el) return;
+      var d = (e.key === "ArrowRight" || e.key === "ArrowDown") ? 1 : (e.key === "ArrowLeft" || e.key === "ArrowUp") ? -1 : 0;
+      if (!d) return;
+      e.preventDefault(); e.stopPropagation();
+      sel = (sel + d + n) % n; place(); draw();
+    }, true);
+    function place() { vtx(); h.set(P[sel].x, P[sel].y, true); h.el.setAttribute("aria-valuetext", "vertex " + LET[sel]); }
+    function draw() {
+      W.clear(layer);
+      vtx();
+      layer.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: R, fill: "none", stroke: "var(--faint)", "stroke-dasharray": "3 6" }));
+      if (all) {
+        for (var i = 0; i < n; i++) for (var j = i + 2; j < n; j++) {
+          if (i === 0 && j === n - 1) continue;
+          if (i === sel || j === sel) continue;
+          layer.appendChild(W.s("line", { x1: P[i].x, y1: P[i].y, x2: P[j].x, y2: P[j].y, stroke: "var(--plot-3)", "stroke-opacity": 0.45, "stroke-width": 1.2 }));
+        }
+      }
+      layer.appendChild(W.s("polygon", { points: pts(P), fill: "color-mix(in srgb, var(--plot-2) 12%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      for (var k = 0; k < n; k++) {
+        var d = Math.abs(k - sel);
+        if (d < 2 || d > n - 2) continue;
+        layer.appendChild(W.s("line", { x1: P[sel].x, y1: P[sel].y, x2: P[k].x, y2: P[k].y, stroke: "var(--accent)", "stroke-width": 3 }));
+      }
+      P.forEach(function (p, i) {
+        var v = sub(p, c), l = len(v);
+        txt(layer, p.x + v.x / l * 24, p.y + v.y / l * 24 + 5, LET[i], { style: "font: 700 14px var(--font-body)", fill: i === sel ? "var(--accent)" : "var(--ink)" });
+      });
+      var tot = n * (n - 3) / 2;
+      out.set("<p>A " + nameOf(n) + " ($n = " + n + "$). From vertex $" + LET[sel] + "$: $n - 3 = " + (n - 3) + "$ diagonals.</p>" +
+        "<p>Total: $\\dfrac{n(n-3)}{2} = \\dfrac{" + n + " \\cdot " + (n - 3) + "}{2} = " + tot + "$ diagonals (the $" + n * (n - 3) + "$ vertex-by-vertex counts, halved).</p>");
+    }
+    draw();
+  });
+
+  /* 13.2 — interior and exterior angle sums */
+  AOPS.registerWidget("polygonAngles", function (body) {
+    var c = { x: 320, y: 205 };
+    var svg = W.stage(body, { w: 640, h: 410, label: "Polygon with draggable vertices showing interior angles, a triangulation, or exterior angles" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 5, mode = "int";
+    var layer = W.s("g");
+    svg.appendChild(layer);
+    var P = [], hs = [];
+    var cols = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)", "var(--plot-5)"];
+    W.slider(ctl, { label: "Number of sides n", min: 3, max: 8, value: n, onInput: function (v) { n = v; build(); } });
+    W.segmented(ctl, { title: "Show", value: mode, options: [{ value: "int", label: "Interior" }, { value: "tri", label: "Triangles" }, { value: "ext", label: "Exterior" }], onChange: function (v) { mode = v; draw(); } });
+    function build() {
+      var jit = [1, 0.82, 0.95, 0.78, 1, 0.88, 0.97, 0.84];
+      P = regular(n, c, 150, -Math.PI / 2).map(function (p, i) { var r = jit[i]; return { x: snap(c.x + (p.x - c.x) * r, 10), y: snap(c.y + (p.y - c.y) * r, 10) }; });
+      hs.forEach(function (h) { var halo = h.el.previousSibling; if (halo) svg.removeChild(halo); svg.removeChild(h.el); });
+      hs = P.map(function (p, i) {
+        return W.handle(svg, { x: p.x, y: p.y, label: "Vertex " + LET[i] + "; arrow keys move it", keyStep: 10,
+          onMove: function (x, y) { P[i] = { x: clamp(snap(x, 10), 40, 600), y: clamp(snap(y, 10), 30, 380) }; draw(); return [P[i].x, P[i].y]; } });
+      });
+      draw();
+    }
+    function draw() {
+      W.clear(layer);
+      var simple = isSimple(P);
+      var o = signedArea(P) >= 0 ? 1 : -1;
+      var interior = [], exterior = [];
+      P.forEach(function (V, i) {
+        var A = P[(i + n - 1) % n], B = P[(i + 1) % n];
+        var a = angleBetween(sub(A, V), sub(B, V));
+        var turn = cross(sub(V, A), sub(B, V)) * o;
+        interior.push(turn < 0 ? 360 - a : a);
+        var t = angleBetween(sub(V, A), sub(B, V));
+        exterior.push(turn < 0 ? -t : t);
+      });
+      var cen = P.reduce(function (s, p) { return { x: s.x + p.x / n, y: s.y + p.y / n }; }, { x: 0, y: 0 });
+      if (mode === "tri" && simple) {
+        for (var k = 1; k < n - 1; k++) layer.appendChild(W.s("polygon", { points: pts([P[0], P[k], P[k + 1]]), fill: "color-mix(in srgb, " + cols[(k - 1) % 5] + " 30%, transparent)", stroke: cols[(k - 1) % 5], "stroke-width": 1.5 }));
+      }
+      layer.appendChild(W.s("polygon", { points: pts(P), fill: mode === "tri" ? "none" : "color-mix(in srgb, var(--plot-2) 14%, transparent)", stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }));
+      if (simple) P.forEach(function (V, i) {
+        var A = P[(i + n - 1) % n], B = P[(i + 1) % n];
+        if (mode === "ext") {
+          var dir = sub(V, A), l = len(dir) || 1, ext = { x: V.x + dir.x / l * 70, y: V.y + dir.y / l * 70 };
+          layer.appendChild(W.s("line", { x1: V.x, y1: V.y, x2: ext.x, y2: ext.y, stroke: "var(--muted)", "stroke-dasharray": "5 4", "stroke-width": 1.5 }));
+          var e = exterior[i], col = e < 0 ? "var(--plot-5)" : "var(--plot-4)";
+          var w = wedge(V, ext, B, Math.abs(e), 30);
+          layer.appendChild(W.s("path", { d: w.d, fill: "color-mix(in srgb, " + col + " 40%, transparent)", stroke: col, "stroke-width": 2 }));
+          txt(layer, V.x + 52 * Math.cos(w.mid), V.y + 52 * Math.sin(w.mid) + 5, W.fmt(e, 1) + deg, { fill: col });
+        } else {
+          var r = Math.min(28, len(sub(A, V)) / 2.5, len(sub(B, V)) / 2.5);
+          var w2 = wedge(V, A, B, interior[i], r);
+          layer.appendChild(W.s("path", { d: w2.d, fill: "color-mix(in srgb, var(--accent) 35%, transparent)", stroke: "var(--accent)", "stroke-width": 1.5 }));
+          txt(layer, V.x + (r + 22) * Math.cos(w2.mid), V.y + (r + 22) * Math.sin(w2.mid) + 5, W.fmt(interior[i], 0) + deg, { fill: "var(--accent)", style: "font: 600 13px var(--font-mono)" });
+        }
+      });
+      P.forEach(function (V, i) {
+        var v = sub(V, cen), l = len(v) || 1;
+        txt(layer, V.x + v.x / l * 26, V.y + v.y / l * 26 + 5, LET[i], { style: "font: 700 15px var(--font-body)", fill: mode === "tri" && i === 0 ? "var(--accent)" : "var(--ink)" });
+      });
+      if (!simple) { out.set("<p>Some sides cross. Drag a vertex back so the boundary doesn't cross itself.</p>"); return; }
+      var si = interior.reduce(function (s, a) { return s + a; }, 0), se = exterior.reduce(function (s, a) { return s + a; }, 0);
+      var concave = interior.some(function (a) { return a > 180; });
+      var html;
+      if (mode === "ext") {
+        html = "<p>Exterior angles: $" + exterior.map(function (e) { return W.fmt(e, 1) + "^\\circ"; }).join(" + ").replace(/\+ -/g, "- ") + " = " + W.fmt(se, 1) + "^\\circ$</p>";
+        if (concave) html += "<p>At a reflex corner you turn the other way, so that exterior angle counts as negative (shown in a different colour). The total is still $360^\\circ$.</p>";
+      } else {
+        html = "<p>Interior angles add to $" + W.fmt(si, 1) + "^\\circ = 180^\\circ \\times (" + n + " - 2)$.</p>";
+        if (mode === "tri") html += concave ? "<p>This polygon is concave, so some diagonals from $A$ may leave the shape. Make it convex to see the $" + (n - 2) + "$ triangles fill it exactly.</p>" : "<p>The diagonals from $A$ make $n - 2 = " + (n - 2) + "$ triangles, each contributing $180^\\circ$.</p>";
+      }
+      out.set(html);
+    }
+    build();
+  });
+
+  /* 13.3 — regular polygon: r, R, area */
+  AOPS.registerWidget("regularPolygon", function (body) {
+    var c = { x: 260, y: 205 }, U = 20;
+    var svg = W.stage(body, { w: 640, h: 410, label: "Regular polygon with inscribed and circumscribed circles and the right triangle O X A" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 6, R = 8;
+    var layer = W.s("g"); svg.appendChild(layer);
+    W.slider(ctl, { label: "Number of sides n", min: 3, max: 16, value: n, onInput: function (v) { n = v; draw(); } });
+    var h = W.handle(svg, { x: c.x, y: c.y - R * U, label: "Top vertex: drag up or down to resize", keyStep: U / 2,
+      onMove: function (x, y) { R = clamp(snap((c.y - y) / U, 0.5), 2, 9.5); draw(); return [c.x, c.y - R * U]; }, valueText: function () { return "circumradius " + R; } });
+    function draw() {
+      W.clear(layer);
+      var Rp = R * U, th = Math.PI / n;
+      var P = regular(n, c, Rp, -Math.PI / 2);
+      var l = 2 * R * Math.sin(th), r = R * Math.cos(th), rp = r * U;
+      layer.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: Rp, fill: "none", stroke: "var(--plot-3)", "stroke-width": 1.8, "stroke-dasharray": "6 4" }));
+      layer.appendChild(W.s("polygon", { points: pts(P), fill: "color-mix(in srgb, var(--plot-2) 18%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      layer.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: rp, fill: "none", stroke: "var(--plot-4)", "stroke-width": 1.8, "stroke-dasharray": "6 4" }));
+      var A = P[0], B = P[1], X = mid(A, B);
+      layer.appendChild(W.s("polygon", { points: pts([c, X, A]), fill: "color-mix(in srgb, var(--accent) 40%, transparent)", stroke: "var(--accent)", "stroke-width": 2 }));
+      var w = wedge(c, A, X, 180 / n, Math.min(30, rp * 0.6));
+      layer.appendChild(W.s("path", { d: w.d, fill: "var(--accent)", "fill-opacity": 0.5, stroke: "none" }));
+      layer.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: 4, fill: "var(--ink)" }));
+      txt(layer, c.x - 14, c.y + 18, "O", { style: "font: 700 14px var(--font-body)" });
+      var xv = sub(X, c), xl = len(xv);
+      txt(layer, X.x + xv.x / xl * 18, X.y + xv.y / xl * 18 + 5, "X", { style: "font: 700 14px var(--font-body)" });
+      txt(layer, A.x - 16, A.y - 6, "A", { style: "font: 700 14px var(--font-body)" });
+      var lx = 470;
+      txt(layer, lx, 60, "θ = 180°/" + n + " = " + W.fmt(180 / n, 2) + "°", { "text-anchor": "start", fill: "var(--accent)" });
+      txt(layer, lx, 90, "side l = " + W.fmt(l, 2), { "text-anchor": "start", fill: "var(--plot-2)" });
+      txt(layer, lx, 120, "R = " + W.fmt(R, 2), { "text-anchor": "start", fill: "var(--plot-3)" });
+      txt(layer, lx, 150, "r = " + W.fmt(r, 2), { "text-anchor": "start", fill: "var(--plot-4)" });
+      txt(layer, lx, 180, "r / R = " + W.fmt(r / R, 3), { "text-anchor": "start", fill: "var(--muted)" });
+      var area = n * l * r / 2;
+      out.set("<p>Interior angle $= 180^\\circ - \\dfrac{360^\\circ}{" + n + "} = " + W.fmt(180 - 360 / n, 2) + "^\\circ$. In $\\triangle OXA$: $\\tan\\theta = \\dfrac{l/2}{r}$, $\\sin\\theta = \\dfrac{l/2}{R}$.</p>" +
+        "<p>Area $= \\tfrac12 \\cdot (" + n + " \\times " + W.fmt(l, 2) + ") \\cdot " + W.fmt(r, 2) + " \\approx " + W.fmt(area, 2) + "$, which is $" + W.fmt(100 * area / (Math.PI * R * R), 1) + "\\%$ of the circumscribed circle's area $\\pi R^2 \\approx " + W.fmt(Math.PI * R * R, 2) + "$.</p>");
+    }
+    draw();
+  });
+
+  /* 13.4 — regular hexagon parts */
+  AOPS.registerWidget("hexagonParts", function (body) {
+    var c = { x: 250, y: 205 }, U = 20;
+    var svg = W.stage(body, { w: 640, h: 410, label: "Regular hexagon split into equilateral triangles, with its diagonals and triangle ACE" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var s = 8, mode = "tri";
+    var layer = W.s("g"); svg.appendChild(layer);
+    W.segmented(ctl, { title: "Show", value: mode, options: [{ value: "tri", label: "6 triangles" }, { value: "diag", label: "Diagonals" }, { value: "ace", label: "Triangle ACE" }], onChange: function (v) { mode = v; draw(); } });
+    W.handle(svg, { x: c.x + s * U, y: c.y, label: "Vertex A: drag left or right to resize", keyStep: U / 2,
+      onMove: function (x) { s = clamp(snap((x - c.x) / U, 0.5), 2, 9); draw(); return [c.x + s * U, c.y]; }, valueText: function () { return "side " + s; } });
+    function draw() {
+      W.clear(layer);
+      var P = regular(6, c, s * U, 0).map(function (p, i, arr) { return arr[(6 - i) % 6]; });
+      var names = ["A", "B", "C", "D", "E", "F"];
+      var tri = mode === "tri";
+      if (tri) for (var k = 0; k < 6; k++) layer.appendChild(W.s("polygon", { points: pts([c, P[k], P[(k + 1) % 6]]), fill: "color-mix(in srgb, " + (k % 2 ? "var(--plot-1)" : "var(--plot-2)") + " 28%, transparent)", stroke: "var(--muted)", "stroke-width": 1.2 }));
+      if (mode === "ace") {
+        layer.appendChild(W.s("polygon", { points: pts([P[0], P[2], P[4]]), fill: "color-mix(in srgb, var(--plot-1) 32%, transparent)", stroke: "var(--plot-1)", "stroke-width": 2.5 }));
+        [[0, 1, 2], [2, 3, 4], [4, 5, 0]].forEach(function (t) { layer.appendChild(W.s("polygon", { points: pts([P[t[0]], P[t[1]], P[t[2]]]), fill: "color-mix(in srgb, var(--plot-3) 30%, transparent)", stroke: "var(--plot-3)", "stroke-width": 1.2 })); });
+        [0, 2, 4].forEach(function (k) { layer.appendChild(W.s("line", { x1: c.x, y1: c.y, x2: P[k].x, y2: P[k].y, stroke: "var(--plot-1)", "stroke-dasharray": "5 4" })); });
+      }
+      layer.appendChild(W.s("polygon", { points: pts(P), fill: "none", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      if (mode === "diag") {
+        layer.appendChild(W.s("line", { x1: P[0].x, y1: P[0].y, x2: P[3].x, y2: P[3].y, stroke: "var(--plot-5)", "stroke-width": 3 }));
+        layer.appendChild(W.s("line", { x1: P[0].x, y1: P[0].y, x2: P[2].x, y2: P[2].y, stroke: "var(--plot-4)", "stroke-width": 3 }));
+        layer.appendChild(W.s("line", { x1: P[2].x, y1: P[2].y, x2: P[3].x, y2: P[3].y, stroke: "var(--plot-2)", "stroke-width": 4 }));
+        var m = mid(P[0], P[2]);
+        txt(layer, m.x + 12, m.y - 6, "s√3", { fill: "var(--plot-4)", "text-anchor": "start" });
+        txt(layer, c.x + 30, c.y + 20, "2s", { fill: "var(--plot-5)" });
+        var C = P[2], v1 = sub(P[0], C), v2 = sub(P[3], C), l1 = len(v1), l2 = len(v2), q = 12;
+        layer.appendChild(W.s("path", { d: "M" + (C.x + v1.x / l1 * q) + " " + (C.y + v1.y / l1 * q) + "l" + (v2.x / l2 * q) + " " + (v2.y / l2 * q) + "l" + (-v1.x / l1 * q) + " " + (-v1.y / l1 * q), fill: "none", stroke: "var(--ink)", "stroke-width": 2 }));
+      }
+      layer.appendChild(W.s("circle", { cx: c.x, cy: c.y, r: 4, fill: "var(--ink)" }));
+      P.forEach(function (p, i) { var v = sub(p, c), l = len(v); txt(layer, p.x + v.x / l * 26, p.y + v.y / l * 26 + 5, names[i], { style: "font: 700 15px var(--font-body)" }); });
+      var lx = 470, r3 = Math.sqrt(3);
+      txt(layer, lx, 60, "side s = " + W.fmt(s, 1), { "text-anchor": "start" });
+      txt(layer, lx, 90, "AC = s√3 ≈ " + W.fmt(s * r3, 2), { "text-anchor": "start", fill: "var(--plot-4)" });
+      txt(layer, lx, 120, "AD = 2s = " + W.fmt(2 * s, 1), { "text-anchor": "start", fill: "var(--plot-5)" });
+      txt(layer, lx, 150, "r = (√3/2)s ≈ " + W.fmt(s * r3 / 2, 2), { "text-anchor": "start", fill: "var(--muted)" });
+      var A6 = 3 * r3 / 2 * s * s;
+      var html = "<p>Area $= 6 \\cdot \\dfrac{\\sqrt3}{4}s^2 = \\dfrac{3\\sqrt3}{2}(" + W.fmt(s, 1) + ")^2 \\approx " + W.fmt(A6, 2) + "$.</p>";
+      if (mode === "tri") html += "<p>Each central angle is $60^\\circ$ and $OA = OB$, so all six triangles are equilateral with side $s$.</p>";
+      if (mode === "diag") html += "<p>$AD$ is a diameter, so $\\angle ACD = 90^\\circ$ and $AC = \\sqrt{(2s)^2 - s^2} = s\\sqrt3$.</p>";
+      if (mode === "ace") html += "<p>$[ACE] = \\dfrac{\\sqrt3}{4}(s\\sqrt3)^2 \\approx " + W.fmt(A6 / 2, 2) + "$: exactly half. Each purple corner triangle matches one of the three pieces of $ACE$ at the centre.</p>";
+      out.set(html);
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

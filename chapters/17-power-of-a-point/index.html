@@ -1,0 +1,478 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 17: Power of a Point · AoPS Learner</title>
+  <meta name="description" content="The Power of a Point Theorem for chords, secants and tangents, equal tangents, incircle tangent lengths and the similar-triangle proofs, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="17" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 17 · Geometry</span>
+    <h1>Power of a Point</h1>
+    <p class="lede">Pick any point and any circle. Draw a line through the point that hits the circle twice, and multiply the two distances from the point to the circle. Now tilt the line: the product does not change. That single fact handles chords, secants and tangents all at once, and it is one of the most useful tools in geometry.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Power of a Point: for a point $P$ and any line through $P$ meeting a circle at $A$ and $B$, the product $PA \cdot PB$ is the same for every such line.</li>
+      <li>Two chords through $P$: $PA \cdot PB = PC \cdot PD$. Two secants from $P$: $PA \cdot PB = PC \cdot PD$ (whole secant times outside part). Tangent and secant: $PT^2 = PA \cdot PB$.</li>
+      <li>Two tangents from one point are equal. Label equal tangent lengths with one variable.</li>
+      <li>Incircle: the tangent lengths from the vertices are $s - a$, $s - b$, $s - c$, where $s$ is the semiperimeter.</li>
+      <li>A quadrilateral with an inscribed circle has $AB + CD = BC + DA$.</li>
+      <li>The power equals $|d^2 - r^2|$, where $d$ is the distance from $P$ to the center.</li>
+      <li>Proofs: ratios of lengths suggest similar triangles; inscribed angles and tangent-chord angles supply the equal angles.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 17.1 ===================== -->
+  <section class="lesson" id="s17-1" data-title="Introduction">
+    <h2><span class="sec-num">17.1</span> Introduction</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Stick a pin anywhere inside a round pizza and lay a ruler across the pin. The ruler crosses the crust at two points, splitting into a short piece and a long piece. Turn the ruler: one piece shrinks and the other grows, in exactly the right way to keep their <em>product</em> fixed. The pin's position alone decides that product.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Power of a Point Theorem.</strong> Given a point $P$ and a circle, draw any line through $P$ that meets the circle at $A$ and $B$. Then $PA \cdot PB$ is the same for every such line. This number is called the <strong>power</strong> of $P$.</p>
+      <p>It shows up in four familiar pictures:</p>
+      <div class="rule">
+        <p>1. Two chords $AB$ and $CD$ crossing at $P$ inside: $\;PA \cdot PB = PC \cdot PD$.</p>
+        <p>2. Two secants from $P$ outside, meeting the circle at $A, B$ and $C, D$: $\;PA \cdot PB = PC \cdot PD$.</p>
+        <p>3. A tangent $PT$ and a secant $PAB$ from $P$ outside: $\;PT^2 = PA \cdot PB$.</p>
+        <p>4. Two tangents $PT$ and $PU$ from $P$: $\;PT = PU$.</p>
+      </div>
+      <p>For a secant, always measure both lengths <em>from $P$</em>: the outside part times the whole secant, not the outside part times the chord. A tangent is the limiting case where the two meeting points merge, so both factors become $PT$.</p>
+      <p>Equal tangents are especially handy. If a circle is inscribed in triangle $ABC$ with sides $a, b, c$ and semiperimeter $s = \frac{a + b + c}{2}$, the two tangent lengths from $A$ are both $s - a$, from $B$ both $s - b$, and from $C$ both $s - c$.</p>
+      <div class="note"><p>The power can be computed from the center $O$ and radius $r$: a line through $P$ and $O$ meets the circle at distances $d - r$ and $d + r$ from $P$ (with $d = PO$), so the power is $|d^2 - r^2|$. Points outside have $PT^2 = d^2 - r^2$, which is just Pythagoras in the right triangle $PTO$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="powerPoint">
+      <figcaption><strong>Explore:</strong> Drag $P$ inside or outside the circle, and drag the blue and purple points around the circle to swing the two lines through $P$. The two products always match each other, and they match $|d^2 - r^2|$ (and $PT^2$ when $P$ is outside).</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Crossing chords</h3>
+        <div class="problem"><p>Chords $AB$ and $CD$ meet at $P$. If $PA = 4$, $PB = 6$ and $PC = 3$, find $PD$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$PA \cdot PB = PC \cdot PD$, so $4 \cdot 6 = 3 \cdot PD$.</p></div><p class="why">Both chords pass through $P$, so the two products of pieces agree.</p></li>
+          <li><div class="do"><p>$PD = 24 / 3 = 8$.</p></div><p class="why">Divide both sides by $3$.</p></li>
+        </ol>
+        <p class="answer">$PD = 8$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Equal tangents</h3>
+        <div class="problem"><p>From $P$, two tangents touch a circle at $T$ and $U$. If $PT = x + 3$ and $PU = 2x - 1$, find $PT$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x + 3 = 2x - 1$, so $x = 4$.</p></div><p class="why">Tangents to a circle from the same point are equal.</p></li>
+          <li><div class="do"><p>$PT = 4 + 3 = 7$.</p></div><p class="why">Check: $PU = 2 \cdot 4 - 1 = 7$. ✓</p></li>
+        </ol>
+        <p class="answer">$PT = 7$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Tangent and secant</h3>
+        <div class="problem"><p>From $P$, a tangent touches a circle at $T$ with $PT = 6$, and a secant meets the circle at $A$ and then $B$ with $PA = 3$. Find the chord $AB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$PT^2 = PA \cdot PB$: $36 = 3 \cdot PB$, so $PB = 12$.</p></div><p class="why">The tangent squared equals outside part times whole secant.</p></li>
+          <li><div class="do"><p>$AB = PB - PA = 12 - 3 = 9$.</p></div><p class="why">The chord is the whole secant minus its outside part.</p></li>
+        </ol>
+        <p class="answer">$AB = 9$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two secants</h3>
+        <div class="problem"><p>Two secants from $P$ meet a circle at $A, B$ and at $C, D$ (with $A$ and $C$ nearer $P$). If $PA = 4$, $AB = 5$ and $PC = 3$, find $CD$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$PB = PA + AB = 9$, so the power of $P$ is $PA \cdot PB = 4 \cdot 9 = 36$.</p></div><p class="why">Measure both lengths from $P$: the whole secant, not just the chord.</p></li>
+          <li><div class="do"><p>$PC \cdot PD = 36$, so $PD = 12$ and $CD = 12 - 3 = 9$.</p></div><p class="why">The second secant has the same power.</p></li>
+        </ol>
+        <p class="answer">$CD = 9$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Power from the center</h3>
+        <div class="problem"><p>A point $P$ is $10$ units from the center of a circle of radius $6$. Find the length of a tangent from $P$, and the product $PA \cdot PB$ for any secant $PAB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The radius to the point of tangency $T$ is perpendicular to $PT$, so $PT^2 + 6^2 = 10^2$ and $PT = 8$.</p></div><p class="why">A tangent is perpendicular to the radius at the point of contact, giving a right triangle.</p></li>
+          <li><div class="do"><p>Every secant has $PA \cdot PB = PT^2 = 64$.</p></div><p class="why">Power of a Point: all lines through $P$ share one product, and the tangent gives $d^2 - r^2 = 100 - 36$.</p></li>
+        </ol>
+        <p class="answer">$PT = 8$; $PA \cdot PB = 64$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Shortest chord through a point</h3>
+        <div class="problem"><p>A point $P$ is $3$ units from the center $O$ of a circle of radius $5$. Find the lengths of the longest and shortest chords through $P$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The chord through $O$ is a diameter: pieces $5 - 3 = 2$ and $5 + 3 = 8$, so the power is $16$ and the longest chord is $10$.</p></div><p class="why">A diameter is the longest chord; computing its pieces gives the power $r^2 - d^2$.</p></li>
+          <li data-think="If the two pieces have a fixed product, when is their sum smallest?"><div class="do"><p>For the chord perpendicular to $OP$, $P$ is its midpoint (the perpendicular from the center bisects a chord). So both pieces equal $x$ with $x^2 = 16$, $x = 4$, and the chord is $8$.</p></div><p class="why">For a fixed product, the sum of two positive numbers is smallest when they are equal.</p></li>
+        </ol>
+        <p class="answer">Longest $10$, shortest $8$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Tangent lengths in a triangle</h3>
+        <div class="problem"><p>A circle is inscribed in a triangle with sides $BC = 7$, $CA = 8$, $AB = 9$. Find the tangent lengths from each vertex.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Call the tangent lengths from $A$, $B$, $C$ by $x$, $y$, $z$. Then $x + y = 9$, $y + z = 7$, $z + x = 8$.</p></div><p class="why">Each side is made of two tangent segments, one from each end, and tangents from one vertex are equal.</p></li>
+          <li><div class="do"><p>Add: $2(x + y + z) = 24$, so $x + y + z = 12 = s$.</p></div><p class="why">The sum of all three is the semiperimeter.</p></li>
+          <li><div class="do"><p>$x = 12 - 7 = 5$, $y = 12 - 8 = 4$, $z = 12 - 9 = 3$.</p></div><p class="why">Subtract the opposite side from $s$: this is the $s - a$ rule.</p></li>
+        </ol>
+        <p class="answer">From $A$: $5$; from $B$: $4$; from $C$: $3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A quadrilateral around a circle</h3>
+        <div class="problem"><p>Quadrilateral $ABCD$ has a circle tangent to all four sides. If $AB = 7$, $BC = 9$ and $CD = 10$, find $DA$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the tangent lengths from $A, B, C, D$ be $w, x, y, z$. Then $AB + CD = (w + x) + (y + z)$ and $BC + DA = (x + y) + (z + w)$.</p></div><p class="why">Each side splits into tangents from its two ends.</p></li>
+          <li><div class="do"><p>Both sums equal $w + x + y + z$, so $AB + CD = BC + DA$: $7 + 10 = 9 + DA$.</p></div><p class="why">Opposite sides of a quadrilateral with an inscribed circle have equal sums.</p></li>
+        </ol>
+        <p class="answer">$DA = 8$</p>
+        <p class="key-idea">Name each tangent length once; equal tangents do the rest.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Finding a radius</h3>
+        <div class="problem"><p>A point $P$ is $11$ units from the center of a circle. A secant from $P$ meets the circle at $Q$ and $R$, with $PQ = 5$ and $QR = 7$. Find the radius.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Power from the secant: $PQ \cdot PR = 5 \cdot 12 = 60$.</p></div><p class="why">$PR = PQ + QR = 12$.</p></li>
+          <li data-think="What is the power in terms of the distance to the center and the radius?"><div class="do"><p>Power from the center: $11^2 - r^2 = 121 - r^2$.</p></div><p class="why">The secant through the center has pieces $11 - r$ and $11 + r$.</p></li>
+          <li><div class="do"><p>$121 - r^2 = 60$, so $r^2 = 61$ and $r = \sqrt{61}$.</p></div><p class="why">Two expressions for the same power must be equal.</p></li>
+        </ol>
+        <p class="answer">$r = \sqrt{61}$</p>
+        <p class="book-next">Next in the book: Problems 294 and 295.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Tangents to two circles</h3>
+        <div class="problem"><p>Two circles cross at $X$ and $Y$. A point $P$ on line $XY$, outside both circles, has $PX = 4$ and $PY = 9$. Find the length of a tangent from $P$ to each circle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Line $PXY$ is a secant of the first circle, so a tangent $PT_1$ satisfies $PT_1^2 = PX \cdot PY = 36$.</p></div><p class="why">Tangent squared equals the secant product.</p></li>
+          <li data-think="Is line $PXY$ also a secant of the second circle?"><div class="do"><p>The same line is a secant of the second circle too, so $PT_2^2 = 36$ as well. Both tangents have length $6$.</p></div><p class="why">$X$ and $Y$ lie on both circles, so $P$ has the same power with respect to each.</p></li>
+        </ol>
+        <p class="answer">Both tangents have length $6$.</p>
+        <p class="key-idea">Every point on the line through two crossing points has equal power to both circles.</p>
+        <p class="book-next">Next in the book: Exercises 17-1 and 17-2, then Problems 297 and 298.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 17.2 ===================== -->
+  <section class="lesson" id="s17-2" data-title="Power of a Point Proofs">
+    <h2><span class="sec-num">17.2</span> Power of a Point Proofs</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>An equation like $PA \cdot PB = PC \cdot PD$ can be rearranged into $\frac{PA}{PC} = \frac{PD}{PB}$, a statement about <em>ratios</em>. Whenever you see equal ratios of lengths, a pair of similar triangles is usually hiding nearby. In a circle, inscribed angles hand you the equal angles you need to find them.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Point inside (two chords).</strong> Chords $AB$ and $CD$ cross at $E$. Draw $AC$ and $DB$. Then $\angle AEC = \angle DEB$ (vertical angles), and $\angle CAB = \angle CDB$ (inscribed angles on the same arc $CB$). So $\triangle EAC \sim \triangle EDB$, which gives</p>
+      <div class="rule"><p>$$\frac{EA}{ED} = \frac{EC}{EB} \quad\Longrightarrow\quad EA \cdot EB = EC \cdot ED.$$</p></div>
+      <p><strong>Point outside (tangent and secant).</strong> A tangent from $P$ touches at $T$; a secant meets the circle at $A$ (near) and $B$ (far). The tangent-chord angle $\angle PTA$ equals half of arc $TA$, and so does the inscribed angle $\angle TBA$. With the shared angle at $P$, $\triangle PTA \sim \triangle PBT$, so</p>
+      <div class="rule"><p>$$\frac{PT}{PB} = \frac{PA}{PT} \quad\Longrightarrow\quad PT^2 = PA \cdot PB.$$</p></div>
+      <p>Two secants follow at once: each secant product equals the same $PT^2$. Two tangents follow too: $PT^2 = PA \cdot PB = PU^2$, so $PT = PU$.</p>
+      <div class="note"><p>The toolkit for these proofs: ratios of sides suggest similar triangles; similar triangles need equal angles; circles supply equal angles through arcs. Keep this pattern in mind for your own proofs.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="similarProof">
+      <figcaption><strong>Explore:</strong> Drag the four points around the circle. Lines $AB$ and $CD$ meet at $E$, inside or outside. The two shaded triangles $EAC$ and $EDB$ stay similar: their matching angles agree and their side ratios agree, which forces $EA \cdot EB = EC \cdot ED$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Spot the equal angles</h3>
+        <div class="problem"><p>Chords $AB$ and $CD$ cross at $E$. Which angles of $\triangle EAC$ and $\triangle EDB$ are equal, and why?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle AEC = \angle DEB$.</p></div><p class="why">They are vertical angles, formed by the same two crossing lines.</p></li>
+          <li><div class="do"><p>$\angle CAE = \angle BDE$, that is, $\angle CAB = \angle CDB$.</p></div><p class="why">Both are inscribed angles that cut off the same arc $CB$, so each is half of it.</p></li>
+          <li><div class="do"><p>The third angles, $\angle ACE$ and $\angle DBE$, are then equal too.</p></div><p class="why">Angles in a triangle sum to $180^\circ$. (They also cut off the same arc $AD$.)</p></li>
+        </ol>
+        <p class="answer">All three pairs match, so $\triangle EAC \sim \triangle EDB$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Proof for crossing chords</h3>
+        <div class="problem"><p>Prove that if chords $AB$ and $CD$ cross at $E$, then $EA \cdot EB = EC \cdot ED$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw segments $AC$ and $DB$ to form $\triangle EAC$ and $\triangle EDB$.</p></div><p class="why">The products involve four segments from $E$; two triangles that use them are the natural thing to compare.</p></li>
+          <li><div class="do"><p>By the previous example, the triangles are similar (AA), with $A \leftrightarrow D$, $C \leftrightarrow B$, $E \leftrightarrow E$.</p></div><p class="why">Two pairs of equal angles are enough for similarity.</p></li>
+          <li><div class="do"><p>Corresponding sides are proportional: $\dfrac{EA}{ED} = \dfrac{EC}{EB}$. Cross-multiply: $EA \cdot EB = EC \cdot ED$. ∎</p></div><p class="why">Match the sides carefully: $EA$ is opposite the angle at $C$, which matches the angle at $B$, opposite $ED$.</p></li>
+        </ol>
+        <p class="answer">$EA \cdot EB = EC \cdot ED$, from $\triangle EAC \sim \triangle EDB$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two unknown pieces</h3>
+        <div class="problem"><p>Chords $AB$ and $CD$ cross at $E$ with $AE = 6$, $EB = 4$, and $CD = 11$. Find $CE$ and $ED$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $CE = x$, so $ED = 11 - x$. Then $x(11 - x) = 6 \cdot 4 = 24$.</p></div><p class="why">Power of the point $E$.</p></li>
+          <li><div class="do"><p>$x^2 - 11x + 24 = 0$, so $(x - 3)(x - 8) = 0$ and $x = 3$ or $8$.</p></div><p class="why">Either root works; it just depends on which end you call $C$.</p></li>
+        </ol>
+        <p class="answer">The pieces are $3$ and $8$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Why two tangents are equal</h3>
+        <div class="problem"><p>Tangents from $P$ touch a circle with center $O$ at $T$ and $U$. Prove $PT = PU$ directly with congruent triangles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle PTO = \angle PUO = 90^\circ$.</p></div><p class="why">A tangent is perpendicular to the radius at the point of contact.</p></li>
+          <li><div class="do"><p>$OT = OU$ (radii) and $OP$ is shared, so right triangles $PTO$ and $PUO$ are congruent (hypotenuse-leg).</p></div><p class="why">Two right triangles with equal hypotenuses and one pair of equal legs are congruent.</p></li>
+          <li><div class="do"><p>Hence $PT = PU$. ∎ As a bonus, $\angle TPO = \angle UPO$: $PO$ bisects the angle between the tangents.</p></div><p class="why">Corresponding parts of congruent triangles are equal.</p></li>
+        </ol>
+        <p class="answer">$\triangle PTO \cong \triangle PUO$, so $PT = PU$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Proof for tangent and secant</h3>
+        <div class="problem"><p>From an outside point $P$, a tangent touches a circle at $T$, and a secant meets it at $A$ and then $B$. Prove $PT^2 = PA \cdot PB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw $TA$ and $TB$. Compare $\triangle PTA$ and $\triangle PBT$; they share $\angle P$.</p></div><p class="why">$PT^2 = PA \cdot PB$ rearranges to $\frac{PT}{PA} = \frac{PB}{PT}$, so look for triangles with sides $PT, PA$ and $PB, PT$.</p></li>
+          <li data-think="Which arc does the tangent-chord angle $\angle PTA$ cut off? Which inscribed angle cuts off the same arc?"><div class="do"><p>$\angle PTA = \tfrac12 \overset{\frown}{TA}$ (tangent-chord angle) and $\angle TBA = \tfrac12 \overset{\frown}{TA}$ (inscribed angle). So $\angle PTA = \angle PBT$.</p></div><p class="why">Both angles are measured by half of the same arc $TA$ (Chapter 10).</p></li>
+          <li><div class="do"><p>By AA, $\triangle PTA \sim \triangle PBT$, so $\dfrac{PT}{PB} = \dfrac{PA}{PT}$ and $PT^2 = PA \cdot PB$. ∎</p></div><p class="why">Match vertices: $P \leftrightarrow P$, $T \leftrightarrow B$, $A \leftrightarrow T$.</p></li>
+        </ol>
+        <p class="answer">$\triangle PTA \sim \triangle PBT$ gives $PT^2 = PA \cdot PB$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The power is $|d^2 - r^2|$</h3>
+        <div class="problem"><p>A circle has center $O$ and radius $r$; let $d = PO$. Show that the power of $P$ is $d^2 - r^2$ if $P$ is outside and $r^2 - d^2$ if $P$ is inside.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Use the line through $P$ and $O$. It meets the circle at the two ends of a diameter.</p></div><p class="why">Since every line through $P$ gives the same product, choose the easiest one.</p></li>
+          <li><div class="do"><p>Outside: the distances from $P$ are $d - r$ and $d + r$, with product $d^2 - r^2$.</p></div><p class="why">The near end is $r$ closer than $O$; the far end is $r$ farther.</p></li>
+          <li><div class="do"><p>Inside: the distances are $r - d$ and $r + d$, with product $r^2 - d^2$.</p></div><p class="why">Now $P$ is between the two ends of the diameter.</p></li>
+        </ol>
+        <p class="answer">Power $= |d^2 - r^2|$ in both cases.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The geometric mean in a semicircle</h3>
+        <div class="problem"><p>The diameter of a semicircle is split by a point $X$ into pieces of length $4$ and $9$. A perpendicular to the diameter at $X$ meets the semicircle at $C$. Find $XC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Complete the full circle and extend $CX$ to a chord $CD$. The diameter is perpendicular to $CD$, so it bisects it: $XD = XC$.</p></div><p class="why">A diameter perpendicular to a chord bisects the chord.</p></li>
+          <li><div class="do"><p>Power of $X$: $XC \cdot XD = 4 \cdot 9$, so $XC^2 = 36$ and $XC = 6$.</p></div><p class="why">The chord $CD$ and the diameter cross at $X$.</p></li>
+        </ol>
+        <p class="answer">$XC = 6$, the geometric mean of $4$ and $9$.</p>
+        <p class="book-next">Next in the book: Exercise 17-2 asks you to prove this in general.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A test for tangency</h3>
+        <div class="problem"><p>A secant from an outside point $P$ meets a circle at $A$ and $B$, and $X$ is a point on the circle with $PX^2 = PA \cdot PB$. Prove that $PX$ is tangent to the circle.</p></div>
+        <ol class="steps">
+          <li data-think="If $PX$ were not tangent, what else would line $PX$ do?"><div class="do"><p>Suppose not. Then line $PX$ meets the circle at a second point $Y$.</p></div><p class="why">A line through a point of a circle is either tangent there or crosses at a second point.</p></li>
+          <li><div class="do"><p>Power of $P$: $PX \cdot PY = PA \cdot PB = PX^2$, so $PY = PX$.</p></div><p class="why">Line $PXY$ is another secant from $P$.</p></li>
+          <li><div class="do"><p>Since $P$ is outside the circle, $X$ and $Y$ lie on the same ray from $P$, so $PY = PX$ forces $Y = X$. This contradicts $Y$ being a second point, so $PX$ is tangent. ∎</p></div><p class="why">From an outside point, both meeting points of a secant are on the same side of $P$.</p></li>
+        </ol>
+        <p class="answer">$PX$ is tangent, because a second meeting point would have to coincide with $X$.</p>
+        <p class="key-idea">Power of a Point works backward too: $PX^2 = PA \cdot PB$ proves tangency.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The common tangent is bisected</h3>
+        <div class="problem"><p>Two circles cross at $X$ and $Y$. A common tangent touches the first circle at $T_1$ and the second at $T_2$. Prove that line $XY$ passes through the midpoint of $T_1T_2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Extend $XY$ to meet line $T_1T_2$ at $M$.</p></div><p class="why">We will show $MT_1 = MT_2$.</p></li>
+          <li><div class="do"><p>For the first circle, $MT_1$ is a tangent and $MXY$ a secant: $MT_1^2 = MX \cdot MY$.</p></div><p class="why">Tangent-secant form of Power of a Point.</p></li>
+          <li><div class="do"><p>For the second circle, likewise $MT_2^2 = MX \cdot MY$. So $MT_1 = MT_2$, and $M$ is the midpoint. ∎</p></div><p class="why">The same secant works for both circles because $X$ and $Y$ are on both.</p></li>
+        </ol>
+        <p class="answer">$MT_1^2 = MX \cdot MY = MT_2^2$, so $M$ is the midpoint of $T_1T_2$.</p>
+        <p class="book-next">Next in the book: Problems 299–302.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-17">
+    <h2 id="further-17">Further reading in the book</h2>
+    <ul>
+      <li><strong>§17.1 Introduction</strong>: the four Power of a Point formulas, Examples 17-1 to 17-4 and Exercises 17-1, 17-2, plus the note on proving tangency.</li>
+      <li><strong>§17.2 Power of a Point Proofs</strong>: the similar-triangle proofs for points outside and inside the circle.</li>
+      <li><strong>Problems to Solve for Chapter 17</strong>: Problems 294–302. Problems 294–298 apply the formulas directly; 299, 301 and 302 combine them with other ideas and are the most demanding.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 17 explorers ---------- */
+(function () {
+  "use strict";
+
+  var U = 24; /* svg pixels per length unit (radius 5 units = 120 px) */
+  function lbl(svg, x, y, t, o) {
+    o = o || {};
+    svg.appendChild(W.s("text", { x: x, y: y, class: "lbl", "text-anchor": o.anchor || "middle", fill: o.fill, style: "font: 700 " + (o.size || 15) + "px var(--font-mono);paint-order:stroke;stroke:var(--surface-solid);stroke-width:4px;stroke-linejoin:round", text: t }));
+  }
+  function circleHandle(svg, cx, cy, R, ang, o) {
+    var h = W.handle(svg, {
+      x: cx + R * Math.cos(ang), y: cy - R * Math.sin(ang), label: o.label, color: o.color || "var(--accent-2)", keyStep: 10,
+      onMove: function (px, py) {
+        var a = Math.atan2(cy - py, px - cx);
+        h.ang = a;
+        if (o.onChange) o.onChange();
+        return [cx + R * Math.cos(a), cy - R * Math.sin(a)];
+      },
+      valueText: function () { return o.name + " at " + Math.round(((h ? h.ang : ang) * 180 / Math.PI + 360) % 360) + " degrees"; }
+    });
+    h.ang = ang;
+    h.place = function (a) { h.ang = a; h.set(cx + R * Math.cos(a), cy - R * Math.sin(a), true); };
+    return h;
+  }
+  /* intersections of the line through p with direction (ux,uy) and circle (cx,cy,R): signed params */
+  function hits(px, py, ux, uy, cx, cy, R) {
+    var fx = px - cx, fy = py - cy, b = ux * fx + uy * fy, c = fx * fx + fy * fy - R * R, disc = b * b - c;
+    if (disc < 0) return null;
+    var s = Math.sqrt(disc);
+    return [-b - s, -b + s];
+  }
+
+  /* 17.1 — power of a point */
+  AOPS.registerWidget("powerPoint", function (body) {
+    var Wd = 640, Ht = 400, cx = 300, cy = 200, R = 5 * U;
+    var svg = W.stage(body, { w: Wd, h: Ht, label: "A circle, a draggable point P and two lines through P meeting the circle" });
+    var out = W.readout(body);
+    svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "color-mix(in srgb, var(--plot-1) 8%, transparent)", stroke: "var(--plot-1)", "stroke-width": 3 }));
+    svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 4, fill: "var(--ink)" }));
+    lbl(svg, cx - 12, cy + 20, "O", { size: 14 });
+    var L = W.s("g"); svg.appendChild(L);
+    var P = W.handle(svg, { x: 520, y: 150, label: "Point P; arrow keys move it", keyStep: 12,
+      onMove: function (x, y) { x = Math.max(20, Math.min(Wd - 20, x)); y = Math.max(20, Math.min(Ht - 20, y)); P && (P.pos.x = x, P.pos.y = y); draw(x, y); return [x, y]; },
+      valueText: function (x, y) { return "P at " + Math.round(x) + ", " + Math.round(y); } });
+    var Q1 = circleHandle(svg, cx, cy, R, 2.2, { name: "First line point", label: "Point where the first line meets the circle; arrow keys move it around", onChange: function () { draw(); } });
+    var Q2 = circleHandle(svg, cx, cy, R, -2.4, { name: "Second line point", label: "Point where the second line meets the circle; arrow keys move it around", color: "var(--plot-3)", onChange: function () { draw(); } });
+    function draw(px, py) {
+      if (!Q2) return;
+      if (px == null) { px = P.pos.x; py = P.pos.y; }
+      W.clear(L);
+      var d = Math.hypot(px - cx, py - cy) / U, r = R / U, outside = d > r + 1e-6;
+      var res = [], names = [["A", "B"], ["C", "D"]], cols = ["var(--accent-2)", "var(--plot-3)"];
+      [Q1, Q2].forEach(function (Q, i) {
+        var qx = cx + R * Math.cos(Q.ang), qy = cy - R * Math.sin(Q.ang);
+        var len = Math.hypot(qx - px, qy - py);
+        if (len < 1) { res.push(null); return; }
+        var ux = (qx - px) / len, uy = (qy - py) / len;
+        var t = hits(px, py, ux, uy, cx, cy, R);
+        if (!t) { res.push(null); return; }
+        var A = [px + t[0] * ux, py + t[0] * uy], B = [px + t[1] * ux, py + t[1] * uy];
+        var ext = Math.max(Math.abs(t[0]), Math.abs(t[1])) + 30;
+        var lo = Math.min(t[0], 0) - 30, hi = Math.max(t[1], 0) + 30;
+        L.appendChild(W.s("line", { x1: px + lo * ux, y1: py + lo * uy, x2: px + hi * ux, y2: py + hi * uy, stroke: cols[i], "stroke-width": 2.5 }));
+        var near = Math.abs(t[0]) <= Math.abs(t[1]) ? 0 : 1;
+        var pa = Math.abs(t[near]) / U, pb = Math.abs(t[1 - near]) / U;
+        var Pn = near === 0 ? A : B, Pf = near === 0 ? B : A;
+        [Pn, Pf].forEach(function (pt, k) {
+          L.appendChild(W.s("circle", { cx: pt[0], cy: pt[1], r: 5, fill: cols[i] }));
+          var ox = (pt[0] - cx), oy = (pt[1] - cy), on = Math.hypot(ox, oy) || 1;
+          lbl(L, pt[0] + ox / on * 18, pt[1] + oy / on * 18 + 5, names[i][k], { fill: cols[i] });
+        });
+        res.push({ pa: pa, pb: pb });
+      });
+      if (outside) {
+        var tl = Math.sqrt(Math.max(0, (d * d - r * r))) * U, base = Math.atan2(py - cy, px - cx), phi = Math.acos(r / d);
+        var T = [cx + R * Math.cos(base + phi), cy + R * Math.sin(base + phi)];
+        L.appendChild(W.s("line", { x1: px, y1: py, x2: T[0], y2: T[1], stroke: "var(--plot-4)", "stroke-width": 2.5, "stroke-dasharray": "7 5" }));
+        L.appendChild(W.s("line", { x1: cx, y1: cy, x2: T[0], y2: T[1], stroke: "var(--faint)", "stroke-width": 1.5 }));
+        L.appendChild(W.s("circle", { cx: T[0], cy: T[1], r: 5, fill: "var(--plot-4)" }));
+        lbl(L, T[0] + (T[0] - cx) / R * 18, T[1] + (T[1] - cy) / R * 18 + 5, "T", { fill: "var(--plot-4)" });
+      }
+      lbl(L, px + 16, py - 14, "P", { fill: "var(--accent)", anchor: "start", size: 16 });
+      var pow = Math.abs(d * d - r * r);
+      var rows = [];
+      res.forEach(function (o, i) {
+        if (!o) { rows.push("Line " + (i + 1) + ": move its gold point away from $P$."); return; }
+        var n = names[i];
+        rows.push("$P" + n[0] + " \\cdot P" + n[1] + " \\approx " + o.pa.toFixed(2) + " \\times " + o.pb.toFixed(2) + " = " + (o.pa * o.pb).toFixed(2) + "$");
+      });
+      var s = rows.join(" &nbsp;·&nbsp; ");
+      s += "<br>$d = PO \\approx " + d.toFixed(2) + "$, $r = 5$: &nbsp; $|d^2 - r^2| \\approx " + pow.toFixed(2) + "$";
+      if (outside) s += " &nbsp;·&nbsp; tangent $PT^2 \\approx " + pow.toFixed(2) + "$ ($P$ is outside: secants and a tangent)";
+      else if (Math.abs(d - r) < 1e-6) s += " ($P$ is on the circle: power $0$)";
+      else s += " ($P$ is inside: two chords)";
+      out.set(s);
+    }
+    draw();
+  });
+
+  /* 17.2 — similar triangles behind the theorem */
+  AOPS.registerWidget("similarProof", function (body) {
+    var Wd = 640, Ht = 420, cx = 300, cy = 210, R = 5 * U + 20;
+    var svg = W.stage(body, { w: Wd, h: Ht, label: "Four points on a circle; lines AB and CD meet at E, forming similar triangles EAC and EDB" });
+    var ctl = W.controls(body), out = W.readout(body);
+    svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+    var L = W.s("g"); svg.appendChild(L);
+    var H = {};
+    var start = { A: 3.6, B: 0.35, C: 2.1, D: 5.1 };
+    ["A", "B", "C", "D"].forEach(function (n, i) {
+      H[n] = circleHandle(svg, cx, cy, R, start[n], { name: "Point " + n, label: "Point " + n + " on the circle; arrow keys move it around", color: ["var(--plot-2)", "var(--plot-2)", "var(--plot-3)", "var(--plot-3)"][i], onChange: function () { draw(); } });
+    });
+    W.button(ctl, "Preset: E inside", function () { H.A.place(3.6); H.B.place(0.35); H.C.place(2.1); H.D.place(5.1); draw(); });
+    W.button(ctl, "Preset: E outside", function () { H.A.place(1.25); H.B.place(2.6); H.C.place(-1.0); H.D.place(-2.4); draw(); });
+    function pt(n) { var a = H[n].ang; return [cx + R * Math.cos(a), cy - R * Math.sin(a)]; }
+    function angAt(V, X, Y) {
+      var a1 = Math.atan2(X[1] - V[1], X[0] - V[0]), a2 = Math.atan2(Y[1] - V[1], Y[0] - V[0]);
+      var d = Math.abs(a1 - a2) * 180 / Math.PI; if (d > 180) d = 360 - d; return d;
+    }
+    function dist(p, q) { return Math.hypot(p[0] - q[0], p[1] - q[1]) / U; }
+    function draw() {
+      if (!H.D) return;
+      var A = pt("A"), B = pt("B"), C = pt("C"), D = pt("D");
+      W.clear(L);
+      var d1 = [B[0] - A[0], B[1] - A[1]], d2 = [D[0] - C[0], D[1] - C[1]];
+      var den = d1[0] * d2[1] - d1[1] * d2[0];
+      function longLine(P1, dir, col) {
+        var n = Math.hypot(dir[0], dir[1]) || 1;
+        L.appendChild(W.s("line", { x1: P1[0] - dir[0] / n * 900, y1: P1[1] - dir[1] / n * 900, x2: P1[0] + dir[0] / n * 900, y2: P1[1] + dir[1] / n * 900, stroke: col, "stroke-width": 1.5, "stroke-dasharray": "4 6", opacity: 0.8 }));
+      }
+      longLine(A, d1, "var(--plot-2)"); longLine(C, d2, "var(--plot-3)");
+      L.appendChild(W.s("line", { x1: A[0], y1: A[1], x2: B[0], y2: B[1], stroke: "var(--plot-2)", "stroke-width": 3 }));
+      L.appendChild(W.s("line", { x1: C[0], y1: C[1], x2: D[0], y2: D[1], stroke: "var(--plot-3)", "stroke-width": 3 }));
+      var lab = { A: A, B: B, C: C, D: D };
+      if (Math.abs(den) < 1e-6) {
+        Object.keys(lab).forEach(function (n) { var p = lab[n]; lbl(L, p[0] + (p[0] - cx) / R * 20, p[1] + (p[1] - cy) / R * 20 + 5, n); });
+        out.set("Lines $AB$ and $CD$ are parallel, so there is no point $E$. Move a point to make them meet.");
+        return;
+      }
+      var t = ((C[0] - A[0]) * d2[1] - (C[1] - A[1]) * d2[0]) / den;
+      var E = [A[0] + t * d1[0], A[1] + t * d1[1]];
+      var inside = Math.hypot(E[0] - cx, E[1] - cy) < R;
+      var visible = E[0] > -40 && E[0] < Wd + 40 && E[1] > -40 && E[1] < Ht + 40;
+      L.appendChild(W.s("polygon", { points: [E, A, C].map(function (p) { return p.join(","); }).join(" "), fill: "color-mix(in srgb, var(--plot-4) 30%, transparent)", stroke: "var(--plot-4)", "stroke-width": 2 }));
+      L.appendChild(W.s("polygon", { points: [E, D, B].map(function (p) { return p.join(","); }).join(" "), fill: "color-mix(in srgb, var(--plot-5) 30%, transparent)", stroke: "var(--plot-5)", "stroke-width": 2 }));
+      L.appendChild(W.s("circle", { cx: E[0], cy: E[1], r: 6, fill: "var(--ink)" }));
+      if (visible) lbl(L, E[0] + 14, E[1] - 12, "E", { anchor: "start" });
+      Object.keys(lab).forEach(function (n) { var p = lab[n]; lbl(L, p[0] + (p[0] - cx) / R * 22, p[1] + (p[1] - cy) / R * 22 + 5, n); });
+      var EA = dist(E, A), EB = dist(E, B), EC = dist(E, C), ED = dist(E, D), AC = dist(A, C), DB = dist(D, B);
+      var aA = angAt(A, E, C), aD = angAt(D, E, B), aC = angAt(C, E, A), aB = angAt(B, E, D);
+      out.set("$E$ is " + (inside ? "inside the circle (two chords)" : "outside the circle (two secants)") + (visible ? "" : ", off the picture") +
+        "<br>Angles: $\\angle EAC \\approx " + aA.toFixed(1) + "^\\circ = \\angle EDB \\approx " + aD.toFixed(1) + "^\\circ$, &nbsp; $\\angle ECA \\approx " + aC.toFixed(1) + "^\\circ = \\angle EBD \\approx " + aB.toFixed(1) + "^\\circ$" +
+        "<br>Ratios: $\\dfrac{EA}{ED} \\approx " + (EA / ED).toFixed(3) + "$, $\\dfrac{EC}{EB} \\approx " + (EC / EB).toFixed(3) + "$, $\\dfrac{AC}{DB} \\approx " + (AC / DB).toFixed(3) + "$" +
+        "<br>So $EA \\cdot EB \\approx " + (EA * EB).toFixed(2) + "$ and $EC \\cdot ED \\approx " + (EC * ED).toFixed(2) + "$");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
