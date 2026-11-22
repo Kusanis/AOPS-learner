@@ -1,0 +1,790 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 4: Proportions · AoPS Learner</title>
+  <meta name="description" content="Ratios, direct, inverse and joint variation, manipulating proportions, conversion factors and percent, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="4" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 4 · Algebra &amp; Number</span>
+    <h1>Proportions</h1>
+    <p class="lede">Twice the ingredients make twice the cookies; twice the workers finish in half the time. Proportions capture these "scale it up" relationships in a single equation. In this chapter you'll set up direct and inverse variation, juggle ratios, convert units without guessing, and handle percents, including the ones that trick almost everybody.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Direct proportion: the <em>quotient</em> is constant, $\dfrac{y}{x} = k$. Inverse proportion: the <em>product</em> is constant, $xy = k$.</li>
+      <li>Joint and combined variation: put directly proportional quantities on the opposite side of the fraction from $x$, inversely proportional ones on the same side, and find the one constant.</li>
+      <li>A ratio $p : q$ splits a whole into $p + q$ equal parts.</li>
+      <li>If $\dfrac ab = \dfrac cd$, then $\dfrac ab = \dfrac{a + kc}{b + kd}$ for any $k$ (when the denominator isn't $0$). Multiply ratios to cancel a shared quantity.</li>
+      <li>Conversion factors are fractions equal to $1$; choose the orientation that cancels the unit you want to remove, and repeat it for squared or cubed units.</li>
+      <li>Percent means "per hundred". "Of" means multiply; an increase of $p\%$ multiplies by $1 + \tfrac{p}{100}$, a decrease by $1 - \tfrac{p}{100}$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 4.1 ===================== -->
+  <section class="lesson" id="s4-1" data-title="Direct and Inverse">
+    <h2><span class="sec-num">4.1</span> Direct and Inverse</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A recipe for 4 people needs 300 g of pasta. Cooking for 10? Scale everything by $\tfrac{10}{4}$. Now a different question: a pot of soup feeds 4 people for 3 days. How long would it feed 6 people? More people means <em>fewer</em> days. Both are proportions, but they scale in opposite directions.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>ratio</strong> compares two quantities by division. "The ratio of apples to oranges is $3 : 2$" means $\dfrac{\text{apples}}{\text{oranges}} = \dfrac32$; out of every $5$ pieces of fruit, $3$ are apples. Ratios of three or more quantities use colons: ages $30 : 12 : 6$ simplify to $5 : 2 : 1$ by dividing by $6$.</p>
+      <div class="rule">
+        <p><strong>Direct proportion:</strong> $\dfrac{y}{x} = k$ (constant). When $x$ doubles, $y$ doubles.</p>
+        <p><strong>Inverse proportion:</strong> $xy = k$ (constant). When $x$ doubles, $y$ halves.</p>
+      </div>
+      <p>The constant $k$ is the <strong>constant of proportionality</strong>. To solve a problem, find $k$ from the information given, then use it for the new situation.</p>
+      <p>A quantity can depend on several others at once. If $z$ is directly proportional to both $x$ and $y$ (<strong>jointly proportional</strong>) and inversely proportional to $w$, then</p>
+      <div class="rule"><p>$$\frac{zw}{xy} = k \qquad\text{or}\qquad z = \frac{kxy}{w}.$$</p></div>
+      <p>To decide which kind of proportion you have, ask: "If this goes up while everything else stays fixed, does that go up or down?"</p>
+    </div>
+
+    <figure class="explore" data-widget="variation">
+      <figcaption><strong>Explore:</strong> Switch between direct and inverse variation and drag the point along the curve. In direct mode the slope from the origin (the ratio $y/x$) never changes; in inverse mode the shaded rectangle's area ($xy$) never changes. Change $k$ to get a new curve.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Scale a price</h3>
+        <div class="problem"><p>Six pencils cost 90 cents. At the same rate, how much do 14 pencils cost?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{\text{cost}}{\text{pencils}} = \dfrac{90}{6} = 15$ cents per pencil.</p></div><p class="why">Cost is directly proportional to the number of pencils, so the quotient is constant.</p></li>
+          <li><div class="do"><p>$\text{cost} = 15 \times 14 = 210$ cents.</p></div><p class="why">Use the same constant for the new number of pencils.</p></li>
+        </ol>
+        <p class="answer">210 cents (2.10 dollars)</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Split by a ratio</h3>
+        <div class="problem"><p>A bag of 64 marbles has red and blue marbles in the ratio $5 : 3$. How many of each?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The ratio splits the marbles into $5 + 3 = 8$ equal parts of $\dfrac{64}{8} = 8$ marbles.</p></div><p class="why">For every 5 red there are 3 blue, so every group of 8 marbles has the same mix.</p></li>
+          <li><div class="do"><p>Red: $5 \times 8 = 40$. Blue: $3 \times 8 = 24$.</p></div><p class="why">Take 5 parts and 3 parts. Check: $40 + 24 = 64$.</p></li>
+        </ol>
+        <p class="answer">40 red and 24 blue</p>
+        <p class="book-next">Next in the book: Exercises 4-1 and 4-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>More workers, fewer days</h3>
+        <div class="problem"><p>Six workers can build a wall in 15 days. How long would 9 workers take, working at the same rate?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>More workers means fewer days, so workers and days are inversely proportional: $(\text{workers})(\text{days}) = 6 \times 15 = 90$.</p></div><p class="why">The product is the total "worker-days" of labour the wall needs, which doesn't change.</p></li>
+          <li><div class="do"><p>$9 \times \text{days} = 90$, so $\text{days} = 10$.</p></div><p class="why">Same constant, new number of workers.</p></li>
+        </ol>
+        <p class="answer">10 days</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Chain two ratios</h3>
+        <div class="problem"><p>If $a : b = 2 : 3$ and $b : c = 4 : 5$, find $a : b : c$.</p></div>
+        <ol class="steps">
+          <li data-think="The two ratios use different amounts of $b$. How can you make them agree?"><div class="do"><p>Make $b$ the same in both: $2 : 3 = 8 : 12$ and $4 : 5 = 12 : 15$.</p></div><p class="why">$b$ is 3 parts in one ratio and 4 in the other; scale both to $\operatorname{lcm}(3, 4) = 12$ parts.</p></li>
+          <li><div class="do"><p>So $a : b : c = 8 : 12 : 15$.</p></div><p class="why">With a common value for $b$, the ratios link up.</p></li>
+        </ol>
+        <p class="answer">$8 : 12 : 15$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Inverse with a square</h3>
+        <div class="problem"><p>$y$ is inversely proportional to the square of $x$, and $y = 8$ when $x = 3$. Find $y$ when $x = 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 y = k$, so $k = 3^2 \cdot 8 = 72$.</p></div><p class="why">"Inversely proportional to $x^2$" means the product $x^2 y$ is constant.</p></li>
+          <li><div class="do"><p>$6^2 y = 72$, so $y = 2$.</p></div><p class="why">Doubling $x$ multiplies $x^2$ by 4, so $y$ is divided by 4.</p></li>
+        </ol>
+        <p class="answer">$y = 2$</p>
+        <p class="book-next">Compare with the book's Example 4-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Joint and inverse together</h3>
+        <div class="problem"><p>$z$ varies jointly with $x$ and $y$ and inversely with $w$. If $z = 12$ when $x = 2$, $y = 3$, $w = 4$, find $z$ when $x = 5$, $y = 6$, $w = 10$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{zw}{xy} = k$, so $k = \dfrac{12 \cdot 4}{2 \cdot 3} = 8$.</p></div><p class="why">$x$ and $y$ go opposite $z$ in the fraction (direct); $w$ goes on the same side as $z$ (inverse).</p></li>
+          <li><div class="do"><p>$z = \dfrac{kxy}{w} = \dfrac{8 \cdot 5 \cdot 6}{10} = 24$.</p></div><p class="why">Solve for $z$ and use the new values.</p></li>
+        </ol>
+        <p class="answer">$z = 24$</p>
+        <p class="book-next">Compare with the book's Example 4-4.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Machines, parts and hours</h3>
+        <div class="problem"><p>Six machines make 240 parts in 4 hours. How many hours do 9 machines need to make 450 parts?</p></div>
+        <ol class="steps">
+          <li data-think="If you have more parts to make, do you need more or fewer machines? More or fewer hours?"><div class="do"><p>Parts are directly proportional to machines and to hours: $\dfrac{\text{parts}}{(\text{machines})(\text{hours})} = k$.</p></div><p class="why">More machines or more hours both mean more parts.</p></li>
+          <li><div class="do"><p>$k = \dfrac{240}{6 \cdot 4} = 10$ parts per machine-hour.</p></div><p class="why">Find the constant from the first situation.</p></li>
+          <li><div class="do"><p>$\text{hours} = \dfrac{450}{10 \cdot 9} = 5$.</p></div><p class="why">Rearrange for hours and substitute.</p></li>
+        </ol>
+        <p class="answer">5 hours</p>
+        <p class="book-next">Next in the book: Exercise 4-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>What happens to z?</h3>
+        <div class="problem"><p>$z = \dfrac{kx^2}{y}$. If $x$ doubles and $y$ triples, by what factor does $z$ change?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>New $z = \dfrac{k(2x)^2}{3y} = \dfrac{4kx^2}{3y}$.</p></div><p class="why">Substitute $2x$ and $3y$ for the old values.</p></li>
+          <li><div class="do"><p>$= \dfrac43 \cdot \dfrac{kx^2}{y} = \dfrac43 z$.</p></div><p class="why">Pull out the original expression; what's left is the factor.</p></li>
+        </ol>
+        <p class="answer">$z$ is multiplied by $\dfrac43$.</p>
+        <p class="key-idea">You don't need $k$ to find how a proportional quantity scales.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Clock hands at a right angle</h3>
+        <div class="problem"><p>At exactly 2:00, how many minutes pass before the hour and minute hands first form a right angle?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Measure positions in "minute marks" (60 around the dial). After $x$ minutes the minute hand is at mark $x$.</p></div><p class="why">Using one unit for both hands lets us compare them directly.</p></li>
+          <li data-think="The hour hand moves too. How far does it move in $x$ minutes?"><div class="do"><p>The hour hand starts at mark $10$ and moves $5$ marks per $60$ minutes, so it is at $10 + \dfrac{x}{12}$.</p></div><p class="why">Its movement is directly proportional to time: $\tfrac{5}{60} = \tfrac{1}{12}$ mark per minute.</p></li>
+          <li><div class="do"><p>A right angle is $15$ marks. The minute hand first gets $15$ marks ahead: $x = 10 + \dfrac{x}{12} + 15$.</p></div><p class="why">At 2:00 the minute hand is 10 marks behind, so it must catch up and pull 15 ahead.</p></li>
+          <li><div class="do"><p>$\dfrac{11x}{12} = 25$, so $x = \dfrac{300}{11} = 27\tfrac{3}{11}$ minutes.</p></div><p class="why">Solve the linear equation.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{300}{11} \approx 27.27$ minutes</p>
+        <p class="key-idea">In clock problems, both hands move: write each position as a function of time.</p>
+        <p class="book-next">Compare with the book's Example 4-6.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 4.2 ===================== -->
+  <section class="lesson" id="s4-2" data-title="Manipulating Proportions">
+    <h2><span class="sec-num">4.2</span> Manipulating Proportions</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>One glass of juice is 1 part syrup to 3 parts water. A second, bigger glass is 2 parts syrup to 6 parts water: the same strength. Pour them together and you get 3 parts syrup to 9 parts water, which is <em>still</em> the same strength. Adding tops and adding bottoms of equal ratios keeps the ratio. That small fact is surprisingly powerful.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Suppose $\dfrac ab = \dfrac cd$. Call the common value $r$, so $a = rb$ and $c = rd$. Then for any number $k$,</p>
+      <div class="rule"><p>$$\frac{a + kc}{b + kd} = \frac{rb + krd}{b + kd} = \frac{r(b + kd)}{b + kd} = r. \qquad\text{So}\quad \frac ab = \frac cd = \frac{a+c}{b+d} = \frac{a-c}{b-d} = \frac{a+kc}{b+kd}$$</p></div>
+      <p>(as long as the new denominator isn't zero). Naming the common ratio $r$ (or $t$) is itself a great technique: if $\dfrac x3 = \dfrac y4$, write $x = 3t$, $y = 4t$.</p>
+      <p>Ratios also <strong>multiply</strong> to cancel a shared quantity: if $\dfrac xy = \dfrac45$ and $\dfrac yz = \dfrac53$, then $\dfrac xz = \dfrac xy \cdot \dfrac yz = \dfrac43$.</p>
+      <div class="note"><p>Most ratio equations still yield to plain algebra: clear denominators by cross-multiplying, collect terms, and divide to get the ratio you want.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="mediant">
+      <figcaption><strong>Explore:</strong> A fraction $\tfrac{a}{b}$ is the slope of the arrow from the origin to $(b, a)$. Equal fractions lie on the same line. Slide $k$ and watch $(b + kd,\ a + kc)$ stay on the line. Then press "Break it" to make $\tfrac cd$ different: now the combination wanders between the two lines.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Add one to a ratio</h3>
+        <div class="problem"><p>If $\dfrac ab = \dfrac35$, find $\dfrac{a + b}{b}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{a+b}{b} = \dfrac ab + \dfrac bb = \dfrac ab + 1$.</p></div><p class="why">Split the fraction into two pieces with the same denominator.</p></li>
+          <li><div class="do"><p>$= \dfrac35 + 1 = \dfrac85$.</p></div><p class="why">Substitute the known ratio.</p></li>
+        </ol>
+        <p class="answer">$\dfrac85$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Multiply ratios to cancel</h3>
+        <div class="problem"><p>If $\dfrac xy = \dfrac23$ and $\dfrac yz = \dfrac67$, find $\dfrac xz$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac xz = \dfrac xy \cdot \dfrac yz$.</p></div><p class="why">The $y$ on top of the second ratio cancels the $y$ on the bottom of the first.</p></li>
+          <li><div class="do"><p>$= \dfrac23 \cdot \dfrac67 = \dfrac{12}{21} = \dfrac47$.</p></div><p class="why">Multiply and reduce.</p></li>
+        </ol>
+        <p class="answer">$\dfrac47$</p>
+        <p class="book-next">Next in the book: Exercise 4-4.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Solve for a ratio</h3>
+        <div class="problem"><p>If $\dfrac{x + y}{x - y} = 5$, find $\dfrac xy$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply by $x - y$: $x + y = 5x - 5y$.</p></div><p class="why">Clear the denominator.</p></li>
+          <li><div class="do"><p>$6y = 4x$.</p></div><p class="why">Collect $x$ terms on one side and $y$ terms on the other.</p></li>
+          <li><div class="do"><p>Divide both sides by $4y$: $\dfrac xy = \dfrac64 = \dfrac32$.</p></div><p class="why">We want $x$ over $y$, so divide by $y$ (and by $x$'s coefficient).</p></li>
+        </ol>
+        <p class="answer">$\dfrac32$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A messier ratio equation</h3>
+        <div class="problem"><p>If $\dfrac{3x - y}{x + 2y} = \dfrac45$, find $\dfrac xy$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Cross-multiply: $5(3x - y) = 4(x + 2y)$, so $15x - 5y = 4x + 8y$.</p></div><p class="why">Equal fractions have equal cross products.</p></li>
+          <li><div class="do"><p>$11x = 13y$, so $\dfrac xy = \dfrac{13}{11}$.</p></div><p class="why">Group like terms, then divide by $11y$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{13}{11}$</p>
+        <p class="book-next">Compare with the book's Example 4-7.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Combine equal ratios</h3>
+        <div class="problem"><p>If $\dfrac ab = \dfrac cd = \dfrac27$, find $\dfrac{3a - 2c}{3b - 2d}$ (assume the denominator isn't zero).</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Write $a = \tfrac27 b$ and $c = \tfrac27 d$.</p></div><p class="why">Name the common ratio and express the tops in terms of the bottoms.</p></li>
+          <li><div class="do"><p>$3a - 2c = \tfrac27(3b - 2d)$, so the fraction equals $\tfrac27$.</p></div><p class="why">The factor $\tfrac27$ comes out of every term, and $3b - 2d$ cancels.</p></li>
+        </ol>
+        <p class="answer">$\dfrac27$</p>
+        <p class="key-idea">Any combination $\dfrac{ma + nc}{mb + nd}$ of equal ratios has the same value.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Prove the addition property</h3>
+        <div class="problem"><p>Show that if $\dfrac ab = \dfrac cd$ and $b + d \ne 0$, then $\dfrac{a + c}{b + d} = \dfrac ab$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Cross-multiplying the given ratio: $ad = bc$.</p></div><p class="why">Turn the proportion into an equation without fractions.</p></li>
+          <li><div class="do"><p>We want $(a + c)b = a(b + d)$, i.e. $ab + bc = ab + ad$.</p></div><p class="why">Cross-multiplying the claimed equation shows what must be proved.</p></li>
+          <li><div class="do"><p>That reduces to $bc = ad$, which is exactly what we know. ∎</p></div><p class="why">Every step is reversible, so the claim follows from the hypothesis.</p></li>
+        </ol>
+        <p class="answer">Both reduce to $ad = bc$, so the property holds.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three equal ratios</h3>
+        <div class="problem"><p>If $\dfrac x3 = \dfrac y4 = \dfrac z5$ and $x + y + z = 36$, find $x$, $y$ and $z$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the common value be $t$: $x = 3t$, $y = 4t$, $z = 5t$.</p></div><p class="why">One letter now describes all three unknowns.</p></li>
+          <li><div class="do"><p>$3t + 4t + 5t = 12t = 36$, so $t = 3$.</p></div><p class="why">Use the sum condition. (Equivalently, the addition property gives $t = \tfrac{36}{3 + 4 + 5}$.)</p></li>
+          <li><div class="do"><p>$x = 9$, $y = 12$, $z = 15$.</p></div><p class="why">Substitute back.</p></li>
+        </ol>
+        <p class="answer">$(x, y, z) = (9, 12, 15)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Evaluate using a ratio</h3>
+        <div class="problem"><p>If $a : b = 3 : 4$ (with $b \ne 0$), find $\dfrac{2a + 5b}{4a - b}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Write $a = 3t$, $b = 4t$ with $t \ne 0$.</p></div><p class="why">Only the ratio is known, so introduce a scale factor.</p></li>
+          <li><div class="do"><p>$\dfrac{6t + 20t}{12t - 4t} = \dfrac{26t}{8t} = \dfrac{13}{4}$.</p></div><p class="why">Every term has a factor of $t$, which cancels. That's why the ratio alone determines the answer.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{13}{4}$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A ratio of squares</h3>
+        <div class="problem"><p>If $\dfrac ab = \dfrac23$, find $\dfrac{a^2 + b^2}{ab}$.</p></div>
+        <ol class="steps">
+          <li data-think="Can you write the expression using only the ratio $a/b$?"><div class="do"><p>$\dfrac{a^2 + b^2}{ab} = \dfrac{a^2}{ab} + \dfrac{b^2}{ab} = \dfrac ab + \dfrac ba$.</p></div><p class="why">Splitting the fraction reveals the ratio and its reciprocal.</p></li>
+          <li><div class="do"><p>$= \dfrac23 + \dfrac32 = \dfrac{4 + 9}{6} = \dfrac{13}{6}$.</p></div><p class="why">Substitute and add.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{13}{6}$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A symmetric proportion</h3>
+        <div class="problem"><p>Positive numbers $a$, $b$, $c$ satisfy $\dfrac{a}{b + c} = \dfrac{b}{c + a} = \dfrac{c}{a + b} = k$. Find $k$.</p></div>
+        <ol class="steps">
+          <li data-think="Three equal ratios... which property lets you combine them?"><div class="do"><p>By the addition property, $k = \dfrac{a + b + c}{(b + c) + (c + a) + (a + b)}$.</p></div><p class="why">Adding all the tops and all the bottoms of equal ratios gives the same ratio.</p></li>
+          <li><div class="do"><p>$= \dfrac{a + b + c}{2(a + b + c)} = \dfrac12$.</p></div><p class="why">The denominator is twice the numerator, and $a + b + c \ne 0$ since all are positive.</p></li>
+        </ol>
+        <p class="answer">$k = \dfrac12$</p>
+        <p class="key-idea">When ratios are equal, adding tops and bottoms often exposes hidden symmetry.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 4.3 ===================== -->
+  <section class="lesson" id="s4-3" data-title="Conversion Factors">
+    <h2><span class="sec-num">4.3</span> Conversion Factors</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A runner finishes 5 kilometers. How many miles is that? Do you multiply by 1.609 or divide by it? Guessing gives a 50/50 chance of nonsense. Conversion factors remove the guessing: you let the units tell you what to do.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Start with a fact like $1 \text{ mi} = 1.609 \text{ km}$. Dividing both sides by one side gives two fractions that each equal $1$:</p>
+      <div class="rule"><p>$$\frac{1.609\ \text{km}}{1\ \text{mi}} = 1 \qquad\text{and}\qquad \frac{1\ \text{mi}}{1.609\ \text{km}} = 1.$$</p></div>
+      <p>Multiplying by $1$ never changes a quantity, so you can multiply by either. Choose the one that puts the unit you want to get rid of on the <em>opposite</em> side, so it cancels:</p>
+      <div class="rule"><p>$$5\ \text{km} \times \frac{1\ \text{mi}}{1.609\ \text{km}} \approx 3.11\ \text{mi}.$$</p></div>
+      <p>Chain as many factors as you need, cancelling one unit at a time. Units in denominators ("per hour", "per gallon") need a factor with that unit on top.</p>
+      <div class="note"><p><strong>Squared and cubed units.</strong> $\text{ft}^2$ means $\text{ft}\cdot\text{ft}$, so it takes the conversion factor <em>twice</em>: $1\ \text{ft}^2 = 1\ \text{ft}^2 \times \left(\dfrac{12\ \text{in}}{1\ \text{ft}}\right)^2 = 144\ \text{in}^2$. Cubed units take it three times.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="unitChain">
+      <figcaption><strong>Explore:</strong> Pick a conversion and a starting amount. Each card is a fraction equal to $1$; matching units on the top and bottom are struck out. Notice that squared and cubed units need the same card two or three times.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Hours to seconds</h3>
+        <div class="problem"><p>Convert 3.5 hours to minutes and to seconds.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$3.5\ \text{h} \times \dfrac{60\ \text{min}}{1\ \text{h}} = 210\ \text{min}$.</p></div><p class="why">"h" sits on the bottom of the factor so that it cancels the "h" we start with.</p></li>
+          <li><div class="do"><p>$210\ \text{min} \times \dfrac{60\ \text{s}}{1\ \text{min}} = 12600\ \text{s}$.</p></div><p class="why">A second factor cancels minutes and leaves seconds.</p></li>
+        </ol>
+        <p class="answer">210 minutes, 12600 seconds</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Miles per hour to feet per second</h3>
+        <div class="problem"><p>Convert 60 mi/h to ft/s (1 mi = 5280 ft).</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{60\ \text{mi}}{1\ \text{h}} \times \dfrac{5280\ \text{ft}}{1\ \text{mi}} \times \dfrac{1\ \text{h}}{3600\ \text{s}}$.</p></div><p class="why">Miles are on top, so the first factor has miles on the bottom; hours are on the bottom, so the second factor has hours on top.</p></li>
+          <li><div class="do"><p>$= \dfrac{60 \cdot 5280}{3600}\ \dfrac{\text{ft}}{\text{s}} = 88\ \text{ft/s}$.</p></div><p class="why">Miles and hours cancel, leaving feet per second.</p></li>
+        </ol>
+        <p class="answer">88 ft/s</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Kilometers to miles</h3>
+        <div class="problem"><p>How many miles is a 5 km race? Use 1 mi ≈ 1.609 km.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$5\ \text{km} \times \dfrac{1\ \text{mi}}{1.609\ \text{km}}$.</p></div><p class="why">We start with km, so km must be on the bottom of the factor. That settles "multiply or divide": we divide by $1.609$.</p></li>
+          <li><div class="do"><p>$\approx 3.11\ \text{mi}$.</p></div><p class="why">Sanity check: a mile is longer than a kilometer, so the number of miles should be smaller.</p></li>
+        </ol>
+        <p class="answer">about 3.11 miles</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Square units</h3>
+        <div class="problem"><p>Convert 2 square yards to square feet, and 1 square meter to square centimeters.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2\ \text{yd}^2 \times \left(\dfrac{3\ \text{ft}}{1\ \text{yd}}\right)^2 = 2 \times 9\ \text{ft}^2 = 18\ \text{ft}^2$.</p></div><p class="why">$\text{yd}^2 = \text{yd}\cdot\text{yd}$, so the factor is needed twice to cancel both.</p></li>
+          <li><div class="do"><p>$1\ \text{m}^2 \times \left(\dfrac{100\ \text{cm}}{1\ \text{m}}\right)^2 = 10000\ \text{cm}^2$.</p></div><p class="why">A 1 m square is 100 cm by 100 cm, which is $10000$ little squares, not $100$.</p></li>
+        </ol>
+        <p class="answer">18 ft² and 10000 cm²</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Made-up currencies</h3>
+        <div class="problem"><p>If 3 zips are worth 5 zaps and 2 zaps are worth 7 zoops, how many zoops are 12 zips worth?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$12\ \text{zips} \times \dfrac{5\ \text{zaps}}{3\ \text{zips}} = 20\ \text{zaps}$.</p></div><p class="why">There's no direct zip-to-zoop rate, so go through zaps.</p></li>
+          <li><div class="do"><p>$20\ \text{zaps} \times \dfrac{7\ \text{zoops}}{2\ \text{zaps}} = 70\ \text{zoops}$.</p></div><p class="why">The second factor cancels zaps.</p></li>
+        </ol>
+        <p class="answer">70 zoops</p>
+        <p class="book-next">Compare with the book's Example 4-9.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A leaky faucet</h3>
+        <div class="problem"><p>A faucet drips 1 mL every 2 seconds. How many liters does it waste per day?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{1\ \text{mL}}{2\ \text{s}} \times \dfrac{60\ \text{s}}{1\ \text{min}} \times \dfrac{60\ \text{min}}{1\ \text{h}} \times \dfrac{24\ \text{h}}{1\ \text{day}}$.</p></div><p class="why">Seconds are on the bottom, so we chain factors that carry the bottom unit up to days.</p></li>
+          <li><div class="do"><p>$= \dfrac{86400}{2}\ \dfrac{\text{mL}}{\text{day}} = 43200\ \text{mL/day}$.</p></div><p class="why">$60 \cdot 60 \cdot 24 = 86400$ seconds in a day.</p></li>
+          <li><div class="do"><p>$43200\ \text{mL} \times \dfrac{1\ \text{L}}{1000\ \text{mL}} = 43.2\ \text{L}$.</p></div><p class="why">Convert the top unit too.</p></li>
+        </ol>
+        <p class="answer">43.2 liters per day</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Density in different units</h3>
+        <div class="problem"><p>Water has density $1000\ \text{kg/m}^3$. Express this in $\text{g/cm}^3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Top: $1000\ \text{kg} \times \dfrac{1000\ \text{g}}{1\ \text{kg}} = 10^6\ \text{g}$.</p></div><p class="why">Convert the numerator's unit.</p></li>
+          <li><div class="do"><p>Bottom: $\dfrac{1}{\text{m}^3} \times \left(\dfrac{1\ \text{m}}{100\ \text{cm}}\right)^3 = \dfrac{1}{10^6\ \text{cm}^3}$.</p></div><p class="why">$\text{m}^3$ is in the denominator, so the factor needs m on <em>top</em>, cubed.</p></li>
+          <li><div class="do"><p>$\dfrac{10^6\ \text{g}}{10^6\ \text{cm}^3} = 1\ \text{g/cm}^3$.</p></div><p class="why">The two powers of ten cancel.</p></li>
+        </ol>
+        <p class="answer">$1\ \text{g/cm}^3$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Cubic feet to liters</h3>
+        <div class="problem"><p>How many liters are in one cubic foot? Use 1 in = 2.54 cm and 1 L = 1000 cm³.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$1\ \text{ft}^3 \times \left(\dfrac{12\ \text{in}}{1\ \text{ft}}\right)^3 = 1728\ \text{in}^3$.</p></div><p class="why">Cube the factor because the unit is cubed.</p></li>
+          <li><div class="do"><p>$1728\ \text{in}^3 \times \left(\dfrac{2.54\ \text{cm}}{1\ \text{in}}\right)^3 \approx 1728 \times 16.387\ \text{cm}^3 \approx 28317\ \text{cm}^3$.</p></div><p class="why">Again cube the factor: $2.54^3 \approx 16.387$.</p></li>
+          <li><div class="do"><p>$28317\ \text{cm}^3 \times \dfrac{1\ \text{L}}{1000\ \text{cm}^3} \approx 28.3\ \text{L}$.</p></div><p class="why">Finish with the liter conversion.</p></li>
+        </ol>
+        <p class="answer">about 28.3 liters</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Fuel economy, flipped</h3>
+        <div class="problem"><p>A car gets 30 miles per gallon. Express this in liters per 100 km. (1 mi ≈ 1.609 km, 1 gal ≈ 3.785 L.)</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{30\ \text{mi}}{1\ \text{gal}} \times \dfrac{1.609\ \text{km}}{1\ \text{mi}} \times \dfrac{1\ \text{gal}}{3.785\ \text{L}} \approx 12.75\ \dfrac{\text{km}}{\text{L}}$.</p></div><p class="why">Convert both the top and bottom units.</p></li>
+          <li data-think="The target unit is liters per distance, but you have distance per liter. What do you do?"><div class="do"><p>Flip: $\dfrac{1\ \text{L}}{12.75\ \text{km}}$.</p></div><p class="why">"Liters per km" is the reciprocal of "km per liter". The units tell you to take the reciprocal.</p></li>
+          <li><div class="do"><p>$\dfrac{1\ \text{L}}{12.75\ \text{km}} \times 100\ \text{km} \approx 7.84\ \text{L}$, so about 7.8 L per 100 km.</p></div><p class="why">Multiply by 100 km to get the fuel used over 100 km.</p></li>
+        </ol>
+        <p class="answer">about 7.8 L per 100 km</p>
+        <p class="key-idea">When a rate is "upside down" from what you want, take its reciprocal; the units show you when.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 4.4 ===================== -->
+  <section class="lesson" id="s4-4" data-title="Percent">
+    <h2><span class="sec-num">4.4</span> Percent</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A shop raises a price by 50%, then puts it "50% off". Back to where it started? No: you now pay only 75% of the original price. Percent changes multiply, they don't add, and the base changes after every step.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Percent</strong> means "per hundred": $p\% = \dfrac{p}{100}$. So $35\% = 0.35 = \tfrac{7}{20}$, and $\tfrac38 = 0.375 = 37.5\%$.</p>
+      <p>Translate words into algebra: "<strong>of</strong>" means multiply, and "<strong>is</strong>" means equals. "What percent of 40 is 14?" becomes $\dfrac{p}{100}\cdot 40 = 14$.</p>
+      <div class="rule">
+        <p>Increase by $p\%$: multiply by $\left(1 + \dfrac{p}{100}\right)$. &nbsp; Decrease by $p\%$: multiply by $\left(1 - \dfrac{p}{100}\right)$.</p>
+        <p>$$\text{percent change} = \frac{\text{new} - \text{old}}{\text{old}} \times 100\%$$</p>
+      </div>
+      <p>Thinking in multipliers makes repeated changes easy. Interest of $r\%$ per year for $n$ years multiplies an amount by $\left(1 + \tfrac{r}{100}\right)^n$. To undo a change, divide by its multiplier.</p>
+      <p>In mixtures, the <strong>concentration</strong> is (amount of the ingredient) ÷ (total amount). Track the ingredient itself: it adds up, while percents do not.</p>
+    </div>
+
+    <figure class="explore" data-widget="percentChain">
+      <figcaption><strong>Explore:</strong> Apply two percent changes in a row to a price of 100. Try $+50\%$ then $-50\%$, or $+25\%$ then $-20\%$. The net change is the product of the multipliers, not the sum of the percents.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="mixture">
+      <figcaption><strong>Explore:</strong> Mix two salt solutions. The darker part of each beaker is the salt itself. The mixture's strength is a weighted average: it always lands between the two strengths, closer to the one you use more of.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Convert between forms</h3>
+        <div class="problem"><p>Write $12.5\%$ as a fraction and a decimal, and write $\tfrac38$ as a percent.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$12.5\% = \dfrac{12.5}{100} = 0.125 = \dfrac{125}{1000} = \dfrac18$.</p></div><p class="why">Divide by 100, then reduce the fraction.</p></li>
+          <li><div class="do"><p>$\dfrac38 = 0.375 = 37.5\%$.</p></div><p class="why">To go from a decimal to a percent, multiply by 100.</p></li>
+        </ol>
+        <p class="answer">$12.5\% = 0.125 = \tfrac18$; $\ \tfrac38 = 37.5\%$</p>
+        <p class="book-next">Next in the book: Exercises 4-5 and 4-6.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A percent of a number</h3>
+        <div class="problem"><p>What is 15% of 80?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$0.15 \times 80 = 12$.</p></div><p class="why">"Of" means multiply, and $15\% = 0.15$.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the whole</h3>
+        <div class="problem"><p>18 is 24% of what number?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the number be $n$: $18 = 0.24n$.</p></div><p class="why">"Is" means equals and "of" means multiply.</p></li>
+          <li><div class="do"><p>$n = \dfrac{18}{0.24} = 75$.</p></div><p class="why">Divide to isolate $n$. Check: $0.24 \times 75 = 18$.</p></li>
+        </ol>
+        <p class="answer">$75$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the percent</h3>
+        <div class="problem"><p>What percent of 40 is 14?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{p}{100} \cdot 40 = 14$, so $\dfrac{p}{100} = \dfrac{14}{40} = 0.35$.</p></div><p class="why">The unknown is the percent itself.</p></li>
+          <li><div class="do"><p>$p = 35$.</p></div><p class="why">Multiply by 100.</p></li>
+        </ol>
+        <p class="answer">$35\%$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Discount, then tax</h3>
+        <div class="problem"><p>A jacket costs 60 dollars. It is marked 15% off, and then 8% sales tax is added. What is the final price?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>After the discount: $60 \times 0.85 = 51$ dollars.</p></div><p class="why">Taking off 15% leaves 85% of the price.</p></li>
+          <li><div class="do"><p>With tax: $51 \times 1.08 = 55.08$ dollars.</p></div><p class="why">Adding 8% means multiplying by $1.08$. In one line: $60 \times 0.85 \times 1.08$.</p></li>
+        </ol>
+        <p class="answer">55.08 dollars</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Percent change goes both ways</h3>
+        <div class="problem"><p>A price rises from 80 to 92 dollars. What is the percent increase? If it later falls from 92 back to 80, what is the percent decrease?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Increase: $\dfrac{92 - 80}{80} = \dfrac{12}{80} = 0.15 = 15\%$.</p></div><p class="why">Percent change is measured against the <em>starting</em> value, here 80.</p></li>
+          <li><div class="do"><p>Decrease: $\dfrac{92 - 80}{92} = \dfrac{12}{92} \approx 0.1304 \approx 13.0\%$.</p></div><p class="why">Same 12-dollar change, but now the starting value is 92, so the percent is smaller.</p></li>
+        </ol>
+        <p class="answer">15% increase; about 13.0% decrease</p>
+        <p class="book-next">Next in the book: Exercise 4-8.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Compound interest</h3>
+        <div class="problem"><p>5000 dollars earns 4% interest per year, compounded yearly. How much is there after 3 years?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each year multiplies the balance by $1.04$.</p></div><p class="why">Interest is added to the current balance, so each year's 4% is 4% of a bigger amount.</p></li>
+          <li><div class="do"><p>$5000 \times 1.04^3 = 5000 \times 1.124864 = 5624.32$.</p></div><p class="why">Three years means three factors of $1.04$.</p></li>
+        </ol>
+        <p class="answer">5624.32 dollars</p>
+        <p class="book-next">Compare with the book's Example 4-14.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Undo a raise</h3>
+        <div class="problem"><p>After a 20% raise, a salary is 54000 dollars. What was it before?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Old salary $\times 1.2 = 54000$.</p></div><p class="why">The raise multiplied the old salary by $1.2$.</p></li>
+          <li><div class="do"><p>Old salary $= \dfrac{54000}{1.2} = 45000$.</p></div><p class="why">Undo a multiplier by dividing. (Subtracting 20% of 54000 would give 43200, which is wrong: the 20% was of the <em>old</em> salary.)</p></li>
+        </ol>
+        <p class="answer">45000 dollars</p>
+        <p class="book-next">Next in the book: Exercise 4-7.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Diluting a solution</h3>
+        <div class="problem"><p>How many liters of pure water must be added to 6 L of a 30% salt solution to make a 20% solution?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Salt present: $0.30 \times 6 = 1.8$ L.</p></div><p class="why">Track the ingredient. Adding water doesn't change the amount of salt.</p></li>
+          <li><div class="do"><p>With $x$ liters of water added, the concentration is $\dfrac{1.8}{6 + x} = 0.20$.</p></div><p class="why">Concentration = salt ÷ total volume.</p></li>
+          <li><div class="do"><p>$1.8 = 0.2(6 + x)$, so $6 + x = 9$ and $x = 3$.</p></div><p class="why">Clear the denominator and solve.</p></li>
+        </ol>
+        <p class="answer">3 liters</p>
+        <p class="book-next">Next in the book: Exercise 4-10.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Getting back to the start</h3>
+        <div class="problem"><p>A town's population grows by 60% in one year. By what percent must it then shrink to return to its original size?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the shrink be $p\%$, with multiplier $m = 1 - \tfrac{p}{100}$. We need $1.6\,m = 1$.</p></div><p class="why">Two multipliers in a row must cancel out to 1.</p></li>
+          <li data-think="Is the answer 60%?"><div class="do"><p>$m = \dfrac{1}{1.6} = 0.625$, so $p = 37.5$.</p></div><p class="why">The decrease is taken from the larger, grown population, so a smaller percent is enough.</p></li>
+          <li><div class="do"><p>Check with 1000 people: $1000 \to 1600 \to 1600 \times 0.625 = 1000$. ✓</p></div><p class="why">Testing with a concrete number confirms the result.</p></li>
+        </ol>
+        <p class="answer">37.5%</p>
+        <p class="key-idea">To undo a change with multiplier $m$, you need multiplier $\dfrac1m$, not the same percent in reverse.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-4">
+    <h2 id="further-4">Further reading in the book</h2>
+    <ul>
+      <li><strong>§4.1 Direct and Inverse</strong>: Examples 4-1 to 4-6 (including joint variation and a clock problem) and Exercises 4-1 to 4-3.</li>
+      <li><strong>§4.2 Manipulating Proportions</strong>: the $\frac{a+kc}{b+kd}$ property, Example 4-7 and Exercise 4-4.</li>
+      <li><strong>§4.3 Conversion Factors</strong>: worked conversions with squared and cubed units, and Examples 4-8 and 4-9.</li>
+      <li><strong>§4.4 Percent</strong>: Examples 4-10 to 4-15 and Exercises 4-5 to 4-10.</li>
+      <li><strong>Problems to Solve for Chapter 4</strong>: percent changes, ratio equations and proportion word problems.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 4 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 4.1 — direct vs inverse variation */
+  AOPS.registerWidget("variation", function (body) {
+    var svg = W.stage(body, { w: 600, h: 440, label: "Graph of direct or inverse variation with a draggable point and a shaded rectangle" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var k = 2, mode = "direct", x = 3;
+    var P = W.plane(svg, { x: [0, 10], y: [0, 10], step: 1, pad: 30 });
+    var rect = W.s("rect", { fill: "color-mix(in srgb, var(--plot-2) 25%, transparent)", stroke: "var(--plot-2)", "stroke-dasharray": "4 4" });
+    var ray = W.s("line", { stroke: "var(--accent-3)", "stroke-width": 2, "stroke-dasharray": "6 5" });
+    var curve = W.s("path", { fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 });
+    var note = W.s("text", { class: "lbl", x: P.X(5.2), y: P.Y(9.3) });
+    [rect, ray, curve, note].forEach(function (e) { svg.appendChild(e); });
+    function f(t) { return mode === "direct" ? k * t : k / t; }
+    function xBounds() { return mode === "direct" ? [0.25, Math.min(10, 10 / k)] : [Math.max(0.25, k / 10), 10]; }
+    var h = W.handle(svg, { x: P.X(x), y: P.Y(f(x)), label: "Point on the curve; left and right arrows move it", keyStep: P.X(0.25) - P.X(0),
+      onMove: function (px) { var b = xBounds(); x = Math.max(b[0], Math.min(b[1], Math.round(P.ix(px) * 4) / 4)); update(); return [P.X(x), P.Y(f(x))]; },
+      valueText: function () { return "x = " + x; } });
+    W.slider(ctl, { label: "Constant k", min: 1, max: 9, step: 0.5, value: k, onInput: function (v) { k = v; rebuild(); } });
+    W.segmented(ctl, { title: "Type", value: mode, options: [{ value: "direct", label: "direct: y = kx" }, { value: "inverse", label: "inverse: y = k/x" }], onChange: function (v) { mode = v; rebuild(); } });
+    function rebuild() {
+      curve.setAttribute("d", W.fnPath(P, f, { from: 0.05 }));
+      var b = xBounds(); x = Math.max(b[0], Math.min(b[1], x));
+      update(); h.set(P.X(x), P.Y(f(x)), true);
+    }
+    function update() {
+      var y = f(x);
+      rect.setAttribute("x", P.X(0)); rect.setAttribute("y", P.Y(y));
+      rect.setAttribute("width", P.X(x) - P.X(0)); rect.setAttribute("height", P.Y(0) - P.Y(y));
+      if (mode === "direct") {
+        ray.setAttribute("x1", P.X(0)); ray.setAttribute("y1", P.Y(0)); ray.setAttribute("x2", P.X(x)); ray.setAttribute("y2", P.Y(y));
+        ray.style.display = ""; rect.style.opacity = 0.35;
+        note.textContent = "ratio y/x stays " + W.fmt(k, 2);
+        out.tex("\\frac{y}{x} = \\frac{" + W.fmt(y, 3) + "}{" + W.fmt(x, 2) + "} = " + W.fmt(k, 2) + "\\qquad\\text{double } x \\Rightarrow \\text{double } y");
+      } else {
+        ray.style.display = "none"; rect.style.opacity = 1;
+        note.textContent = "shaded area xy stays " + W.fmt(k, 2);
+        out.tex("xy = " + W.fmt(x, 2) + "\\times" + W.fmt(y, 3) + " = " + W.fmt(k, 2) + "\\qquad\\text{double } x \\Rightarrow \\text{halve } y");
+      }
+    }
+    rebuild();
+  });
+
+  /* 4.2 — equal ratios lie on one line */
+  AOPS.registerWidget("mediant", function (body) {
+    var svg = W.stage(body, { w: 620, h: 440, label: "Vectors from the origin whose slopes are the fractions a over b, c over d and their combination" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 2, b = 3, m = 2, k = 1, broken = false;
+    W.slider(ctl, { label: "k", min: -1, max: 1.5, step: 0.25, value: k, onInput: function (v) { k = v; draw(); } });
+    W.slider(ctl, { label: "a", min: 1, max: 4, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b", min: 1, max: 4, value: b, onInput: function (v) { b = v; draw(); } });
+    W.segmented(ctl, { title: "c/d is a/b scaled by", value: m, options: [{ value: 1.5, label: "1.5" }, { value: 2, label: "2" }], onChange: function (v) { m = v; draw(); } });
+    var brk = W.button(ctl, "Break it", function () { broken = !broken; brk.textContent = broken ? "Make equal again" : "Break it"; draw(); });
+    var P = W.plane(svg, { x: [-6, 18], y: [-4, 13], step: 1, pad: 24, labelEvery: 2 });
+    var layer = W.s("g"); svg.appendChild(layer);
+    function vec(px, py, col, w) { return W.s("line", { x1: P.X(0), y1: P.Y(0), x2: P.X(px), y2: P.Y(py), stroke: col, "stroke-width": w || 3, "stroke-linecap": "round" }); }
+    function dot(px, py, col) { return W.s("circle", { cx: P.X(px), cy: P.Y(py), r: 6.5, fill: col, stroke: "var(--surface-solid)", "stroke-width": 2 }); }
+    function lab(px, py, t, col, dx, dy) { return W.s("text", { x: P.X(px) + (dx || 8), y: P.Y(py) + (dy || -8), style: "font: 700 13px var(--font-mono)", fill: col, text: t }); }
+    function inView(px, py) { return px >= -6 && px <= 18 && py >= -4 && py <= 13; }
+    function draw() {
+      W.clear(layer);
+      var c = m * a + (broken ? 2 : 0), d = m * b;
+      var r = a / b;
+      // line y = r x
+      layer.appendChild(W.s("line", { x1: P.X(-6), y1: P.Y(-6 * r), x2: P.X(18), y2: P.Y(18 * r), stroke: "var(--faint)", "stroke-dasharray": "6 6" }));
+      if (broken) layer.appendChild(W.s("line", { x1: P.X(-6), y1: P.Y(-6 * c / d), x2: P.X(18), y2: P.Y(18 * c / d), stroke: "color-mix(in srgb, var(--plot-2) 60%, transparent)", "stroke-dasharray": "3 6" }));
+      var nx = b + k * d, ny = a + k * c;
+      layer.appendChild(vec(d, c, "var(--plot-2)", 3));
+      layer.appendChild(vec(b, a, "var(--plot-1)", 4));
+      layer.appendChild(dot(b, a, "var(--plot-1)")); layer.appendChild(lab(b, a, "(b, a)", "var(--plot-1)", -58, -10));
+      layer.appendChild(dot(d, c, "var(--plot-2)")); layer.appendChild(lab(d, c, "(d, c)", "var(--plot-2)", 10, 18));
+      if (inView(nx, ny)) {
+        layer.appendChild(W.s("line", { x1: P.X(b), y1: P.Y(a), x2: P.X(nx), y2: P.Y(ny), stroke: "var(--accent-3)", "stroke-width": 2, "stroke-dasharray": "5 4" }));
+        layer.appendChild(dot(nx, ny, "var(--accent-3)"));
+        layer.appendChild(lab(nx, ny, "(b+kd, a+kc)", "var(--accent-3)", 10, -10));
+      } else {
+        layer.appendChild(W.s("text", { x: P.X(-5.6), y: P.Y(12.2), class: "lbl", text: "combination point is off the chart" }));
+      }
+      var ft = function (n, dd) { return "\\frac{" + W.fmt(n, 2) + "}{" + W.fmt(dd, 2) + "}"; };
+      var comb = ny === 0 && nx === 0 ? "\\text{undefined}" : (nx === 0 ? "\\text{undefined (denominator 0)}" : ft(ny, nx) + " \\approx " + W.fmt(ny / nx, 3));
+      out.tex("\\frac ab = " + ft(a, b) + " \\approx " + W.fmt(r, 3) + ",\\quad \\frac cd = " + ft(c, d) + " \\approx " + W.fmt(c / d, 3) + ",\\quad \\frac{a + " + W.fmt(k, 2) + "c}{b + " + W.fmt(k, 2) + "d} = " + comb);
+    }
+    draw();
+  });
+
+  /* 4.3 — conversion factor chain */
+  AOPS.registerWidget("unitChain", function (body) {
+    var svg = W.stage(body, { w: 640, h: 230, label: "Chain of conversion factor cards with cancelled units struck out" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var val = 60, mode = "speed";
+    var MODES = {
+      speed: { start: ["mi", "h"], factors: [[5280, "ft", 1, "mi"], [1, "h", 3600, "s"]], result: "ft/s", note: "miles cancel miles; hours cancel hours" },
+      kmh: { start: ["mi", "h"], factors: [[1.609, "km", 1, "mi"]], result: "km/h", note: "only the top unit changes" },
+      area: { start: ["ft²", ""], factors: [[12, "in", 1, "ft"], [12, "in", 1, "ft"]], result: "in²", note: "ft² = ft·ft, so the card is used twice: ×144" },
+      volume: { start: ["yd³", ""], factors: [[3, "ft", 1, "yd"], [3, "ft", 1, "yd"], [3, "ft", 1, "yd"]], result: "ft³", note: "yd³ = yd·yd·yd, so the card is used three times: ×27" }
+    };
+    W.slider(ctl, { label: "Starting amount", min: 1, max: 100, value: val, onInput: function (v) { val = v; draw(); } });
+    W.segmented(ctl, { title: "Convert", value: mode, options: [{ value: "speed", label: "mi/h → ft/s" }, { value: "kmh", label: "mi/h → km/h" }, { value: "area", label: "ft² → in²" }, { value: "volume", label: "yd³ → ft³" }], onChange: function (v) { mode = v; draw(); } });
+    function txt(x, y, t, opts) {
+      return W.s("text", Object.assign({ x: x, y: y, "text-anchor": "middle", style: "font: 600 15px var(--font-mono)", fill: "var(--ink)", text: t }, opts || {}));
+    }
+    function strike(x, y, t) { var w = t.length * 9 + 4; return W.s("line", { x1: x - w / 2, y1: y - 5, x2: x + w / 2, y2: y - 5, stroke: "var(--accent)", "stroke-width": 2.5 }); }
+    function draw() {
+      W.clear(svg);
+      var M = MODES[mode];
+      var cards = [{ num: [W.fmt(val, 2), M.start[0]], den: M.start[1] ? ["1", M.start[1]] : null, start: true }];
+      M.factors.forEach(function (f) { cards.push({ num: [String(f[0]), f[1]], den: [String(f[2]), f[3]] }); });
+      var cw = 118, gap = 26, total = cards.length * cw + (cards.length - 1) * gap;
+      var x0 = (640 - total) / 2, top = 40;
+      cards.forEach(function (cd, i) {
+        var x = x0 + i * (cw + gap), cxm = x + cw / 2;
+        svg.appendChild(W.s("rect", { x: x, y: top, width: cw, height: 110, rx: 10, fill: cd.start ? "color-mix(in srgb, var(--plot-1) 18%, transparent)" : "var(--surface-2)", stroke: cd.start ? "var(--plot-1)" : "var(--border-strong)" }));
+        if (cd.den) svg.appendChild(W.s("line", { x1: x + 12, y1: top + 55, x2: x + cw - 12, y2: top + 55, stroke: "var(--ink)", "stroke-width": 1.5 }));
+        var numT = cd.num[0] + " " + cd.num[1];
+        var nY = cd.den ? top + 38 : top + 62;
+        svg.appendChild(txt(cxm, nY, numT));
+        // cancelled units: the starting unit on top always cancels; "h" cancels wherever it appears
+        if (cd.start || cd.num[1] === "h") svg.appendChild(strike(cxm + (cd.num[0].length + 1) * 4.5, nY, cd.num[1]));
+        if (cd.den) {
+          var dT = cd.den[0] + " " + cd.den[1];
+          svg.appendChild(txt(cxm, top + 86, dT));
+          var cancelDen = cd.start ? (mode === "speed") : (cd.den[1] !== "s"); // per hour cancels only when converting to per second
+          if (cancelDen) svg.appendChild(strike(cxm + (cd.den[0].length + 1) * 4.5, top + 86, cd.den[1]));
+        }
+        if (i < cards.length - 1) svg.appendChild(txt(x + cw + gap / 2, top + 62, "×", { style: "font: 700 18px var(--font-mono)", fill: "var(--muted)" }));
+        if (!cd.start) svg.appendChild(W.s("text", { x: cxm, y: top + 128, "text-anchor": "middle", class: "lbl", text: "= 1" }));
+      });
+      svg.appendChild(W.s("text", { x: 320, y: 210, "text-anchor": "middle", class: "lbl", text: M.note }));
+      var factor = M.factors.reduce(function (acc, f) { return acc * f[0] / f[2]; }, 1);
+      var res = val * factor;
+      var chainTex = M.factors.map(function (f) { return "\\frac{" + f[0] + "\\ \\text{" + f[1] + "}}{" + f[2] + "\\ \\text{" + f[3] + "}}"; }).join("\\times ");
+      var startU = M.start[1] ? "\\text{" + M.start[0] + "/" + M.start[1] + "}" : "\\text{" + M.start[0] + "}";
+      out.tex(val + "\\ " + startU + " \\times " + chainTex + " = " + W.fmt(res, 3) + "\\ \\text{" + M.result + "}");
+    }
+    draw();
+  });
+
+  /* 4.4a — successive percent changes */
+  AOPS.registerWidget("percentChain", function (body) {
+    var svg = W.stage(body, { w: 620, h: 300, label: "Bars for the original price and the price after each percent change" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var p1 = 50, p2 = -50;
+    var sgn = function (v) { return (v > 0 ? "+" : v < 0 ? "−" : "±") + Math.abs(v) + "%"; };
+    W.slider(ctl, { label: "First change", min: -50, max: 100, step: 5, value: p1, format: sgn, onInput: function (v) { p1 = v; draw(); } });
+    W.slider(ctl, { label: "Second change", min: -50, max: 100, step: 5, value: p2, format: sgn, onInput: function (v) { p2 = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var v0 = 100, v1 = v0 * (1 + p1 / 100), v2 = v1 * (1 + p2 / 100);
+      var base = 250, sc = 1; // one svg unit per unit of value (max 200)
+      var bars = [["start", v0, "var(--plot-2)"], ["after " + sgn(p1), v1, "var(--plot-1)"], ["after " + sgn(p2), v2, "var(--accent-3)"]];
+      svg.appendChild(W.s("line", { x1: 40, y1: base - 100 * sc, x2: 600, y2: base - 100 * sc, stroke: "var(--faint)", "stroke-dasharray": "6 6" }));
+      svg.appendChild(W.s("text", { x: 596, y: base - 100 * sc - 6, "text-anchor": "end", class: "lbl", text: "original 100" }));
+      bars.forEach(function (bb, i) {
+        var x = 70 + i * 180, hgt = bb[1] * sc;
+        svg.appendChild(W.s("rect", { x: x, y: base - hgt, width: 110, height: hgt, rx: 8, fill: "color-mix(in srgb, " + bb[2] + " 45%, transparent)", stroke: bb[2] }));
+        svg.appendChild(W.s("text", { x: x + 55, y: base - hgt - 8, "text-anchor": "middle", style: "font: 700 15px var(--font-mono)", fill: "var(--ink)", text: W.fmt(bb[1], 2) }));
+        svg.appendChild(W.s("text", { x: x + 55, y: base + 22, "text-anchor": "middle", class: "lbl", text: bb[0] }));
+        if (i) svg.appendChild(W.s("text", { x: x - 35, y: base - 40, "text-anchor": "middle", style: "font: 700 14px var(--font-mono)", fill: "var(--muted)", text: "×" + W.fmt(1 + (i === 1 ? p1 : p2) / 100, 2) }));
+      });
+      var m = (1 + p1 / 100) * (1 + p2 / 100);
+      var net = (m - 1) * 100;
+      out.tex("100 \\times " + W.fmt(1 + p1 / 100, 2) + " \\times " + W.fmt(1 + p2 / 100, 2) + " = " + W.fmt(v2, 2) +
+        "\\qquad\\text{net change: } " + (net >= 0 ? "+" : "") + W.fmt(net, 2) + "\\%" + "\\quad(\\text{not } " + (p1 + p2 >= 0 ? "+" : "") + (p1 + p2) + "\\%)");
+    }
+    draw();
+  });
+
+  /* 4.4b — mixing two solutions */
+  AOPS.registerWidget("mixture", function (body) {
+    var svg = W.stage(body, { w: 620, h: 300, label: "Two beakers of salt solution poured into a third, with the salt shown as a darker layer" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var vA = 2, cA = 20, vB = 8, cB = 50;
+    W.slider(ctl, { label: "Volume A (L)", min: 0, max: 10, value: vA, onInput: function (v) { vA = v; draw(); } });
+    W.slider(ctl, { label: "Strength A (%)", min: 0, max: 100, step: 5, value: cA, onInput: function (v) { cA = v; draw(); } });
+    W.slider(ctl, { label: "Volume B (L)", min: 0, max: 10, value: vB, onInput: function (v) { vB = v; draw(); } });
+    W.slider(ctl, { label: "Strength B (%)", min: 0, max: 100, step: 5, value: cB, onInput: function (v) { cB = v; draw(); } });
+    function beaker(x, w, cap, vol, conc, title, col) {
+      var top = 50, H = 200, base = top + H;
+      var g = W.s("g");
+      var fillH = vol / cap * H, saltH = fillH * conc / 100;
+      g.appendChild(W.s("rect", { x: x, y: base - fillH, width: w, height: fillH, fill: "color-mix(in srgb, " + col + " 22%, transparent)" }));
+      g.appendChild(W.s("rect", { x: x, y: base - saltH, width: w, height: saltH, fill: "color-mix(in srgb, " + col + " 70%, transparent)" }));
+      g.appendChild(W.s("path", { d: "M" + x + " " + top + " V" + base + " H" + (x + w) + " V" + top, fill: "none", stroke: "var(--border-strong)", "stroke-width": 2.5 }));
+      g.appendChild(W.s("text", { x: x + w / 2, y: top - 26, "text-anchor": "middle", style: "font: 700 14px var(--font-mono)", fill: "var(--ink)", text: title }));
+      g.appendChild(W.s("text", { x: x + w / 2, y: top - 8, "text-anchor": "middle", class: "lbl", text: W.fmt(vol, 2) + " L at " + W.fmt(conc, 1) + "%" }));
+      g.appendChild(W.s("text", { x: x + w / 2, y: base + 22, "text-anchor": "middle", class: "lbl", text: "salt " + W.fmt(vol * conc / 100, 2) + " L" }));
+      return g;
+    }
+    function draw() {
+      W.clear(svg);
+      var V = vA + vB, salt = vA * cA / 100 + vB * cB / 100, c = V ? salt / V * 100 : 0;
+      svg.appendChild(beaker(30, 110, 10, vA, cA, "A", "var(--plot-1)"));
+      svg.appendChild(W.s("text", { x: 170, y: 160, "text-anchor": "middle", style: "font: 700 22px var(--font-mono)", fill: "var(--muted)", text: "+" }));
+      svg.appendChild(beaker(200, 110, 10, vB, cB, "B", "var(--plot-2)"));
+      svg.appendChild(W.s("text", { x: 345, y: 160, "text-anchor": "middle", style: "font: 700 22px var(--font-mono)", fill: "var(--muted)", text: "=" }));
+      svg.appendChild(beaker(380, 210, 20, V, c, "mixture", "var(--accent-3)"));
+      out.tex(V ? "\\frac{" + W.fmt(vA, 2) + "(" + W.fmt(cA / 100, 2) + ") + " + W.fmt(vB, 2) + "(" + W.fmt(cB / 100, 2) + ")}{" + W.fmt(vA, 2) + " + " + W.fmt(vB, 2) + "} = \\frac{" + W.fmt(salt, 3) + "}{" + W.fmt(V, 2) + "} \\approx " + W.fmt(c, 2) + "\\%" : "\\text{Add some liquid to mix!}");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,816 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 3: Linear Equations · AoPS Learner</title>
+  <meta name="description" content="What makes an equation linear, solving one-variable equations, systems of two equations by substitution and elimination, and translating word problems into algebra, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="3" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 3 · Algebra &amp; Number</span>
+    <h1>Linear Equations</h1>
+    <p class="lede">Linear equations are the workhorses of algebra: no squares, no roots, just variables multiplied by constants. In this chapter you'll learn to recognise them, solve one equation or a pair of them, and, most importantly, turn a story told in words into equations you can solve.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>The degree of a term is the sum of its variables' exponents; a <em>linear</em> equation has degree 1.</li>
+      <li>One variable: do the same thing to both sides. Gather variable terms on one side, constants on the other, then divide by the coefficient.</li>
+      <li>Clear fractions first by multiplying through by a common denominator; if the variable was in a denominator, check for excluded values.</li>
+      <li>Two variables: <em>substitution</em> (solve one equation for a variable and plug in) or <em>elimination</em> (scale and add equations to cancel a variable).</li>
+      <li>Getting $0 = 0$ means the equations describe the same line (infinitely many solutions); getting $0 = c \ne 0$ means parallel lines (no solution).</li>
+      <li>Word problems: (1) name the unknowns, (2) write one equation per fact, (3) solve and check.</li>
+      <li>$\text{rate} \times \text{time} = \text{amount}$ covers both distance problems and work problems.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 3.1 ===================== -->
+  <section class="lesson" id="s3-1" data-title="What is a Linear Equation?">
+    <h2><span class="sec-num">3.1</span> What is a Linear Equation?</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A taxi charges a flat 3 dollars plus 2 dollars per mile. Ride 1 mile and you pay 5; ride 2 and you pay 7; ride 10 and you pay 23. Every extra mile adds exactly the same amount. Plot cost against distance and the points fall on a perfectly straight line. That steady, same-every-time growth is what "linear" means.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>An <strong>equation</strong> is any statement with an equals sign. Unknown quantities are <strong>variables</strong>; fixed numbers are <strong>constants</strong>. A constant multiplying a variable term is that term's <strong>coefficient</strong>. In $5x - 2y = 9$, the variables are $x$ and $y$, the coefficients are $5$ and $-2$, and $9$ is the constant term.</p>
+      <p>The <strong>degree</strong> of a term is the sum of the exponents of its variables. So $7x$ has degree 1, $x^2$ has degree 2, and $3xy^2$ has degree $1 + 2 = 3$. A constant term has degree 0. The degree of an equation is the highest degree among its terms.</p>
+      <div class="rule"><p>A <strong>linear equation</strong> has degree 1: every variable term is a constant times a single variable to the first power.</p></div>
+      <p>So $x + y + z = 4$ and $\tfrac12 x - \sqrt3\, y = \pi$ are linear (coefficients may be fractions or irrational numbers), while $xy = 6$, $x^2 + y = 1$, $\sqrt{x} + y = 2$ and $\dfrac{3}{x} = 5$ as written are not. Equations like $2^x = 8$, where the variable sits in an exponent, are not linear either.</p>
+      <div class="note"><p>Always simplify before judging. $(x+1)^2 = x^2 + 5$ looks quadratic, but expanding gives $x^2 + 2x + 1 = x^2 + 5$, and the $x^2$ terms cancel, leaving the linear equation $2x = 4$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="linearTest">
+      <figcaption><strong>Explore:</strong> Graph $y = ax^p + b$ for different powers $p$. Watch the table: when $x$ goes up by 1, does $y$ always change by the same amount? Only for $p = 1$, the linear case, are the steps equal and the graph straight.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Name the parts</h3>
+        <div class="problem"><p>In the equation $4a - 7b + c = 12$, list the variables, the coefficients and the constant term.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Variables: $a$, $b$, $c$.</p></div><p class="why">These are the unknown letters.</p></li>
+          <li><div class="do"><p>Coefficients: $4$ (of $a$), $-7$ (of $b$), $1$ (of $c$).</p></div><p class="why">The sign belongs to the coefficient, and a bare variable has an invisible coefficient of $1$.</p></li>
+          <li><div class="do"><p>Constant term: $12$.</p></div><p class="why">It is the only term with no variable.</p></li>
+        </ol>
+        <p class="answer">Variables $a, b, c$; coefficients $4, -7, 1$; constant $12$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Degrees of terms</h3>
+        <div class="problem"><p>Find the degree of each term: $9x$, $\ -2x^3$, $\ 5x^2y^3$, $\ 8$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$9x$: degree 1. $\ -2x^3$: degree 3.</p></div><p class="why">With one variable, the degree is just its exponent; the coefficient doesn't matter.</p></li>
+          <li><div class="do"><p>$5x^2y^3$: degree $2 + 3 = 5$.</p></div><p class="why">With several variables, add their exponents.</p></li>
+          <li><div class="do"><p>$8$: degree 0.</p></div><p class="why">A constant has no variables, like $8x^0$.</p></li>
+        </ol>
+        <p class="answer">$1, 3, 5, 0$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Linear or not?</h3>
+        <div class="problem"><p>Which are linear? (a) $\tfrac{x}{3} + y = 1$ (b) $\sqrt2\,x - 5y = \pi$ (c) $2xy = 5$ (d) $\dfrac{3}{x} + y = 1$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) is linear: it is $\tfrac13 x + 1y = 1$.</p></div><p class="why">Dividing by a constant is multiplying by the constant $\tfrac13$, so each term still has degree 1.</p></li>
+          <li><div class="do"><p>(b) is linear.</p></div><p class="why">Coefficients and constants can be any numbers, irrational ones included. Only the variables' powers matter.</p></li>
+          <li><div class="do"><p>(c) is not linear: $xy$ has degree 2.</p></div><p class="why">A product of two variables counts both exponents.</p></li>
+          <li><div class="do"><p>(d) is not linear: $\dfrac{3}{x} = 3x^{-1}$.</p></div><p class="why">A variable in a denominator acts like a negative power, not a first power.</p></li>
+        </ol>
+        <p class="answer">(a) and (b) are linear; (c) and (d) are not.</p>
+        <p class="book-next">Compare with the book's Example 3-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Spot the hidden powers</h3>
+        <div class="problem"><p>Which are linear? (a) $x\sqrt{y} = 4$ (b) $3x + 2^y = 7$ (c) $0.2x - y + 4z = w$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) is not linear: $x\sqrt{y} = x\,y^{1/2}$ has degree $\tfrac32$.</p></div><p class="why">Roots are fractional powers, and linear equations can't have them.</p></li>
+          <li><div class="do"><p>(b) is not linear.</p></div><p class="why">In $2^y$ the variable is in the exponent, so the term isn't a constant times $y$ at all.</p></li>
+          <li><div class="do"><p>(c) is linear, with four variables.</p></div><p class="why">Every term is a constant times one variable to the first power; moving $w$ to the left gives $0.2x - y + 4z - w = 0$.</p></li>
+        </ol>
+        <p class="answer">Only (c) is linear.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Simplify before you judge</h3>
+        <div class="problem"><p>Is $(x - 3)(x + 2) = x^2 + 4$ a linear equation? If so, solve it.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Expand: $x^2 - x - 6 = x^2 + 4$.</p></div><p class="why">The degree can only be judged once the equation is multiplied out.</p></li>
+          <li><div class="do"><p>Subtract $x^2$ from both sides: $-x - 6 = 4$.</p></div><p class="why">The squared terms cancel, so the equation really has degree 1.</p></li>
+          <li><div class="do"><p>$-x = 10$, so $x = -10$. Check: $(-13)(-8) = 104 = 100 + 4$. ✓</p></div><p class="why">Solve the linear equation, then check in the original.</p></li>
+        </ol>
+        <p class="answer">Yes, it is linear; $x = -10$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Make it linear</h3>
+        <div class="problem"><p>For which value of $k$ is $(k - 2)x^2 + 3x + ky = 7$ a linear equation? Write the resulting equation.</p></div>
+        <ol class="steps">
+          <li data-think="Which term could stop the equation from being linear?"><div class="do"><p>The only problem term is $(k-2)x^2$, so we need $k - 2 = 0$.</p></div><p class="why">The equation is linear exactly when the degree-2 term disappears, which happens when its coefficient is zero.</p></li>
+          <li><div class="do"><p>$k = 2$ gives $0\cdot x^2 + 3x + 2y = 7$, that is, $3x + 2y = 7$.</p></div><p class="why">Substitute $k = 2$ everywhere, including the coefficient of $y$.</p></li>
+        </ol>
+        <p class="answer">$k = 2$, giving $3x + 2y = 7$.</p>
+        <p class="key-idea">A term vanishes when its coefficient is zero; that can change an equation's degree.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 3.2 ===================== -->
+  <section class="lesson" id="s3-2" data-title="One Equation, One Variable">
+    <h2><span class="sec-num">3.2</span> One Equation, One Variable</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Picture an old-fashioned balance scale. On the left: three mystery boxes and 5 one-gram weights. On the right: one mystery box and 11 weights. It balances. Take a box off each side and it still balances; take 5 weights off each side and it still balances. Now two boxes weigh 6 grams, so each box weighs 3. You've just solved $3x + 5 = x + 11$.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>An equation is a balance. Whatever you do to one side, do to the other, and it stays true. To solve a linear equation in one variable:</p>
+      <div class="rule">
+        <p>1. Simplify each side (expand brackets, clear fractions).<br>2. Add or subtract to collect variable terms on one side and constants on the other.<br>3. Divide both sides by the coefficient of the variable.</p>
+        <p>$$ax + b = c \quad\Longrightarrow\quad ax = c - b \quad\Longrightarrow\quad x = \frac{c - b}{a}\quad (a \ne 0)$$</p>
+      </div>
+      <p>Letters can stand for constants too. Solving "for $x$" means treating every other letter as a known number and isolating $x$.</p>
+      <p>If the variable appears in a denominator, multiply both sides by that denominator to clear it. The new equation may be linear even though the original wasn't. But any value that makes an original denominator zero is <em>excluded</em>, so always check your answer in the original equation.</p>
+      <div class="note"><p>Sometimes the variable cancels completely. If what's left is always true (like $6 = 6$), every number is a solution. If it's always false (like $6 = 5$), there is no solution.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="balance">
+      <figcaption><strong>Explore:</strong> Set up an equation $ax + b = cx + d$ with boxes ($x$) and unit weights. Then step through the solution: remove the same thing from both pans, then share what's left among the boxes. The scale stays level the whole time.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Two moves</h3>
+        <div class="problem"><p>Solve $5x - 7 = 18$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Add $7$ to both sides: $5x = 25$.</p></div><p class="why">Undo the subtraction so the variable term stands alone.</p></li>
+          <li><div class="do"><p>Divide both sides by $5$: $x = 5$.</p></div><p class="why">Undo the multiplication by the coefficient.</p></li>
+          <li><div class="do"><p>Check: $5(5) - 7 = 18$. ✓</p></div><p class="why">Substituting back catches arithmetic slips.</p></li>
+        </ol>
+        <p class="answer">$x = 5$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Variables on both sides</h3>
+        <div class="problem"><p>Solve $4(x - 3) = 2x + 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Expand: $4x - 12 = 2x + 6$.</p></div><p class="why">Simplify each side before moving terms.</p></li>
+          <li><div class="do"><p>Subtract $2x$: $2x - 12 = 6$. Add $12$: $2x = 18$.</p></div><p class="why">Collect the $x$ terms on one side and the constants on the other.</p></li>
+          <li><div class="do"><p>$x = 9$. Check: $4(6) = 24 = 18 + 6$. ✓</p></div><p class="why">Divide by the coefficient and verify.</p></li>
+        </ol>
+        <p class="answer">$x = 9$</p>
+        <p class="book-next">Next in the book: Exercise 3-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Clear the fractions</h3>
+        <div class="problem"><p>Solve $\dfrac{x}{3} + \dfrac{x}{4} = 14$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply every term by $12$: $4x + 3x = 168$.</p></div><p class="why">$12$ is the least common multiple of the denominators, so every fraction becomes a whole number.</p></li>
+          <li><div class="do"><p>$7x = 168$, so $x = 24$.</p></div><p class="why">Combine like terms and divide.</p></li>
+          <li><div class="do"><p>Check: $8 + 6 = 14$. ✓</p></div><p class="why">$24/3 = 8$ and $24/4 = 6$.</p></li>
+        </ol>
+        <p class="answer">$x = 24$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Solve a formula for a letter</h3>
+        <div class="problem"><p>The perimeter of a rectangle is $P = 2L + 2W$. Solve for $W$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Subtract $2L$: $P - 2L = 2W$.</p></div><p class="why">Treat $P$ and $L$ as known numbers and isolate the $W$ term.</p></li>
+          <li><div class="do"><p>Divide by $2$: $W = \dfrac{P - 2L}{2}$.</p></div><p class="why">Divide by $W$'s coefficient, exactly as with numbers.</p></li>
+        </ol>
+        <p class="answer">$W = \dfrac{P - 2L}{2}$</p>
+        <p class="book-next">Compare with the book's Example 3-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Variable in the denominator</h3>
+        <div class="problem"><p>Solve $\dfrac{2x + 3}{x - 1} = 5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Note $x \ne 1$, then multiply both sides by $x - 1$: $2x + 3 = 5x - 5$.</p></div><p class="why">Clearing the denominator turns the equation into a linear one. Record the excluded value first.</p></li>
+          <li><div class="do"><p>$8 = 3x$, so $x = \dfrac{8}{3}$.</p></div><p class="why">Move $2x$ right and $-5$ left, then divide by $3$.</p></li>
+          <li><div class="do"><p>Check: $\dfrac{16/3 + 9/3}{5/3} = \dfrac{25/3}{5/3} = 5$. ✓</p></div><p class="why">$x = \tfrac83$ is not the excluded value $1$, and it satisfies the original equation.</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{8}{3}$</p>
+        <p class="book-next">Next in the book: Exercise 3-2.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>All numbers, or none</h3>
+        <div class="problem"><p>Solve (a) $3(x + 2) - x = 2(x + 3)$ and (b) $3(x + 2) - x = 2x + 5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Left side: $2x + 6$. Right side: $2x + 6$. So $2x + 6 = 2x + 6$.</p></div><p class="why">Simplify both sides first.</p></li>
+          <li><div class="do"><p>Subtracting $2x$ leaves $6 = 6$, which is always true.</p></div><p class="why">The variable vanished and a true statement remained, so every real $x$ works. This is an <em>identity</em>.</p></li>
+          <li><div class="do"><p>(b) $2x + 6 = 2x + 5$ leaves $6 = 5$, which is never true.</p></div><p class="why">No value of $x$ can make a false statement true, so there is no solution.</p></li>
+        </ol>
+        <p class="answer">(a) every real number; (b) no solution.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The general case</h3>
+        <div class="problem"><p>Solve $ax + b = cx + d$ for $x$. When does it have exactly one solution?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Subtract $cx$ and $b$: $ax - cx = d - b$.</p></div><p class="why">Collect the $x$ terms on the left and the constants on the right.</p></li>
+          <li><div class="do"><p>Factor: $(a - c)x = d - b$.</p></div><p class="why">Factoring out $x$ shows its single combined coefficient.</p></li>
+          <li data-think="Can you always divide by $a - c$?"><div class="do"><p>If $a \ne c$: $x = \dfrac{d - b}{a - c}$.</p></div><p class="why">Division is allowed only by a nonzero number. If $a = c$, we are in the previous example's situation: all numbers (if $b = d$) or none (if $b \ne d$).</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{d-b}{a-c}$, exactly one solution when $a \ne c$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Fractions on both sides</h3>
+        <div class="problem"><p>Solve $\dfrac{x + 2}{x - 3} = \dfrac{x - 1}{x - 4}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Excluded values: $x \ne 3$, $x \ne 4$. Cross-multiply: $(x + 2)(x - 4) = (x - 1)(x - 3)$.</p></div><p class="why">Multiplying both sides by $(x-3)(x-4)$ clears both denominators at once.</p></li>
+          <li data-think="Both sides now have an $x^2$. Is the equation quadratic?"><div class="do"><p>$x^2 - 2x - 8 = x^2 - 4x + 3$.</p></div><p class="why">Expand both products. The $x^2$ terms will cancel, so the equation is actually linear.</p></li>
+          <li><div class="do"><p>$2x = 11$, so $x = \dfrac{11}{2}$.</p></div><p class="why">Subtract $x^2$, add $4x$ and $8$ to both sides.</p></li>
+          <li><div class="do"><p>Check: $\dfrac{7.5}{2.5} = 3$ and $\dfrac{4.5}{1.5} = 3$. ✓</p></div><p class="why">The answer isn't an excluded value, and both sides agree.</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{11}{2}$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>An answer that isn't allowed</h3>
+        <div class="problem"><p>Solve $\dfrac{x}{x - 2} + 3 = \dfrac{2}{x - 2}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Note $x \ne 2$. Multiply every term by $x - 2$: $x + 3(x - 2) = 2$.</p></div><p class="why">Remember to multiply the $3$ as well; it is a term of its own.</p></li>
+          <li><div class="do"><p>$4x - 6 = 2$, so $x = 2$.</p></div><p class="why">Solve the linear equation as usual.</p></li>
+          <li data-think="Does $x = 2$ actually work in the original equation?"><div class="do"><p>But $x = 2$ makes the denominators zero, so it is not a solution. The equation has no solution.</p></div><p class="why">Multiplying by $x - 2$ is only valid when $x - 2 \ne 0$. The value it produced is <em>extraneous</em>: it solves the cleared equation but not the original.</p></li>
+        </ol>
+        <p class="answer">No solution.</p>
+        <p class="key-idea">After clearing a variable denominator, always check the answer against the excluded values.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 3.3 ===================== -->
+  <section class="lesson" id="s3-3" data-title="Two Equations, Two Variables">
+    <h2><span class="sec-num">3.3</span> Two Equations, Two Variables</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>"Two numbers add to 10." That's not enough: 3 and 7 work, but so do 4 and 6, and 2.5 and 7.5. "Their difference is 4" pins them down: only 7 and 3 satisfy both. Each clue on its own allows infinitely many answers, a whole line of them. Two clues together usually leave just one, where the lines cross.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A solution of an equation in $x$ and $y$ is an ordered pair $(x, y)$. A linear equation like $x + y = 10$ has infinitely many, and they form a line when plotted. A <strong>system</strong> of two equations asks for the pairs that satisfy <em>both</em>: the intersection of two lines.</p>
+      <p><strong>Substitution.</strong> Solve one equation for one variable ("$y = $ something without $y$"), then substitute into the other equation. You get a one-variable equation.</p>
+      <p><strong>Elimination.</strong> Multiply the equations by constants so that one variable has opposite coefficients, then add. For $a_1x + b_1y = c_1$ and $a_2x + b_2y = c_2$, multiplying the first by $a_2$ and the second by $-a_1$ makes the $x$ terms cancel.</p>
+      <div class="rule"><p>$$\begin{aligned} x + y &amp;= 10 \\ x - y &amp;= 4 \end{aligned} \quad\xrightarrow{\text{add}}\quad 2x = 14 \quad\Longrightarrow\quad x = 7,\ y = 3.$$</p></div>
+      <p>Two lines can meet in one point, never meet (parallel), or be the same line. If elimination wipes out both variables and leaves a false statement like $0 = 3$, the lines are parallel and there is no solution. If it leaves $0 = 0$, the equations are multiples of each other and every point on the line is a solution.</p>
+      <div class="note"><p>"Linear" is about the unknowns you choose. If $\tfrac1x$ and $\tfrac1y$ appear (or $\sqrt x$ and $\sqrt y$), treat those as the unknowns, solve the linear system, then convert back.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="twoLines">
+      <figcaption><strong>Explore:</strong> Adjust the coefficients of two equations and watch their lines. The readout runs elimination for you. Try to make the lines parallel (no solution) and then identical (infinitely many). What must be true of the coefficients?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Add to eliminate</h3>
+        <div class="problem"><p>Solve $x + y = 12$ and $x - y = 2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Add the equations: $2x = 14$, so $x = 7$.</p></div><p class="why">The $y$ terms have opposite coefficients, so adding cancels them.</p></li>
+          <li><div class="do"><p>Substitute: $7 + y = 12$, so $y = 5$.</p></div><p class="why">Either original equation gives $y$ once $x$ is known.</p></li>
+          <li><div class="do"><p>Check: $7 - 5 = 2$. ✓</p></div><p class="why">Test the equation you didn't use.</p></li>
+        </ol>
+        <p class="answer">$(x, y) = (7, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Substitute an expression</h3>
+        <div class="problem"><p>Solve $y = 2x - 1$ and $3x + y = 14$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Replace $y$ in the second equation: $3x + (2x - 1) = 14$.</p></div><p class="why">The first equation already says what $y$ equals, which is perfect for substitution.</p></li>
+          <li><div class="do"><p>$5x = 15$, so $x = 3$, and $y = 2(3) - 1 = 5$.</p></div><p class="why">Solve the one-variable equation, then return to $y = 2x - 1$.</p></li>
+        </ol>
+        <p class="answer">$(x, y) = (3, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Scale, then eliminate</h3>
+        <div class="problem"><p>Solve $3x + 2y = 16$ and $5x - 3y = -5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply the first by $3$ and the second by $2$: $9x + 6y = 48$ and $10x - 6y = -10$.</p></div><p class="why">Choose multipliers that give the $y$ terms opposite coefficients, $+6y$ and $-6y$.</p></li>
+          <li><div class="do"><p>Add: $19x = 38$, so $x = 2$.</p></div><p class="why">The $y$ terms cancel.</p></li>
+          <li><div class="do"><p>$3(2) + 2y = 16$ gives $y = 5$. Check: $5(2) - 3(5) = -5$. ✓</p></div><p class="why">Back-substitute, then check in the other equation.</p></li>
+        </ol>
+        <p class="answer">$(x, y) = (2, 5)$</p>
+        <p class="book-next">Compare with the book's Example 3-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Line the variables up first</h3>
+        <div class="problem"><p>Solve $4x = 3y + 1$ and $2y = x + 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Rewrite: $4x - 3y = 1$ and $-x + 2y = 6$.</p></div><p class="why">Putting $x$ terms, $y$ terms and constants in matching columns makes the structure clear.</p></li>
+          <li><div class="do"><p>From the second: $x = 2y - 6$. Substitute: $4(2y - 6) - 3y = 1$.</p></div><p class="why">$x$ has coefficient $-1$ in the second equation, so solving for $x$ avoids fractions.</p></li>
+          <li><div class="do"><p>$5y - 24 = 1$, so $y = 5$ and $x = 2(5) - 6 = 4$.</p></div><p class="why">Solve, then back-substitute.</p></li>
+          <li><div class="do"><p>Check: $4(4) = 16 = 3(5) + 1$ and $2(5) = 10 = 4 + 6$. ✓</p></div><p class="why">Check in the <em>original</em> equations, not the rearranged ones.</p></li>
+        </ol>
+        <p class="answer">$(x, y) = (4, 5)$</p>
+        <p class="book-next">Next in the book: Exercise 3-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Same line or parallel?</h3>
+        <div class="problem"><p>Solve (a) $6x - 4y = 10$, $3x - 2y = 5$ and (b) $6x - 4y = 10$, $3x - 2y = 4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Double the second: $6x - 4y = 10$. Subtracting from the first gives $0 = 0$.</p></div><p class="why">The first equation is exactly twice the second, so both describe the same line.</p></li>
+          <li><div class="do"><p>So every pair with $3x - 2y = 5$ works, for example $(1, -1)$ and $(3, 2)$.</p></div><p class="why">Infinitely many solutions: one for every point on the line.</p></li>
+          <li><div class="do"><p>(b) Double the second: $6x - 4y = 8$. Subtracting gives $0 = 2$.</p></div><p class="why">The left sides match but the right sides don't, so the lines are parallel and never meet: no solution.</p></li>
+        </ol>
+        <p class="answer">(a) infinitely many solutions; (b) no solution.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A system with fractions</h3>
+        <div class="problem"><p>Solve $\dfrac{x}{2} + \dfrac{y}{3} = 4$ and $\dfrac{x}{4} - \dfrac{y}{6} = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply the first by $6$ and the second by $12$: $3x + 2y = 24$ and $3x - 2y = 0$.</p></div><p class="why">Clear each equation's fractions with its own common denominator.</p></li>
+          <li><div class="do"><p>Add: $6x = 24$, so $x = 4$; then $3(4) - 2y = 0$ gives $y = 6$.</p></div><p class="why">The $y$ coefficients are already opposites.</p></li>
+          <li><div class="do"><p>Check: $2 + 2 = 4$ and $1 - 1 = 0$. ✓</p></div><p class="why">Verify in the original fractional equations.</p></li>
+        </ol>
+        <p class="answer">$(x, y) = (4, 6)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Choose k for no solution</h3>
+        <div class="problem"><p>For what value of $k$ does the system $2x + ky = 5$, $\ 4x + 6y = 7$ have no solution?</p></div>
+        <ol class="steps">
+          <li data-think="What has to happen for two lines never to meet?"><div class="do"><p>For no solution, the left sides must be proportional but the right sides not.</p></div><p class="why">Parallel lines: elimination must cancel <em>both</em> variables and leave a false statement.</p></li>
+          <li><div class="do"><p>The $x$ coefficients have ratio $4 : 2 = 2$, so we need $6 = 2k$, giving $k = 3$.</p></div><p class="why">Doubling the first equation must reproduce the second equation's left side.</p></li>
+          <li><div class="do"><p>With $k = 3$: doubling gives $4x + 6y = 10$, but the second says $4x + 6y = 7$. Contradiction. ✓</p></div><p class="why">Since $10 \ne 7$, the lines are parallel and distinct.</p></li>
+        </ol>
+        <p class="answer">$k = 3$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Linear in disguise</h3>
+        <div class="problem"><p>Solve $\dfrac{2}{x} + \dfrac{3}{y} = 2$ and $\dfrac{4}{x} - \dfrac{3}{y} = 1$.</p></div>
+        <ol class="steps">
+          <li data-think="These aren't linear in $x$ and $y$. What could you treat as the unknowns instead?"><div class="do"><p>Let $u = \dfrac1x$ and $v = \dfrac1y$: $2u + 3v = 2$ and $4u - 3v = 1$.</p></div><p class="why">The equations are linear in the reciprocals, so rename them.</p></li>
+          <li><div class="do"><p>Add: $6u = 3$, so $u = \dfrac12$; then $2\cdot\tfrac12 + 3v = 2$ gives $v = \dfrac13$.</p></div><p class="why">Ordinary elimination on the new unknowns.</p></li>
+          <li><div class="do"><p>$x = \dfrac1u = 2$ and $y = \dfrac1v = 3$. Check: $1 + 1 = 2$ and $2 - 1 = 1$. ✓</p></div><p class="why">Convert back to the original variables.</p></li>
+        </ol>
+        <p class="answer">$(x, y) = (2, 3)$</p>
+        <p class="key-idea">Pick the unknowns that make the system linear.</p>
+        <p class="book-next">Compare with the book's Example 3-9.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Three unknowns, added cleverly</h3>
+        <div class="problem"><p>Solve $x + y = 11$, $\ y + z = 15$, $\ x + z = 12$.</p></div>
+        <ol class="steps">
+          <li data-think="Each variable appears in exactly two equations. What happens if you add all three?"><div class="do"><p>Add all three: $2x + 2y + 2z = 38$, so $x + y + z = 19$.</p></div><p class="why">Because of the symmetry, the sum of everything is easy to find.</p></li>
+          <li><div class="do"><p>$z = 19 - (x + y) = 19 - 11 = 8$, $\ x = 19 - 15 = 4$, $\ y = 19 - 12 = 7$.</p></div><p class="why">Subtract each original equation from the total to isolate the missing variable.</p></li>
+          <li><div class="do"><p>Check: $4 + 7 = 11$, $7 + 8 = 15$, $4 + 8 = 12$. ✓</p></div><p class="why">All three equations hold.</p></li>
+        </ol>
+        <p class="answer">$(x, y, z) = (4, 7, 8)$</p>
+        <p class="key-idea">Adding all the equations can reveal a useful total.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 3.4 ===================== -->
+  <section class="lesson" id="s3-4" data-title="Word Problems">
+    <h2><span class="sec-num">3.4</span> Word Problems</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>You drive to a friend's house at 60 mph and, stuck in traffic, come back at 30 mph. Your average speed must be 45 mph, right? It isn't: it's 40. You spend twice as long on the slow leg, so the slow speed counts for more. Word problems reward people who translate carefully instead of guessing.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A word problem is a system of equations written in sentences. Solve it in three stages:</p>
+      <div class="rule"><p><strong>1. Define variables</strong> for the unknowns (write down what each letter means, with units).<br><strong>2. Write equations</strong>: usually one per fact in the problem.<br><strong>3. Solve</strong> the equations, then check the answer against the original words.</p></div>
+      <p>A few patterns come up again and again:</p>
+      <ul>
+        <li><strong>Digits.</strong> A two-digit number with tens digit $t$ and units digit $u$ has value $10t + u$; reversed, it is $10u + t$.</li>
+        <li><strong>Motion.</strong> $\text{rate} \times \text{time} = \text{distance}$. Average speed is <em>total distance ÷ total time</em>, not the average of the speeds. With a current of speed $c$, a boat of speed $b$ goes $b + c$ downstream and $b - c$ upstream.</li>
+        <li><strong>Work.</strong> If a job takes someone $T$ hours, they do $\tfrac1T$ of it per hour. Rates add when people work together: $(\text{rate})(\text{time}) = \text{fraction of the job done}$.</li>
+      </ul>
+    </div>
+
+    <figure class="explore" data-widget="avgSpeed">
+      <figcaption><strong>Explore:</strong> Set the speeds for a round trip. The bar shows how the total time splits between the two legs. Notice that the slow leg takes longer, which drags the true average below the simple mean, and that changing the distance changes nothing about the average.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="workRate">
+      <figcaption><strong>Explore:</strong> Two pipes fill one tank. Set how long each takes alone, then slide time forward. Each pipe adds its own fraction per hour; the tank is full when the fractions add to 1.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Ages now and later</h3>
+        <div class="problem"><p>Maria is three times as old as her brother. In 6 years she will be twice as old as he will be. How old is each now?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $M$ and $B$ be their ages now. Then $M = 3B$ and $M + 6 = 2(B + 6)$.</p></div><p class="why">One equation per sentence. In 6 years <em>both</em> ages increase by 6.</p></li>
+          <li><div class="do"><p>Substitute: $3B + 6 = 2B + 12$, so $B = 6$ and $M = 18$.</p></div><p class="why">The first equation gives $M$ directly, so substitution is quickest.</p></li>
+          <li><div class="do"><p>Check: in 6 years, $24 = 2 \cdot 12$. ✓</p></div><p class="why">Re-read the problem with the answer in hand.</p></li>
+        </ol>
+        <p class="answer">Maria is 18 and her brother is 6.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Consecutive integers</h3>
+        <div class="problem"><p>Three consecutive integers add to $87$. Find them.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Call the middle one $n$; the three are $n - 1$, $n$, $n + 1$.</p></div><p class="why">Centering on the middle number makes the extras cancel.</p></li>
+          <li><div class="do"><p>$(n - 1) + n + (n + 1) = 3n = 87$, so $n = 29$.</p></div><p class="why">The $-1$ and $+1$ cancel.</p></li>
+        </ol>
+        <p class="answer">$28, 29, 30$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Counting coins</h3>
+        <div class="problem"><p>A jar holds 30 coins, all quarters and dimes, worth 5.10 dollars in total. How many of each?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $q$ be the number of quarters and $d$ the number of dimes. Then $q + d = 30$.</p></div><p class="why">The first fact counts coins.</p></li>
+          <li><div class="do"><p>In cents: $25q + 10d = 510$.</p></div><p class="why">The second fact counts value. Working in cents avoids decimals.</p></li>
+          <li><div class="do"><p>Substitute $d = 30 - q$: $25q + 300 - 10q = 510$, so $15q = 210$ and $q = 14$, $d = 16$.</p></div><p class="why">Solve the system by substitution.</p></li>
+          <li><div class="do"><p>Check: $350 + 160 = 510$ cents. ✓</p></div><p class="why">Confirm the total value.</p></li>
+        </ol>
+        <p class="answer">14 quarters and 16 dimes.</p>
+        <p class="book-next">Next in the book: Exercise 3-4.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Reversing the digits</h3>
+        <div class="problem"><p>The digits of a two-digit number add to 11. Reversing the digits makes the number 27 larger. Find the number.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the tens digit be $t$ and the units digit $u$. Then $t + u = 11$.</p></div><p class="why">The number itself is $10t + u$, but the first fact is about the digits.</p></li>
+          <li><div class="do"><p>$(10u + t) - (10t + u) = 27$ simplifies to $9u - 9t = 27$, so $u - t = 3$.</p></div><p class="why">Reversing swaps the place values.</p></li>
+          <li><div class="do"><p>Adding $t + u = 11$ and $u - t = 3$: $2u = 14$, so $u = 7$, $t = 4$.</p></div><p class="why">Elimination by adding.</p></li>
+          <li><div class="do"><p>Check: $74 - 47 = 27$. ✓</p></div><p class="why">Verify the reversal condition.</p></li>
+        </ol>
+        <p class="answer">$47$</p>
+        <p class="book-next">Compare with the book's Example 3-11.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Trains approaching</h3>
+        <div class="problem"><p>Two trains start 360 miles apart and travel toward each other at 50 mph and 70 mph. How long until they meet?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $t$ be the time in hours. The trains cover $50t$ and $70t$ miles.</p></div><p class="why">Rate times time gives each train's distance.</p></li>
+          <li><div class="do"><p>They meet when $50t + 70t = 360$, so $120t = 360$ and $t = 3$.</p></div><p class="why">Together they close the whole gap. Equivalently, the gap shrinks at the combined rate of 120 mph.</p></li>
+        </ol>
+        <p class="answer">3 hours</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Average speed is not the average of speeds</h3>
+        <div class="problem"><p>A car climbs a mountain road at 30 mph and comes back down the same road at 60 mph. What is its average speed for the round trip?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the road be $d$ miles long. The climb takes $\dfrac{d}{30}$ hours and the descent $\dfrac{d}{60}$ hours.</p></div><p class="why">The distance isn't given, so name it; we expect it to cancel.</p></li>
+          <li><div class="do"><p>Total time: $\dfrac{d}{30} + \dfrac{d}{60} = \dfrac{2d + d}{60} = \dfrac{d}{20}$ hours.</p></div><p class="why">Add the times using the common denominator $60$.</p></li>
+          <li data-think="Average speed is total distance over total time. What is the total distance?"><div class="do"><p>Average speed $= \dfrac{2d}{d/20} = 40$ mph.</p></div><p class="why">The round trip is $2d$ miles; dividing, $d$ cancels, so the answer doesn't depend on the road's length.</p></li>
+        </ol>
+        <p class="answer">40 mph (not 45)</p>
+        <p class="key-idea">Average speed = total distance ÷ total time. The slower leg takes longer, so it weighs more.</p>
+        <p class="book-next">Next in the book: Exercise 3-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>With and against the current</h3>
+        <div class="problem"><p>A boat travels 36 miles downstream in 2 hours and returns upstream in 3 hours. Find the boat's speed in still water and the speed of the current.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $b$ be the boat's still-water speed and $c$ the current's speed, in mph.</p></div><p class="why">Two unknowns, and the problem gives two trips: two equations.</p></li>
+          <li><div class="do"><p>Downstream: $(b + c)(2) = 36$, so $b + c = 18$. Upstream: $(b - c)(3) = 36$, so $b - c = 12$.</p></div><p class="why">The current adds to the boat's speed going downstream and subtracts going upstream.</p></li>
+          <li><div class="do"><p>Add: $2b = 30$, so $b = 15$ and $c = 3$.</p></div><p class="why">Elimination by adding.</p></li>
+        </ol>
+        <p class="answer">Boat 15 mph, current 3 mph.</p>
+        <p class="book-next">Next in the book: Exercise 3-6.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two hoses together</h3>
+        <div class="problem"><p>Hose A fills a tank in 6 hours and hose B fills it in 4 hours. How long do they take together?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A fills $\tfrac16$ of the tank per hour; B fills $\tfrac14$.</p></div><p class="why">If a job takes $T$ hours, the rate is $\tfrac1T$ of the job per hour.</p></li>
+          <li><div class="do"><p>Together: $\tfrac16 + \tfrac14 = \tfrac{2}{12} + \tfrac{3}{12} = \tfrac{5}{12}$ of the tank per hour.</p></div><p class="why">Rates add when both work at the same time. (Times do <em>not</em> add.)</p></li>
+          <li><div class="do"><p>$\tfrac{5}{12}t = 1$ gives $t = \tfrac{12}{5} = 2.4$ hours.</p></div><p class="why">Rate times time equals one whole tank.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{12}{5}$ hours, which is 2 hours 24 minutes.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A late start</h3>
+        <div class="problem"><p>Lena can paint a room in 6 hours; Omar can paint it in 9 hours. Lena paints alone for 2 hours, then Omar joins her. How long do they work together?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In 2 hours Lena paints $2 \cdot \tfrac16 = \tfrac13$ of the room, leaving $\tfrac23$.</p></div><p class="why">Work done = rate × time, for the solo stretch.</p></li>
+          <li><div class="do"><p>Together they paint $\tfrac16 + \tfrac19 = \tfrac{3}{18} + \tfrac{2}{18} = \tfrac{5}{18}$ per hour.</p></div><p class="why">Add their rates.</p></li>
+          <li data-think="Should the equation say the fraction done together equals 1?"><div class="do"><p>$\tfrac{5}{18}t = \tfrac23$, so $t = \tfrac23 \cdot \tfrac{18}{5} = \tfrac{12}{5}$ hours.</p></div><p class="why">Together they only need to finish the remaining $\tfrac23$, not the whole room.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{12}{5}$ hours (2 h 24 min), so 4.4 hours from the start.</p>
+        <p class="book-next">Next in the book: Exercise 3-7.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Three workers in pairs</h3>
+        <div class="problem"><p>A and B together finish a job in 6 days, B and C in 10 days, and A and C in 7.5 days. How long would all three take working together?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $a$, $b$, $c$ be their daily rates (jobs per day). Then $a + b = \tfrac16$, $\ b + c = \tfrac1{10}$, $\ a + c = \tfrac{1}{7.5} = \tfrac{2}{15}$.</p></div><p class="why">Use rates, not times, as the unknowns: rates add, so the equations are linear.</p></li>
+          <li data-think="Each rate appears in two equations. Have you seen this pattern before?"><div class="do"><p>Add all three: $2(a + b + c) = \tfrac{5}{30} + \tfrac{3}{30} + \tfrac{4}{30} = \tfrac{12}{30} = \tfrac25$.</p></div><p class="why">The same symmetric trick as the three-unknown system in §3.3.</p></li>
+          <li><div class="do"><p>$a + b + c = \tfrac15$ job per day, so together they take $5$ days.</p></div><p class="why">Time = 1 job ÷ combined rate.</p></li>
+        </ol>
+        <p class="answer">5 days</p>
+        <p class="key-idea">In work problems, make the rates the unknowns; then everything is linear.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-3">
+    <h2 id="further-3">Further reading in the book</h2>
+    <ul>
+      <li><strong>§3.1 What is a Linear Equation?</strong>: Example 3-1.</li>
+      <li><strong>§3.2 One Equation, One Variable</strong>: Examples 3-2 to 3-4 and Exercises 3-1, 3-2.</li>
+      <li><strong>§3.3 Two Equations, Two Variables</strong>: substitution and elimination, Examples 3-5 to 3-9 and Exercise 3-3.</li>
+      <li><strong>§3.4 Word Problems</strong>: Examples 3-10 to 3-15 and Exercises 3-4 to 3-7.</li>
+      <li><strong>Problems to Solve for Chapter 3</strong>: a long set of word problems (ages, digits, coins, motion, current and work), the best practice for §3.4.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 3 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 3.1 — is it linear? constant differences test */
+  AOPS.registerWidget("linearTest", function (body) {
+    var svg = W.stage(body, { w: 620, h: 380, label: "Graph of y equals a times x to the p plus b, with a table of values" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 2, b = 1, p = 1;
+    W.slider(ctl, { label: "Coefficient a", min: -3, max: 3, step: 0.5, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Constant b", min: -4, max: 4, value: b, onInput: function (v) { b = v; draw(); } });
+    W.segmented(ctl, { title: "Power p", value: p, options: [{ value: 1, label: "1" }, { value: 2, label: "2" }, { value: 3, label: "3" }, { value: 0.5, label: "½" }, { value: -1, label: "−1" }], onChange: function (v) { p = v; draw(); } });
+    function f(x) { return a * Math.pow(x, p) + b; }
+    function draw() {
+      W.clear(svg);
+      var P = W.plane(svg, { x: [-1, 4.5], y: [-10, 10], step: 1, ystep: 2, pad: 26, labelEvery: 1 });
+      var d = W.fnPath(P, f, { from: p === 0.5 || p === -1 ? 0.02 : -1, to: 4.5 });
+      svg.appendChild(W.s("path", { d: d, fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      var xs = [0, 1, 2, 3, 4], ys = [];
+      xs.forEach(function (x) {
+        var y = f(x); ys.push(y);
+        if (isFinite(y) && y >= -10 && y <= 10) svg.appendChild(W.s("circle", { cx: P.X(x), cy: P.Y(y), r: 6, fill: "var(--plot-2)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      });
+      // step triangles between consecutive integer points
+      for (var i = 1; i < xs.length; i++) {
+        var y0 = ys[i - 1], y1 = ys[i];
+        if (!isFinite(y0) || !isFinite(y1)) continue;
+        var c0 = Math.max(-10, Math.min(10, y0)), c1 = Math.max(-10, Math.min(10, y1));
+        var dy = y1 - y0, inside = c0 === y0 && c1 === y1;
+        if (inside) svg.appendChild(W.s("path", { d: "M" + P.X(xs[i - 1]) + " " + P.Y(c0) + "H" + P.X(xs[i]) + "V" + P.Y(c1), fill: "none", stroke: "var(--accent-3)", "stroke-width": 2, "stroke-dasharray": "4 4" }));
+        svg.appendChild(W.s("text", { x: P.X(xs[i]) + 6, y: inside ? (P.Y(c0) + P.Y(c1)) / 2 + 5 : (c1 > 0 ? 18 : 372), style: "font: 700 13px var(--font-mono)", fill: "var(--accent-3)", text: (inside ? "" : (c1 > 0 ? "↑ " : "↓ ")) + (dy >= 0 ? "+" : "") + W.fmt(dy, 2) }));
+      }
+      svg.appendChild(W.s("text", { x: P.X(4.45), y: P.Y(-8.6), "text-anchor": "end", class: "lbl", text: "violet numbers: change in y per step of 1 in x" }));
+      var diffs = [];
+      for (var j = 1; j < ys.length; j++) diffs.push(isFinite(ys[j]) && isFinite(ys[j - 1]) ? ys[j] - ys[j - 1] : NaN);
+      var lin = p === 1 && a !== 0;
+      var pt = p === 0.5 ? "\\frac12" : String(p);
+      var eq = "y = " + W.fmt(a, 2) + "x^{" + pt + "}" + (b === 0 ? "" : (b > 0 ? " + " : " - ") + Math.abs(b));
+      var row = diffs.map(function (v) { return isFinite(v) ? W.fmt(v, 2) : "\\text{undef}"; }).join(",\\ ");
+      out.tex(eq + "\\qquad \\Delta y:\\ " + row + "\\qquad " +
+        (a === 0 ? "\\text{no } x \\text{ term at all}" : lin ? "\\text{equal steps: linear}" : "\\text{unequal: not linear}"));
+    }
+    draw();
+  });
+
+  /* 3.2 — balance scale */
+  AOPS.registerWidget("balance", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "Balance scale with boxes for x and unit weights on each pan" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 3, b = 5, c = 1, d = 11, stage = 0;
+    var seg;
+    function setStage(s) { stage = s; draw(); }
+    W.slider(ctl, { label: "Boxes on left a", min: 1, max: 5, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Weights on left b", min: 0, max: 12, value: b, onInput: function (v) { b = v; draw(); } });
+    W.slider(ctl, { label: "Boxes on right c", min: 0, max: 5, value: c, onInput: function (v) { c = v; draw(); } });
+    W.slider(ctl, { label: "Weights on right d", min: 0, max: 20, value: d, onInput: function (v) { d = v; draw(); } });
+    var ctl2 = W.controls(body);
+    var stepBtns = [];
+    ["Start", "Remove boxes", "Remove weights", "Divide"].forEach(function (lbl, i) {
+      stepBtns.push(W.button(ctl2, (i + 1) + ". " + lbl, function () { setStage(i); }));
+    });
+    function pan(x, boxes, units, fadedBoxes, fadedUnits) {
+      var g = W.s("g");
+      // pan plate
+      g.appendChild(W.s("path", { d: "M" + (x - 120) + " 210 L" + (x + 120) + " 210 L" + (x + 100) + " 226 L" + (x - 100) + " 226 Z", fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+      g.appendChild(W.s("line", { x1: x, y1: 90, x2: x - 110, y2: 210, stroke: "var(--faint)" }));
+      g.appendChild(W.s("line", { x1: x, y1: 90, x2: x + 110, y2: 210, stroke: "var(--faint)" }));
+      var bx = x - 112;
+      for (var i = 0; i < boxes; i++) {
+        var faded = i >= boxes - fadedBoxes;
+        g.appendChild(W.s("rect", { x: bx + i * 40, y: 168, width: 34, height: 40, rx: 4, fill: faded ? "none" : "color-mix(in srgb, var(--plot-1) 55%, transparent)", stroke: "var(--plot-1)", "stroke-dasharray": faded ? "4 3" : null, opacity: faded ? 0.5 : 1 }));
+        g.appendChild(W.s("text", { x: bx + i * 40 + 17, y: 194, "text-anchor": "middle", style: "font: 700 15px var(--font-mono)", fill: "var(--ink)", opacity: faded ? 0.4 : 1, text: "x" }));
+      }
+      var ux0 = bx + boxes * 40 + (boxes ? 6 : 0);
+      var perRow = Math.max(4, Math.floor((x + 114 - ux0) / 15));
+      for (var k = 0; k < units; k++) {
+        var fu = k >= units - fadedUnits;
+        var col = k % perRow, rowi = Math.floor(k / perRow);
+        g.appendChild(W.s("circle", { cx: ux0 + 7 + col * 15, cy: 201 - rowi * 15, r: 6, fill: fu ? "none" : "var(--plot-2)", stroke: "var(--plot-2)", "stroke-dasharray": fu ? "3 2" : null, opacity: fu ? 0.45 : 1 }));
+      }
+      return g;
+    }
+    function draw() {
+      W.clear(svg);
+      stepBtns.forEach(function (bt, i) { bt.setAttribute("aria-pressed", String(i === stage)); bt.style.outline = i === stage ? "2px solid var(--accent)" : ""; });
+      // stand and beam (always level: it's an equation)
+      svg.appendChild(W.s("path", { d: "M300 300 L340 300 L325 90 L315 90 Z", fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+      svg.appendChild(W.s("line", { x1: 150, y1: 90, x2: 490, y2: 90, stroke: "var(--ink)", "stroke-width": 5, "stroke-linecap": "round" }));
+      svg.appendChild(W.s("circle", { cx: 320, cy: 90, r: 7, fill: "var(--accent)" }));
+      var same = a === c;
+      var lb = a, lu = b, rb = c, ru = d, flb = 0, flu = 0, frb = 0, fru = 0;
+      var m = Math.min(b, d);
+      if (stage >= 1 && !same) { flb = Math.min(a, c); frb = Math.min(a, c); }
+      if (stage >= 2 && !same) { flu = m; fru = m; }
+      if (stage === 1 && same) { flb = a; frb = c; }
+      svg.appendChild(pan(150 + 20, lb, lu, flb, flu));
+      svg.appendChild(pan(490 - 20, rb, ru, frb, fru));
+      svg.appendChild(W.s("text", { x: 320, y: 30, "text-anchor": "middle", class: "lbl", text: "left pan = right pan" }));
+      // equation text by stage
+      var L = function (bx, u) { var s = ""; if (bx) s += (bx === 1 ? "" : bx) + "x"; if (u) s += (s ? " + " : "") + u; return s || "0"; };
+      var lines = [L(a, b) + " = " + L(c, d)];
+      var t;
+      if (same) {
+        lines.push(L(0, b) + " = " + L(0, d));
+        t = lines.join("\\;\\Rightarrow\\;") + (b === d ? "\\quad\\text{always true: every } x \\text{ works}" : "\\quad\\text{never true: no solution}");
+        out.tex(stage === 0 ? lines[0] : t);
+        return;
+      }
+      var big = a > c ? "L" : "R";
+      var k = Math.abs(a - c);
+      // after removing min boxes from both
+      var s1 = big === "L" ? L(k, b) + " = " + L(0, d) : L(0, b) + " = " + L(k, d);
+      var rest = big === "L" ? d - b : b - d;
+      var s2 = (k === 1 ? "" : k) + "x = " + rest;
+      var s3 = "x = " + W.frac(rest, k);
+      var seq = [lines[0], s1, s2, s3];
+      var shown = seq.slice(0, stage + 1).join("\\;\\Rightarrow\\;");
+      if (stage >= 2 && rest < 0) shown += "\\quad(\\text{a negative weight: the box would have to pull up!})";
+      if (stage === 3) {
+        var val = rest / k;
+        svg.appendChild(W.s("text", { x: 320, y: 322, "text-anchor": "middle", style: "font: 700 15px var(--font-mono)", fill: "var(--accent)", text: "each box weighs " + W.fmt(val, 3) }));
+      }
+      out.tex(shown);
+    }
+    draw();
+  });
+
+  /* 3.3 — two lines */
+  AOPS.registerWidget("twoLines", function (body) {
+    var svg = W.stage(body, { w: 600, h: 440, label: "Two lines in the plane and their intersection" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var c1 = [1, 1, 3], c2 = [1, -1, 1];
+    var P = W.plane(svg, { x: [-8, 8], y: [-6, 6], step: 1, pad: 24, labelEvery: 2 });
+    var layer = W.s("g"); svg.appendChild(layer);
+    function mk(arr, i, name, col) {
+      W.slider(ctl, { label: name, min: -6, max: 6, value: arr[i], onInput: function (v) { arr[i] = v; draw(); } });
+    }
+    mk(c1, 0, "a₁", 1); mk(c1, 1, "b₁", 1); mk(c1, 2, "c₁", 1);
+    mk(c2, 0, "a₂", 2); mk(c2, 1, "b₂", 2); mk(c2, 2, "c₂", 2);
+    function lineEl(cf, col) {
+      var A = cf[0], B = cf[1], C = cf[2];
+      if (A === 0 && B === 0) return null;
+      var pts;
+      if (B !== 0) pts = [[-8, (C - A * -8) / B], [8, (C - A * 8) / B]];
+      else pts = [[C / A, -6], [C / A, 6]];
+      return W.s("line", { x1: P.X(pts[0][0]), y1: P.Y(pts[0][1]), x2: P.X(pts[1][0]), y2: P.Y(pts[1][1]), stroke: col, "stroke-width": 3, "stroke-linecap": "round" });
+    }
+    function eqTex(cf) {
+      var A = cf[0], B = cf[1], C = cf[2], s = "";
+      if (A) s += (A === 1 ? "" : A === -1 ? "-" : A) + "x";
+      if (B) s += (s ? (B > 0 ? " + " : " - ") : (B < 0 ? "-" : "")) + (Math.abs(B) === 1 ? "" : Math.abs(B)) + "y";
+      return (s || "0") + " = " + C;
+    }
+    function par(n) { return n < 0 ? "(" + n + ")" : String(n); }
+    function draw() {
+      W.clear(layer);
+      var l1 = lineEl(c1, "var(--plot-1)"), l2 = lineEl(c2, "var(--plot-2)");
+      if (l1) layer.appendChild(l1);
+      if (l2) { if (l1 && c1.join() === c2.join()) l2.setAttribute("stroke-dasharray", "10 8"); layer.appendChild(l2); }
+      var a1 = c1[0], b1 = c1[1], k1 = c1[2], a2 = c2[0], b2 = c2[1], k2 = c2[2];
+      var D = a1 * b2 - a2 * b1;
+      var sys = "\\begin{cases}" + eqTex(c1) + "\\\\ " + eqTex(c2) + "\\end{cases}";
+      var t;
+      if ((a1 === 0 && b1 === 0) || (a2 === 0 && b2 === 0)) {
+        t = sys + "\\quad\\text{An equation with no variables is not a line.}";
+      } else if (D !== 0) {
+        var xn = k1 * b2 - k2 * b1, yn = a1 * k2 - a2 * k1;
+        var x = xn / D, y = yn / D;
+        if (x >= -8 && x <= 8 && y >= -6 && y <= 6) {
+          layer.appendChild(W.s("circle", { cx: P.X(x), cy: P.Y(y), r: 8, fill: "var(--accent-3)", stroke: "var(--surface-solid)", "stroke-width": 3 }));
+        }
+        t = sys + "\\;\\xrightarrow{\\times " + par(b2) + ",\\ \\times " + par(-b1) + ",\\ \\text{add}}\\; " + D + "x = " + xn + "\\quad\\Rightarrow\\quad (x, y) = \\left(" + W.frac(xn, D) + ",\\ " + W.frac(yn, D) + "\\right)";
+      } else {
+        // parallel or same
+        var same = (a1 * k2 === a2 * k1) && (b1 * k2 === b2 * k1);
+        t = sys + "\\quad\\Rightarrow\\quad " + (same ? "0 = 0:\\ \\text{same line, infinitely many solutions}" : "0 = " + (b1 !== 0 ? (k1 * b2 - k2 * b1) : (k1 * a2 - k2 * a1)) + ":\\ \\text{parallel lines, no solution}");
+      }
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 3.4a — round-trip average speed */
+  AOPS.registerWidget("avgSpeed", function (body) {
+    var svg = W.stage(body, { w: 620, h: 250, label: "Time bar for a round trip split into outbound and return legs" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var u = 60, v = 30, dist = 120;
+    W.slider(ctl, { label: "Speed out (mph)", min: 10, max: 80, step: 5, value: u, onInput: function (x) { u = x; draw(); } });
+    W.slider(ctl, { label: "Speed back (mph)", min: 10, max: 80, step: 5, value: v, onInput: function (x) { v = x; draw(); } });
+    W.slider(ctl, { label: "One-way distance (mi)", min: 20, max: 300, step: 10, value: dist, onInput: function (x) { dist = x; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var t1 = dist / u, t2 = dist / v, T = t1 + t2;
+      var x0 = 30, Wd = 560, sc = Wd / T;
+      svg.appendChild(W.s("text", { x: x0, y: 30, class: "lbl", text: "total time " + W.fmt(T, 2) + " h, split between the legs" }));
+      svg.appendChild(W.s("rect", { x: x0, y: 44, width: t1 * sc, height: 46, rx: 6, fill: "color-mix(in srgb, var(--plot-1) 50%, transparent)", stroke: "var(--plot-1)" }));
+      svg.appendChild(W.s("rect", { x: x0 + t1 * sc, y: 44, width: t2 * sc, height: 46, rx: 6, fill: "color-mix(in srgb, var(--plot-2) 45%, transparent)", stroke: "var(--plot-2)" }));
+      if (t1 * sc > 90) svg.appendChild(W.s("text", { x: x0 + t1 * sc / 2, y: 73, "text-anchor": "middle", style: "font: 700 13px var(--font-mono)", fill: "var(--ink)", text: "out " + W.fmt(t1, 2) + " h" }));
+      if (t2 * sc > 90) svg.appendChild(W.s("text", { x: x0 + t1 * sc + t2 * sc / 2, y: 73, "text-anchor": "middle", style: "font: 700 13px var(--font-mono)", fill: "var(--ink)", text: "back " + W.fmt(t2, 2) + " h" }));
+      // speed comparison
+      var avg = 2 * dist / T, naive = (u + v) / 2;
+      var sx = 560 / 80;
+      [["true average", avg, "var(--accent)", 140], ["mean of speeds", naive, "var(--faint)", 190]].forEach(function (r) {
+        svg.appendChild(W.s("text", { x: x0, y: r[3] - 10, class: "lbl", text: r[0] + ": " + W.fmt(r[1], 2) + " mph" }));
+        svg.appendChild(W.s("rect", { x: x0, y: r[3] - 4, width: Math.max(2, r[1] * sx), height: 18, rx: 5, fill: r[2], opacity: 0.85 }));
+      });
+      for (var s = 0; s <= 80; s += 20) svg.appendChild(W.s("text", { x: x0 + s * sx, y: 240, "text-anchor": "middle", class: "lbl", text: s }));
+      out.tex("\\bar v = \\frac{2d}{\\frac{d}{" + u + "} + \\frac{d}{" + v + "}} = \\frac{2(" + u + ")(" + v + ")}{" + u + " + " + v + "} = " + W.fmt(avg, 2) + "\\ \\text{mph}\\qquad (d \\text{ cancels!})");
+    }
+    draw();
+  });
+
+  /* 3.4b — two pipes filling a tank */
+  AOPS.registerWidget("workRate", function (body) {
+    var svg = W.stage(body, { w: 620, h: 300, label: "A tank filling from two pipes, showing each pipe's share" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var A = 6, B = 4, t = 1;
+    var tSlider;
+    W.slider(ctl, { label: "Pipe A alone (h)", min: 1, max: 12, value: A, onInput: function (x) { A = x; draw(); } });
+    W.slider(ctl, { label: "Pipe B alone (h)", min: 1, max: 12, value: B, onInput: function (x) { B = x; draw(); } });
+    tSlider = W.slider(ctl, { label: "Time t (h)", min: 0, max: 8, step: 0.1, value: t, format: function (x) { return x.toFixed(1); }, onInput: function (x) { t = x; draw(); } });
+    W.button(ctl, "Jump to full", function () { tSlider.set(Math.round(A * B / (A + B) * 10) / 10); });
+    function draw() {
+      W.clear(svg);
+      var fa = t / A, fb = t / B, tot = fa + fb, full = A * B / (A + B);
+      var tx = 60, ty = 30, tw = 180, th = 240;
+      var shownA = Math.min(fa, 1), shownB = Math.min(fb, Math.max(0, 1 - shownA));
+      svg.appendChild(W.s("rect", { x: tx, y: ty, width: tw, height: th, rx: 8, fill: "var(--surface-2)", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      var hA = shownA * th, hB = shownB * th;
+      svg.appendChild(W.s("rect", { x: tx + 2, y: ty + th - hA, width: tw - 4, height: hA, fill: "color-mix(in srgb, var(--plot-1) 55%, transparent)" }));
+      svg.appendChild(W.s("rect", { x: tx + 2, y: ty + th - hA - hB, width: tw - 4, height: hB, fill: "color-mix(in srgb, var(--plot-2) 50%, transparent)" }));
+      for (var q = 1; q < 4; q++) svg.appendChild(W.s("line", { x1: tx - 8, y1: ty + th - q * th / 4, x2: tx, y2: ty + th - q * th / 4, stroke: "var(--muted)" }));
+      svg.appendChild(W.s("text", { x: tx - 12, y: ty + 5, "text-anchor": "end", class: "lbl", text: "1" }));
+      svg.appendChild(W.s("text", { x: tx - 12, y: ty + th / 2 + 4, "text-anchor": "end", class: "lbl", text: "½" }));
+      if (tot >= 1) svg.appendChild(W.s("text", { x: tx + tw / 2, y: ty + 30, "text-anchor": "middle", style: "font: 700 15px var(--font-mono)", fill: "var(--ink)", text: tot > 1.0001 ? "overflowing!" : "FULL" }));
+      var lx = 300;
+      [["Pipe A: t/" + A + " = " + W.fmt(fa, 3), "var(--plot-1)", 70], ["Pipe B: t/" + B + " = " + W.fmt(fb, 3), "var(--plot-2)", 110], ["Together: " + W.fmt(tot, 3) + " of the tank", "var(--ink)", 150]].forEach(function (r) {
+        svg.appendChild(W.s("rect", { x: lx, y: r[2] - 14, width: 16, height: 16, rx: 3, fill: r[1] === "var(--ink)" ? "none" : r[1], stroke: r[1] }));
+        svg.appendChild(W.s("text", { x: lx + 26, y: r[2], style: "font: 600 14px var(--font-mono)", fill: "var(--ink)", text: r[0] }));
+      });
+      svg.appendChild(W.s("text", { x: lx, y: 205, class: "lbl", text: "full when t(1/" + A + " + 1/" + B + ") = 1" }));
+      svg.appendChild(W.s("text", { x: lx, y: 228, class: "lbl", text: "→ t = " + W.fmt(full, 3) + " h" }));
+      out.tex("t\\left(\\frac{1}{" + A + "} + \\frac{1}{" + B + "}\\right) = " + W.fmt(t, 1) + "\\cdot" + W.frac(A + B, A * B) + " = " + W.fmt(tot, 3) + "\\qquad\\text{full at } t = \\frac{" + A + "\\cdot" + B + "}{" + A + " + " + B + "} = " + W.frac(A * B, A + B) + "\\text{ h}");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
