@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 23: Operations and Relations · AoPS Learner</title>
+  <meta name="description" content="Invented binary operations, commutativity, associativity, distributivity, identities and inverses, and relations that are reflexive, symmetric or transitive, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="23" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 23 · Advanced Topics</span>
+    <h1>Operations and Relations</h1>
+    <p class="lede">Addition and multiplication are not sacred; they're just two of the infinitely many ways to combine numbers. Contest problems love to invent new operations with strange symbols, and the only skill needed to use them is careful substitution. The deeper question is which familiar habits, like swapping the order or regrouping, still work. The chapter ends with relations, the "is equal to" and "is parallel to" of mathematics, and the three properties that make a relation behave like equality.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>To use an invented operation, substitute the numbers into its defining formula exactly where the letters were. Work from the innermost parentheses outward.</li>
+      <li>Commutative: $a \star b = b \star a$. Associative: $(a \star b) \star c = a \star (b \star c)$. Distributive: $a \cdot (b + c) = a\cdot b + a\cdot c$; running it backwards is factoring.</li>
+      <li>One counterexample disproves a property; proving it needs algebra that works for <em>all</em> inputs.</li>
+      <li>Identity $e$: $a \star e = e \star a = a$ for every $a$. Find it by solving $a \star e = a$ and checking that the answer doesn't depend on $a$. Inverse of $a$: the $b$ with $a \star b = b \star a = e$.</li>
+      <li>A relation is reflexive ($a \sim a$), symmetric ($a \sim b \Rightarrow b \sim a$) and/or transitive ($a \sim b,\ b \sim c \Rightarrow a \sim c$). All three together make an equivalence relation, which sorts objects into classes.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 23.1 ===================== -->
+  <section class="lesson" id="s23-1" data-title="What is an Operation?">
+    <h2><span class="sec-num">23.1</span> What is an Operation?</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A contest problem says: "Define $a \star b = 3a - 2b$. Find $4 \star 5$." There's nothing to look up and no trick to know; the definition tells you everything. Invented operations test only one thing, whether you can follow a recipe precisely, and that's harder than it sounds once parentheses start nesting.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>An <strong>operation</strong> is a rule that combines quantities to produce a new one. Most important are <strong>binary operations</strong>, which take two inputs: $+$, $-$, $\times$, $\div$, and exponentiation (written with a superscript rather than a symbol). But you may define new ones however you like. For example, let</p>
+      <div class="rule"><p>$$a \star b = a + b - ab. \qquad\text{Then}\qquad 4 \star 3 = 4 + 3 - 4\cdot 3 = -5.$$</p></div>
+      <p>Using an operation means replacing $a$ by the first input and $b$ by the second. The order of the inputs can matter: here $3 \star 4$ happens to equal $4 \star 3$, but for $a \star b = 3a - 2b$ it doesn't.</p>
+      <p>When operations are combined, evaluate the <strong>innermost parentheses first</strong> and work outward. Without parentheses, the usual conventions apply: exponents first, then multiplication and division from left to right, then addition and subtraction from left to right.</p>
+      <div class="note"><p>An operation table lists every result $a \star b$ for a few inputs, with $a$ down the side and $b$ across the top. It's a quick way to get a feel for a new operation.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="opTable">
+      <figcaption><strong>Explore:</strong> Choose an invented operation and set $a$ and $b$. The highlighted cell of the operation table is $a \# b$, and the readout shows the substitution. Compare $a \# b$ with $b \# a$: does swapping the inputs change the answer?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Follow the recipe</h3>
+        <div class="problem"><p>If $a \star b = 3a - 2b$, find $4 \star 5$ and $5 \star 4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4 \star 5 = 3(4) - 2(5) = 12 - 10 = 2$.</p></div><p class="why">The first input replaces $a$, the second replaces $b$.</p></li>
+          <li><div class="do"><p>$5 \star 4 = 3(5) - 2(4) = 15 - 8 = 7$.</p></div><p class="why">Swapping the inputs swaps which number gets multiplied by $3$.</p></li>
+        </ol>
+        <p class="answer">$4 \star 5 = 2$ and $5 \star 4 = 7$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A symmetric recipe</h3>
+        <div class="problem"><p>If $a \otimes b = ab + a + b$, find $2 \otimes 3$ and $(-1) \otimes 7$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2 \otimes 3 = 6 + 2 + 3 = 11$.</p></div><p class="why">Substitute $a = 2$, $b = 3$.</p></li>
+          <li><div class="do"><p>$(-1) \otimes 7 = -7 + (-1) + 7 = -1$.</p></div><p class="why">Parentheses around $-1$ keep the sign straight.</p></li>
+        </ol>
+        <p class="answer">$11$ and $-1$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Parentheses change the answer</h3>
+        <div class="problem"><p>If $a \diamond b = a^2 - b$, compute $(2 \diamond 1) \diamond 5$ and $2 \diamond (1 \diamond 5)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2 \diamond 1 = 4 - 1 = 3$, so $(2 \diamond 1) \diamond 5 = 3 \diamond 5 = 9 - 5 = 4$.</p></div><p class="why">Innermost parentheses first; the result becomes the first input of the next step.</p></li>
+          <li><div class="do"><p>$1 \diamond 5 = 1 - 5 = -4$, so $2 \diamond (1 \diamond 5) = 2 \diamond (-4) = 4 - (-4) = 8$.</p></div><p class="why">Now the inner result is the <em>second</em> input.</p></li>
+        </ol>
+        <p class="answer">$(2 \diamond 1) \diamond 5 = 4$ but $2 \diamond (1 \diamond 5) = 8$.</p>
+        <p class="book-next">Next in the book: Example 23-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An operation with fractions</h3>
+        <div class="problem"><p>If $a \ast b = \dfrac{1}{a} - \dfrac{1}{b}$, find $3 \ast 6$ and simplify $a \ast b$ into a single fraction.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$3 \ast 6 = \dfrac13 - \dfrac16 = \dfrac16$.</p></div><p class="why">Common denominator $6$.</p></li>
+          <li><div class="do"><p>$a \ast b = \dfrac{b}{ab} - \dfrac{a}{ab} = \dfrac{b - a}{ab}$.</p></div><p class="why">Check: $\dfrac{6 - 3}{18} = \dfrac16$. ✓</p></li>
+        </ol>
+        <p class="answer">$3 \ast 6 = \dfrac16$ and $a \ast b = \dfrac{b - a}{ab}$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Solve for a missing input</h3>
+        <div class="problem"><p>If $a \odot b = 2a + 3b$ and $x \odot 4 = 20$, find $x$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x \odot 4 = 2x + 12$.</p></div><p class="why">Substitute as usual, keeping $x$ as an unknown.</p></li>
+          <li><div class="do"><p>$2x + 12 = 20$, so $x = 4$.</p></div><p class="why">Now it's an ordinary linear equation.</p></li>
+        </ol>
+        <p class="answer">$x = 4$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Exponents inside an operation</h3>
+        <div class="problem"><p>If $a \dagger b = a^b - b^a$, find $2 \dagger 3$ and then $(2 \dagger 3) \dagger 2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2 \dagger 3 = 2^3 - 3^2 = 8 - 9 = -1$.</p></div><p class="why">Substitute carefully: $a^b$ is $2^3$, while $b^a$ is $3^2$.</p></li>
+          <li data-think="With $a = -1$ and $b = 2$, what are $a^b$ and $b^a$?"><div class="do"><p>$(-1) \dagger 2 = (-1)^2 - 2^{-1} = 1 - \dfrac12 = \dfrac12$.</p></div><p class="why">Negative exponents mean reciprocals (Chapter 1).</p></li>
+        </ol>
+        <p class="answer">$2 \dagger 3 = -1$ and $(2 \dagger 3) \dagger 2 = \dfrac12$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The unknown appears twice</h3>
+        <div class="problem"><p>If $a \triangledown b = ab + a - b$, find all $x$ with $x \triangledown x = x \triangledown 2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x \triangledown x = x^2 + x - x = x^2$.</p></div><p class="why">Both inputs are $x$.</p></li>
+          <li><div class="do"><p>$x \triangledown 2 = 2x + x - 2 = 3x - 2$.</p></div><p class="why">Here $a = x$ and $b = 2$.</p></li>
+          <li><div class="do"><p>$x^2 = 3x - 2 \Rightarrow (x - 1)(x - 2) = 0$, so $x = 1$ or $x = 2$.</p></div><p class="why">Check $x = 1$: $1 \triangledown 1 = 1$ and $1 \triangledown 2 = 2 + 1 - 2 = 1$. ✓</p></li>
+        </ol>
+        <p class="answer">$x = 1$ or $x = 2$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A long chain with a hidden pattern</h3>
+        <div class="problem"><p>Let $a \oplus b = a + b + ab$. Evaluate $1 \oplus 2 \oplus 3 \oplus \cdots \oplus 9$, working from left to right.</p></div>
+        <ol class="steps">
+          <li data-think="Can you factor $1 + a + b + ab$?"><div class="do"><p>Add $1$: $1 + (a \oplus b) = 1 + a + b + ab = (1 + a)(1 + b)$.</p></div><p class="why">Factoring by grouping reveals that $\oplus$ is ordinary multiplication in disguise.</p></li>
+          <li><div class="do"><p>Each new step multiplies "one more than the running total" by one more than the new number. So $1 + (\text{answer}) = (1+1)(1+2)\cdots(1+9) = 2 \cdot 3 \cdots 10$.</p></div><p class="why">Apply the identity repeatedly: if $1 + T = P$, then $1 + (T \oplus k) = P(1 + k)$.</p></li>
+          <li><div class="do"><p>$2 \cdot 3 \cdots 10 = 10! = 3{,}628{,}800$, so the answer is $3{,}628{,}799$.</p></div><p class="why">Subtract the $1$ we added at the start.</p></li>
+        </ol>
+        <p class="answer">$3{,}628{,}799$</p>
+        <p class="key-idea">If an operation looks messy, try shifting the inputs (here by $1$) to reveal a familiar operation underneath.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 23.2 ===================== -->
+  <section class="lesson" id="s23-2" data-title="Properties of Operations">
+    <h2><span class="sec-num">23.2</span> Properties of Operations</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Socks then shoes works; shoes then socks doesn't. Adding $3$ and then $5$ gives the same total as adding $5$ and then $3$. Some combinations care about order and some don't. With ordinary arithmetic we use these freedoms constantly, often without noticing. Invented operations force us to ask, each time, which freedoms we actually have.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <div class="rule">
+        <p><strong>Commutative:</strong> $a \star b = b \star a$ for all $a, b$. (Addition and multiplication yes; subtraction and division no.)</p>
+        <p><strong>Associative:</strong> $(a \star b) \star c = a \star (b \star c)$ for all $a, b, c$. Then parentheses can be dropped entirely.</p>
+        <p><strong>Distributive</strong> ($\star$ over $\circ$): $a \star (b \circ c) = (a \star b) \circ (a \star c)$. The key example is $a(b + c) = ab + ac$.</p>
+      </div>
+      <p>Running the distributive law backwards, $ab + ac = a(b + c)$, is <strong>factoring</strong>. It turns $45 \cdot 33 + 45 \cdot 67$ into $45 \cdot 100$.</p>
+      <p>An <strong>identity</strong> is a number $e$ with $a \star e = e \star a = a$ for <em>every</em> $a$: $0$ for addition, $1$ for multiplication. An operation can have at most one identity: if $e_1$ and $e_2$ were both identities, then $e_1 \star e_2$ would equal both $e_2$ and $e_1$. If there is an identity, the <strong>inverse</strong> of $a$ is a $b$ with $a \star b = b \star a = e$, like $-a$ for addition and $\tfrac1a$ for multiplication.</p>
+      <div class="note"><p>To show a property <em>fails</em>, one counterexample is enough. To show it <em>holds</em>, you need an argument that works for all inputs, usually by expanding both sides.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="propertyLab">
+      <figcaption><strong>Explore:</strong> Pick an operation. Red cells in the table break symmetry across the diagonal, so the operation isn't commutative. Set $a$, $b$, $c$ to test associativity, and look for a highlighted identity row and column.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>One counterexample suffices</h3>
+        <div class="problem"><p>Is $a \star b = a + 2b$ commutative?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$1 \star 2 = 1 + 4 = 5$, but $2 \star 1 = 2 + 2 = 4$.</p></div><p class="why">Try small, different inputs.</p></li>
+          <li><div class="do"><p>Since $5 \ne 4$, the operation is not commutative.</p></div><p class="why">"For all $a, b$" fails as soon as one pair fails.</p></li>
+        </ol>
+        <p class="answer">No: $1 \star 2 = 5$ but $2 \star 1 = 4$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Distribute backwards</h3>
+        <div class="problem"><p>Compute $37 \cdot 99 + 37$ mentally.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$37 \cdot 99 + 37 \cdot 1 = 37(99 + 1)$.</p></div><p class="why">Factoring: both terms share the factor $37$.</p></li>
+          <li><div class="do"><p>$= 37 \cdot 100 = 3700$.</p></div><p class="why">Multiplying by $100$ is easy.</p></li>
+        </ol>
+        <p class="answer">$3700$</p>
+        <p class="book-next">Next in the book: Example 23-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Distribute twice</h3>
+        <div class="problem"><p>Expand $(x + 3)(x - 5)$ using only the distributive law.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Treat $(x - 5)$ as one number: $(x + 3)(x - 5) = x(x - 5) + 3(x - 5)$.</p></div><p class="why">Distribute the whole factor $(x - 5)$ over the sum $x + 3$.</p></li>
+          <li><div class="do"><p>$= x^2 - 5x + 3x - 15 = x^2 - 2x - 15$.</p></div><p class="why">Distribute again in each piece, then combine like terms.</p></li>
+        </ol>
+        <p class="answer">$x^2 - 2x - 15$</p>
+        <p class="book-next">Next in the book: Example 23-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Prove two properties</h3>
+        <div class="problem"><p>Show that $a \circ b = a + b + ab$ is commutative and associative.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$b \circ a = b + a + ba = a + b + ab = a \circ b$. Commutative.</p></div><p class="why">Ordinary addition and multiplication are commutative, so the formula is symmetric.</p></li>
+          <li><div class="do"><p>$(a \circ b) \circ c = (a + b + ab) + c + (a + b + ab)c = a + b + c + ab + bc + ca + abc$.</p></div><p class="why">Treat $a \circ b$ as the first input and expand.</p></li>
+          <li><div class="do"><p>$a \circ (b \circ c) = a + (b + c + bc) + a(b + c + bc)$, which expands to the same expression.</p></div><p class="why">The result is symmetric in $a$, $b$, $c$, so the grouping can't matter.</p></li>
+        </ol>
+        <p class="answer">Both properties hold for all $a, b, c$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the identity and inverses</h3>
+        <div class="problem"><p>For $a \circ b = a + b - 4$, find the identity, and the inverse of $3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Solve $a \circ e = a$: $a + e - 4 = a$, so $e = 4$. Also $4 \circ a = a$. ✓</p></div><p class="why">The value of $e$ must not depend on $a$, and it must work on both sides.</p></li>
+          <li><div class="do"><p>Inverse of $a$: $a + x - 4 = 4$, so $x = 8 - a$. For $a = 3$: $x = 5$.</p></div><p class="why">Check: $3 \circ 5 = 3 + 5 - 4 = 4 = e$. ✓</p></li>
+        </ol>
+        <p class="answer">Identity $4$; the inverse of $3$ is $5$ (in general $8 - a$).</p>
+        <p class="book-next">Next in the book: Examples 23-4, 23-5 and Exercises 23-2, 23-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Which way does distributing work?</h3>
+        <div class="problem"><p>Multiplication distributes over addition. Does addition distribute over multiplication, that is, is $a + bc = (a + b)(a + c)$ always?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Try $a = 1$, $b = 2$, $c = 3$: left $1 + 6 = 7$; right $3 \cdot 4 = 12$.</p></div><p class="why">The pattern "$a \star (b \circ c) = (a \star b) \circ (a \star c)$" with $\star = +$ and $\circ = \times$.</p></li>
+          <li><div class="do"><p>$7 \ne 12$, so no.</p></div><p class="why">Distributivity is a one-way street for ordinary arithmetic.</p></li>
+        </ol>
+        <p class="answer">No. For example, $1 + 2\cdot 3 = 7$ but $(1+2)(1+3) = 12$.</p>
+        <p class="book-next">Next in the book: Exercise 23-1.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The averaging operation</h3>
+        <div class="problem"><p>Let $a \circ b = \dfrac{a + b}{2}$. Is it commutative? Associative? Does it have an identity?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Commutative: $\dfrac{a + b}{2} = \dfrac{b + a}{2}$. Yes.</p></div><p class="why">The formula is symmetric.</p></li>
+          <li><div class="do"><p>$(0 \circ 0) \circ 4 = 0 \circ 4 = 2$, but $0 \circ (0 \circ 4) = 0 \circ 2 = 1$. Not associative.</p></div><p class="why">Averaging twice weights the numbers unequally depending on the grouping.</p></li>
+          <li data-think="If $\frac{a + e}{2} = a$, what must $e$ be? Is it the same number for every $a$?"><div class="do"><p>$\dfrac{a + e}{2} = a$ forces $e = a$, which changes with $a$. No identity.</p></div><p class="why">An identity must be a single number that works for every input.</p></li>
+        </ol>
+        <p class="answer">Commutative, not associative, no identity.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Inverses solve equations</h3>
+        <div class="problem"><p>Suppose $\star$ is associative with identity $e$, and $a$ has an inverse $b$. Show that $a \star x = c$ has exactly one solution, $x = b \star c$. Then use it to solve $3 \circ x = 10$ for $a \circ b = a + b - 4$.</p></div>
+        <ol class="steps">
+          <li data-think="How can you 'undo' $a$ on the left side of $a \star x$?"><div class="do"><p>If $a \star x = c$, then $x = e \star x = (b \star a) \star x = b \star (a \star x) = b \star c$.</p></div><p class="why">Insert $e = b \star a$, regroup using associativity, then substitute $a \star x = c$. Any solution must equal $b \star c$.</p></li>
+          <li><div class="do"><p>Conversely $a \star (b \star c) = (a \star b) \star c = e \star c = c$, so $b \star c$ really is a solution.</p></div><p class="why">Showing uniqueness and existence are separate tasks.</p></li>
+          <li><div class="do"><p>For $\circ$: the inverse of $3$ is $5$, so $x = 5 \circ 10 = 5 + 10 - 4 = 11$. Check: $3 \circ 11 = 10$. ✓</p></div><p class="why">The identity and inverse come from the earlier example.</p></li>
+        </ol>
+        <p class="answer">$x = b \star c$ is the unique solution; for the example, $x = 11$.</p>
+        <p class="key-idea">Associativity plus inverses let you "divide" by an element, exactly as you do in ordinary algebra.</p>
+        <p class="book-next">Next in the book: Example 23-6.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>An identity in disguise</h3>
+        <div class="problem"><p>Let $a \star b = ab - 2a - 2b + 6$. Find the identity, and find which numbers have inverses.</p></div>
+        <ol class="steps">
+          <li data-think="Can you rewrite $ab - 2a - 2b$ as part of a product?"><div class="do"><p>Factor: $ab - 2a - 2b + 4 = (a - 2)(b - 2)$, so $a \star b = (a - 2)(b - 2) + 2$.</p></div><p class="why">Shifting by $2$ turns $\star$ into multiplication, just as in the previous section's challenge.</p></li>
+          <li><div class="do"><p>Need $(a - 2)(e - 2) + 2 = a$, i.e. $(a - 2)(e - 2) = a - 2$ for all $a$. So $e - 2 = 1$ and $e = 3$.</p></div><p class="why">Check: $a \star 3 = (a-2)(1) + 2 = a$. ✓</p></li>
+          <li><div class="do"><p>Inverse: $(a - 2)(x - 2) + 2 = 3$ gives $x = 2 + \dfrac{1}{a - 2}$, valid for every $a \ne 2$. But $2 \star x = 2$ for all $x$, never $3$.</p></div><p class="why">The number $2$ plays the role of $0$ in multiplication: it has no inverse.</p></li>
+        </ol>
+        <p class="answer">Identity $3$; every $a \ne 2$ has inverse $2 + \dfrac{1}{a-2}$, and $2$ has none.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 23.3 ===================== -->
+  <section class="lesson" id="s23-3" data-title="Relations">
+    <h2><span class="sec-num">23.3</span> Relations</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>"Is taller than," "is a sibling of," "has the same birthday as," "is parallel to": each takes two things and says yes or no. Some of these act a lot like the equals sign and some don't. If Ana has the same birthday as Ben, and Ben has the same birthday as Cleo, then Ana and Cleo share a birthday. Try the same reasoning with "is a friend of" and it falls apart.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>relation</strong> on a set of objects is a rule that, for each ordered pair $(a, b)$, says whether $a$ is related to $b$, written $a \sim b$. Examples: $=$, $&lt;$, $\le$, "divides," congruence of triangles, parallel lines. Three properties matter most:</p>
+      <div class="rule">
+        <p><strong>Reflexive:</strong> $a \sim a$ for every $a$.</p>
+        <p><strong>Symmetric:</strong> whenever $a \sim b$, also $b \sim a$.</p>
+        <p><strong>Transitive:</strong> whenever $a \sim b$ and $b \sim c$, also $a \sim c$.</p>
+      </div>
+      <p>Equality has all three. So does triangle congruence. "Greater than" is transitive but neither reflexive nor symmetric. A relation with all three properties is an <strong>equivalence relation</strong>. It behaves like $=$ in that it splits the objects into separate <strong>classes</strong>: everything in a class is related to everything else in that class, and to nothing outside it.</p>
+      <div class="note"><p>Each property is a "for every" statement. A single failure, such as one object not related to itself, is enough to break it.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="relationGraph">
+      <figcaption><strong>Explore:</strong> Each arrow $a \to b$ means $a \sim b$; a small loop means $a \sim a$. Choose a relation on $\{1, \ldots, 6\}$ and read the verdicts: reflexive means a loop at every number, symmetric means every arrow has a return arrow, transitive means every two-step path has a shortcut. Click a number to highlight its arrows. Equivalence relations color their classes.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Check "less than or equal to"</h3>
+        <div class="problem"><p>For real numbers, is $\le$ reflexive? Symmetric? Transitive?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflexive: $a \le a$ always. Yes.</p></div><p class="why">The "or equal" part makes it work.</p></li>
+          <li><div class="do"><p>Symmetric: $2 \le 5$ but $5 \not\le 2$. No.</p></div><p class="why">One counterexample settles it.</p></li>
+          <li><div class="do"><p>Transitive: $a \le b$ and $b \le c$ give $a \le c$. Yes.</p></div><p class="why">Chain the inequalities: $a \le b \le c$.</p></li>
+        </ol>
+        <p class="answer">Reflexive and transitive, but not symmetric.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>An everyday equivalence relation</h3>
+        <div class="problem"><p>On a group of people, let $a \sim b$ mean "$a$ was born in the same calendar month as $b$." Is this an equivalence relation?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflexive: everyone shares a birth month with themselves. Symmetric: if $a$'s month matches $b$'s, then $b$'s matches $a$'s.</p></div><p class="why">"Same as" statements are automatically reflexive and symmetric.</p></li>
+          <li><div class="do"><p>Transitive: if $a$ and $b$ share a month, and $b$ and $c$ do, all three have $b$'s month.</p></div><p class="why">Matching is passed along through $b$.</p></li>
+        </ol>
+        <p class="answer">Yes. The classes are the (at most $12$) groups of people born in each month.</p>
+        <p class="key-idea">"Has the same ___ as" is always an equivalence relation.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Divisibility</h3>
+        <div class="problem"><p>On the positive integers, let $a \sim b$ mean "$a$ divides $b$." Which properties hold?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflexive: $a = 1 \cdot a$, so $a$ divides $a$. Yes.</p></div><p class="why">Every number is a multiple of itself.</p></li>
+          <li><div class="do"><p>Symmetric: $2$ divides $4$, but $4$ doesn't divide $2$. No.</p></div><p class="why">A counterexample.</p></li>
+          <li><div class="do"><p>Transitive: if $b = ka$ and $c = mb$, then $c = (mk)a$. Yes.</p></div><p class="why">Write each divisibility as an equation and substitute.</p></li>
+        </ol>
+        <p class="answer">Reflexive and transitive, not symmetric.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>"Close to" isn't transitive</h3>
+        <div class="problem"><p>On real numbers, let $a \sim b$ mean $|a - b| \le 1$. Which properties hold?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflexive: $|a - a| = 0 \le 1$. Symmetric: $|b - a| = |a - b|$. Both yes.</p></div><p class="why">Distance is zero from a point to itself, and the same in both directions.</p></li>
+          <li data-think="Can you take two small steps that add up to a big one?"><div class="do"><p>Transitive: $0 \sim 0.8$ and $0.8 \sim 1.6$, but $|0 - 1.6| = 1.6 > 1$. No.</p></div><p class="why">Being close is not passed along: small gaps can add up.</p></li>
+        </ol>
+        <p class="answer">Reflexive and symmetric, not transitive.</p>
+        <p class="book-next">Next in the book: Exercise 23-4.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Same remainder</h3>
+        <div class="problem"><p>On the integers, let $a \sim b$ mean "$a - b$ is divisible by $4$." Show it's an equivalence relation, and name the class containing $2026$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflexive: $a - a = 0 = 4 \cdot 0$. Symmetric: if $a - b = 4k$ then $b - a = 4(-k)$.</p></div><p class="why">Write "divisible by $4$" as "equals $4$ times an integer."</p></li>
+          <li><div class="do"><p>Transitive: $a - b = 4k$ and $b - c = 4m$ add to $a - c = 4(k + m)$.</p></div><p class="why">Adding the two equations cancels $b$.</p></li>
+          <li><div class="do"><p>$2026 = 4 \cdot 506 + 2$, so $2026$ is in the class $\{\ldots, -6, -2, 2, 6, 10, \ldots\}$ of integers with remainder $2$.</p></div><p class="why">Two integers are related exactly when they leave the same remainder on division by $4$ (Chapter 5).</p></li>
+        </ol>
+        <p class="answer">An equivalence relation with four classes (remainders $0, 1, 2, 3$); $2026$ has remainder $2$.</p>
+        <p class="book-next">Next in the book: Exercise 23-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Differ by a whole number</h3>
+        <div class="problem"><p>On the real numbers, let $a \sim b$ mean $a - b$ is an integer. Is it an equivalence relation? Describe the classes.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a - a = 0$ is an integer; if $a - b = n$ then $b - a = -n$; if $a - b = n$ and $b - c = m$ then $a - c = n + m$.</p></div><p class="why">Integers are closed under negation and addition, which gives all three properties.</p></li>
+          <li><div class="do"><p>$a \sim b$ exactly when $a$ and $b$ have the same fractional part, $\{a\} = \{b\}$.</p></div><p class="why">Write $a = \lfloor a \rfloor + \{a\}$ (Chapter 21); the integer parts cancel only if the fractional parts agree.</p></li>
+        </ol>
+        <p class="answer">Yes. Each class is $\{\ldots, t - 1, t, t + 1, \ldots\}$ for one value $0 \le t &lt; 1$, e.g. $\{\ldots, -0.7, 0.3, 1.3, 2.3, \ldots\}$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A single object can spoil reflexivity</h3>
+        <div class="problem"><p>On the integers, let $a \sim b$ mean $ab > 0$. Which properties hold? What changes if we remove $0$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflexive fails: $0 \cdot 0 = 0$, which is not $> 0$. (Every other $a$ has $a^2 > 0$.)</p></div><p class="why">"For every $a$" means even one exception breaks it.</p></li>
+          <li><div class="do"><p>Symmetric: $ab = ba$. Transitive: $ab > 0$ and $bc > 0$ mean $a, b$ share a sign and $b, c$ share a sign, so $a, c$ share a sign and $ac > 0$.</p></div><p class="why">Positive product means same sign.</p></li>
+          <li><div class="do"><p>On the nonzero integers it's an equivalence relation with two classes: positives and negatives.</p></div><p class="why">Removing the troublemaker restores reflexivity.</p></li>
+        </ol>
+        <p class="answer">Symmetric and transitive but not reflexive on all integers; an equivalence relation on the nonzero integers.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A tempting false proof</h3>
+        <div class="problem"><p>"If $\sim$ is symmetric and transitive, it's reflexive: from $a \sim b$, symmetry gives $b \sim a$, and transitivity gives $a \sim a$." Find the flaw and a counterexample.</p></div>
+        <ol class="steps">
+          <li data-think="The argument starts with 'from $a \sim b$.' What if no such $b$ exists?"><div class="do"><p>The argument assumes $a$ is related to <em>something</em>. If $a$ is related to nothing, we can't start.</p></div><p class="why">Reflexivity must hold for every $a$, including lonely ones.</p></li>
+          <li><div class="do"><p>On $\{1, 2, 3\}$, let the related pairs be $(1,1), (1,2), (2,1), (2,2)$ only.</p></div><p class="why">Build a relation where $3$ is related to nothing.</p></li>
+          <li><div class="do"><p>Symmetric: yes. Transitive: every chain stays within $\{1, 2\}$, where all pairs are present. But $3 \not\sim 3$.</p></div><p class="why">Check each property directly on the small set.</p></li>
+        </ol>
+        <p class="answer">The proof fails for elements related to nothing; the relation above is symmetric and transitive but not reflexive.</p>
+        <p class="key-idea">Watch for hidden assumptions such as "pick some $b$ with $a \sim b$."</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Counting relations</h3>
+        <div class="problem"><p>How many relations on $\{1, 2, 3\}$ are reflexive and symmetric? How many of those are equivalence relations?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflexive forces $1 \sim 1$, $2 \sim 2$, $3 \sim 3$. Symmetric means the pairs $\{1,2\}, \{1,3\}, \{2,3\}$ are each related in both directions or neither.</p></div><p class="why">The only free choices are the three unordered pairs.</p></li>
+          <li><div class="do"><p>Each pair is in or out: $2^3 = 8$ relations.</p></div><p class="why">Multiplication principle (Chapter 25).</p></li>
+          <li data-think="If $1 \sim 2$ and $2 \sim 3$ are both chosen, what does transitivity demand?"><div class="do"><p>Transitive fails exactly when two pairs sharing a number are chosen without the third, which happens in $3$ of the $8$. So $8 - 3 = 5$ are equivalence relations.</p></div><p class="why">The $5$ survivors: no pairs, any one pair ($3$ ways), or all three.</p></li>
+        </ol>
+        <p class="answer">$8$ reflexive symmetric relations, of which $5$ are equivalence relations.</p>
+        <p class="key-idea">Equivalence relations match the ways to split the set into classes: $\{1\}\{2\}\{3\}$, three ways to pair two, and $\{1,2,3\}$.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-23">
+    <h2 id="further-23">Further reading in the book</h2>
+    <ul>
+      <li><strong>§23.1 What is an Operation?</strong>: Example 23-1 and the order-of-operations conventions.</li>
+      <li><strong>§23.2 Properties of Operations</strong>: Examples 23-2 to 23-6 and Exercises 23-1 to 23-3.</li>
+      <li><strong>§23.3 Relations</strong>: the discussion of reflexivity, symmetry and transitivity, and Exercises 23-4, 23-5.</li>
+      <li><strong>Problems to Solve for Chapter 23</strong>: Problems 429–433 evaluate invented operations and hunt for identities.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 23 explorers ---------- */
+(function () {
+  "use strict";
+  function P(v) { return v < 0 ? "(" + v + ")" : String(v); }
+  function fv(v) { return isFinite(v) ? W.fmt(v, 2) : "—"; }
+
+  /* shared: draw an operation table into svg */
+  function opGrid(svg, vals, f, opts) {
+    var n = vals.length, cw = opts.cw, ch = opts.ch, x0 = opts.x0, y0 = opts.y0;
+    svg.appendChild(W.s("rect", { x: x0, y: y0, width: cw, height: ch, fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+    svg.appendChild(W.s("text", { x: x0 + cw / 2, y: y0 + ch / 2 + 5, "text-anchor": "middle", style: "font: 700 15px var(--font-mono)", fill: "var(--accent)", text: "a\\b" }));
+    vals.forEach(function (v, i) {
+      [[x0 + (i + 1) * cw, y0], [x0, y0 + (i + 1) * ch]].forEach(function (p) {
+        svg.appendChild(W.s("rect", { x: p[0], y: p[1], width: cw, height: ch, fill: "var(--surface-2)", stroke: "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: p[0] + cw / 2, y: p[1] + ch / 2 + 5, "text-anchor": "middle", style: "font: 700 15px var(--font-mono)", fill: "var(--ink)", text: String(v) }));
+      });
+    });
+    for (var i = 0; i < n; i++) for (var j = 0; j < n; j++) {
+      var a = vals[i], b = vals[j], r = f(a, b), x = x0 + (j + 1) * cw, y = y0 + (i + 1) * ch;
+      var fill = opts.cellFill ? opts.cellFill(a, b, r) : "transparent";
+      svg.appendChild(W.s("rect", { x: x, y: y, width: cw, height: ch, fill: fill, stroke: "var(--border-strong)", "stroke-width": 0.8 }));
+      svg.appendChild(W.s("text", { x: x + cw / 2, y: y + ch / 2 + 5, "text-anchor": "middle", style: "font: 400 14px var(--font-mono)", fill: "var(--ink)", text: fv(r) }));
+    }
+  }
+
+  /* 23.1 — invented operations and their tables */
+  AOPS.registerWidget("opTable", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "Operation table for an invented operation with the chosen cell highlighted" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 3, b = 2, k = "p";
+    var vals = [-2, -1, 0, 1, 2, 3, 4];
+    var OPS = {
+      p: { tex: "a \\# b = a + b - ab", f: function (a, b) { return a + b - a * b; }, sub: function (a, b) { return P(a) + " + " + P(b) + " - " + P(a) + "\\cdot " + P(b); } },
+      d: { tex: "a \\# b = 2a - b", f: function (a, b) { return 2 * a - b; }, sub: function (a, b) { return "2\\cdot " + P(a) + " - " + P(b); } },
+      s: { tex: "a \\# b = a^2 - b", f: function (a, b) { return a * a - b; }, sub: function (a, b) { return P(a) + "^2 - " + P(b); } },
+      m: { tex: "a \\# b = \\dfrac{a + b}{2}", f: function (a, b) { return (a + b) / 2; }, sub: function (a, b) { return "\\dfrac{" + a + " + " + P(b) + "}{2}"; } }
+    };
+    W.slider(ctl, { label: "a", min: -2, max: 4, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b", min: -2, max: 4, value: b, onInput: function (v) { b = v; draw(); } });
+    W.segmented(ctl, { title: "Operation", value: k, options: [{ value: "p", label: "a + b − ab" }, { value: "d", label: "2a − b" }, { value: "s", label: "a² − b" }, { value: "m", label: "(a + b)/2" }], onChange: function (v) { k = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var o = OPS[k];
+      opGrid(svg, vals, o.f, { cw: 70, ch: 36, x0: 40, y0: 14, cellFill: function (x, y) {
+        if (x === a && y === b) return "color-mix(in srgb, var(--accent) 55%, transparent)";
+        if (x === b && y === a) return "color-mix(in srgb, var(--plot-2) 30%, transparent)";
+        if (x === a || y === b) return "color-mix(in srgb, var(--accent) 12%, transparent)";
+        return "transparent";
+      } });
+      svg.appendChild(W.s("text", { x: 40, y: 318, class: "lbl", text: "gold: a # b    blue: b # a    (rows: a, columns: b)" }));
+      var r = o.f(a, b), r2 = o.f(b, a);
+      out.set("$" + o.tex + "$<br>$" + a + " \\# " + b + " = " + o.sub(a, b) + " = " + fv(r) + "$" +
+        (a === b ? "" : "<br>Swapped: $" + b + " \\# " + a + " = " + fv(r2) + "$ " + (Math.abs(r - r2) < 1e-9 ? "(the same)" : "(different!)")));
+    }
+    draw();
+  });
+
+  /* 23.2 — property lab */
+  AOPS.registerWidget("propertyLab", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Operation table highlighting failures of commutativity and the identity row and column" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 2, b = 1, c = 3, k = "sub";
+    var vals = [-2, -1, 0, 1, 2, 3];
+    var OPS = {
+      add: { lab: "a + b", f: function (x, y) { return x + y; }, assoc: true, id: 0, inv: function (x) { return -x; }, invT: function (x) { return String(-x); } },
+      sub: { lab: "a − b", f: function (x, y) { return x - y; }, assoc: false, id: null, idNote: "0 works only on the right: a − 0 = a, but 0 − a ≠ a." },
+      mul: { lab: "a · b", f: function (x, y) { return x * y; }, assoc: true, id: 1, inv: function (x) { return x === 0 ? NaN : 1 / x; }, invT: function (x) { return W.frac(1, x); } },
+      m1: { lab: "a + b − 1", f: function (x, y) { return x + y - 1; }, assoc: true, id: 1, inv: function (x) { return 2 - x; }, invT: function (x) { return String(2 - x); } },
+      pab: { lab: "a + b + ab", f: function (x, y) { return x + y + x * y; }, assoc: true, id: 0, inv: function (x) { return x === -1 ? NaN : -x / (1 + x); }, invT: function (x) { return W.frac(-x, 1 + x); } },
+      avg: { lab: "(a + b)/2", f: function (x, y) { return (x + y) / 2; }, assoc: false, id: null, idNote: "(a + e)/2 = a forces e = a, which changes with a." },
+      mx: { lab: "max(a, b)", f: function (x, y) { return Math.max(x, y); }, assoc: true, id: null, idNote: "max(a, e) = a for all a would need e below every real number." }
+    };
+    W.slider(ctl, { label: "a", min: -2, max: 3, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b", min: -2, max: 3, value: b, onInput: function (v) { b = v; draw(); } });
+    W.slider(ctl, { label: "c", min: -2, max: 3, value: c, onInput: function (v) { c = v; draw(); } });
+    W.segmented(ctl, { title: "a # b =", value: k, options: Object.keys(OPS).map(function (key) { return { value: key, label: OPS[key].lab }; }), onChange: function (v) { k = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var o = OPS[k], f = o.f;
+      opGrid(svg, vals, f, { cw: 56, ch: 36, x0: 14, y0: 14, cellFill: function (x, y, r) {
+        if (Math.abs(r - f(y, x)) > 1e-9) return "color-mix(in srgb, var(--plot-5) 40%, transparent)";
+        if (o.id !== null && (x === o.id || y === o.id)) return "color-mix(in srgb, var(--plot-4) 32%, transparent)";
+        if (x === y) return "color-mix(in srgb, var(--faint) 18%, transparent)";
+        return "transparent";
+      } });
+      var lx = 424;
+      [["var(--plot-5)", "breaks a # b = b # a"], ["var(--plot-4)", "identity row / column"], ["var(--faint)", "diagonal (mirror line)"]].forEach(function (L, i) {
+        svg.appendChild(W.s("rect", { x: lx, y: 40 + i * 34, width: 18, height: 18, rx: 4, fill: "color-mix(in srgb, " + L[0] + " 45%, transparent)", stroke: L[0] }));
+        svg.appendChild(W.s("text", { x: lx + 26, y: 54 + i * 34, class: "lbl", text: L[1] }));
+      });
+      // commutativity
+      var cex = null;
+      vals.forEach(function (x) { vals.forEach(function (y) { if (!cex && Math.abs(f(x, y) - f(y, x)) > 1e-9) cex = [x, y]; }); });
+      var s = "<strong>Commutative:</strong> " + (cex ? "no, e.g. $" + P(cex[0]) + " \\# " + P(cex[1]) + " = " + fv(f(cex[0], cex[1])) + "$ but $" + P(cex[1]) + " \\# " + P(cex[0]) + " = " + fv(f(cex[1], cex[0])) + "$." : "yes (the table is symmetric about its diagonal).");
+      var L = f(f(a, b), c), R = f(a, f(b, c));
+      s += "<br><strong>Associative:</strong> $(" + P(a) + " \\# " + P(b) + ") \\# " + P(c) + " = " + fv(L) + "$, $\\;" + P(a) + " \\# (" + P(b) + " \\# " + P(c) + ") = " + fv(R) + "$: " +
+        (Math.abs(L - R) < 1e-9 ? "equal here" : "<strong>different</strong>") + (o.assoc ? "; this holds for all inputs." : "; not associative in general.");
+      if (o.id !== null) {
+        var iv = o.inv(a);
+        s += "<br><strong>Identity:</strong> $e = " + o.id + "$. &nbsp;<strong>Inverse of $a = " + a + "$:</strong> " + (isFinite(iv) ? "$" + o.invT(a) + "$, since $" + a + " \\# \\left(" + o.invT(a) + "\\right) = " + fv(f(a, iv)) + "$." : "none: no input gives the identity.");
+      } else s += "<br><strong>Identity:</strong> none. " + o.idNote;
+      out.set(s);
+    }
+    draw();
+  });
+
+  /* 23.3 — relation graph */
+  AOPS.registerWidget("relationGraph", function (body) {
+    var svg = W.stage(body, { w: 640, h: 380, label: "Arrow diagram of a relation on the numbers 1 to 6" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var k = "near", focus = null;
+    var N = [1, 2, 3, 4, 5, 6];
+    function gcd(x, y) { return W.gcd(x, y); }
+    var REL = {
+      le: { lab: "a ≤ b", tex: "a \\le b", R: function (x, y) { return x <= y; } },
+      lt: { lab: "a < b", tex: "a &lt; b", R: function (x, y) { return x < y; } },
+      div: { lab: "a divides b", tex: "a \\mid b", R: function (x, y) { return y % x === 0; } },
+      near: { lab: "|a − b| ≤ 1", tex: "|a - b| \\le 1", R: function (x, y) { return Math.abs(x - y) <= 1; } },
+      cop: { lab: "gcd(a, b) = 1", tex: "\\gcd(a, b) = 1", R: function (x, y) { return gcd(x, y) === 1; } },
+      mod3: { lab: "a ≡ b (mod 3)", tex: "3 \\mid a - b", R: function (x, y) { return (x - y) % 3 === 0; } },
+      par: { lab: "a + b even", tex: "a + b \\text{ even}", R: function (x, y) { return (x + y) % 2 === 0; } },
+      eq: { lab: "a = b", tex: "a = b", R: function (x, y) { return x === y; } }
+    };
+    W.segmented(ctl, { title: "Relation a ∼ b", value: k, options: Object.keys(REL).map(function (key) { return { value: key, label: REL[key].lab }; }), onChange: function (v) { k = v; focus = null; draw(); } });
+    var cx = 320, cy = 190, rad = 138, nr = 22;
+    function pos(i) { var t = -Math.PI / 2 + i * 2 * Math.PI / 6; return [cx + rad * Math.cos(t), cy + rad * Math.sin(t)]; }
+    var CLS = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)", "var(--plot-5)", "var(--accent-2)"];
+    function draw() {
+      W.clear(svg);
+      var R = REL[k].R;
+      var defs = W.s("defs");
+      [["rg-a", "var(--muted)"], ["rg-h", "var(--accent)"]].forEach(function (m) {
+        var mk = W.s("marker", { id: m[0], viewBox: "0 0 10 10", refX: 9, refY: 5, markerWidth: 9, markerHeight: 9, markerUnits: "userSpaceOnUse", orient: "auto" });
+        mk.appendChild(W.s("path", { d: "M0 0L10 5L0 10z", fill: m[1] })); defs.appendChild(mk);
+      });
+      svg.appendChild(defs);
+      // properties
+      var refl = null, sym = null, tr = null;
+      N.forEach(function (x) { if (!refl && !R(x, x)) refl = x; });
+      N.forEach(function (x) { N.forEach(function (y) { if (!sym && R(x, y) && !R(y, x)) sym = [x, y]; }); });
+      N.forEach(function (x) { N.forEach(function (y) { N.forEach(function (z) { if (!tr && R(x, y) && R(y, z) && !R(x, z)) tr = [x, y, z]; }); }); });
+      var equiv = !refl && !sym && !tr, cls = {}, nc = 0;
+      if (equiv) N.forEach(function (x) { if (cls[x] === undefined) { N.forEach(function (y) { if (R(x, y)) cls[y] = nc; }); nc++; } });
+      // arrows
+      N.forEach(function (x, i) {
+        N.forEach(function (y, j) {
+          if (!R(x, y)) return;
+          var hi = focus === x, faded = focus !== null && !hi;
+          var col = hi ? "var(--accent)" : "var(--muted)", op = faded ? 0.18 : 0.85;
+          var p = pos(i);
+          if (i === j) {
+            var ox = (p[0] - cx) / rad, oy = (p[1] - cy) / rad;
+            svg.appendChild(W.s("circle", { cx: p[0] + ox * (nr + 11), cy: p[1] + oy * (nr + 11), r: 12, fill: "none", stroke: col, "stroke-width": hi ? 2.6 : 1.8, opacity: op }));
+            return;
+          }
+          var q = pos(j), dx = q[0] - p[0], dy = q[1] - p[1], L = Math.sqrt(dx * dx + dy * dy), ux = dx / L, uy = dy / L;
+          var sx = p[0] + ux * (nr + 2), sy = p[1] + uy * (nr + 2), ex = q[0] - ux * (nr + 4), ey = q[1] - uy * (nr + 4);
+          var mx = (sx + ex) / 2 - uy * 16, my = (sy + ey) / 2 + ux * 16;
+          svg.appendChild(W.s("path", { d: "M" + sx.toFixed(1) + " " + sy.toFixed(1) + "Q" + mx.toFixed(1) + " " + my.toFixed(1) + " " + ex.toFixed(1) + " " + ey.toFixed(1), fill: "none", stroke: col, "stroke-width": hi ? 2.6 : 1.6, opacity: op, "marker-end": "url(#" + (hi ? "rg-h" : "rg-a") + ")" }));
+        });
+      });
+      // nodes
+      N.forEach(function (x, i) {
+        var p = pos(i), col = equiv ? CLS[cls[x] % CLS.length] : "var(--border-strong)";
+        var g = W.s("g", { tabindex: "0", role: "button", "aria-label": "Highlight arrows from " + x, style: "cursor:pointer" });
+        g.appendChild(W.s("circle", { cx: p[0], cy: p[1], r: nr, fill: equiv ? "color-mix(in srgb, " + col + " 35%, var(--surface-solid))" : "var(--surface-solid)", stroke: focus === x ? "var(--accent)" : col, "stroke-width": focus === x ? 4 : 2.5 }));
+        g.appendChild(W.s("text", { x: p[0], y: p[1] + 6, "text-anchor": "middle", style: "font: 700 18px var(--font-mono)", fill: "var(--ink)", text: String(x) }));
+        function pick() { focus = focus === x ? null : x; draw(); }
+        g.addEventListener("click", pick);
+        g.addEventListener("keydown", function (e) { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); pick(); } });
+        svg.appendChild(g);
+      });
+      var s = "Relation $" + REL[k].tex + "$ on $\\{1, \\ldots, 6\\}$<br>";
+      s += "<strong>Reflexive:</strong> " + (refl ? "no; there's no loop at " + refl + "." : "yes, a loop at every number.") + "<br>";
+      s += "<strong>Symmetric:</strong> " + (sym ? "no; " + sym[0] + " → " + sym[1] + " has no return arrow." : "yes, every arrow comes back.") + "<br>";
+      s += "<strong>Transitive:</strong> " + (tr ? "no; " + tr[0] + " → " + tr[1] + " → " + tr[2] + " but no " + tr[0] + " → " + tr[2] + "." : "yes, every two-step path has a shortcut.") + "<br>";
+      if (equiv) {
+        var groups = []; for (var g2 = 0; g2 < nc; g2++) groups.push("{" + N.filter(function (x) { return cls[x] === g2; }).join(", ") + "}");
+        s += "<strong>Equivalence relation.</strong> Classes: " + groups.join(" ");
+      } else s += "Not an equivalence relation.";
+      if (focus !== null) s += "<br>Highlighted: " + focus + " ∼ " + N.filter(function (y) { return R(focus, y); }).join(", ");
+      out.set(s);
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

@@ -424,10 +424,10 @@ input[type="number"], input[type="text"], select {
   font: inherit; color: var(--ink); background: var(--surface-2);
   border: 1px solid var(--border-strong); border-radius: 8px; padding: 6px 10px; min-height: 38px;
 }
-.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 999px; padding: 3px; gap: 2px; flex-wrap: wrap; }
+.seg { display: inline-flex; border: 1px solid var(--border-strong); border-radius: 18px; padding: 3px; gap: 2px; flex-wrap: wrap; max-width: 100%; }
 .seg button {
   border: 0; background: transparent; color: var(--muted); font: 600 0.88rem var(--font-body);
-  padding: 6px 12px; border-radius: 999px; cursor: pointer; min-height: 32px;
+  padding: 6px 12px; border-radius: 14px; cursor: pointer; min-height: 32px;
 }
 .seg button[aria-pressed="true"] { background: var(--accent); color: var(--accent-ink); }
 .readout {
