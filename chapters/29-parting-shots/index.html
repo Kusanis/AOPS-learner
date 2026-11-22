@@ -1,0 +1,570 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 29: Parting Shots · AoPS Learner</title>
+  <meta name="description" content="A final round of mixed problem solving: translating word problems, spotting structure, and counting, bounding and game strategy, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="29" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 29 · Advanced Topics</span>
+    <h1>Parting Shots</h1>
+    <p class="lede">The book ends with a mixed bag of problems and no new theory: you have to recognize which tool each problem needs. This page groups that skill into three habits: translate words into equations, look for hidden structure before computing, and count or bound carefully when the answer must be guaranteed.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Name the unknown, write each sentence as an equation, and check the answer against the story.</li>
+      <li>Rates add when things work together: (work rate) $\times$ (time) $=$ work, and distance $=$ rate $\times$ time, with relative speed for objects moving toward each other.</li>
+      <li>Clock hands: the minute hand moves $6^\circ$ per minute, the hour hand $\tfrac12^\circ$ per minute.</li>
+      <li>Before computing, look for structure: difference of squares, symmetric pairs, telescoping sums, geometric series, powers of $10$.</li>
+      <li>For "how many," organize cases; for "guarantee," find the worst case; for a maximum, give a bound and an example.</li>
+      <li>In take-away games, work backward from the end to find the positions you want to leave your opponent.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 29.1 ===================== -->
+  <section class="lesson" id="s29-1" data-title="Translate, Then Solve">
+    <h2><span class="sec-num">29.1</span> Translate, Then Solve</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Look at a clock at 3:00 and the hands make a right angle. When is the next time they make one? The minute hand will need to "catch up" past the hour hand, which keeps creeping forward. The question is really a race between two runners, and once you see it that way, it is one line of algebra.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Most word problems in this book yield to the same routine:</p>
+      <ol>
+        <li><strong>Name</strong> the unknown(s), with units.</li>
+        <li><strong>Translate</strong> each fact into an equation. Useful templates: total $=$ count $\times$ average; amount of a substance $=$ concentration $\times$ volume; distance $=$ rate $\times$ time; work $=$ rate $\times$ time.</li>
+        <li><strong>Solve</strong>, then <strong>check</strong> the answer in the original story (not just in your equations).</li>
+      </ol>
+      <div class="rule"><p>$$\text{rate}_{\text{together}} = \text{rate}_1 + \text{rate}_2, \qquad \text{minute hand: } 6^\circ/\text{min}, \quad \text{hour hand: } 0.5^\circ/\text{min}.$$</p></div>
+      <p>For the clock, measure both hands in degrees clockwise from 12. At $h$ hours and $m$ minutes the minute hand is at $6m$ degrees and the hour hand at $30h + 0.5m$ degrees. The angle between them is the difference, or $360^\circ$ minus it if that is smaller.</p>
+      <div class="note"><p>Average speed for a whole trip is total distance divided by total time, not the average of the speeds.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="clockHands">
+      <figcaption><strong>Explore:</strong> Slide the time and watch both hands. The readout shows each hand's position as a formula. Find the times when the hands overlap, and notice they are not on whole minutes (except at 12:00).</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Three test scores</h3>
+        <div class="problem"><p>Lena's second test score was $3$ more than her first, and her third was $6$ more than her second. Her average was $80$. What were her scores?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the first score be $x$. Then the scores are $x$, $x + 3$, $x + 9$.</p></div><p class="why">Name one unknown and express the others with it.</p></li>
+          <li><div class="do"><p>$x + (x + 3) + (x + 9) = 3 \times 80 = 240$, so $3x + 12 = 240$ and $x = 76$.</p></div><p class="why">Total $=$ count $\times$ average.</p></li>
+          <li><div class="do"><p>Scores: $76, 79, 85$. Check: $\frac{76 + 79 + 85}{3} = 80$. ✓</p></div><p class="why">Check in the story.</p></li>
+        </ol>
+        <p class="answer">$76$, $79$ and $85$</p>
+        <p class="book-next">Next in the book: Problem 526.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A linear cost</h3>
+        <div class="problem"><p>Making $10$ items costs 55 dollars and making $30$ costs 115 dollars. If cost is a linear function of the number made, what do $50$ items cost?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each extra item costs $\frac{115 - 55}{30 - 10} = 3$ dollars.</p></div><p class="why">The slope of a line through the two data points.</p></li>
+          <li><div class="do"><p>Fixed cost: $55 - 3 \cdot 10 = 25$ dollars, so $C(n) = 25 + 3n$.</p></div><p class="why">Find the intercept from either point.</p></li>
+          <li><div class="do"><p>$C(50) = 25 + 150 = 175$ dollars.</p></div><p class="why">Evaluate.</p></li>
+        </ol>
+        <p class="answer">175 dollars</p>
+        <p class="book-next">Next in the book: Problem 550.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Strengthening a mixture</h3>
+        <div class="problem"><p>A jug holds $8$ litres of drink that is $25\%$ juice. How much pure juice must be added to make it $40\%$ juice?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Juice now: $0.25 \times 8 = 2$ litres. Add $x$ litres of pure juice.</p></div><p class="why">Track the amount of juice, which is what changes in a known way.</p></li>
+          <li><div class="do"><p>$2 + x = 0.40(8 + x)$.</p></div><p class="why">Juice after $=$ $40\%$ of the new total volume.</p></li>
+          <li><div class="do"><p>$2 + x = 3.2 + 0.4x \Rightarrow 0.6x = 1.2 \Rightarrow x = 2$.</p></div><p class="why">Check: $4$ litres of juice in $10$ litres is $40\%$. ✓</p></li>
+        </ol>
+        <p class="answer">$2$ litres</p>
+        <p class="book-next">Next in the book: Problem 545.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The angle at 4:40</h3>
+        <div class="problem"><p>What angle do the hands of a clock make at 4:40?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Minute hand: $6 \times 40 = 240^\circ$.</p></div><p class="why">$6^\circ$ per minute from the 12.</p></li>
+          <li data-think="Is the hour hand exactly on the 4?"><div class="do"><p>Hour hand: $30 \times 4 + 0.5 \times 40 = 140^\circ$.</p></div><p class="why">The hour hand has moved two-thirds of the way from 4 to 5.</p></li>
+          <li><div class="do"><p>Angle: $240 - 140 = 100^\circ$.</p></div><p class="why">Since $100 &lt; 180$, this is the smaller angle.</p></li>
+        </ol>
+        <p class="answer">$100^\circ$</p>
+        <p class="book-next">Next in the book: Problem 561.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Trains passing</h3>
+        <div class="problem"><p>A $600$-foot train going $30$ mph meets a train going $45$ mph in the opposite direction on a parallel track. From the moment their fronts meet until their backs separate takes $12$ seconds. How long is the second train?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Relative speed: $30 + 45 = 75$ mph $= \dfrac{75 \times 5280}{3600} = 110$ ft/s.</p></div><p class="why">Moving toward each other, the speeds add. Convert to feet per second to match the other units.</p></li>
+          <li data-think="How far must the trains move relative to each other to pass completely?"><div class="do"><p>To pass completely, together they cover the sum of their lengths: $600 + L = 110 \times 12 = 1320$.</p></div><p class="why">Picture one train standing still and the other sliding past at $110$ ft/s.</p></li>
+          <li><div class="do"><p>$L = 720$ feet.</p></div><p class="why">Solve.</p></li>
+        </ol>
+        <p class="answer">$720$ feet</p>
+        <p class="book-next">Next in the book: Problem 547.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two taps and a drain</h3>
+        <div class="problem"><p>Tap A fills a tank in $6$ hours and tap B in $4$ hours. A drain empties a full tank in $12$ hours. With all three open, how long does it take to fill the empty tank?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Rates in tanks per hour: A $= \frac16$, B $= \frac14$, drain $= -\frac1{12}$.</p></div><p class="why">A job done in $t$ hours has rate $\frac1t$; the drain works against the taps.</p></li>
+          <li><div class="do"><p>Combined: $\frac{2}{12} + \frac{3}{12} - \frac{1}{12} = \frac{4}{12} = \frac13$ tank per hour.</p></div><p class="why">Rates add.</p></li>
+          <li><div class="do"><p>Time $= 1 \div \frac13 = 3$ hours.</p></div><p class="why">Work $=$ rate $\times$ time.</p></li>
+        </ol>
+        <p class="answer">$3$ hours</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Average speed is not the average of speeds</h3>
+        <div class="problem"><p>A cyclist rides to a town at $30$ km/h and back along the same road at $60$ km/h. What is the average speed for the round trip?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let each leg be $d$ km. Time: $\frac{d}{30} + \frac{d}{60} = \frac{3d}{60} = \frac{d}{20}$ hours.</p></div><p class="why">The distance is unknown, but it will cancel.</p></li>
+          <li data-think="Why isn't the answer $45$?"><div class="do"><p>Average speed $= \dfrac{2d}{d/20} = 40$ km/h.</p></div><p class="why">Total distance over total time. The slow leg takes twice as long, so it counts twice as much.</p></li>
+        </ol>
+        <p class="answer">$40$ km/h</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A right angle between 2 and 3</h3>
+        <div class="problem"><p>At what time strictly between 2:00 and 3:00 are the clock hands perpendicular?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>At $t$ minutes after 2:00: minute hand at $6t$, hour hand at $60 + 0.5t$ degrees.</p></div><p class="why">Set up both positions as functions of one variable.</p></li>
+          <li data-think="At 2:00 the minute hand is behind. Can it be $90^\circ$ behind later in the hour?"><div class="do"><p>The minute hand starts $60^\circ$ behind and gains $5.5^\circ$ per minute, so it can't fall to $90^\circ$ behind. It must be $90^\circ$ ahead: $6t - (60 + 0.5t) = 90$.</p></div><p class="why">Decide which hand is ahead before writing the equation; the other possibility is impossible here.</p></li>
+          <li><div class="do"><p>$5.5t = 150 \Rightarrow t = \frac{300}{11} = 27\tfrac{3}{11}$ minutes.</p></div><p class="why">The next solution, $270^\circ$ ahead, gives $t = 60$: exactly 3:00, which is excluded.</p></li>
+        </ol>
+        <p class="answer">At $2{:}27\tfrac{3}{11}$, about 2:27:16.</p>
+        <p class="key-idea">Clock problems are chase problems: the minute hand gains $5.5^\circ$ per minute on the hour hand.</p>
+        <p class="book-next">Next in the book: Problem 565.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 29.2 ===================== -->
+  <section class="lesson" id="s29-2" data-title="Look for Structure">
+    <h2><span class="sec-num">29.2</span> Look for Structure</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Compute $1001^2 - 999^2$. You could square two four-digit numbers and subtract. Or you could notice it's a difference of squares and finish in your head. Contest problems are built so that the brute-force route is long and the clever route is short. Training yourself to pause and look first is the single most valuable habit in this book.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Before you start crunching, scan for these patterns:</p>
+      <ul>
+        <li><strong>Factor forms:</strong> $a^2 - b^2 = (a-b)(a+b)$; perfect squares like $(a + b)^2$.</li>
+        <li><strong>Symmetry and pairing:</strong> terms that cancel in pairs, like $-k$ and $k$, or that sum to a constant.</li>
+        <li><strong>Telescoping:</strong> write each term as a difference so that neighbours cancel, as in $\dfrac{1}{k(k+2)} = \dfrac12\left(\dfrac1k - \dfrac1{k+2}\right)$.</li>
+        <li><strong>Geometric series:</strong> $a + ar + ar^2 + \cdots = \dfrac{a}{1 - r}$ for $|r| &lt; 1$.</li>
+        <li><strong>Powers of $10$ and cycles:</strong> combine $2$s with $5$s; last digits of powers repeat.</li>
+      </ul>
+      <div class="rule"><p>$$\text{Ask first: what does this expression } \textit{look like}\text{?}$$</p></div>
+    </div>
+
+    <figure class="explore" data-widget="nestedSquares">
+      <figcaption><strong>Explore:</strong> Each new square joins the midpoints of the previous one's sides. Add squares and watch the running total of areas (or perimeters) approach a limit. The structure (each term is a fixed multiple of the last) is what makes the infinite total computable.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Use the factorization</h3>
+        <div class="problem"><p>If $x + y = 9$ and $x^2 - y^2 = 27$, find $3x - y$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 - y^2 = (x + y)(x - y) = 9(x - y) = 27$, so $x - y = 3$.</p></div><p class="why">The second equation contains the first as a factor.</p></li>
+          <li><div class="do"><p>Adding and subtracting: $x = 6$, $y = 3$, so $3x - y = 15$.</p></div><p class="why">Two linear equations in two unknowns.</p></li>
+        </ol>
+        <p class="answer">$15$</p>
+        <p class="book-next">Next in the book: Problem 549.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Mental squaring</h3>
+        <div class="problem"><p>Compute $1001^2 - 999^2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(1001 - 999)(1001 + 999) = 2 \times 2000$.</p></div><p class="why">Difference of squares.</p></li>
+          <li><div class="do"><p>$= 4000$.</p></div><p class="why">No large multiplication needed.</p></li>
+        </ol>
+        <p class="answer">$4000$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Digits on the pages</h3>
+        <div class="problem"><p>How many digits are used to number the pages of a book from $1$ to $150$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Pages $1$–$9$: $9$ one-digit numbers, $9$ digits.</p></div><p class="why">Group pages by how many digits they have.</p></li>
+          <li><div class="do"><p>Pages $10$–$99$: $90$ numbers, $180$ digits.</p></div><p class="why">$99 - 10 + 1 = 90$.</p></li>
+          <li><div class="do"><p>Pages $100$–$150$: $51$ numbers, $153$ digits. Total $9 + 180 + 153 = 342$.</p></div><p class="why">$150 - 100 + 1 = 51$; don't forget the $+1$.</p></li>
+        </ol>
+        <p class="answer">$342$</p>
+        <p class="book-next">Next in the book: Problem 546 runs this idea backward.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Pairs that cancel</h3>
+        <div class="problem"><p>Find the mean of all integers from $-50$ to $51$ inclusive.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The numbers $-50, \dots, 50$ cancel in pairs ($-k$ with $k$), leaving a sum of $51$.</p></div><p class="why">Symmetry does the adding for us.</p></li>
+          <li><div class="do"><p>There are $51 - (-50) + 1 = 102$ numbers, so the mean is $\frac{51}{102} = \frac12$.</p></div><p class="why">Mean $=$ sum $\div$ count. (Also: the mean of an evenly spaced list is the average of its ends, $\frac{-50 + 51}{2}$.)</p></li>
+        </ol>
+        <p class="answer">$\tfrac12$</p>
+        <p class="book-next">Next in the book: Problem 543.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A telescoping sum</h3>
+        <div class="problem"><p>Evaluate $\dfrac{1}{1 \cdot 3} + \dfrac{1}{3 \cdot 5} + \dfrac{1}{5 \cdot 7} + \cdots + \dfrac{1}{19 \cdot 21}$.</p></div>
+        <ol class="steps">
+          <li data-think="Can $\frac{1}{k(k+2)}$ be written as a difference of two simpler fractions?"><div class="do"><p>$\dfrac{1}{k(k+2)} = \dfrac12\left(\dfrac1k - \dfrac1{k+2}\right)$.</p></div><p class="why">Check: $\frac1k - \frac1{k+2} = \frac{2}{k(k+2)}$.</p></li>
+          <li><div class="do"><p>The sum is</p><p>$$\frac12\left[\left(1 - \tfrac13\right) + \left(\tfrac13 - \tfrac15\right) + \cdots + \left(\tfrac1{19} - \tfrac1{21}\right)\right].$$</p></div><p class="why">Every middle fraction appears once with $+$ and once with $-$.</p></li>
+          <li><div class="do"><p>$= \dfrac12\left(1 - \dfrac1{21}\right) = \dfrac{10}{21}$.</p></div><p class="why">Only the first and last pieces survive.</p></li>
+        </ol>
+        <p class="answer">$\tfrac{10}{21}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Squares forever</h3>
+        <div class="problem"><p>A square has side $4$. A second square joins the midpoints of its sides, a third joins the midpoints of the second's sides, and so on forever. What is the total area of all the squares?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each new square has half the area of the previous one.</p></div><p class="why">The midpoint square's corners cut off four triangles that together make up half the old square.</p></li>
+          <li><div class="do"><p>Areas: $16 + 8 + 4 + 2 + \cdots$.</p></div><p class="why">A geometric series with first term $16$ and ratio $\frac12$.</p></li>
+          <li><div class="do"><p>Sum $= \dfrac{16}{1 - \frac12} = 32$.</p></div><p class="why">The infinite geometric series formula.</p></li>
+        </ol>
+        <p class="answer">$32$</p>
+        <p class="book-next">Next in the book: Problems 532 and 542.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A hidden perfect square</h3>
+        <div class="problem"><p>Simplify $\sqrt{7 + 4\sqrt3}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Look for $(a + b\sqrt3)^2 = a^2 + 3b^2 + 2ab\sqrt3$ with $a^2 + 3b^2 = 7$ and $2ab = 4$.</p></div><p class="why">Guess that the inside is a perfect square and match the rational and radical parts.</p></li>
+          <li><div class="do"><p>$a = 2$, $b = 1$ works: $(2 + \sqrt3)^2 = 4 + 3 + 4\sqrt3$. ✓</p></div><p class="why">$ab = 2$ suggests trying small integer pairs.</p></li>
+        </ol>
+        <p class="answer">$2 + \sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Counting digits without multiplying</h3>
+        <div class="problem"><p>How many digits does $2^{20} \cdot 5^{15}$ have?</p></div>
+        <ol class="steps">
+          <li data-think="Which factors combine into powers of $10$?"><div class="do"><p>$2^{20} \cdot 5^{15} = 2^5 \cdot (2 \cdot 5)^{15} = 32 \times 10^{15}$.</p></div><p class="why">Pair each $5$ with a $2$ to make a $10$.</p></li>
+          <li><div class="do"><p>$32$ followed by $15$ zeros has $2 + 15 = 17$ digits.</p></div><p class="why">Multiplying by $10^{15}$ appends fifteen zeros.</p></li>
+        </ol>
+        <p class="answer">$17$</p>
+        <p class="book-next">Next in the book: Problem 569.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The last two digits</h3>
+        <div class="problem"><p>Find the last two digits of $7^{2026}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$7^2 = 49$, $7^4 = 2401$. So $7^4$ ends in $01$.</p></div><p class="why">Compute small powers, keeping only the last two digits, until a pattern appears.</p></li>
+          <li><div class="do"><p>$2026 = 4 \times 506 + 2$, so $7^{2026} = (7^4)^{506} \cdot 7^2$.</p></div><p class="why">Split the exponent around the cycle length.</p></li>
+          <li><div class="do"><p>$(\ldots 01)^{506}$ ends in $01$, and $01 \times 49$ ends in $49$.</p></div><p class="why">A number ending in $01$ times another ending in $01$ still ends in $01$ (Chapter 5's modular arithmetic).</p></li>
+        </ol>
+        <p class="answer">$49$</p>
+        <p class="key-idea">Huge exponents usually hide a short repeating cycle.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 29.3 ===================== -->
+  <section class="lesson" id="s29-3" data-title="Count, Bound and Play">
+    <h2><span class="sec-num">29.3</span> Count, Bound and Play</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Two players face a pile of $21$ sticks. Each turn, a player removes $1$, $2$ or $3$; whoever takes the last stick loses. One of the players can force a win no matter what the other does, and figuring out which one needs no luck, only careful counting backward from the end. Try it in the explorer below.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The last group of problems asks you to count exactly, to <em>guarantee</em> something, or to find a winning strategy. The tools all come from Chapters 25–28:</p>
+      <ul>
+        <li><strong>Count by cases</strong> that don't overlap, or by complements.</li>
+        <li><strong>Bound and construct:</strong> a maximum needs an upper bound <em>and</em> an example that reaches it.</li>
+        <li><strong>Invariants and parity:</strong> a quantity that can't change (or always stays even) rules out whole families of outcomes.</li>
+        <li><strong>Work backward</strong> in games. A position is <em>losing</em> for the player about to move if every move leads to a winning position for the opponent; it is <em>winning</em> if some move leads to a losing one.</li>
+      </ul>
+      <div class="rule"><p>$$\text{take } 1 \text{ to } k \text{ each turn: positions repeat with period } k + 1.$$</p></div>
+      <p>If the player who takes the last stick loses, the positions you want to leave for your opponent are $1, k + 2, 2k + 3, \dots$, the numbers that are $1$ more than a multiple of $k + 1$. If taking the last stick wins, they are the multiples of $k + 1$.</p>
+    </div>
+
+    <figure class="explore" data-widget="stickGame">
+      <figcaption><strong>Explore:</strong> Play against the computer. You move first; it plays perfectly. Change the starting pile, the largest allowed move and the rule, and turn on hints to see the safe numbers to leave behind. Can you find starting piles where even perfect play can't save you?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Forming a committee</h3>
+        <div class="problem"><p>A club has $5$ seniors and $3$ juniors. How many $3$-person committees have at least $2$ seniors?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Exactly $2$ seniors: $\dbinom52\dbinom31 = 10 \times 3 = 30$.</p></div><p class="why">Split into non-overlapping cases by the number of seniors.</p></li>
+          <li><div class="do"><p>Exactly $3$ seniors: $\dbinom53 = 10$.</p></div><p class="why">The other case.</p></li>
+          <li><div class="do"><p>Total: $30 + 10 = 40$.</p></div><p class="why">Add the cases.</p></li>
+        </ol>
+        <p class="answer">$40$</p>
+        <p class="book-next">Next in the book: Problem 541.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Fence posts around a field</h3>
+        <div class="problem"><p>Posts are placed every $3$ feet around a $24$ ft by $15$ ft rectangular field, with a post at each corner. How many posts are needed?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Perimeter: $2(24 + 15) = 78$ feet, so there are $78 \div 3 = 26$ gaps.</p></div><p class="why">Both side lengths are multiples of $3$, so the corners land on posts.</p></li>
+          <li data-think="On a straight fence there is one more post than gaps. Is that true for a closed loop?"><div class="do"><p>Around a closed loop, posts and gaps alternate and come back to the start, so there are $26$ posts.</p></div><p class="why">The "one extra post" of a straight fence disappears when the ends meet.</p></li>
+        </ol>
+        <p class="answer">$26$</p>
+        <p class="book-next">Next in the book: Problem 564.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Twenty sticks</h3>
+        <div class="problem"><p>From a pile of $20$ sticks, players alternately remove $1$, $2$ or $3$. Whoever takes the last stick loses. Should you go first, and if so, what is your first move?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Facing $1$ stick, you must take it and lose. So leaving $1$ for your opponent wins.</p></div><p class="why">Start from the end of the game.</p></li>
+          <li><div class="do"><p>Facing $5$: any move leaves $2$, $3$ or $4$, and the opponent can then leave you $1$. So $5$ is losing to face. Likewise $9, 13, 17$.</p></div><p class="why">Whatever you take ($t$), the opponent takes $4 - t$, keeping the pattern every $4$.</p></li>
+          <li><div class="do"><p>Go first and take $3$, leaving $17$. Then always answer a move of $t$ with $4 - t$.</p></div><p class="why">$20$ is not of the form $4m + 1$, so it is a winning position to face.</p></li>
+        </ol>
+        <p class="answer">Go first and take $3$ sticks.</p>
+        <p class="book-next">Next in the book: Problem 563.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Lines in the plane</h3>
+        <div class="problem"><p>Six lines are drawn in a plane. What is the greatest possible number of intersection points? Into how many regions can they cut the plane, at most?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each pair of lines meets at most once: $\dbinom62 = 15$ points, reached when no two are parallel and no three meet at a point.</p></div><p class="why">Bound by counting pairs; the "general position" arrangement reaches it.</p></li>
+          <li><div class="do"><p>Adding the $k$th line, crossing the $k - 1$ earlier ones, splits $k$ regions in two. Regions: $1 + (1 + 2 + \cdots + 6) = 1 + 21 = 22$.</p></div><p class="why">The new line is cut into $k$ pieces by the $k - 1$ crossings, and each piece divides one region.</p></li>
+        </ol>
+        <p class="answer">$15$ intersection points; $22$ regions.</p>
+        <p class="book-next">Next in the book: Problems 544 and 566.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>When the last stick wins</h3>
+        <div class="problem"><p>Now the player who takes the last stick <em>wins</em>. Players take $1$ to $4$ sticks from a pile of $37$. What should the first player do?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Facing $0$ sticks means your opponent just took the last one: you've lost. Facing $1$–$4$, take them all and win.</p></div><p class="why">Work backward from the end again, with the new rule.</p></li>
+          <li><div class="do"><p>Facing $5$: every move leaves $1$–$4$ for the opponent, who wins. So multiples of $5$ are losing to face.</p></div><p class="why">Answering $t$ with $5 - t$ keeps the opponent on multiples of $5$.</p></li>
+          <li><div class="do"><p>$37 = 35 + 2$: take $2$, leaving $35$.</p></div><p class="why">Leave a multiple of $5$, and keep doing so.</p></li>
+        </ol>
+        <p class="answer">Take $2$ sticks, then always answer $t$ with $5 - t$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A parity invariant</h3>
+        <div class="problem"><p>At a party, some pairs of guests shake hands. Prove that the number of guests who shook an odd number of hands is even.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Add up every guest's handshake count. Each handshake involves two people, so the total is $2H$, where $H$ is the number of handshakes.</p></div><p class="why">Count the same thing (hand-in-handshake participations) two ways.</p></li>
+          <li data-think="If the total is even, what can you say about the odd terms in the sum?"><div class="do"><p>The total is even. The even counts add to an even number, so the odd counts must also add to an even number.</p></div><p class="why">Subtracting an even number from an even number leaves an even number.</p></li>
+          <li><div class="do"><p>A sum of odd numbers is even only when there is an even number of them.</p></div><p class="why">Odd $+$ odd $=$ even, so odd numbers pair off.</p></li>
+        </ol>
+        <p class="answer">The number of guests with an odd count is even.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Peaceful kings</h3>
+        <div class="problem"><p>What is the largest number of kings that can be placed on an $8 \times 8$ chessboard so that no two attack each other? (A king attacks all squares touching its own, including diagonally.)</p></div>
+        <ol class="steps">
+          <li data-think="What regions of the board can hold at most one king?"><div class="do"><p>Bound: split the board into sixteen $2 \times 2$ blocks. The four squares of a block all touch each other, so each block holds at most one king: at most $16$.</p></div><p class="why">Choose regions where two kings would always attack: pigeonhole in reverse.</p></li>
+          <li><div class="do"><p>Example: put a king in the top-left square of every block (rows and columns $1, 3, 5, 7$). Any two are at least $2$ squares apart in some direction, so none attack.</p></div><p class="why">The bound is reached, so it is the maximum.</p></li>
+        </ol>
+        <p class="answer">$16$</p>
+        <p class="key-idea">Bound with a partition, then match the bound with a construction.</p>
+        <p class="book-next">Next in the book: Problem 557.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two groups with equal sums</h3>
+        <div class="problem"><p>Ten different numbers are chosen from $1, 2, \dots, 100$. Prove that two non-empty groups of them, with no number in common, have the same sum.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The ten numbers have $2^{10} = 1024$ subsets.</p></div><p class="why">These will be the pigeons.</p></li>
+          <li data-think="What range of values can a subset's sum take?"><div class="do"><p>A subset's sum is between $0$ and $91 + 92 + \cdots + 100 = 955$: only $956$ possible values.</p></div><p class="why">These are the holes. The largest sum uses the ten biggest possible numbers.</p></li>
+          <li><div class="do"><p>$1024 > 956$, so two different subsets $A$ and $B$ have the same sum.</p></div><p class="why">Pigeonhole.</p></li>
+          <li><div class="do"><p>Remove the numbers they share from both. The sums stay equal, the groups no longer overlap, and neither is empty.</p></div><p class="why">Removing the same numbers from both lowers both sums equally. If one became empty, its sum would be $0$, forcing the other to be empty too, which would mean $A = B$.</p></li>
+        </ol>
+        <p class="answer">Two disjoint non-empty groups with equal sums always exist.</p>
+        <p class="key-idea">Subsets make excellent pigeons: there are exponentially many of them.</p>
+        <p class="book-next">You're ready for the book's Parting Shots, Problems 526–588.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-29">
+    <h2 id="further-29">Further reading in the book</h2>
+    <ul>
+      <li>Chapter 29 has no new sections, only the <strong>Problems to Solve for Chapter 29</strong>, Problems 526–588, arranged roughly by difficulty.</li>
+      <li><strong>§29.1 Translate, Then Solve</strong>: word problems such as 526, 528, 531, 545, 547, 550, 562, and the clock problems 561 and 565.</li>
+      <li><strong>§29.2 Look for Structure</strong>: 530, 532, 538, 542, 543, 546, 549, 556 and 569 reward spotting a pattern first.</li>
+      <li><strong>§29.3 Count, Bound and Play</strong>: 529, 541, 544, 555, 557, 563, 564, 566 and the proofs 575 and 579.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 29 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 29.1 — clock hands */
+  AOPS.registerWidget("clockHands", function (body) {
+    var svg = W.stage(body, { w: 620, h: 320, label: "Clock face showing the hour and minute hands and the angle between them" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var t = 4 * 60 + 40;
+    function label(v) { var h = Math.floor(v / 60), m = v % 60; return (h === 0 ? 12 : h) + ":" + (m < 10 ? "0" : "") + m; }
+    W.slider(ctl, { label: "Time", min: 0, max: 719, value: t, format: label, onInput: function (v) { t = v; draw(); } });
+    W.button(ctl, "−1 min", function () { t = (t + 719) % 720; draw(); });
+    W.button(ctl, "+1 min", function () { t = (t + 1) % 720; draw(); });
+    function pt(cx, cy, r, deg) { var a = (deg - 90) * Math.PI / 180; return [cx + r * Math.cos(a), cy + r * Math.sin(a)]; }
+    function draw() {
+      W.clear(svg);
+      var cx = 160, cy = 160, R = 135, h = Math.floor(t / 60), m = t % 60;
+      var mDeg = 6 * m, hDeg = 30 * h + 0.5 * m;
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "var(--surface-2)", stroke: "var(--border-strong)", "stroke-width": 3 }));
+      for (var k = 0; k < 60; k++) {
+        var a = pt(cx, cy, R - 4, k * 6), b = pt(cx, cy, R - (k % 5 ? 10 : 18), k * 6);
+        svg.appendChild(W.s("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: "var(--muted)", "stroke-width": k % 5 ? 1 : 2.5 }));
+      }
+      for (var n = 1; n <= 12; n++) { var q = pt(cx, cy, R - 34, n * 30); svg.appendChild(W.s("text", { x: q[0], y: q[1] + 6, "text-anchor": "middle", style: "font: 600 17px var(--font-body)", fill: "var(--ink)", text: n })); }
+      // angle wedge between hands (smaller angle)
+      var d = ((mDeg - hDeg) % 360 + 360) % 360, from = hDeg, sweep = d;
+      if (d > 180) { from = mDeg; sweep = 360 - d; }
+      var r0 = 52, p0 = pt(cx, cy, r0, from), p1 = pt(cx, cy, r0, from + sweep);
+      if (sweep > 0.01) svg.appendChild(W.s("path", { d: "M" + cx + " " + cy + "L" + p0[0] + " " + p0[1] + "A" + r0 + " " + r0 + " 0 0 1 " + p1[0] + " " + p1[1] + "Z", fill: "color-mix(in srgb, var(--accent) 35%, transparent)", stroke: "var(--accent)" }));
+      var hp = pt(cx, cy, 72, hDeg), mp = pt(cx, cy, 112, mDeg);
+      svg.appendChild(W.s("line", { x1: cx, y1: cy, x2: hp[0], y2: hp[1], stroke: "var(--plot-2)", "stroke-width": 8, "stroke-linecap": "round" }));
+      svg.appendChild(W.s("line", { x1: cx, y1: cy, x2: mp[0], y2: mp[1], stroke: "var(--plot-4)", "stroke-width": 5, "stroke-linecap": "round" }));
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 7, fill: "var(--ink)" }));
+      var ang = Math.min(d, 360 - d), tx = 340;
+      svg.appendChild(W.s("text", { x: tx, y: 60, style: "font: 700 30px var(--font-mono)", fill: "var(--ink)", text: label(t) }));
+      svg.appendChild(W.s("text", { x: tx, y: 110, class: "lbl", style: "font-size:15px", fill: "var(--plot-4)", text: "minute hand: " + W.fmt(mDeg, 1) + "°" }));
+      svg.appendChild(W.s("text", { x: tx, y: 140, class: "lbl", style: "font-size:15px", fill: "var(--plot-2)", text: "hour hand: " + W.fmt(hDeg, 1) + "°" }));
+      svg.appendChild(W.s("text", { x: tx, y: 185, class: "lbl", style: "font-size:15px", fill: "var(--accent)", text: "angle between: " + W.fmt(ang, 1) + "°" }));
+      svg.appendChild(W.s("text", { x: tx, y: 230, class: "lbl", text: "minute hand gains 5.5° per minute" }));
+      out.tex("\\text{minute} = 6 \\times " + m + " = " + W.fmt(mDeg, 1) + "^\\circ,\\quad \\text{hour} = 30 \\times " + h + " + 0.5 \\times " + m + " = " + W.fmt(hDeg, 1) + "^\\circ,\\quad \\text{angle} = " + W.fmt(ang, 1) + "^\\circ");
+    }
+    draw();
+  });
+
+  /* 29.2 — nested midpoint squares and a geometric series */
+  AOPS.registerWidget("nestedSquares", function (body) {
+    var svg = W.stage(body, { w: 620, h: 320, label: "Nested squares formed by joining midpoints, with the running total compared to the limit" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var k = 3, mode = "area";
+    W.slider(ctl, { label: "Number of squares", min: 1, max: 10, value: k, onInput: function (v) { k = v; draw(); } });
+    W.segmented(ctl, { title: "Add up", value: mode, options: [{ value: "area", label: "areas" }, { value: "per", label: "perimeters" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var cx = 155, cy = 160, s0 = 260;
+      var pts = [[cx - s0 / 2, cy - s0 / 2], [cx + s0 / 2, cy - s0 / 2], [cx + s0 / 2, cy + s0 / 2], [cx - s0 / 2, cy + s0 / 2]];
+      var cols = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)", "var(--plot-5)"];
+      for (var i = 0; i < k; i++) {
+        var d = "M" + pts.map(function (p) { return p[0].toFixed(1) + " " + p[1].toFixed(1); }).join("L") + "Z";
+        svg.appendChild(W.s("path", { d: d, fill: "color-mix(in srgb, " + cols[i % 5] + " 28%, transparent)", stroke: cols[i % 5], "stroke-width": i === k - 1 ? 3 : 1.5 }));
+        pts = pts.map(function (p, j) { var q = pts[(j + 1) % 4]; return [(p[0] + q[0]) / 2, (p[1] + q[1]) / 2]; });
+      }
+      var side = 4, terms = [], sum = 0;
+      for (var j = 0; j < k; j++) {
+        var sj = side * Math.pow(Math.SQRT1_2, j), v = mode === "area" ? sj * sj : 4 * sj;
+        terms.push(v); sum += v;
+      }
+      var limit = mode === "area" ? 32 : 16 / (1 - Math.SQRT1_2);
+      var bx = 330, bw = 260;
+      svg.appendChild(W.s("text", { x: bx, y: 40, class: "lbl", text: (mode === "area" ? "areas: 16, 8, 4, 2, …  (ratio 1/2)" : "perimeters: 16, 11.31, 8, …  (ratio 1/√2)") }));
+      svg.appendChild(W.s("text", { x: bx, y: 90, class: "lbl", style: "font-size:14px", text: "running total: " + W.fmt(sum, 3) }));
+      svg.appendChild(W.s("rect", { x: bx, y: 100, width: bw, height: 26, rx: 6, fill: "none", stroke: "var(--border-strong)" }));
+      svg.appendChild(W.s("rect", { x: bx, y: 100, width: bw * sum / limit, height: 26, rx: 6, fill: "var(--accent)" }));
+      svg.appendChild(W.s("text", { x: bx, y: 156, class: "lbl", style: "font-size:14px", text: "limit: " + W.fmt(limit, 3) + "   (" + W.fmt(100 * sum / limit, 1) + "% reached)" }));
+      svg.appendChild(W.s("text", { x: bx, y: 200, class: "lbl", text: "outer square: side 4" }));
+      out.tex(mode === "area"
+        ? "16 + 8 + 4 + \\cdots \\;(" + k + "\\text{ terms}) = " + W.fmt(sum, 4) + " \\;\\to\\; \\frac{16}{1 - \\frac12} = 32"
+        : "16 + \\tfrac{16}{\\sqrt2} + 8 + \\cdots \\;(" + k + "\\text{ terms}) = " + W.fmt(sum, 4) + " \\;\\to\\; \\frac{16}{1 - \\frac{1}{\\sqrt2}} \\approx " + W.fmt(limit, 3));
+    }
+    draw();
+  });
+
+  /* 29.3 — take-away game against a perfect computer */
+  AOPS.registerWidget("stickGame", function (body) {
+    var svg = W.stage(body, { w: 620, h: 170, label: "Pile of sticks in a take-away game" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var moves = W.controls(body);
+    var out = W.readout(body);
+    var N = 21, K = 3, rule = "loses", hint = false, left, over, log;
+    W.slider(ctl, { label: "Starting sticks", min: 8, max: 40, value: N, onInput: function (v) { N = v; reset(); } });
+    W.segmented(ctl, { title: "Take at most", value: K, options: [2, 3, 4, 5].map(function (v) { return { value: v, label: String(v) }; }), onChange: function (v) { K = v; reset(); } });
+    W.segmented(ctl2, { title: "Taking the last stick", value: rule, options: [{ value: "loses", label: "loses" }, { value: "wins", label: "wins" }], onChange: function (v) { rule = v; reset(); } });
+    W.segmented(ctl2, { title: "Hints", value: "off", options: [{ value: "off", label: "off" }, { value: "on", label: "on" }], onChange: function (v) { hint = v === "on"; draw(); } });
+    function safe(n) { return rule === "loses" ? n % (K + 1) === 1 : n % (K + 1) === 0; }
+    function reset() { left = N; over = false; log = "Your move: take 1 to " + K + " sticks."; buildMoves(); draw(); }
+    function buildMoves() {
+      W.clear(moves);
+      for (var t = 1; t <= K; t++) (function (t) { W.button(moves, "Take " + t, function () { play(t); }); })(t);
+      W.button(moves, "New game", reset);
+    }
+    function lastTaker(who) { return rule === "loses" ? (who === "you" ? "You took the last stick, so the computer wins." : "The computer took the last stick, so you win!") : (who === "you" ? "You took the last stick: you win!" : "The computer took the last stick and wins."); }
+    function play(t) {
+      if (over || t > left) return;
+      left -= t;
+      var msg = "You took " + t + ". ";
+      if (left === 0) { over = true; log = msg + lastTaker("you"); draw(); return; }
+      var c;
+      if (rule === "loses") { c = (left - 1) % (K + 1); } else { c = left % (K + 1); }
+      if (c === 0) c = 1;
+      c = Math.min(c, left);
+      left -= c;
+      msg += "Computer took " + c + ". ";
+      if (left === 0) { over = true; log = msg + lastTaker("computer"); draw(); return; }
+      log = msg + left + " left: your move.";
+      draw();
+    }
+    function draw() {
+      W.clear(svg);
+      var w = Math.min(28, 600 / N), x0 = (620 - N * w) / 2;
+      for (var i = 0; i < N; i++) {
+        var gone = i >= left;
+        svg.appendChild(W.s("rect", { x: x0 + i * w + w * 0.2, y: 30, width: w * 0.6, height: 90, rx: Math.min(4, w * 0.3),
+          fill: gone ? "var(--surface-2)" : "var(--accent)", stroke: gone ? "var(--border-strong)" : "none", opacity: gone ? 0.5 : 1 }));
+        var cnt = i + 1;
+        if (hint && safe(cnt)) svg.appendChild(W.s("circle", { cx: x0 + i * w + w / 2, cy: 136, r: 4, fill: "var(--plot-4)" }));
+      }
+      svg.appendChild(W.s("text", { x: 310, y: 18, "text-anchor": "middle", class: "lbl", text: left + " stick" + (left === 1 ? "" : "s") + " left" + (hint ? "  ·  green dots: safe counts to leave your opponent" : "") }));
+      moves.querySelectorAll("button").forEach(function (b) { var m = /Take (\d+)/.exec(b.textContent); if (m) b.disabled = over || +m[1] > left; });
+      var safes = [];
+      for (var s = 0; s <= Math.min(N, 40); s++) if (safe(s) && s > 0) safes.push(s);
+      out.set("<p>" + log + "</p>" + (hint ? "<p>Leave your opponent one of: " + safes.join(", ") + ". " + (safe(N) ? "From " + N + " the first player is already lost against perfect play." : "From " + N + ", the first player can win.") + "</p>" : ""));
+    }
+    reset();
+  });
+})();
+</script>
+</body>
+</html>

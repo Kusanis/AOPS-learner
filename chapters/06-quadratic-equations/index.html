@@ -1,0 +1,1165 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 6: Quadratic Equations · AoPS Learner</title>
+  <meta name="description" content="Factoring quadratics, completing the square, the quadratic formula and discriminant, rearrangements and substitutions, square roots of irrationals and complex numbers, and a first look at polynomials, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="6" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 6 · Algebra &amp; Number</span>
+    <h1>Quadratic Equations</h1>
+    <p class="lede">Linear equations describe things moving at a steady rate. As soon as something speeds up, curves, or multiplies by itself, a square appears, and with it the quadratic equation. In this chapter you'll factor quadratics, derive and use the quadratic formula, untangle equations in disguise, take square roots of irrational and complex numbers, and peek at polynomials of higher degree.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>A quadratic is $ax^2 + bx + c$ with $a \ne 0$. If it factors as $a(x - r)(x - s)$, the solutions of $ax^2 + bx + c = 0$ are $r$ and $s$, because a product is $0$ only when a factor is $0$.</li>
+      <li>To factor $x^2 + bx + c$, find two numbers with product $c$ and sum $b$. Clear fractions first, and watch for $x(ax + b)$, $x^2 - k^2$ and perfect squares.</li>
+      <li>Completing the square turns any quadratic into $(x + m)^2 = k$, which gives the formula $x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a}$.</li>
+      <li>The discriminant $b^2 - 4ac$ decides the roots: positive means two real roots, zero means one repeated root, negative means two complex conjugate roots.</li>
+      <li>For $ax^2 + bx + c$, the roots have sum $-\dfrac{b}{a}$ and product $\dfrac{c}{a}$. With rational coefficients, irrational roots come in pairs $p \pm q\sqrt d$.</li>
+      <li>Clear denominators or square away radicals to reach a quadratic, then <em>check for extraneous roots</em>. Substitute $u$ for a repeated expression such as $x^2$ or $2^x$.</li>
+      <li>To find $\sqrt{a + b\sqrt c}$ or $\sqrt{a + bi}$, assume the form $x + y\sqrt c$ or $x + yi$, square, and match parts.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 6.1 ===================== -->
+  <section class="lesson" id="s6-1" data-title="What's a Quadratic?">
+    <h2><span class="sec-num">6.1</span> What's a Quadratic?</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Toss a ball upward at $20$ meters per second from a $25$-meter rooftop. Gravity steals about $5t^2$ meters by time $t$, so its height is $h = 25 + 20t - 5t^2$. When does it hit the ground? You need $25 + 20t - 5t^2 = 0$, and no amount of linear-equation tricks will isolate $t$: there's a $t$ and a $t^2$ fighting each other.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>quadratic expression</strong> in $x$ has the form $ax^2 + bx + c$, where the <strong>coefficients</strong> $a, b, c$ are constants and $a \ne 0$. Its <strong>degree</strong> is $2$, the highest power of $x$. A <strong>quadratic equation</strong> is one that can be rearranged into</p>
+      <div class="rule"><p>$$ax^2 + bx + c = 0, \qquad a \neq 0.$$</p></div>
+      <p>The solutions are called the <strong>roots</strong> (or zeros) of the quadratic. On a graph, $y = ax^2 + bx + c$ is a parabola, and the roots are where it crosses the $x$-axis. A parabola can cross twice, touch once, or miss entirely, which is why a quadratic can have two, one, or no real roots.</p>
+      <p>Before solving anything, it helps to recognize a quadratic in disguise: move every term to one side, expand any products, and collect like terms. If an $x^2$ survives, it's quadratic; if the $x^2$ terms cancel, it was linear all along.</p>
+    </div>
+
+    <figure class="explore" data-widget="projectile">
+      <figcaption><strong>Explore:</strong> Set the starting height and upward speed of a thrown ball. The curve is its height $h = h_0 + vt - 5t^2$. The landing time is a root of a quadratic; the other root, at negative time, is shown hollow because the story rejects it.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Spot the quadratics</h3>
+        <div class="problem"><p>Which of these are quadratic equations? (a) $3x^2 - 5 = 0$ (b) $x(x + 2) = x^2 + 6$ (c) $(x - 1)^2 = 4x$ (d) $x^3 = x^2$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) is already $3x^2 + 0x - 5 = 0$: quadratic.</p></div><p class="why">$b = 0$ is allowed; only $a$ must be nonzero.</p></li>
+          <li><div class="do"><p>(b) expands to $x^2 + 2x = x^2 + 6$, so $2x = 6$: linear, not quadratic.</p></div><p class="why">The $x^2$ terms cancel. Always simplify before deciding.</p></li>
+          <li><div class="do"><p>(c) expands to $x^2 - 2x + 1 = 4x$, so $x^2 - 6x + 1 = 0$: quadratic.</p></div><p class="why">Expand the square and collect terms on one side.</p></li>
+          <li><div class="do"><p>(d) has an $x^3$ term: degree $3$, a cubic.</p></div><p class="why">The highest power decides the degree.</p></li>
+        </ol>
+        <p class="answer">(a) and (c) are quadratic; (b) is linear; (d) is cubic.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Name the coefficients</h3>
+        <div class="problem"><p>Write $5 - 2x^2 = 3x$ in the form $ax^2 + bx + c = 0$ with $a > 0$, and name $a$, $b$, $c$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Move everything to one side: $-2x^2 - 3x + 5 = 0$.</p></div><p class="why">Standard form has $0$ on one side.</p></li>
+          <li><div class="do"><p>Multiply by $-1$: $2x^2 + 3x - 5 = 0$.</p></div><p class="why">Multiplying an equation by a nonzero number doesn't change its solutions, and a positive $a$ is easier to work with.</p></li>
+        </ol>
+        <p class="answer">$2x^2 + 3x - 5 = 0$, so $a = 2$, $b = 3$, $c = -5$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Check candidate roots</h3>
+        <div class="problem"><p>Which of $x = 3$, $x = 1$, $x = -1$ are roots of $x^2 - 2x - 3 = 0$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x = 3$: $9 - 6 - 3 = 0$. ✓</p></div><p class="why">A root is a value that makes the expression equal $0$.</p></li>
+          <li><div class="do"><p>$x = 1$: $1 - 2 - 3 = -4 \ne 0$. ✗</p></div><p class="why">Substitution is the definitive test.</p></li>
+          <li><div class="do"><p>$x = -1$: $1 + 2 - 3 = 0$. ✓</p></div><p class="why">Careful with signs: $(-1)^2 = 1$ and $-2(-1) = 2$.</p></li>
+        </ol>
+        <p class="answer">$3$ and $-1$ are roots; $1$ is not.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Rearrange into standard form</h3>
+        <div class="problem"><p>Write $(2x + 1)(x - 3) = x + 5$ in standard form with the smallest possible integer coefficients.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Expand: $(2x + 1)(x - 3) = 2x^2 - 6x + x - 3 = 2x^2 - 5x - 3$.</p></div><p class="why">Distribute each term of the first factor over the second.</p></li>
+          <li><div class="do"><p>$2x^2 - 5x - 3 - x - 5 = 0$, so $2x^2 - 6x - 8 = 0$.</p></div><p class="why">Move everything to the left and combine like terms.</p></li>
+          <li><div class="do"><p>Divide by $2$: $x^2 - 3x - 4 = 0$.</p></div><p class="why">A common factor can be divided out of an equation.</p></li>
+        </ol>
+        <p class="answer">$x^2 - 3x - 4 = 0$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The rooftop ball</h3>
+        <div class="problem"><p>A ball's height in meters after $t$ seconds is $h = 25 + 20t - 5t^2$. Show that it lands at $t = 5$, and explain why the equation also has the root $t = -1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Landing means $h = 0$: $-5t^2 + 20t + 25 = 0$, or dividing by $-5$, $t^2 - 4t - 5 = 0$.</p></div><p class="why">Set the height to zero, then simplify.</p></li>
+          <li><div class="do"><p>$t = 5$: $25 - 20 - 5 = 0$ ✓. $t = -1$: $1 + 4 - 5 = 0$ ✓.</p></div><p class="why">Both satisfy the equation.</p></li>
+          <li data-think="Does a negative time make sense here?"><div class="do"><p>The formula only describes the ball after it's thrown, $t \ge 0$, so $t = -1$ is rejected.</p></div><p class="why">The parabola extends backward in time as if the ball had been launched from the ground a second earlier; the math is fine, but the story isn't.</p></li>
+        </ol>
+        <p class="answer">It lands at $t = 5$ seconds; $t = -1$ is a valid root of the equation but not a physical answer.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Set up from a rectangle</h3>
+        <div class="problem"><p>A rectangle has perimeter $20$ and area $21$. Write a quadratic equation for its width $x$, and check that $x = 3$ and $x = 7$ satisfy it.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Width plus length is half the perimeter, so the length is $10 - x$.</p></div><p class="why">$2x + 2\ell = 20$ gives $\ell = 10 - x$.</p></li>
+          <li><div class="do"><p>Area: $x(10 - x) = 21$, so $x^2 - 10x + 21 = 0$.</p></div><p class="why">Expand and move everything to one side.</p></li>
+          <li><div class="do"><p>$x = 3$: $9 - 30 + 21 = 0$ ✓. $x = 7$: $49 - 70 + 21 = 0$ ✓.</p></div><p class="why">The two roots are the width and length; swapping them describes the same rectangle.</p></li>
+        </ol>
+        <p class="answer">$x^2 - 10x + 21 = 0$; the rectangle is $3$ by $7$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A known root reveals a coefficient</h3>
+        <div class="problem"><p>The equation $x^2 + kx - 10 = 0$ has $x = 2$ as a root. Find $k$ and the other root.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Substitute $x = 2$: $4 + 2k - 10 = 0$, so $k = 3$.</p></div><p class="why">A root must satisfy the equation, which gives an equation for $k$.</p></li>
+          <li data-think="If $2$ is one root of $x^2 + 3x - 10$, what must the other factor look like?"><div class="do"><p>$x^2 + 3x - 10 = (x - 2)(x + 5)$.</p></div><p class="why">The factor $(x - 2)$ must appear; the other factor's constant must multiply with $-2$ to give $-10$.</p></li>
+          <li><div class="do"><p>The other root is $x = -5$. Check: $25 - 15 - 10 = 0$. ✓</p></div><p class="why">Section 6.2 develops this factoring idea in full.</p></li>
+        </ol>
+        <p class="answer">$k = 3$; the other root is $-5$.</p>
+        <p class="key-idea">A root plugged into the equation gives you information; a root also gives you a factor.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 6.2 ===================== -->
+  <section class="lesson" id="s6-2" data-title="Factoring Quadratics">
+    <h2><span class="sec-num">6.2</span> Factoring Quadratics</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>If two numbers multiply to $0$, one of them must be $0$. That tiny fact is a superpower: if you can rewrite $x^2 + 5x + 6$ as $(x + 2)(x + 3)$, then solving $x^2 + 5x + 6 = 0$ becomes two baby equations, $x + 2 = 0$ or $x + 3 = 0$.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Multiplying out two linear factors shows where the coefficients come from:</p>
+      <div class="rule"><p>$$(x + u)(x + v) = x^2 + (u + v)x + uv.$$</p></div>
+      <p>So to factor $x^2 + bx + c$, look for two numbers $u, v$ with <strong>product $c$</strong> and <strong>sum $b$</strong>. Signs help: if $c > 0$ the numbers share a sign (the sign of $b$); if $c &lt; 0$ they have opposite signs. Then the roots are $-u$ and $-v$.</p>
+      <p>When the leading coefficient isn't $1$, first factor out any common factor (and make $a$ positive), then look for $(sx + u)(tx + v)$ with $st = a$, $uv = c$ and $sv + tu = b$. A handy shortcut: find two numbers with product $ac$ and sum $b$, split the middle term with them, and factor by grouping. If there are fractions, multiply through to clear them first.</p>
+      <p>Three patterns are worth recognizing on sight:</p>
+      <div class="rule"><p>$$ax^2 + bx = x(ax + b), \qquad x^2 - k^2 = (x - k)(x + k), \qquad x^2 + 2kx + k^2 = (x + k)^2.$$</p></div>
+      <div class="note"><p>Never divide both sides by $x$ to "simplify" $ax^2 = bx$: you'd throw away the root $x = 0$. Factor instead.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="factorBox">
+      <figcaption><strong>Explore:</strong> Choose $b$ and $c$ for $x^2 + bx + c$. The list shows every integer pair with product $c$ and its sum; when a sum matches $b$, the box fills in the factorization. Find values of $b$ and $c$ that don't factor over the integers.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Multiply two binomials</h3>
+        <div class="problem"><p>Expand $(x + 4)(x - 7)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x \cdot x + x\cdot(-7) + 4 \cdot x + 4 \cdot (-7) = x^2 - 7x + 4x - 28$.</p></div><p class="why">Every term of one factor multiplies every term of the other.</p></li>
+          <li><div class="do"><p>$x^2 - 3x - 28$.</p></div><p class="why">The middle coefficient is $4 + (-7)$ and the constant is $4 \cdot (-7)$, just as the pattern predicts.</p></li>
+        </ol>
+        <p class="answer">$x^2 - 3x - 28$</p>
+        <p class="book-next">Next in the book: Example 6-1 and Exercise 6-1.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Product and sum, both positive</h3>
+        <div class="problem"><p>Solve $x^2 + 7x + 12 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Need product $12$ and sum $7$: pairs $1 \cdot 12$, $2 \cdot 6$, $3 \cdot 4$. The pair $3, 4$ works.</p></div><p class="why">Both positive since the product and sum are positive.</p></li>
+          <li><div class="do"><p>$(x + 3)(x + 4) = 0$, so $x = -3$ or $x = -4$.</p></div><p class="why">Set each factor to zero. The roots are the <em>negatives</em> of $u$ and $v$.</p></li>
+        </ol>
+        <p class="answer">$x = -3$ or $x = -4$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Opposite signs</h3>
+        <div class="problem"><p>Solve $x^2 - 2x - 35 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Product $-35$, so opposite signs; sum $-2$, so the negative one is bigger in size.</p></div><p class="why">Reading signs first narrows the search.</p></li>
+          <li><div class="do"><p>$5 \cdot 7 = 35$ and $5 - 7 = -2$: use $u = 5$, $v = -7$.</p></div><p class="why">The sizes must differ by $2$.</p></li>
+          <li><div class="do"><p>$(x + 5)(x - 7) = 0$, so $x = -5$ or $x = 7$.</p></div><p class="why">Check $x = 7$: $49 - 14 - 35 = 0$. ✓</p></li>
+        </ol>
+        <p class="answer">$x = 7$ or $x = -5$</p>
+        <p class="book-next">Next in the book: Example 6-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two special forms</h3>
+        <div class="problem"><p>Solve $9x^2 - 16 = 0$ and $2x^2 = 6x$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$9x^2 - 16 = (3x)^2 - 4^2 = (3x - 4)(3x + 4)$, so $x = \pm\dfrac{4}{3}$.</p></div><p class="why">A difference of squares. $9x^2$ is the square of $3x$.</p></li>
+          <li><div class="do"><p>$2x^2 - 6x = 0 \Rightarrow 2x(x - 3) = 0$, so $x = 0$ or $x = 3$.</p></div><p class="why">Move everything to one side and factor out $2x$. Dividing by $x$ would have lost $x = 0$.</p></li>
+        </ol>
+        <p class="answer">$x = \pm\dfrac{4}{3}$; and $x = 0$ or $x = 3$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Perfect squares</h3>
+        <div class="problem"><p>Solve $x^2 - 10x + 25 = 0$ and $4x^2 + 12x + 9 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 - 10x + 25 = (x - 5)^2$, so $x = 5$.</p></div><p class="why">$25 = 5^2$ and $-10 = 2 \cdot (-5)$: the pattern $x^2 + 2kx + k^2$ with $k = -5$.</p></li>
+          <li><div class="do"><p>$4x^2 + 12x + 9 = (2x + 3)^2$, so $x = -\dfrac{3}{2}$.</p></div><p class="why">First and last terms are squares of $2x$ and $3$, and the middle is $2 \cdot 2x \cdot 3$.</p></li>
+        </ol>
+        <p class="answer">$x = 5$ (a double root); $x = -\dfrac32$ (a double root).</p>
+        <p class="book-next">Next in the book: Example 6-4 and Exercise 6-4.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Leading coefficient not 1</h3>
+        <div class="problem"><p>Solve $6x^2 + x - 2 = 0$.</p></div>
+        <ol class="steps">
+          <li data-think="Which two numbers have product $6 \cdot (-2) = -12$ and sum $1$?"><div class="do"><p>Product $ac = -12$ and sum $1$: the numbers $4$ and $-3$.</p></div><p class="why">These tell us how to split the middle term.</p></li>
+          <li><div class="do"><p>$6x^2 + 4x - 3x - 2 = 2x(3x + 2) - 1(3x + 2) = (2x - 1)(3x + 2)$.</p></div><p class="why">Group in pairs and pull out the common binomial.</p></li>
+          <li><div class="do"><p>$x = \dfrac12$ or $x = -\dfrac23$.</p></div><p class="why">Set each factor to zero.</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{1}{2}$ or $x = -\dfrac{2}{3}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Clear the fractions first</h3>
+        <div class="problem"><p>Solve $\dfrac{x^2}{2} + \dfrac{x}{6} - \dfrac{1}{3} = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply by $6$: $3x^2 + x - 2 = 0$.</p></div><p class="why">$6$ is the LCM of the denominators. Integer coefficients are far easier to factor.</p></li>
+          <li><div class="do"><p>$ac = -6$, sum $1$: use $3$ and $-2$. $3x^2 + 3x - 2x - 2 = (3x - 2)(x + 1)$.</p></div><p class="why">Split the middle term and group.</p></li>
+          <li><div class="do"><p>$x = \dfrac23$ or $x = -1$.</p></div><p class="why">Check $x = -1$: $\tfrac12 - \tfrac16 - \tfrac13 = 0$. ✓</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{2}{3}$ or $x = -1$</p>
+        <p class="book-next">Next in the book: Example 6-3 and Exercise 6-2.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Build a quadratic from its roots</h3>
+        <div class="problem"><p>Find a quadratic with integer coefficients whose roots are $\dfrac{3}{2}$ and $-4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Root $\dfrac32$ comes from the factor $2x - 3$; root $-4$ from $x + 4$.</p></div><p class="why">$2x - 3 = 0$ exactly when $x = \tfrac32$, and this factor keeps the coefficients whole.</p></li>
+          <li><div class="do"><p>$(2x - 3)(x + 4) = 2x^2 + 8x - 3x - 12 = 2x^2 + 5x - 12$.</p></div><p class="why">Expand.</p></li>
+        </ol>
+        <p class="answer">$2x^2 + 5x - 12 = 0$ (or any nonzero multiple of it)</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A tough split</h3>
+        <div class="problem"><p>Solve $12x^2 - x - 35 = 0$.</p></div>
+        <ol class="steps">
+          <li data-think="You need product $12 \cdot (-35) = -420$ and sum $-1$. Two numbers that differ by $1$ and multiply to $420$?"><div class="do"><p>$ac = -420$ and sum $-1$: since $20 \cdot 21 = 420$, use $20$ and $-21$.</p></div><p class="why">Numbers with sum $-1$ are consecutive in size, so look near $\sqrt{420} \approx 20.5$.</p></li>
+          <li><div class="do"><p>$12x^2 + 20x - 21x - 35 = 4x(3x + 5) - 7(3x + 5) = (4x - 7)(3x + 5)$.</p></div><p class="why">Group and factor out the common binomial.</p></li>
+          <li><div class="do"><p>$x = \dfrac74$ or $x = -\dfrac53$.</p></div><p class="why">Check by expanding: $12x^2 + 20x - 21x - 35$. ✓</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{7}{4}$ or $x = -\dfrac{5}{3}$</p>
+        <p class="key-idea">For $ax^2 + bx + c$, find numbers with product $ac$ and sum $b$, then split and group.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Which middle coefficients work?</h3>
+        <div class="problem"><p>For how many integers $b$ does $x^2 + bx + 12$ factor as $(x + u)(x + v)$ with integers $u, v$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>We need $uv = 12$, and then $b = u + v$.</p></div><p class="why">Every factorization comes from a pair with product $12$.</p></li>
+          <li><div class="do"><p>Positive pairs: $(1, 12), (2, 6), (3, 4)$ with sums $13, 8, 7$.</p></div><p class="why">Order doesn't matter, since swapping gives the same sum.</p></li>
+          <li data-think="Can $u$ and $v$ both be negative?"><div class="do"><p>Negative pairs $(-1, -12), (-2, -6), (-3, -4)$ give sums $-13, -8, -7$.</p></div><p class="why">Two negatives also multiply to $+12$.</p></li>
+        </ol>
+        <p class="answer">$6$ values: $b = \pm 7, \pm 8, \pm 13$</p>
+        <p class="book-next">Next in the book: Exercise 6-3.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 6.3 ===================== -->
+  <section class="lesson" id="s6-3" data-title="The Quadratic Formula">
+    <h2><span class="sec-num">6.3</span> The Quadratic Formula</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Try to factor $x^2 + 2x - 1$. Product $-1$, sum $2$... nothing works, because the roots are $-1 \pm \sqrt2$. Factoring is fast when it works, but we need a method that <em>always</em> works. The trick is to make the quadratic into a perfect square, since square roots undo squares.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Completing the square.</strong> Because $(x + m)^2 = x^2 + 2mx + m^2$, the expression $x^2 + bx$ becomes a perfect square when you add $\left(\tfrac{b}{2}\right)^2$: half the $x$-coefficient, squared. To solve $ax^2 + bx + c = 0$:</p>
+      <div class="rule"><p>$$x^2 + \frac{b}{a}x = -\frac{c}{a} \;\Longrightarrow\; \left(x + \frac{b}{2a}\right)^2 = \frac{b^2 - 4ac}{4a^2} \;\Longrightarrow\; x = \frac{-b \pm \sqrt{b^2 - 4ac}}{2a}.$$</p></div>
+      <p>That last expression is the <strong>quadratic formula</strong>. The $\pm$ gives the two roots. The quantity under the root, the <strong>discriminant</strong> $\Delta = b^2 - 4ac$, tells you what kind of roots to expect when $a, b, c$ are real:</p>
+      <div class="rule"><p>$\Delta > 0$: two different real roots. $\quad\Delta = 0$: one repeated real root $-\dfrac{b}{2a}$. $\quad\Delta &lt; 0$: two complex roots, which are conjugates $p \pm qi$.</p></div>
+      <p>If $a, b, c$ are rational and $\Delta$ is a perfect square, the roots are rational and the quadratic factors nicely. If the coefficients are rational and $p + q\sqrt d$ is a root, then $p - q\sqrt d$ is the other. Adding and multiplying the formula's two roots gives</p>
+      <div class="rule"><p>$$r + s = -\frac{b}{a}, \qquad rs = \frac{c}{a}.$$</p></div>
+    </div>
+
+    <figure class="explore" data-widget="completeSquare">
+      <figcaption><strong>Explore:</strong> See completing the square as a picture. The $x^2$ square and the $bx$ strip, split in half and moved to two sides, form an almost-square. The missing corner is exactly $\left(\tfrac b2\right)^2$. Step through the stages and change $b$ and $c$.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="discriminant">
+      <figcaption><strong>Explore:</strong> Change $a$, $b$ and $c$ and watch the parabola. The right panel plots the two roots in the complex plane: they slide together along the real axis as $\Delta$ shrinks to $0$, then split apart vertically as complex conjugates when $\Delta &lt; 0$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Complete the square</h3>
+        <div class="problem"><p>Solve $x^2 + 6x - 7 = 0$ by completing the square.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 + 6x = 7$. Add $\left(\tfrac62\right)^2 = 9$ to both sides: $x^2 + 6x + 9 = 16$.</p></div><p class="why">Half of $6$ is $3$, and $3^2 = 9$ completes the square.</p></li>
+          <li><div class="do"><p>$(x + 3)^2 = 16$, so $x + 3 = \pm 4$.</p></div><p class="why">Both $4$ and $-4$ square to $16$.</p></li>
+          <li><div class="do"><p>$x = 1$ or $x = -7$.</p></div><p class="why">Solve the two linear equations.</p></li>
+        </ol>
+        <p class="answer">$x = 1$ or $x = -7$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Use the formula</h3>
+        <div class="problem"><p>Solve $x^2 - 4x + 1 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a = 1$, $b = -4$, $c = 1$: $\Delta = 16 - 4 = 12$.</p></div><p class="why">Compute the discriminant first; it's the messiest part.</p></li>
+          <li><div class="do"><p>$x = \dfrac{4 \pm \sqrt{12}}{2} = \dfrac{4 \pm 2\sqrt3}{2} = 2 \pm \sqrt3$.</p></div><p class="why">$-b = 4$. Simplify $\sqrt{12} = 2\sqrt3$, then divide each term by $2$.</p></li>
+        </ol>
+        <p class="answer">$x = 2 \pm \sqrt{3}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Formula with $a \neq 1$</h3>
+        <div class="problem"><p>Solve $2x^2 + 3x - 4 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\Delta = 3^2 - 4(2)(-4) = 9 + 32 = 41$.</p></div><p class="why">$-4ac$ with $c$ negative becomes a positive contribution.</p></li>
+          <li><div class="do"><p>$x = \dfrac{-3 \pm \sqrt{41}}{4}$.</p></div><p class="why">$2a = 4$. Since $41$ is prime, $\sqrt{41}$ doesn't simplify.</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{-3 \pm \sqrt{41}}{4}$</p>
+        <p class="book-next">Next in the book: Exercise 6-7.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Read the discriminant</h3>
+        <div class="problem"><p>Without solving, describe the roots of (a) $x^2 - 6x + 9$ (b) $2x^2 + x + 5$ (c) $3x^2 - 5x - 2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) $\Delta = 36 - 36 = 0$: one repeated real root.</p></div><p class="why">The parabola just touches the axis.</p></li>
+          <li><div class="do"><p>(b) $\Delta = 1 - 40 = -39 &lt; 0$: two complex conjugate roots.</p></div><p class="why">The square root of a negative is imaginary.</p></li>
+          <li><div class="do"><p>(c) $\Delta = 25 + 24 = 49 = 7^2$: two different rational roots.</p></div><p class="why">A perfect-square discriminant means the formula gives rational answers, so it factors: $(3x + 1)(x - 2)$.</p></li>
+        </ol>
+        <p class="answer">(a) one repeated real root; (b) two non-real complex roots; (c) two rational roots.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Complex roots</h3>
+        <div class="problem"><p>Solve $x^2 + 2x + 5 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\Delta = 4 - 20 = -16$, and $\sqrt{-16} = 4i$.</p></div><p class="why">Chapter 2: $\sqrt{-16} = \sqrt{16}\, i$.</p></li>
+          <li><div class="do"><p>$x = \dfrac{-2 \pm 4i}{2} = -1 \pm 2i$.</p></div><p class="why">The roots are complex conjugates, as they must be with real coefficients.</p></li>
+        </ol>
+        <p class="answer">$x = -1 \pm 2i$</p>
+        <p class="book-next">Next in the book: Examples 6-5, 6-6 and Exercise 6-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Completing the square when $a \neq 1$</h3>
+        <div class="problem"><p>Solve $3x^2 - 12x + 5 = 0$ by completing the square.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Divide by $3$: $x^2 - 4x = -\dfrac53$.</p></div><p class="why">Completing the square needs a leading coefficient of $1$.</p></li>
+          <li><div class="do"><p>Add $4$: $(x - 2)^2 = 4 - \dfrac53 = \dfrac73$.</p></div><p class="why">Half of $-4$ is $-2$, squared is $4$.</p></li>
+          <li><div class="do"><p>$x = 2 \pm \sqrt{\dfrac73} = 2 \pm \dfrac{\sqrt{21}}{3}$.</p></div><p class="why">Rationalize: $\sqrt{\tfrac73} = \tfrac{\sqrt7}{\sqrt3} = \tfrac{\sqrt{21}}{3}$. The formula gives the same: $\tfrac{12 \pm \sqrt{84}}{6}$.</p></li>
+        </ol>
+        <p class="answer">$x = 2 \pm \dfrac{\sqrt{21}}{3}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Conjugate roots</h3>
+        <div class="problem"><p>One root of $x^2 + bx + c = 0$, where $b$ and $c$ are rational, is $2 - \sqrt5$. Find $b$ and $c$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The other root is $2 + \sqrt5$.</p></div><p class="why">With rational coefficients, irrational roots come in conjugate pairs.</p></li>
+          <li><div class="do"><p>Sum: $4$. Product: $(2 - \sqrt5)(2 + \sqrt5) = 4 - 5 = -1$.</p></div><p class="why">The difference of squares clears the radical.</p></li>
+          <li><div class="do"><p>Sum $= -b$ and product $= c$, so $b = -4$ and $c = -1$.</p></div><p class="why">For $x^2 + bx + c$, $a = 1$, so $r + s = -b$ and $rs = c$.</p></li>
+        </ol>
+        <p class="answer">$b = -4$, $c = -1$</p>
+        <p class="book-next">Next in the book: Example 6-7 and Exercise 6-6.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Force a double root</h3>
+        <div class="problem"><p>For which values of $k$ does $x^2 + kx + 16 = 0$ have exactly one (repeated) root?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A repeated root means $\Delta = k^2 - 64 = 0$.</p></div><p class="why">That's when the $\pm\sqrt\Delta$ part vanishes.</p></li>
+          <li><div class="do"><p>$k = 8$ or $k = -8$.</p></div><p class="why">Then the quadratic is $(x + 4)^2$ or $(x - 4)^2$.</p></li>
+        </ol>
+        <p class="answer">$k = \pm 8$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Sum of squares of the roots</h3>
+        <div class="problem"><p>Let $r$ and $s$ be the roots of $2x^2 - 7x + 3 = 0$. Find $r^2 + s^2$ without finding $r$ and $s$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$r + s = \dfrac72$ and $rs = \dfrac32$.</p></div><p class="why">Sum $= -\tfrac{b}{a}$, product $= \tfrac{c}{a}$.</p></li>
+          <li data-think="How can you get $r^2 + s^2$ from $(r + s)^2$?"><div class="do"><p>$r^2 + s^2 = (r + s)^2 - 2rs = \dfrac{49}{4} - 3 = \dfrac{37}{4}$.</p></div><p class="why">$(r + s)^2 = r^2 + 2rs + s^2$, so subtract the $2rs$.</p></li>
+          <li><div class="do"><p>Check: the roots are $3$ and $\tfrac12$, and $9 + \tfrac14 = \tfrac{37}{4}$. ✓</p></div><p class="why">Here the quadratic happens to factor as $(2x - 1)(x - 3)$, so we can verify.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{37}{4}$</p>
+        <p class="key-idea">Symmetric expressions in the roots can be built from the sum and product alone.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two real roots, but watch $a$</h3>
+        <div class="problem"><p>For which real $k$ does $kx^2 + 4x + 1 = 0$ have two different real roots?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Need $\Delta = 16 - 4k > 0$, so $k &lt; 4$.</p></div><p class="why">Two different real roots require a positive discriminant.</p></li>
+          <li data-think="What happens to the equation when $k = 0$?"><div class="do"><p>But if $k = 0$ the equation is $4x + 1 = 0$, which is linear with only one root.</p></div><p class="why">The formula assumes $a \ne 0$; the case $a = 0$ must be checked separately.</p></li>
+          <li><div class="do"><p>So $k &lt; 4$ and $k \neq 0$.</p></div><p class="why">Combine both conditions.</p></li>
+        </ol>
+        <p class="answer">$k &lt; 4$, $k \ne 0$</p>
+        <p class="key-idea">A coefficient that can be zero can change the type of equation.</p>
+        <p class="book-next">Next in the book: Exercise 6-8.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 6.4 ===================== -->
+  <section class="lesson" id="s6-4" data-title="Variations on a Theme">
+    <h2><span class="sec-num">6.4</span> Variations on a Theme</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>$4^x - 6 \cdot 2^x + 8 = 0$ doesn't look like a quadratic. Neither does $\sqrt{x + 7} = x + 1$. But call $2^x$ "$u$" in the first and it becomes $u^2 - 6u + 8 = 0$; square both sides of the second and an honest quadratic appears. Many equations are quadratics wearing a costume.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Rearrangements.</strong> If the variable is in a denominator, multiply both sides by every denominator. If it's under a square root, isolate the root and square both sides (repeat if there are two roots). Either way you reach a polynomial equation you can solve.</p>
+      <div class="note"><p><strong>Always check your answers in the original equation.</strong> Multiplying by an expression that might be $0$, or squaring both sides, can introduce <strong>extraneous roots</strong>: values that solve the new equation but not the original. A value that makes a denominator $0$ is out. And since $\sqrt{\ }$ means the nonnegative root, squaring $A = B$ also accepts solutions of $-A = B$.</p></div>
+      <p><strong>Substitutions.</strong> If an expression and its square both appear, such as $x^2$ and $x^4$, or $3^x$ and $9^x = (3^x)^2$, let $u$ be that expression. Solve the quadratic in $u$, then translate back, discarding impossible values (for example $2^x$ can never be negative).</p>
+      <div class="rule"><p>Sum and product: if $x + y = S$ and $xy = P$, then $x$ and $y$ are the two roots of $t^2 - St + P = 0$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="extraneous">
+      <figcaption><strong>Explore:</strong> The equation $\sqrt{x + k} = x - m$. Squaring it also solves $-\sqrt{x + k} = x - m$, the dashed lower branch. Solid gold dots are true solutions; hollow dots are extraneous roots that squaring sneaks in. Adjust $k$ and $m$ to make one or the other appear.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A variable in the denominator</h3>
+        <div class="problem"><p>Solve $x + \dfrac{6}{x} = 5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply by $x$ (note $x \ne 0$): $x^2 + 6 = 5x$.</p></div><p class="why">Clearing the denominator gives a polynomial equation.</p></li>
+          <li><div class="do"><p>$x^2 - 5x + 6 = (x - 2)(x - 3) = 0$, so $x = 2$ or $x = 3$.</p></div><p class="why">Neither is $0$, so both are valid. Check: $2 + 3 = 5$ and $3 + 2 = 5$. ✓</p></li>
+        </ol>
+        <p class="answer">$x = 2$ or $x = 3$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A quadratic in $x^2$</h3>
+        <div class="problem"><p>Find all real solutions of $x^4 - 13x^2 + 36 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $u = x^2$: $u^2 - 13u + 36 = 0$, so $(u - 4)(u - 9) = 0$.</p></div><p class="why">$x^4 = (x^2)^2$, so the equation is quadratic in $x^2$.</p></li>
+          <li><div class="do"><p>$x^2 = 4$ or $x^2 = 9$, so $x = \pm 2$ or $x = \pm 3$.</p></div><p class="why">Each positive value of $u$ gives two values of $x$.</p></li>
+        </ol>
+        <p class="answer">$x = -3, -2, 2, 3$</p>
+        <p class="book-next">Next in the book: Example 6-13.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Square away a radical</h3>
+        <div class="problem"><p>Solve $\sqrt{x + 7} = x + 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Square: $x + 7 = x^2 + 2x + 1$, so $x^2 + x - 6 = 0$.</p></div><p class="why">The radical is already isolated, so squaring removes it.</p></li>
+          <li><div class="do"><p>$(x + 3)(x - 2) = 0$, so $x = -3$ or $x = 2$.</p></div><p class="why">These are candidates, not yet answers.</p></li>
+          <li data-think="Plug $x = -3$ into the original. Which side is negative?"><div class="do"><p>$x = 2$: $\sqrt9 = 3 = 2 + 1$ ✓. $x = -3$: $\sqrt4 = 2$, but $-3 + 1 = -2$ ✗.</p></div><p class="why">$x = -3$ solves $-\sqrt{x+7} = x + 1$ instead; squaring couldn't tell the difference.</p></li>
+        </ol>
+        <p class="answer">$x = 2$</p>
+        <p class="book-next">Next in the book: Example 6-9.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A forbidden value</h3>
+        <div class="problem"><p>Solve $\dfrac{x^2}{x - 3} = \dfrac{9}{x - 3}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply by $x - 3$: $x^2 = 9$, so $x = 3$ or $x = -3$.</p></div><p class="why">This step is valid only when $x - 3 \neq 0$.</p></li>
+          <li><div class="do"><p>$x = 3$ makes the denominators $0$, so it's extraneous. $x = -3$: both sides equal $\tfrac{9}{-6}$ ✓.</p></div><p class="why">Division by zero is undefined, so $x = 3$ can't be a solution.</p></li>
+        </ol>
+        <p class="answer">$x = -3$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An exponential in disguise</h3>
+        <div class="problem"><p>Solve $4^x - 6 \cdot 2^x + 8 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4^x = (2^x)^2$. Let $u = 2^x$: $u^2 - 6u + 8 = 0$.</p></div><p class="why">Spot an expression and its square.</p></li>
+          <li><div class="do"><p>$(u - 2)(u - 4) = 0$, so $2^x = 2$ or $2^x = 4$.</p></div><p class="why">Translate each $u$ back.</p></li>
+          <li><div class="do"><p>$x = 1$ or $x = 2$.</p></div><p class="why">Check $x = 2$: $16 - 24 + 8 = 0$. ✓</p></li>
+        </ol>
+        <p class="answer">$x = 1$ or $x = 2$</p>
+        <p class="book-next">Next in the book: Example 6-12.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two denominators</h3>
+        <div class="problem"><p>Solve $\dfrac{3}{x - 1} + \dfrac{2}{x + 1} = 2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply by $(x - 1)(x + 1)$: $3(x + 1) + 2(x - 1) = 2(x^2 - 1)$.</p></div><p class="why">Multiply by every denominator at once; note $x \ne \pm 1$.</p></li>
+          <li><div class="do"><p>$5x + 1 = 2x^2 - 2$, so $2x^2 - 5x - 3 = 0$, which factors as $(2x + 1)(x - 3) = 0$.</p></div><p class="why">Collect terms; then $ac = -6$, sum $-5$: split as $-6x + x$.</p></li>
+          <li><div class="do"><p>$x = 3$ or $x = -\dfrac12$. Neither is $\pm 1$. Check $x = 3$: $\tfrac32 + \tfrac12 = 2$ ✓.</p></div><p class="why">Both survive the check. Check $x = -\tfrac12$: $-2 + 4 = 2$ ✓.</p></li>
+        </ol>
+        <p class="answer">$x = 3$ or $x = -\dfrac{1}{2}$</p>
+        <p class="book-next">Next in the book: Example 6-8.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Reject an impossible value</h3>
+        <div class="problem"><p>Solve $9^x - 2 \cdot 3^{x+1} - 27 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$9^x = (3^x)^2$ and $3^{x+1} = 3 \cdot 3^x$. Let $u = 3^x$: $u^2 - 6u - 27 = 0$.</p></div><p class="why">Rewrite everything in terms of $3^x$.</p></li>
+          <li><div class="do"><p>$(u - 9)(u + 3) = 0$, so $u = 9$ or $u = -3$.</p></div><p class="why">Product $-27$, sum $-6$.</p></li>
+          <li data-think="Can $3^x$ ever equal $-3$?"><div class="do"><p>$3^x = -3$ is impossible, since powers of $3$ are positive. $3^x = 9$ gives $x = 2$.</p></div><p class="why">Translating back can rule out values of $u$.</p></li>
+        </ol>
+        <p class="answer">$x = 2$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Given the sum and product</h3>
+        <div class="problem"><p>Find all pairs $(x, y)$ with $x + y = 4$ and $xy = 5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x$ and $y$ are the roots of $t^2 - 4t + 5 = 0$.</p></div><p class="why">$(t - x)(t - y) = t^2 - (x + y)t + xy$.</p></li>
+          <li><div class="do"><p>$t = \dfrac{4 \pm \sqrt{16 - 20}}{2} = \dfrac{4 \pm 2i}{2} = 2 \pm i$.</p></div><p class="why">The discriminant is negative, so the solutions are complex.</p></li>
+          <li><div class="do"><p>Pairs: $(2 + i, 2 - i)$ and $(2 - i, 2 + i)$.</p></div><p class="why">Either root can be $x$. Check: $(2 + i)(2 - i) = 4 + 1 = 5$ ✓.</p></li>
+        </ol>
+        <p class="answer">$(x, y) = (2 + i,\ 2 - i)$ or $(2 - i,\ 2 + i)$</p>
+        <p class="book-next">Next in the book: Examples 6-10 and 6-11.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two radicals</h3>
+        <div class="problem"><p>Solve $\sqrt{2x + 3} - \sqrt{x + 1} = 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Isolate one radical: $\sqrt{2x + 3} = 1 + \sqrt{x + 1}$. Square: $2x + 3 = 1 + 2\sqrt{x + 1} + x + 1$.</p></div><p class="why">Squaring with both radicals on one side would leave a messy product; isolate one first.</p></li>
+          <li><div class="do"><p>Simplify: $x + 1 = 2\sqrt{x + 1}$.</p></div><p class="why">Collect everything except the remaining radical.</p></li>
+          <li data-think="Both sides involve $x + 1$. Is there a substitution that makes this easy?"><div class="do"><p>Let $u = \sqrt{x + 1} \ge 0$: $u^2 = 2u$, so $u = 0$ or $u = 2$, giving $x = -1$ or $x = 3$.</p></div><p class="why">Factor $u(u - 2) = 0$ rather than dividing by $u$.</p></li>
+          <li><div class="do"><p>Check: $x = -1$: $\sqrt1 - \sqrt0 = 1$ ✓. $x = 3$: $\sqrt9 - \sqrt4 = 1$ ✓.</p></div><p class="why">We squared, so checking is mandatory. This time both survive.</p></li>
+        </ol>
+        <p class="answer">$x = -1$ or $x = 3$</p>
+        <p class="key-idea">Isolate, square, repeat; then check every candidate.</p>
+        <p class="book-next">Next in the book: Exercise 6-9.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Substitute a whole expression</h3>
+        <div class="problem"><p>Solve $(x^2 + x)^2 - 8(x^2 + x) + 12 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $u = x^2 + x$: $u^2 - 8u + 12 = (u - 2)(u - 6) = 0$.</p></div><p class="why">The block $x^2 + x$ and its square both appear.</p></li>
+          <li><div class="do"><p>$x^2 + x = 2$: $(x + 2)(x - 1) = 0$, so $x = -2, 1$.</p></div><p class="why">Each value of $u$ gives a new quadratic in $x$.</p></li>
+          <li><div class="do"><p>$x^2 + x = 6$: $(x + 3)(x - 2) = 0$, so $x = -3, 2$.</p></div><p class="why">Expanding would have given a quartic; substitution kept it to quadratics.</p></li>
+        </ol>
+        <p class="answer">$x = -3, -2, 1, 2$</p>
+        <p class="key-idea">Look for a repeated block, not just a repeated variable.</p>
+        <p class="book-next">Next in the book: Exercise 6-10.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 6.5 ===================== -->
+  <section class="lesson" id="s6-5" data-title="Square Roots of Irrationals and Imaginaries">
+    <h2><span class="sec-num">6.5</span> Square Roots of Irrationals and Imaginaries</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Squaring $1 + \sqrt3$ is easy: $1 + 2\sqrt3 + 3 = 4 + 2\sqrt3$. Now go backwards: what is $\sqrt{4 + 2\sqrt3}$? A calculator says $2.732\ldots$, which hides the beautiful exact answer $1 + \sqrt3$. This section is about undoing squares like that.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To find $\sqrt{a + b\sqrt c}$ (with $c$ prime, say), guess the form $x + y\sqrt c$ and square it:</p>
+      <div class="rule"><p>$$(x + y\sqrt c)^2 = (x^2 + c y^2) + 2xy\sqrt c, \quad\text{so}\quad x^2 + cy^2 = a \text{ and } 2xy = b.$$</p></div>
+      <p>Small cases yield to trial: list pairs with $2xy = b$ and test them in the other equation. Otherwise substitute $y = \tfrac{b}{2x}$ to get a quadratic in $x^2$. If $c$ is not prime, the answer may instead look like $\sqrt p + \sqrt q$ with $pq = c$.</p>
+      <div class="note"><p>$\sqrt{\ }$ of a real number means the <em>nonnegative</em> root. Both $\pm(x + y\sqrt c)$ square to the same thing, so choose the sign that makes the answer positive.</p></div>
+      <p>Complex numbers work the same way. Guess $\sqrt{a + bi} = x + yi$:</p>
+      <div class="rule"><p>$$(x + yi)^2 = (x^2 - y^2) + 2xyi, \quad\text{so}\quad x^2 - y^2 = a \text{ and } 2xy = b.$$</p></div>
+      <p>Every nonzero complex number has two square roots, $\pm(x + yi)$, and neither is preferred. Geometrically, squaring doubles a point's angle from the positive real axis and squares its distance from $0$, so a square root halves the angle and takes the root of the distance.</p>
+    </div>
+
+    <figure class="explore" data-widget="denest">
+      <figcaption><strong>Explore:</strong> The square $(x + y\sqrt c)^2$ as an area. The two squares, $x^2$ and $cy^2$, are rational; the two rectangles, each $xy\sqrt c$, carry the radical. Reading the area model backwards is exactly how you find $\sqrt{a + b\sqrt c}$.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="complexRoot">
+      <figcaption><strong>Explore:</strong> Drag $z$ (gold) around the complex plane. Its two square roots (blue) sit at half the angle and the square root of the distance, on opposite sides of $0$. Land $z$ on points like $3 + 4i$, $-3 + 4i$ or $8 - 6i$ to get whole-number roots.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Squaring first</h3>
+        <div class="problem"><p>Compute $(2 + \sqrt3)^2$ and $(3 - 2i)^2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(2 + \sqrt3)^2 = 4 + 4\sqrt3 + 3 = 7 + 4\sqrt3$.</p></div><p class="why">$(x + y)^2 = x^2 + 2xy + y^2$ with $y = \sqrt3$.</p></li>
+          <li><div class="do"><p>$(3 - 2i)^2 = 9 - 12i + 4i^2 = 9 - 12i - 4 = 5 - 12i$.</p></div><p class="why">Remember $i^2 = -1$.</p></li>
+        </ol>
+        <p class="answer">$7 + 4\sqrt3$ and $5 - 12i$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>An easy denesting</h3>
+        <div class="problem"><p>Simplify $\sqrt{6 + 2\sqrt5}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Try $x + y\sqrt5$: need $x^2 + 5y^2 = 6$ and $2xy = 2$, so $xy = 1$.</p></div><p class="why">Match the rational and irrational parts.</p></li>
+          <li><div class="do"><p>$x = y = 1$ works: $1 + 5 = 6$. So the answer is $1 + \sqrt5$.</p></div><p class="why">It's positive, so it's the right square root.</p></li>
+        </ol>
+        <p class="answer">$1 + \sqrt{5}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A minus sign inside</h3>
+        <div class="problem"><p>Simplify $\sqrt{11 - 6\sqrt2}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Try $x + y\sqrt2$: $x^2 + 2y^2 = 11$ and $xy = -3$.</p></div><p class="why">$2xy = -6$.</p></li>
+          <li><div class="do"><p>Pairs with $xy = -3$: $(1, -3)$ gives $1 + 18 = 19$ ✗; $(3, -1)$ gives $9 + 2 = 11$ ✓.</p></div><p class="why">Trial works quickly because $3$ has few factors.</p></li>
+          <li><div class="do"><p>Candidates $\pm(3 - \sqrt2)$. Since $3 > \sqrt2$, take $3 - \sqrt2$.</p></div><p class="why">The square root symbol asks for the positive one.</p></li>
+        </ol>
+        <p class="answer">$3 - \sqrt{2}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A complex square root</h3>
+        <div class="problem"><p>Find the square roots of $-3 + 4i$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $(x + yi)^2 = -3 + 4i$: $x^2 - y^2 = -3$ and $xy = 2$.</p></div><p class="why">Real parts and imaginary parts must match separately.</p></li>
+          <li><div class="do"><p>Try $(1, 2)$: $1 - 4 = -3$ ✓.</p></div><p class="why">Pairs with $xy = 2$ are few: $(1,2), (2,1)$ and their negatives.</p></li>
+          <li><div class="do"><p>Check: $(1 + 2i)^2 = 1 + 4i - 4 = -3 + 4i$ ✓.</p></div><p class="why">The other root is the negative.</p></li>
+        </ol>
+        <p class="answer">$\pm(1 + 2i)$</p>
+        <p class="book-next">Next in the book: Example 6-15.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>When $c$ is not prime</h3>
+        <div class="problem"><p>Simplify $\sqrt{8 + 2\sqrt{15}}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$15 = 3 \cdot 5$, so try $\sqrt p + \sqrt q$: $(\sqrt p + \sqrt q)^2 = p + q + 2\sqrt{pq}$.</p></div><p class="why">With a composite radicand, the two pieces may be different radicals.</p></li>
+          <li><div class="do"><p>Need $p + q = 8$ and $pq = 15$: $p = 3$, $q = 5$.</p></div><p class="why">Two numbers with sum $8$ and product $15$, a factoring problem in disguise.</p></li>
+        </ol>
+        <p class="answer">$\sqrt{3} + \sqrt{5}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Choosing the positive root</h3>
+        <div class="problem"><p>Simplify $\sqrt{22 - 12\sqrt2}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 + 2y^2 = 22$ and $xy = -6$.</p></div><p class="why">Set up the matching equations.</p></li>
+          <li><div class="do"><p>$(1,-6)$: $73$ ✗. $(2,-3)$: $4 + 18 = 22$ ✓.</p></div><p class="why">Test the factor pairs of $-6$.</p></li>
+          <li data-think="Is $2 - 3\sqrt2$ positive or negative?"><div class="do"><p>$3\sqrt2 = \sqrt{18} > \sqrt{4} = 2$, so $2 - 3\sqrt2 &lt; 0$. Take its negative: $3\sqrt2 - 2$.</p></div><p class="why">Compare by squaring: $18 > 4$. A square root must be nonnegative.</p></li>
+        </ol>
+        <p class="answer">$3\sqrt{2} - 2$</p>
+        <p class="book-next">Next in the book: Example 6-14.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Solve the system directly</h3>
+        <div class="problem"><p>Find the square roots of $8 - 6i$ without guessing.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 - y^2 = 8$ and $xy = -3$, so $y = -\dfrac3x$.</p></div><p class="why">Solve one equation for $y$.</p></li>
+          <li><div class="do"><p>$x^2 - \dfrac{9}{x^2} = 8 \Rightarrow x^4 - 8x^2 - 9 = 0 \Rightarrow (x^2 - 9)(x^2 + 1) = 0$.</p></div><p class="why">A quadratic in $x^2$, a substitution from Section 6.4.</p></li>
+          <li><div class="do"><p>$x$ is real, so $x^2 = 9$, $x = \pm 3$, and $y = \mp 1$.</p></div><p class="why">$x^2 = -1$ would make $x$ non-real, but we assumed $x$ and $y$ are real.</p></li>
+        </ol>
+        <p class="answer">$\pm(3 - i)$</p>
+        <p class="book-next">Next in the book: Exercise 6-11.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A root with no integer form</h3>
+        <div class="problem"><p>Simplify $\sqrt{2 + \sqrt3}$.</p></div>
+        <ol class="steps">
+          <li data-think="$2 + \sqrt3$ has a lone $\sqrt3$ with no factor of $2$. Can you create one?"><div class="do"><p>Write $2 + \sqrt3 = \dfrac{4 + 2\sqrt3}{2}$.</p></div><p class="why">The form $a + 2\sqrt{pq}$ fits the pattern $(\sqrt p + \sqrt q)^2$.</p></li>
+          <li><div class="do"><p>$4 + 2\sqrt3 = (1 + \sqrt3)^2$, so $\sqrt{2 + \sqrt3} = \dfrac{1 + \sqrt3}{\sqrt2}$.</p></div><p class="why">From the hook: $1 + 3 = 4$ and $1 \cdot 3 = 3$.</p></li>
+          <li><div class="do"><p>Rationalize: $\dfrac{1 + \sqrt3}{\sqrt2}\cdot\dfrac{\sqrt2}{\sqrt2} = \dfrac{\sqrt2 + \sqrt6}{2}$.</p></div><p class="why">Numerically both sides are about $1.932$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{\sqrt{2} + \sqrt{6}}{2}$</p>
+        <p class="key-idea">Multiply and divide by $2$ to create the $2\sqrt{pq}$ shape.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A quadratic with a complex discriminant</h3>
+        <div class="problem"><p>Solve $z^2 - 3z + (3 - i) = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\Delta = 9 - 4(3 - i) = -3 + 4i$.</p></div><p class="why">The quadratic formula works with complex coefficients too.</p></li>
+          <li><div class="do"><p>$\sqrt{-3 + 4i} = \pm(1 + 2i)$.</p></div><p class="why">Found in an earlier example.</p></li>
+          <li><div class="do"><p>$z = \dfrac{3 \pm (1 + 2i)}{2}$, so $z = 2 + i$ or $z = 1 - i$.</p></div><p class="why">Check: sum $3$ and product $(2 + i)(1 - i) = 2 - 2i + i + 1 = 3 - i$ ✓.</p></li>
+        </ol>
+        <p class="answer">$z = 2 + i$ or $z = 1 - i$</p>
+        <p class="key-idea">Complex square roots let the quadratic formula handle any quadratic at all.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 6.6 ===================== -->
+  <section class="lesson" id="s6-6" data-title="Beyond Quadratics">
+    <h2><span class="sec-num">6.6</span> Beyond Quadratics</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Degree $1$: a line, one root. Degree $2$: a parabola, up to two roots. What about $x^3$, $x^4$, or $x^{17}$? The pattern continues, and much of what you learned about quadratics, especially "roots give factors", carries over.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>polynomial</strong> is a sum of constants times nonnegative integer powers of a variable, like $4x^5 - x^2 + 7$. Its <strong>degree</strong> is the highest power with a nonzero coefficient, and that coefficient is the <strong>leading coefficient</strong>. Degree $3$ is a <strong>cubic</strong>; degree $4$ is a <strong>quartic</strong>.</p>
+      <p>As with quadratics, the <strong>roots</strong> are the values that make the polynomial $0$, and each root $r$ corresponds to a factor $(x - r)$. A polynomial of degree $n$ with roots $r_1, \ldots, r_n$ factors as</p>
+      <div class="rule"><p>$$a(x - r_1)(x - r_2)\cdots(x - r_n).$$</p></div>
+      <p>Expanding shows the same sum and product patterns as before. For a monic cubic, $(x - r)(x - s)(x - t) = x^3 - (r + s + t)x^2 + (rs + st + tr)x - rst$.</p>
+      <p>Solving higher-degree equations is harder in general, but the tools you have often suffice: factor out common factors, group terms, spot patterns like $(x + 1)^3$, substitute, or divide out a known root.</p>
+    </div>
+
+    <figure class="explore" data-widget="polyRoots">
+      <figcaption><strong>Explore:</strong> Drag the roots along the $x$-axis and choose the degree. The graph of $a(x - r_1)(x - r_2)\cdots$ passes through each root, and the readout expands it. Notice that the $x^{n-1}$ coefficient is always $-a$ times the sum of the roots.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Degree of a product</h3>
+        <div class="problem"><p>What are the degree and leading coefficient of $(2x^2 + 1)(3x^3 - x + 4)$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The highest-power term comes from $2x^2 \cdot 3x^3 = 6x^5$.</p></div><p class="why">Every other product of terms has a smaller power.</p></li>
+        </ol>
+        <p class="answer">Degree $5$, leading coefficient $6$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Roots from factors</h3>
+        <div class="problem"><p>Solve $(x - 1)(x + 2)(x - 5) = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A product is $0$ when some factor is $0$: $x = 1$, $x = -2$ or $x = 5$.</p></div><p class="why">The zero-product idea works for any number of factors.</p></li>
+        </ol>
+        <p class="answer">$x = 1, -2, 5$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Expand a cubic</h3>
+        <div class="problem"><p>Expand $(x - 1)(x - 2)(x - 3)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x - 1)(x - 2) = x^2 - 3x + 2$.</p></div><p class="why">Multiply two factors first.</p></li>
+          <li><div class="do"><p>$(x^2 - 3x + 2)(x - 3) = x^3 - 3x^2 - 3x^2 + 9x + 2x - 6 = x^3 - 6x^2 + 11x - 6$.</p></div><p class="why">Distribute and collect like terms.</p></li>
+          <li><div class="do"><p>Notice $6 = 1 + 2 + 3$, $11 = 1\cdot2 + 2\cdot3 + 3\cdot1$, and $6 = 1 \cdot 2 \cdot 3$.</p></div><p class="why">The coefficients follow the sum and product pattern for cubics.</p></li>
+        </ol>
+        <p class="answer">$x^3 - 6x^2 + 11x - 6$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Factor out a common $x$</h3>
+        <div class="problem"><p>Solve $x^3 - 4x = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x(x^2 - 4) = x(x - 2)(x + 2) = 0$.</p></div><p class="why">Factor out $x$, then use the difference of squares.</p></li>
+          <li><div class="do"><p>$x = 0$, $x = 2$ or $x = -2$.</p></div><p class="why">Dividing by $x$ at the start would have lost $x = 0$.</p></li>
+        </ol>
+        <p class="answer">$x = 0, 2, -2$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Build a cubic from its roots</h3>
+        <div class="problem"><p>Find the cubic with leading coefficient $1$ and roots $1$, $2$ and $-3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x - 1)(x - 2)(x + 3)$.</p></div><p class="why">Each root $r$ gives a factor $(x - r)$.</p></li>
+          <li><div class="do"><p>$(x^2 - 3x + 2)(x + 3) = x^3 + 3x^2 - 3x^2 - 9x + 2x + 6 = x^3 - 7x + 6$.</p></div><p class="why">The $x^2$ term vanishes because the roots sum to $0$.</p></li>
+        </ol>
+        <p class="answer">$x^3 - 7x + 6$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Factor by grouping</h3>
+        <div class="problem"><p>Solve $x^3 + 2x^2 - 9x - 18 = 0$.</p></div>
+        <ol class="steps">
+          <li data-think="Compare the first two terms with the last two. Do they share a factor?"><div class="do"><p>$x^2(x + 2) - 9(x + 2) = (x + 2)(x^2 - 9)$.</p></div><p class="why">Each pair has the factor $(x + 2)$ once you pull out $x^2$ and $-9$.</p></li>
+          <li><div class="do"><p>$(x + 2)(x - 3)(x + 3) = 0$, so $x = -2, 3, -3$.</p></div><p class="why">Finish with the difference of squares.</p></li>
+        </ol>
+        <p class="answer">$x = -3, -2, 3$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Recognize a cube</h3>
+        <div class="problem"><p>Find all real $x$ with $x^3 + 3x^2 + 3x = 7$.</p></div>
+        <ol class="steps">
+          <li data-think="The coefficients $1, 3, 3$ look familiar. What is $(x + 1)^3$?"><div class="do"><p>$(x + 1)^3 = x^3 + 3x^2 + 3x + 1$, so add $1$ to both sides: $(x + 1)^3 = 8$.</p></div><p class="why">Completing the cube, just like completing the square.</p></li>
+          <li><div class="do"><p>$x + 1 = 2$, so $x = 1$.</p></div><p class="why">$8$ has exactly one real cube root.</p></li>
+        </ol>
+        <p class="answer">$x = 1$</p>
+        <p class="book-next">Next in the book: Exercise 6-8.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Divide out a known root</h3>
+        <div class="problem"><p>Given that $x = 2$ is a root of $x^3 - 5x^2 + 2x + 8 = 0$, find the other roots.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Check: $8 - 20 + 4 + 8 = 0$ ✓. So $(x - 2)$ is a factor: $x^3 - 5x^2 + 2x + 8 = (x - 2)(x^2 + px + q)$.</p></div><p class="why">A root gives a factor; the other factor must be a quadratic with leading coefficient $1$.</p></li>
+          <li data-think="Expand $(x - 2)(x^2 + px + q)$. Which coefficients pin down $p$ and $q$ fastest?"><div class="do"><p>Expanding gives $x^3 + (p - 2)x^2 + (q - 2p)x - 2q$. Match: $p - 2 = -5$ and $-2q = 8$, so $p = -3$, $q = -4$.</p></div><p class="why">Check the middle coefficient: $q - 2p = -4 + 6 = 2$ ✓.</p></li>
+          <li><div class="do"><p>$x^2 - 3x - 4 = (x - 4)(x + 1)$, so the other roots are $4$ and $-1$.</p></div><p class="why">Back to a familiar quadratic. The roots sum to $2 + 4 - 1 = 5$, matching the $-5x^2$ term.</p></li>
+        </ol>
+        <p class="answer">$x = 4$ and $x = -1$</p>
+        <p class="key-idea">Each known root lowers the degree by one.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Irrational roots in a cubic</h3>
+        <div class="problem"><p>Find a cubic with integer coefficients and leading coefficient $1$ that has roots $1 + \sqrt2$ and $3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>To have integer coefficients, include the conjugate $1 - \sqrt2$ as a root too.</p></div><p class="why">Pairing conjugates removes the radical.</p></li>
+          <li><div class="do"><p>$(x - 1 - \sqrt2)(x - 1 + \sqrt2) = (x - 1)^2 - 2 = x^2 - 2x - 1$.</p></div><p class="why">Difference of squares with $(x - 1)$ as one term.</p></li>
+          <li><div class="do"><p>$(x^2 - 2x - 1)(x - 3) = x^3 - 3x^2 - 2x^2 + 6x - x + 3 = x^3 - 5x^2 + 5x + 3$.</p></div><p class="why">Multiply in the factor for the root $3$.</p></li>
+        </ol>
+        <p class="answer">$x^3 - 5x^2 + 5x + 3$</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-6">
+    <h2 id="further-6">Further reading in the book</h2>
+    <ul>
+      <li><strong>§6.1 What's a Quadratic?</strong>: the falling-rock introduction.</li>
+      <li><strong>§6.2 Factoring Quadratics</strong>: Examples 6-1 to 6-4 and Exercises 6-1 to 6-4.</li>
+      <li><strong>§6.3 The Quadratic Formula</strong>: Examples 6-5 to 6-7 and Exercises 6-5 to 6-8.</li>
+      <li><strong>§6.4 Variations on a Theme</strong>: Examples 6-8 to 6-13 and Exercises 6-9, 6-10.</li>
+      <li><strong>§6.5 Square Roots of Irrationals and Imaginaries</strong>: Examples 6-14, 6-15 and Exercise 6-11.</li>
+      <li><strong>§6.6 Beyond Quadratics</strong>: polynomials, cubics and quartics, and their factored forms.</li>
+      <li><strong>Problems to Solve for Chapter 6</strong>: Problems 110–137, mixing factoring, the formula, extraneous roots, substitutions and nested radicals.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 6 explorers ---------- */
+(function () {
+  "use strict";
+  function sgnTerm(v, s, first) {
+    if (Math.abs(v) < 1e-9) return "";
+    var a = Math.abs(v), coef = (a === 1 && s) ? "" : W.fmt(a, 2);
+    return (v < 0 ? (first ? "-" : " - ") : (first ? "" : " + ")) + coef + s;
+  }
+  function polyTex(cs, v) { /* cs: highest degree first */
+    var n = cs.length - 1, out = "";
+    cs.forEach(function (c, i) {
+      var p = n - i, s = p === 0 ? "" : p === 1 ? v : v + "^{" + p + "}";
+      var t = sgnTerm(c, s, out === "");
+      if (p === 0 && Math.abs(c) === 1) t = (c < 0 ? (out === "" ? "-" : " - ") : (out === "" ? "" : " + ")) + "1";
+      out += t;
+    });
+    return out || "0";
+  }
+  function cfmt(re, im) {
+    re = Math.abs(re) < 1e-9 ? 0 : re; im = Math.abs(im) < 1e-9 ? 0 : im;
+    if (im === 0) return W.fmt(re, 3);
+    var ims = (Math.abs(im) === 1 ? "" : W.fmt(Math.abs(im), 3)) + "i";
+    if (re === 0) return (im < 0 ? "-" : "") + ims;
+    return W.fmt(re, 3) + (im < 0 ? " - " : " + ") + ims;
+  }
+
+  /* 6.1 — projectile */
+  AOPS.registerWidget("projectile", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Height of a thrown ball against time" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var h0 = 25, v = 20;
+    W.slider(ctl, { label: "Starting height h₀ (m)", min: 0, max: 60, step: 5, value: h0, onInput: function (x) { h0 = x; draw(); } });
+    W.slider(ctl, { label: "Upward speed v (m/s)", min: 0, max: 30, value: v, onInput: function (x) { v = x; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var P = W.plane(svg, { x: [-2, 8], y: [-10, 80], step: 1, ystep: 10, pad: 30 });
+      function h(t) { return h0 + v * t - 5 * t * t; }
+      function hc(t) { var y = h(t); return y < -10 ? NaN : y; }
+      svg.appendChild(W.s("path", { d: W.fnPath(P, hc, { from: -2, to: 0 }), fill: "none", stroke: "var(--faint)", "stroke-width": 2, "stroke-dasharray": "5 5" }));
+      svg.appendChild(W.s("path", { d: W.fnPath(P, hc, { from: 0, to: 8 }), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      var D = v * v + 20 * h0, tPos = (v + Math.sqrt(D)) / 10, tNeg = (v - Math.sqrt(D)) / 10;
+      var tTop = v / 10, hTop = h(tTop);
+      svg.appendChild(W.s("circle", { cx: P.X(tTop), cy: P.Y(hTop), r: 5, fill: "var(--accent-2)" }));
+      svg.appendChild(W.s("text", { x: P.X(tTop) + 8, y: P.Y(hTop) - 8, class: "lbl", text: "top: " + W.fmt(hTop, 1) + " m" }));
+      if (tPos <= 8) svg.appendChild(W.s("circle", { cx: P.X(tPos), cy: P.Y(0), r: 8, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      if (tNeg >= -2 && tNeg < -1e-9) svg.appendChild(W.s("circle", { cx: P.X(tNeg), cy: P.Y(0), r: 7, fill: "var(--surface-solid)", stroke: "var(--accent)", "stroke-width": 2.5 }));
+      svg.appendChild(W.s("text", { x: P.X(7.9), y: P.Y(0) - 8, "text-anchor": "end", class: "lbl", text: "t (s)" }));
+      svg.appendChild(W.s("text", { x: P.X(0) + 6, y: P.Y(78), class: "lbl", text: "height h (m)" }));
+      out.tex("\\begin{gathered}" + h0 + " + " + v + "t - 5t^2 = 0 \\iff 5t^2 - " + v + "t - " + h0 + " = 0\\\\ t = \\frac{" + v + " \\pm \\sqrt{" + D + "}}{10}:\\quad t \\approx " + W.fmt(tPos, 2) + "\\ \\text{(lands)}" + (tNeg < -1e-9 ? ",\\quad t \\approx " + W.fmt(tNeg, 2) + "\\ \\text{(rejected)}" : "") + "\\end{gathered}");
+    }
+    draw();
+  });
+
+  /* 6.2 — factor box */
+  AOPS.registerWidget("factorBox", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "Factor pairs of c with their sums, and a box diagram of the factorization" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var b = 5, c = 6;
+    W.slider(ctl, { label: "b", min: -12, max: 12, value: b, onInput: function (x) { b = x; draw(); } });
+    W.slider(ctl, { label: "c", min: -36, max: 36, value: c, onInput: function (x) { c = x; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var pairs = [];
+      if (c === 0) pairs.push([0, b]);
+      else for (var u = -Math.abs(c); u <= Math.abs(c); u++) { if (u !== 0 && c % u === 0) { var w = c / u; if (u <= w) pairs.push([u, w]); } }
+      var match = null;
+      svg.appendChild(W.s("text", { x: 24, y: 22, class: "lbl", text: "u·v = " + c })); svg.appendChild(W.s("text", { x: 150, y: 22, class: "lbl", text: "u + v" }));
+      var rowH = Math.min(26, 290 / Math.max(pairs.length, 1)), fs = rowH < 18 ? 12 : 14;
+      pairs.forEach(function (p, i) {
+        var s = p[0] + p[1], hit = s === b && !match;
+        if (hit) match = p;
+        var y = 46 + i * rowH;
+        if (hit) svg.appendChild(W.s("rect", { x: 14, y: y - rowH + 6, width: 200, height: rowH, rx: 6, fill: "color-mix(in srgb, var(--accent) 30%, transparent)", stroke: "var(--accent)" }));
+        svg.appendChild(W.s("text", { x: 24, y: y, style: "font: " + (hit ? 700 : 400) + " " + fs + "px var(--font-mono); fill: var(--ink)", text: "(" + p[0] + ", " + p[1] + ")" }));
+        svg.appendChild(W.s("text", { x: 150, y: y, style: "font: " + (hit ? 700 : 400) + " " + fs + "px var(--font-mono); fill: " + (hit ? "var(--ink)" : "var(--muted)"), text: String(s) }));
+      });
+      // box
+      var bx = 330, by = 44, S = 120;
+      function cell(x, y, w, h, t, f) {
+        svg.appendChild(W.s("rect", { x: x, y: y, width: w, height: h, fill: f, stroke: "var(--border-strong)", "stroke-width": 1.5 }));
+        svg.appendChild(W.s("text", { x: x + w / 2, y: y + h / 2 + 6, "text-anchor": "middle", style: "font: 700 17px var(--font-mono); fill: var(--ink)", text: t }));
+      }
+      function term(k) { return k === 0 ? "0" : (k === 1 ? "" : k === -1 ? "−" : (k < 0 ? "−" + (-k) : String(k))) + "x"; }
+      if (match) {
+        var u2 = match[0], v2 = match[1];
+        svg.appendChild(W.s("text", { x: bx + S / 2, y: by - 12, "text-anchor": "middle", style: "font: 700 15px var(--font-mono); fill: var(--plot-2)", text: "x" }));
+        svg.appendChild(W.s("text", { x: bx + S + S / 2, y: by - 12, "text-anchor": "middle", style: "font: 700 15px var(--font-mono); fill: var(--plot-2)", text: (v2 < 0 ? "−" : "+") + Math.abs(v2) }));
+        svg.appendChild(W.s("text", { x: bx - 12, y: by + S / 2 + 5, "text-anchor": "end", style: "font: 700 15px var(--font-mono); fill: var(--plot-1)", text: "x" }));
+        svg.appendChild(W.s("text", { x: bx - 12, y: by + S + S / 2 + 5, "text-anchor": "end", style: "font: 700 15px var(--font-mono); fill: var(--plot-1)", text: (u2 < 0 ? "−" : "+") + Math.abs(u2) }));
+        cell(bx, by, S, S, "x²", "color-mix(in srgb, var(--plot-1) 25%, transparent)");
+        cell(bx + S, by, S, S, term(v2), "color-mix(in srgb, var(--plot-3) 25%, transparent)");
+        cell(bx, by + S, S, S, term(u2), "color-mix(in srgb, var(--plot-3) 25%, transparent)");
+        cell(bx + S, by + S, S, S, String(u2 * v2).replace("-", "−"), "color-mix(in srgb, var(--plot-2) 25%, transparent)");
+        svg.appendChild(W.s("text", { x: bx + S, y: by + 2 * S + 24, "text-anchor": "middle", class: "lbl", text: "x-terms add to " + b + "x · constant is " + c }));
+      } else {
+        cell(bx, by, S, S, "x²", "color-mix(in srgb, var(--plot-1) 25%, transparent)");
+        cell(bx + S, by, S, S, "?", "var(--surface-2)");
+        cell(bx, by + S, S, S, "?", "var(--surface-2)");
+        cell(bx + S, by + S, S, S, String(c).replace("-", "−"), "color-mix(in srgb, var(--plot-2) 25%, transparent)");
+        svg.appendChild(W.s("text", { x: bx + S, y: by + 2 * S + 24, "text-anchor": "middle", class: "lbl", text: "no integer pair has sum " + b }));
+      }
+      var q = polyTex([1, b, c], "x"), D = b * b - 4 * c;
+      if (match) {
+        var f = function (k) { return k === 0 ? "x" : "(x " + (k < 0 ? "- " + (-k) : "+ " + k) + ")"; };
+        var fac = match[0] === match[1] ? f(match[0]) + "^2" : f(match[0]) + f(match[1]);
+        out.tex(q + " = " + fac + "\\quad\\Longrightarrow\\quad x = " + (match[0] === match[1] ? -match[0] : (-match[0]) + " \\text{ or } " + (-match[1])));
+      } else out.tex(q + "\\ \\text{does not factor over the integers } (b^2 - 4c = " + D + (D < 0 ? " < 0" : "\\text{ is not a perfect square}") + ")");
+    }
+    draw();
+  });
+
+  /* 6.3 — completing the square */
+  AOPS.registerWidget("completeSquare", function (body) {
+    var svg = W.stage(body, { w: 640, h: 330, label: "Area model for completing the square" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var b = 6, c = -7, stage = 2;
+    W.slider(ctl, { label: "b", min: 1, max: 12, value: b, onInput: function (x) { b = x; draw(); } });
+    W.slider(ctl, { label: "c", min: -20, max: 20, value: c, onInput: function (x) { c = x; draw(); } });
+    W.segmented(ctl, { title: "Stage", value: stage, options: [{ value: 0, label: "x² + bx" }, { value: 1, label: "split" }, { value: 2, label: "complete" }], onChange: function (x) { stage = x; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var X = 170, k = 16, B = b * k, h = B / 2, ox = 40, oy = 40;
+      var sq = "color-mix(in srgb, var(--plot-1) 30%, transparent)", st = "color-mix(in srgb, var(--plot-2) 30%, transparent)";
+      svg.appendChild(W.s("rect", { x: ox, y: oy, width: X, height: X, fill: sq, stroke: "var(--plot-1)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: ox + X / 2, y: oy + X / 2 + 6, "text-anchor": "middle", style: "font: 700 18px var(--font-mono); fill: var(--ink)", text: "x²" }));
+      svg.appendChild(W.s("text", { x: ox + X / 2, y: oy - 10, "text-anchor": "middle", class: "lbl", text: "x" }));
+      if (stage === 0) {
+        svg.appendChild(W.s("rect", { x: ox + X + 20, y: oy, width: B, height: X, fill: st, stroke: "var(--plot-2)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: ox + X + 20 + B / 2, y: oy + X / 2 + 6, "text-anchor": "middle", style: "font: 700 16px var(--font-mono); fill: var(--ink)", text: b + "x" }));
+        svg.appendChild(W.s("text", { x: ox + X + 20 + B / 2, y: oy - 10, "text-anchor": "middle", class: "lbl", text: String(b) }));
+      } else {
+        svg.appendChild(W.s("rect", { x: ox + X, y: oy, width: h, height: X, fill: st, stroke: "var(--plot-2)", "stroke-width": 2 }));
+        svg.appendChild(W.s("rect", { x: ox, y: oy + X, width: X, height: h, fill: st, stroke: "var(--plot-2)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: ox + X + h / 2, y: oy - 10, "text-anchor": "middle", class: "lbl", text: W.fmt(b / 2, 1) }));
+        if (h > 34) {
+          svg.appendChild(W.s("text", { x: ox + X + h / 2, y: oy + X / 2 + 6, "text-anchor": "middle", style: "font: 700 13px var(--font-mono); fill: var(--ink)", text: W.fmt(b / 2, 1) + "x" }));
+          svg.appendChild(W.s("text", { x: ox + X / 2, y: oy + X + h / 2 + 5, "text-anchor": "middle", style: "font: 700 13px var(--font-mono); fill: var(--ink)", text: W.fmt(b / 2, 1) + "x" }));
+        }
+        svg.appendChild(W.s("rect", { x: ox + X, y: oy + X, width: h, height: h, fill: stage === 2 ? "color-mix(in srgb, var(--accent) 55%, transparent)" : "none", stroke: stage === 2 ? "var(--accent)" : "var(--faint)", "stroke-dasharray": stage === 2 ? "none" : "5 4", "stroke-width": 2 }));
+        if (stage === 2) svg.appendChild(W.s("text", { x: ox + X + h + 8, y: oy + X + h / 2 + 5, class: "lbl", text: "+ (" + W.fmt(b / 2, 1) + ")² = " + W.fmt(b * b / 4, 2) }));
+      }
+      var tx = 440, msgs = [
+        ["x² plus a strip", "of area " + b + "x"],
+        ["cut the strip in half", "and move one half;", "a corner is missing"],
+        ["fill the corner with", "(b/2)² to finish", "a square of side x + " + W.fmt(b / 2, 1)]][stage];
+      msgs.forEach(function (m, i) { svg.appendChild(W.s("text", { x: tx, y: 70 + i * 22, class: "lbl", text: m })); });
+      var m = b / 2, rhs = m * m - c;
+      var t = "x^2 + " + b + "x " + (c < 0 ? "- " + (-c) : "+ " + c) + " = 0";
+      if (stage < 2) t += "\\qquad x^2 + " + b + "x = " + (-c);
+      else {
+        t = "\\begin{gathered}" + t + "\\\\ x^2 + " + b + "x + " + W.fmt(m * m, 2) + " = " + (-c) + " + " + W.fmt(m * m, 2) + "\\\\ \\left(x + " + W.fmt(m, 1) + "\\right)^2 = " + W.fmt(rhs, 2);
+        if (rhs >= 0) {
+          var r = Math.sqrt(rhs), nice = Math.abs(r - Math.round(r)) < 1e-9;
+          t += "\\ \\Rightarrow\\ x = -" + W.fmt(m, 1) + " \\pm " + (nice ? W.fmt(r, 0) : "\\sqrt{" + W.fmt(rhs, 2) + "}") + (nice ? " = " + W.fmt(-m + r, 2) + ",\\ " + W.fmt(-m - r, 2) : "");
+        } else t += " < 0 \\ \\Rightarrow\\ \\text{no real roots}";
+        t += "\\end{gathered}";
+      }
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 6.3 — discriminant */
+  AOPS.registerWidget("discriminant", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Parabola and its two roots plotted in the complex plane" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 1, b = -2, c = -3;
+    W.slider(ctl, { label: "b", min: -6, max: 6, step: 0.5, value: b, onInput: function (x) { b = x; draw(); } });
+    W.slider(ctl, { label: "c", min: -6, max: 6, step: 0.5, value: c, onInput: function (x) { c = x; draw(); } });
+    W.segmented(ctl, { title: "a", value: a, options: [-2, -1, 1, 2].map(function (k) { return { value: k, label: String(k) }; }), onChange: function (x) { a = x; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var left = W.s("svg", { x: 0, y: 0, width: 400, height: 340, viewBox: "0 0 400 340" }); left._w = 400; left._h = 340; svg.appendChild(left);
+      var P = W.plane(left, { x: [-6, 6], y: [-8, 8], step: 1, pad: 26, labelEvery: 2 });
+      left.appendChild(W.s("path", { d: W.fnPath(P, function (x) { return a * x * x + b * x + c; }), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      var D = b * b - 4 * a * c, re, im;
+      var right = W.s("svg", { x: 410, y: 30, width: 220, height: 280, viewBox: "0 0 220 280" }); right._w = 220; right._h = 280; svg.appendChild(right);
+      svg.appendChild(W.s("text", { x: 520, y: 22, "text-anchor": "middle", class: "lbl", text: "roots in the complex plane" }));
+      var Q = W.plane(right, { x: [-6, 6], y: [-6, 6], step: 2, pad: 18 });
+      var pts;
+      if (D >= 0) { var s = Math.sqrt(D); pts = [[(-b + s) / (2 * a), 0], [(-b - s) / (2 * a), 0]]; }
+      else { re = -b / (2 * a); im = Math.sqrt(-D) / (2 * Math.abs(a)); pts = [[re, im], [re, -im]]; }
+      pts.forEach(function (p) {
+        var cx = Q.X(Math.max(-6, Math.min(6, p[0]))), cy = Q.Y(Math.max(-6, Math.min(6, p[1])));
+        right.appendChild(W.s("circle", { cx: cx, cy: cy, r: 7, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        if (D >= 0) left.appendChild(W.s("circle", { cx: P.X(p[0]), cy: P.Y(0), r: 6, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      });
+      right.appendChild(W.s("text", { x: 200, y: Q.Y(0) - 6, "text-anchor": "end", class: "lbl", text: "Re" }));
+      right.appendChild(W.s("text", { x: Q.X(0) + 6, y: 16, class: "lbl", text: "Im" }));
+      var kind = D > 0 ? "\\Delta > 0:\\ \\text{two real roots}" : D === 0 ? "\\Delta = 0:\\ \\text{one repeated root}" : "\\Delta < 0:\\ \\text{complex conjugates}";
+      var roots = D >= 0 ? (D === 0 ? "x = " + W.fmt(pts[0][0], 3) : "x \\approx " + W.fmt(pts[0][0], 3) + ",\\ " + W.fmt(pts[1][0], 3)) : "x \\approx " + cfmt(pts[0][0], pts[0][1]) + ",\\ " + cfmt(pts[1][0], pts[1][1]);
+      out.tex("\\begin{gathered}" + polyTex([a, b, c], "x") + " = 0:\\quad \\Delta = b^2 - 4ac = " + W.fmt(D, 2) + "\\\\ " + kind + ",\\quad " + roots + "\\end{gathered}");
+    }
+    draw();
+  });
+
+  /* 6.4 — extraneous roots */
+  AOPS.registerWidget("extraneous", function (body) {
+    var svg = W.stage(body, { w: 620, h: 380, label: "Graphs of the square root branches and a line, showing true and extraneous solutions" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var k = 7, m = -1;
+    W.slider(ctl, { label: "k", min: 0, max: 10, value: k, onInput: function (x) { k = x; draw(); } });
+    W.slider(ctl, { label: "m", min: -4, max: 6, value: m, onInput: function (x) { m = x; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var P = W.plane(svg, { x: [-10, 10], y: [-6, 6], step: 1, pad: 26, labelEvery: 2 });
+      svg.appendChild(W.s("path", { d: W.fnPath(P, function (x) { return Math.sqrt(x + k); }, { from: -k, samples: 600 }), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      svg.appendChild(W.s("path", { d: W.fnPath(P, function (x) { return -Math.sqrt(x + k); }, { from: -k, samples: 600 }), fill: "none", stroke: "var(--plot-1)", "stroke-width": 2, "stroke-dasharray": "6 6" }));
+      svg.appendChild(W.s("path", { d: W.fnPath(P, function (x) { return x - m; }), fill: "none", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      svg.appendChild(W.s("text", { x: P.X(9.6), y: P.Y(Math.sqrt(9.6 + k)) - 8, "text-anchor": "end", class: "lbl", text: "y = √(x + k)" }));
+      svg.appendChild(W.s("text", { x: P.X(9.6), y: P.Y(-Math.sqrt(9.6 + k)) + 18, "text-anchor": "end", class: "lbl", text: "y = −√(x + k)" }));
+      // x^2 - (2m+1)x + m^2 - k = 0
+      var B = -(2 * m + 1), C = m * m - k, D = B * B - 4 * C, items = [];
+      if (D >= 0) {
+        var s = Math.sqrt(D), xs = D === 0 ? [-B / 2] : [(-B + s) / 2, (-B - s) / 2];
+        xs.forEach(function (x) {
+          var ok = x - m >= -1e-9;
+          svg.appendChild(W.s("circle", { cx: P.X(x), cy: P.Y(x - m), r: 8, fill: ok ? "var(--accent)" : "var(--surface-solid)", stroke: "var(--accent)", "stroke-width": 2.5 }));
+          items.push("x = " + W.fmt(x, 3) + (ok ? "\\ \\checkmark" : "\\ (\\text{extraneous: } x - m = " + W.fmt(x - m, 3) + " < 0)"));
+        });
+      }
+      var mstr = m === 0 ? "x" : "x " + (m > 0 ? "- " + m : "+ " + (-m));
+      out.tex("\\begin{gathered}\\sqrt{x + " + k + "} = " + mstr + "\\ \\xrightarrow{\\text{square}}\\ " + polyTex([1, B, C], "x") + " = 0\\\\ " + (items.length ? items.join(",\\quad ") : "\\text{no real candidates}") + "\\end{gathered}");
+    }
+    draw();
+  });
+
+  /* 6.5 — denesting area model */
+  AOPS.registerWidget("denest", function (body) {
+    var svg = W.stage(body, { w: 640, h: 320, label: "Area model of x plus y root c, squared" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var x = 3, y = 1, c = 2;
+    W.slider(ctl, { label: "x", min: 1, max: 6, value: x, onInput: function (v) { x = v; draw(); } });
+    W.slider(ctl, { label: "y", min: 1, max: 6, value: y, onInput: function (v) { y = v; draw(); } });
+    W.segmented(ctl, { title: "c", value: c, options: [2, 3, 5, 6, 7].map(function (k) { return { value: k, label: String(k) }; }), onChange: function (v) { c = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var r = y * Math.sqrt(c), tot = x + r, S = 260 / tot, A = x * S, R = r * S, ox = 40, oy = 30;
+      var rat = "color-mix(in srgb, var(--plot-1) 30%, transparent)", irr = "color-mix(in srgb, var(--plot-2) 30%, transparent)";
+      function box(px, py, w, h, f, st, t) {
+        svg.appendChild(W.s("rect", { x: px, y: py, width: w, height: h, fill: f, stroke: st, "stroke-width": 2 }));
+        if (w > 30 && h > 22) svg.appendChild(W.s("text", { x: px + w / 2, y: py + h / 2 + 5, "text-anchor": "middle", style: "font: 700 14px var(--font-mono); fill: var(--ink)", text: t }));
+      }
+      box(ox, oy, A, A, rat, "var(--plot-1)", "x² = " + x * x);
+      box(ox + A, oy, R, A, irr, "var(--plot-2)", (x * y === 1 ? "" : x * y) + "√" + c);
+      box(ox, oy + A, A, R, irr, "var(--plot-2)", (x * y === 1 ? "" : x * y) + "√" + c);
+      box(ox + A, oy + A, R, R, rat, "var(--plot-1)", "" + c * y * y);
+      svg.appendChild(W.s("text", { x: ox + A / 2, y: oy - 8, "text-anchor": "middle", class: "lbl", text: String(x) }));
+      svg.appendChild(W.s("text", { x: ox + A + R / 2, y: oy - 8, "text-anchor": "middle", class: "lbl", text: (y === 1 ? "" : y) + "√" + c }));
+      var tx = 350;
+      [["rational part (squares):", "var(--plot-1)"], [x * x + " + " + c * y * y + " = " + (x * x + c * y * y), "var(--ink)"], ["radical part (rectangles):", "var(--plot-2)"], ["2 · " + x * y + "√" + c + " = " + 2 * x * y + "√" + c, "var(--ink)"]].forEach(function (p, i) {
+        svg.appendChild(W.s("text", { x: tx, y: 80 + i * 30, style: "font: " + (i % 2 ? "700 16px" : "400 13px") + " var(--font-mono); fill: " + p[1], text: p[0] }));
+      });
+      var a = x * x + c * y * y, b = 2 * x * y;
+      var ys = (y === 1 ? "" : y) + "\\sqrt{" + c + "}";
+      out.tex("\\begin{gathered}(" + x + " + " + ys + ")^2 = " + a + " + " + b + "\\sqrt{" + c + "}\\\\ \\text{so}\\quad \\sqrt{" + a + " + " + b + "\\sqrt{" + c + "}} = " + x + " + " + ys + "\\quad\\text{and}\\quad \\sqrt{" + a + " - " + b + "\\sqrt{" + c + "}} = " + (x * x > c * y * y ? x + " - " + ys : (x * x === c * y * y ? "0" : ys + " - " + x)) + "\\end{gathered}");
+    }
+    draw();
+  });
+
+  /* 6.5 — complex square root */
+  AOPS.registerWidget("complexRoot", function (body) {
+    var svg = W.stage(body, { w: 600, h: 440, label: "Complex plane with a draggable point z and its two square roots" });
+    var out = W.readout(body);
+    var P = W.plane(svg, { x: [-13, 13], y: [-9.5, 9.5], step: 1, pad: 20, labelEvery: 2 });
+    var zr = 8, zi = -6;
+    var ray = W.s("line", { stroke: "var(--accent)", "stroke-width": 1.5, "stroke-dasharray": "4 4" });
+    var ray1 = W.s("line", { stroke: "var(--plot-2)", "stroke-width": 1.5 }), ray2 = W.s("line", { stroke: "var(--plot-2)", "stroke-width": 1.5 });
+    var w1 = W.s("circle", { r: 8, fill: "var(--plot-2)", stroke: "var(--surface-solid)", "stroke-width": 2 }), w2 = W.s("circle", { r: 8, fill: "var(--plot-2)", stroke: "var(--surface-solid)", "stroke-width": 2 });
+    var lz = W.s("text", { class: "lbl" }), l1 = W.s("text", { class: "lbl" }), l2 = W.s("text", { class: "lbl" });
+    [ray, ray1, ray2, w1, w2, lz, l1, l2].forEach(function (e) { svg.appendChild(e); });
+    var h = W.handle(svg, { x: P.X(zr), y: P.Y(zi), label: "Point z in the complex plane; arrow keys move it one unit", keyStep: P.X(1) - P.X(0),
+      onMove: function (px, py) { zr = Math.max(-13, Math.min(13, Math.round(P.ix(px)))); zi = Math.max(-9, Math.min(9, Math.round(P.iy(py)))); update(); return [P.X(zr), P.Y(zi)]; },
+      valueText: function () { return "z = " + zr + " + " + zi + "i"; } });
+    function update() {
+      var mod = Math.sqrt(zr * zr + zi * zi), ang = Math.atan2(zi, zr);
+      var rr = Math.sqrt(mod), xr = rr * Math.cos(ang / 2), yi = rr * Math.sin(ang / 2);
+      ray.setAttribute("x1", P.X(0)); ray.setAttribute("y1", P.Y(0)); ray.setAttribute("x2", P.X(zr)); ray.setAttribute("y2", P.Y(zi));
+      ray1.setAttribute("x1", P.X(0)); ray1.setAttribute("y1", P.Y(0)); ray1.setAttribute("x2", P.X(xr)); ray1.setAttribute("y2", P.Y(yi));
+      ray2.setAttribute("x1", P.X(0)); ray2.setAttribute("y1", P.Y(0)); ray2.setAttribute("x2", P.X(-xr)); ray2.setAttribute("y2", P.Y(-yi));
+      w1.setAttribute("cx", P.X(xr)); w1.setAttribute("cy", P.Y(yi)); w2.setAttribute("cx", P.X(-xr)); w2.setAttribute("cy", P.Y(-yi));
+      lz.setAttribute("x", P.X(zr) + 12); lz.setAttribute("y", P.Y(zi) - 12); lz.textContent = "z";
+      l1.setAttribute("x", P.X(xr) + 10); l1.setAttribute("y", P.Y(yi) + 18); l1.textContent = "w";
+      l2.setAttribute("x", P.X(-xr) + 10); l2.setAttribute("y", P.Y(-yi) + 18); l2.textContent = "−w";
+      var nice = Math.abs(xr - Math.round(xr)) < 1e-9 && Math.abs(yi - Math.round(yi)) < 1e-9;
+      var X = nice ? Math.round(xr) : xr, Y = nice ? Math.round(yi) : yi;
+      var wt = nice ? cfmt(X, Y) : cfmt(+W.fmt(X, 3), +W.fmt(Y, 3));
+      out.tex("\\begin{gathered}z = " + cfmt(zr, zi) + ",\\quad |z| = " + W.fmt(mod, 3) + "\\\\ \\sqrt{z} " + (nice ? "=" : "\\approx") + " \\pm(" + wt + ")" + (nice && (zr || zi) ? "\\quad\\text{check: } (" + cfmt(X, Y) + ")^2 = " + (X * X - Y * Y) + (2 * X * Y < 0 ? " - " : " + ") + Math.abs(2 * X * Y) + "i" : "") + "\\end{gathered}");
+    }
+    update();
+  });
+
+  /* 6.6 — polynomial roots */
+  AOPS.registerWidget("polyRoots", function (body) {
+    var svg = W.stage(body, { w: 620, h: 380, label: "Graph of a polynomial with draggable roots on the x-axis" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 1, deg = 3, roots = [-3, -1, 2, 4];
+    var P = W.plane(svg, { x: [-5, 5], y: [-12, 12], step: 1, ystep: 2, pad: 26, labelEvery: 2 });
+    var curve = W.s("path", { fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 });
+    svg.appendChild(curve);
+    var handles = [];
+    var AV = [-2, -1.5, -1, -0.5, 0.5, 1, 1.5, 2];
+    W.slider(ctl, { label: "Leading coefficient a", min: 0, max: 7, value: 5, format: function (v) { return String(AV[v]); }, onInput: function (v) { a = AV[v]; draw(); } });
+    W.segmented(ctl, { title: "Degree", value: deg, options: [2, 3, 4].map(function (k) { return { value: k, label: String(k) }; }), onChange: function (v) { deg = v; handles.forEach(function (hd, i) { hd.el.style.display = i < deg ? "" : "none"; hd.el.previousSibling.style.display = i < deg ? "" : "none"; }); draw(); } });
+    roots.forEach(function (r0, i) {
+      handles.push(W.handle(svg, { x: P.X(r0), y: P.Y(0), label: "Root " + (i + 1) + "; left and right arrows move it", keyStep: P.X(0.5) - P.X(0),
+        onMove: function (px) { roots[i] = Math.max(-5, Math.min(5, Math.round(P.ix(px) * 2) / 2)); draw(); return [P.X(roots[i]), P.Y(0)]; },
+        valueText: function () { return "root " + roots[i]; } }));
+    });
+    handles[3].el.style.display = "none"; handles[3].el.previousSibling.style.display = "none";
+    function draw() {
+      var rs = roots.slice(0, deg);
+      curve.setAttribute("d", W.fnPath(P, function (x) { var v = a; rs.forEach(function (r) { v *= (x - r); }); return v; }, { samples: 500 }));
+      var cs = [a];
+      rs.forEach(function (r) { var n = [cs[0]]; for (var i = 1; i < cs.length; i++) n.push(cs[i] - r * cs[i - 1]); n.push(-r * cs[cs.length - 1]); cs = n; });
+      var fac = rs.map(function (r) { return r === 0 ? "x" : "(x " + (r > 0 ? "- " + W.fmt(r, 1) : "+ " + W.fmt(-r, 1)) + ")"; }).join("");
+      var sum = rs.reduce(function (s, r) { return s + r; }, 0);
+      out.tex("\\begin{gathered}" + (a === 1 ? "" : a === -1 ? "-" : W.fmt(a, 2)) + fac + " = " + polyTex(cs, "x") + "\\\\ \\text{sum of roots} = " + W.fmt(sum, 2) + ",\\quad -\\frac{\\text{coef. of } x^{" + (deg - 1) + "}}{a} = " + W.fmt(-cs[1] / a, 2) + "\\end{gathered}");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

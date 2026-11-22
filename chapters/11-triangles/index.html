@@ -1,0 +1,1609 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 11: Triangles, a.k.a. Geometry · AoPS Learner</title>
+  <meta name="description" content="Classifying triangles, medians, bisectors and altitudes, the triangle inequality, Pythagoras, congruence, similarity, trigonometry and area, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="11" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 11 · Geometry</span>
+    <h1>Triangles, a.k.a. Geometry</h1>
+    <p class="lede">Three points, three segments, and almost all of basic geometry. Triangles can be sorted, measured, matched and scaled, and every one of those ideas becomes a tool for solving problems. This is a long chapter, so take it one section at a time and drag the vertices around until each fact feels obvious.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>The angles of a triangle add to $180^\circ$. Equal sides sit opposite equal angles.</li>
+      <li>Medians meet at the centroid (which splits each median $2:1$), angle bisectors at the incenter, perpendicular bisectors at the circumcenter, altitudes at the orthocenter.</li>
+      <li>Triangle inequality: each side is less than the sum of the other two, and more than their difference.</li>
+      <li>Pythagoras: $a^2 + b^2 = c^2$ in a right triangle. If $a^2 + b^2 &lt; c^2$ the angle opposite $c$ is obtuse; if $a^2 + b^2 &gt; c^2$ it is acute. Learn the triples $3$-$4$-$5$, $5$-$12$-$13$, $8$-$15$-$17$, $7$-$24$-$25$ and their multiples.</li>
+      <li>Congruence (SSS, SAS, ASA, AAS, and HL for right triangles) proves segments and angles equal. There is no SSA.</li>
+      <li>Similarity (usually by AA) gives equal ratios of sides; areas scale by the square of the ratio.</li>
+      <li>$\sin = \dfrac{\text{opp}}{\text{hyp}}$, $\cos = \dfrac{\text{adj}}{\text{hyp}}$, $\tan = \dfrac{\text{opp}}{\text{adj}}$. Special triangles: $45$-$45$-$90$ is $1 : 1 : \sqrt2$ and $30$-$60$-$90$ is $1 : \sqrt3 : 2$.</li>
+      <li>Area $= \tfrac12 a h_a = \tfrac12 ab\sin C = rs$, where $r$ is the inradius and $s$ the semiperimeter.</li>
+      <li>Stuck? Add a line: a parallel for similar triangles, a perpendicular for right triangles and areas.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 11.1 ===================== -->
+  <section class="lesson" id="s11-1" data-title="Classifying Triangles">
+    <h2><span class="sec-num">11.1</span> Classifying Triangles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Could a triangle have two right angles? Try to draw one: two sides leave a base at $90^\circ$, so they are parallel and never meet. The fact that the angles add to $180^\circ$ quietly rules out a lot of shapes, and it is the first thing to reach for whenever you meet a triangle.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The corners of a triangle are its <strong>vertices</strong>. We sort triangles in two independent ways.</p>
+      <p><em>By angles.</em> If all three angles are less than $90^\circ$ the triangle is <strong>acute</strong>. If one angle is exactly $90^\circ$ it is a <strong>right</strong> triangle: the side across from the right angle is the <strong>hypotenuse</strong>, the other two are <strong>legs</strong>, and the two acute angles are complementary. If one angle is more than $90^\circ$ the triangle is <strong>obtuse</strong>. Because the three angles total $180^\circ$, a triangle has at most one right or obtuse angle.</p>
+      <div class="rule"><p>$$\angle A + \angle B + \angle C = 180^\circ$$</p></div>
+      <p><em>By sides.</em> All three sides equal: <strong>equilateral</strong>. At least two sides equal: <strong>isosceles</strong>. No two sides equal: <strong>scalene</strong>. In an isosceles triangle the equal sides are the <em>legs</em>, the third side is the <em>base</em>, the angle between the legs is the <em>vertex angle</em>, and the two angles touching the base are the <em>base angles</em>.</p>
+      <p>Sides and angles mirror each other: <strong>equal sides are opposite equal angles</strong>, and the longest side is opposite the largest angle. So an equilateral triangle has three equal angles, each $180^\circ / 3 = 60^\circ$, and a scalene triangle has three different angles.</p>
+    </div>
+
+    <figure class="explore" data-widget="classifyTri">
+      <figcaption><strong>Explore:</strong> Drag the three vertices. The angles always add to $180^\circ$. Try to make a right triangle, an obtuse isosceles triangle, and an equilateral one. (Why can't you make an equilateral triangle with grid snapping on? Switch to free mode.)</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Find the missing angle</h3>
+        <div class="problem"><p>Two angles of a triangle measure $35^\circ$ and $55^\circ$. Find the third angle and classify the triangle by its angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Third angle $= 180^\circ - 35^\circ - 55^\circ = 90^\circ$.</p></div><p class="why">The three angles of any triangle add to $180^\circ$.</p></li>
+          <li><div class="do"><p>One angle is exactly $90^\circ$, so the triangle is right. The side opposite the $90^\circ$ angle is the hypotenuse.</p></div><p class="why">Classification by angles only asks whether there is a right or obtuse angle.</p></li>
+        </ol>
+        <p class="answer">$90^\circ$; it is a right triangle (and its acute angles, $35^\circ$ and $55^\circ$, are complementary).</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Which angles are equal?</h3>
+        <div class="problem"><p>In $\triangle PQR$, $PQ = PR = 7$ and $QR = 10$. Classify the triangle by its sides and name the two equal angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Two sides are equal and the third is different, so $\triangle PQR$ is isosceles (not equilateral).</p></div><p class="why">Isosceles means at least two equal sides.</p></li>
+          <li><div class="do"><p>$PQ$ is opposite $\angle R$ and $PR$ is opposite $\angle Q$, so $\angle Q = \angle R$.</p></div><p class="why">Equal sides sit opposite equal angles. The side opposite a vertex is the one that does not touch it.</p></li>
+        </ol>
+        <p class="answer">Isosceles, with base angles $\angle Q = \angle R$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Base angles from the vertex angle</h3>
+        <div class="problem"><p>The vertex angle of an isosceles triangle is $40^\circ$. Find the base angles and classify the triangle by its angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let each base angle be $x$. Then $40^\circ + 2x = 180^\circ$.</p></div><p class="why">The two base angles are equal, and all three angles total $180^\circ$.</p></li>
+          <li><div class="do"><p>$2x = 140^\circ$, so $x = 70^\circ$.</p></div><p class="why">Solve the linear equation.</p></li>
+          <li><div class="do"><p>All angles ($40^\circ, 70^\circ, 70^\circ$) are under $90^\circ$, so it is acute.</p></div><p class="why">Check each angle against $90^\circ$.</p></li>
+        </ol>
+        <p class="answer">Each base angle is $70^\circ$; the triangle is acute isosceles.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An obtuse angle must be the vertex angle</h3>
+        <div class="problem"><p>One angle of an isosceles triangle measures $100^\circ$. Find the other two angles.</p></div>
+        <ol class="steps">
+          <li data-think="Could $100^\circ$ be one of the two base angles?"><div class="do"><p>If $100^\circ$ were a base angle, the other base angle would also be $100^\circ$, and $100^\circ + 100^\circ &gt; 180^\circ$. Impossible.</p></div><p class="why">Base angles come in an equal pair, and a triangle has room for only one obtuse angle.</p></li>
+          <li><div class="do"><p>So $100^\circ$ is the vertex angle and each base angle is $\dfrac{180^\circ - 100^\circ}{2} = 40^\circ$.</p></div><p class="why">The base angles split what is left of the $180^\circ$ equally.</p></li>
+        </ol>
+        <p class="answer">$40^\circ$ and $40^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>When the given angle could be either</h3>
+        <div class="problem"><p>One angle of an isosceles triangle measures $50^\circ$. What could the other two angles be?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p><em>Case 1:</em> $50^\circ$ is the vertex angle. Then each base angle is $\dfrac{180^\circ - 50^\circ}{2} = 65^\circ$.</p></div><p class="why">We don't know which angle we were given, so we try each role.</p></li>
+          <li><div class="do"><p><em>Case 2:</em> $50^\circ$ is a base angle. Then the other base angle is also $50^\circ$ and the vertex angle is $180^\circ - 100^\circ = 80^\circ$.</p></div><p class="why">This time $50^\circ + 50^\circ$ leaves room for a third angle, so the case is possible.</p></li>
+        </ol>
+        <p class="answer">Either $65^\circ$ and $65^\circ$, or $50^\circ$ and $80^\circ$.</p>
+        <p class="key-idea">In isosceles problems, ask whether the given angle is the vertex angle or a base angle.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Angles in a ratio</h3>
+        <div class="problem"><p>The angles of a triangle are in the ratio $2 : 3 : 7$. Classify the triangle by its angles and by its sides.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Write the angles as $2k, 3k, 7k$. Then $12k = 180^\circ$, so $k = 15^\circ$.</p></div><p class="why">A ratio fixes the angles up to a common multiplier, and the angle sum pins down that multiplier.</p></li>
+          <li><div class="do"><p>The angles are $30^\circ$, $45^\circ$ and $105^\circ$. Since $105^\circ &gt; 90^\circ$, the triangle is obtuse.</p></div><p class="why">Multiply out each part of the ratio.</p></li>
+          <li data-think="We know nothing about the side lengths. How can we classify by sides?"><div class="do"><p>All three angles are different, so no two sides are equal: the triangle is scalene.</p></div><p class="why">If two sides were equal, the angles opposite them would be equal too.</p></li>
+        </ol>
+        <p class="answer">An obtuse scalene triangle with angles $30^\circ, 45^\circ, 105^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Isosceles, but which pair?</h3>
+        <div class="problem"><p>A triangle has angles $x^\circ$, $2x^\circ$ and $y^\circ$, and it is isosceles. Find every possibility for its three angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Some two angles must be equal. There are three pairs to try: $x = 2x$, $x = y$, or $2x = y$.</p></div><p class="why">Isosceles means two equal angles, but we aren't told which two.</p></li>
+          <li><div class="do"><p>$x = 2x$ forces $x = 0$, which is not a triangle. Reject.</p></div><p class="why">Every angle of a triangle is positive.</p></li>
+          <li><div class="do"><p>$x = y$: then $x + 2x + x = 180$, so $x = 45$. The angles are $45^\circ, 90^\circ, 45^\circ$.</p></div><p class="why">Substitute into the angle sum.</p></li>
+          <li><div class="do"><p>$2x = y$: then $x + 2x + 2x = 180$, so $x = 36$. The angles are $36^\circ, 72^\circ, 72^\circ$.</p></div><p class="why">Same method for the last pair.</p></li>
+        </ol>
+        <p class="answer">Either $45^\circ, 45^\circ, 90^\circ$ (a right isosceles triangle) or $36^\circ, 72^\circ, 72^\circ$ (an acute isosceles triangle).</p>
+        <p class="key-idea">Casework on "which two are equal" is the standard move for isosceles problems.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.2 ===================== -->
+  <section class="lesson" id="s11-2" data-title="Parts of a Triangle">
+    <h2><span class="sec-num">11.2</span> Parts of a Triangle</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Cut a triangle out of cardboard and try to balance it on a pencil tip. There is exactly one point where it balances. Draw three lines, each from a corner to the middle of the opposite side, and they all pass through that point. Three lines meeting at one point is rare; a triangle has several such points, and each one has its own job.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>In $\triangle ABC$ we write $a = BC$, $b = CA$, $c = AB$: each side is named by the small letter of the vertex <em>opposite</em> it. The perimeter is $a + b + c$, and half of it, the <strong>semiperimeter</strong>, is $s = \dfrac{a+b+c}{2}$.</p>
+      <p>Four families of lines each meet at a single point (they are <strong>concurrent</strong>):</p>
+      <ul>
+        <li>A <strong>median</strong> joins a vertex to the midpoint of the opposite side. The medians meet at the <strong>centroid</strong> $G$, which is two thirds of the way along each median from the vertex: $AG : GD = 2 : 1$.</li>
+        <li>An <strong>angle bisector</strong> splits an angle in half. Every point on it is equally far from the two sides of the angle. The three bisectors meet at the <strong>incenter</strong> $I$, equally far ($r$, the <strong>inradius</strong>) from all three sides, so it is the center of the <strong>incircle</strong>, which touches each side once.</li>
+        <li>A <strong>perpendicular bisector</strong> of a side passes through its midpoint at a right angle. Its points are equally far from the two endpoints. They meet at the <strong>circumcenter</strong> $O$, equally far ($R$, the <strong>circumradius</strong>) from all three vertices, so it is the center of the <strong>circumcircle</strong> through $A$, $B$, $C$.</li>
+        <li>An <strong>altitude</strong> drops from a vertex perpendicular to the line containing the opposite side (you may need to extend that side). The altitudes $h_a, h_b, h_c$ meet at the <strong>orthocenter</strong> $H$.</li>
+      </ul>
+      <div class="note"><p>$G$ and $I$ are always inside the triangle. $O$ and $H$ are inside an acute triangle, outside an obtuse one, and on a right triangle: $O$ at the midpoint of the hypotenuse, $H$ at the right-angle vertex.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="triCenters">
+      <figcaption><strong>Explore:</strong> Choose a family of lines, then drag the vertices. The three lines always meet at one point. Make the triangle obtuse and watch the circumcenter and orthocenter leave it; make it right and see where they land.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Sides, perimeter and semiperimeter</h3>
+        <div class="problem"><p>In $\triangle ABC$, $AB = 7$, $BC = 8$ and $CA = 9$. Find $a$, $b$, $c$ and the semiperimeter $s$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a = BC = 8$, $b = CA = 9$, $c = AB = 7$.</p></div><p class="why">Each side is named after the vertex it does not touch.</p></li>
+          <li><div class="do"><p>$s = \dfrac{8 + 9 + 7}{2} = \dfrac{24}{2} = 12$.</p></div><p class="why">The semiperimeter is half the perimeter.</p></li>
+        </ol>
+        <p class="answer">$a = 8$, $b = 9$, $c = 7$, and $s = 12$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>The centroid splits a median 2 : 1</h3>
+        <div class="problem"><p>Median $AD$ of $\triangle ABC$ has length $18$, and $G$ is the centroid. Find $AG$ and $GD$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$AG : GD = 2 : 1$, so $AG$ is $\tfrac23$ of the median and $GD$ is $\tfrac13$.</p></div><p class="why">The centroid lies two thirds of the way from the vertex to the midpoint.</p></li>
+          <li><div class="do"><p>$AG = \tfrac23 \cdot 18 = 12$ and $GD = \tfrac13 \cdot 18 = 6$.</p></div><p class="why">Check: $12 + 6 = 18$ and $12 : 6 = 2 : 1$.</p></li>
+        </ol>
+        <p class="answer">$AG = 12$, $GD = 6$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The circumcircle of a right triangle</h3>
+        <div class="problem"><p>A right triangle has legs $6$ and $8$. Where is its circumcenter, and what is its circumradius?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The hypotenuse is $\sqrt{6^2 + 8^2} = \sqrt{100} = 10$.</p></div><p class="why">We'll need its length; Section 11.4 covers this formula.</p></li>
+          <li data-think="The right angle is an inscribed angle in the circumcircle. What arc must it cut off?"><div class="do"><p>The right angle is inscribed in the circumcircle, so it cuts off an arc of $2 \cdot 90^\circ = 180^\circ$. The hypotenuse is therefore a diameter.</p></div><p class="why">An inscribed angle is half its arc (Chapter 10), and only a diameter cuts off a semicircle.</p></li>
+          <li><div class="do"><p>The circumcenter is the midpoint of the hypotenuse and $R = \dfrac{10}{2} = 5$.</p></div><p class="why">The center of a circle is the midpoint of any diameter.</p></li>
+        </ol>
+        <p class="answer">The circumcenter is the midpoint of the hypotenuse, and $R = 5$.</p>
+        <p class="book-next">Next in the book: Exercises 11-1 and 11-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Locate a centroid with coordinates</h3>
+        <div class="problem"><p>Triangle $ABC$ has vertices $A(0, 0)$, $B(6, 0)$, $C(0, 6)$. Find the centroid using the $2 : 1$ property on the median from $C$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The midpoint of $AB$ is $D = (3, 0)$, so the median from $C$ runs from $(0, 6)$ to $(3, 0)$.</p></div><p class="why">A median ends at the midpoint of the opposite side.</p></li>
+          <li><div class="do"><p>Moving from $C$ to $D$ changes the coordinates by $(3, -6)$. Two thirds of that is $(2, -4)$.</p></div><p class="why">$G$ is two thirds of the way from the vertex to the midpoint.</p></li>
+          <li><div class="do"><p>$G = (0 + 2,\ 6 - 4) = (2, 2)$.</p></div><p class="why">Notice that $(2, 2)$ is also the average of the three vertices, $\left(\tfrac{0+6+0}{3}, \tfrac{0+0+6}{3}\right)$. That shortcut always works.</p></li>
+        </ol>
+        <p class="answer">$G = (2, 2)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The orthocenter of a right triangle</h3>
+        <div class="problem"><p>$\triangle ABC$ has a right angle at $C$. Where is its orthocenter?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The altitude from $A$ must be perpendicular to $BC$. Leg $AC$ already is, so the altitude from $A$ is $AC$ itself.</p></div><p class="why">An altitude is the perpendicular from a vertex to the opposite side's line.</p></li>
+          <li><div class="do"><p>Likewise the altitude from $B$ is leg $BC$.</p></div><p class="why">Same reasoning with the roles swapped.</p></li>
+          <li><div class="do"><p>These two altitudes meet at $C$, so $H = C$.</p></div><p class="why">Two of the altitudes are enough to locate their common point.</p></li>
+        </ol>
+        <p class="answer">At the right-angle vertex $C$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>An angle at the incenter</h3>
+        <div class="problem"><p>In $\triangle ABC$, $\angle B = 50^\circ$ and $\angle C = 70^\circ$. The angle bisectors from $B$ and $C$ meet at $I$. Find $\angle BIC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle IBC = \tfrac12 \cdot 50^\circ = 25^\circ$ and $\angle ICB = \tfrac12 \cdot 70^\circ = 35^\circ$.</p></div><p class="why">Each bisector cuts its angle in half.</p></li>
+          <li><div class="do"><p>In $\triangle BIC$: $\angle BIC = 180^\circ - 25^\circ - 35^\circ = 120^\circ$.</p></div><p class="why">Angle sum in the small triangle.</p></li>
+          <li><div class="do"><p>Check with the general pattern: $\angle A = 60^\circ$ and $90^\circ + \tfrac12\angle A = 120^\circ$. ✓</p></div><p class="why">In general $\angle BIC = 180^\circ - \tfrac12(\angle B + \angle C) = 90^\circ + \tfrac12 \angle A$.</p></li>
+        </ol>
+        <p class="answer">$120^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>An angle at the orthocenter</h3>
+        <div class="problem"><p>In acute $\triangle ABC$, $\angle A = 70^\circ$. Altitudes $BE$ and $CF$ (with $E$ on $AC$ and $F$ on $AB$) meet at the orthocenter $H$. Find $\angle BHC$.</p></div>
+        <ol class="steps">
+          <li data-think="Which polygon has $A$ and $H$ as opposite corners, with two right angles?"><div class="do"><p>Look at quadrilateral $AFHE$. Its angles at $F$ and $E$ are $90^\circ$ (altitudes), and its angle at $A$ is $70^\circ$.</p></div><p class="why">The angles of a quadrilateral add to $360^\circ$, since a diagonal splits it into two triangles.</p></li>
+          <li><div class="do"><p>$\angle FHE = 360^\circ - 90^\circ - 90^\circ - 70^\circ = 110^\circ$.</p></div><p class="why">Whatever is left of $360^\circ$ belongs to the fourth angle.</p></li>
+          <li><div class="do"><p>$\angle BHC$ and $\angle FHE$ are vertical angles, so $\angle BHC = 110^\circ$.</p></div><p class="why">$B$, $H$, $E$ are collinear and so are $C$, $H$, $F$, so the two angles are formed by the same pair of crossing lines.</p></li>
+        </ol>
+        <p class="answer">$110^\circ$ (in general, $\angle BHC = 180^\circ - \angle A$ for an acute triangle).</p>
+        <p class="key-idea">Altitudes create right angles; look for quadrilaterals with two of them.</p>
+        <p class="book-next">Next in the book: Exercises 11-3 and 11-15.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.3 ===================== -->
+  <section class="lesson" id="s11-3" data-title="The Triangle Inequality">
+    <h2><span class="sec-num">11.3</span> The Triangle Inequality</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Take three sticks: $2$ cm, $3$ cm and $9$ cm. Lay the long one down and swing the two short ones up from its ends. They can't reach each other. No matter how you tilt them, $2 + 3$ falls short of $9$. Whether three lengths make a triangle comes down to one comparison.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A straight segment is the shortest path between two points. So going from $A$ to $B$ by way of $C$ is longer than going straight, unless $C$ is on the segment:</p>
+      <div class="rule"><p>$$a + b &gt; c, \qquad b + c &gt; a, \qquad c + a &gt; b.$$</p></div>
+      <p>This is the <strong>Triangle Inequality</strong>. If one of these becomes an equality, the "triangle" is <strong>degenerate</strong>: the three points lie on one line. In practice you only need to check one inequality: <em>the two shorter sides must add to more than the longest.</em></p>
+      <p>Turned around, it bounds an unknown third side. If two sides are $p$ and $q$ with $p \ge q$, the third side $x$ must satisfy</p>
+      <div class="rule"><p>$$p - q &lt; x &lt; p + q.$$</p></div>
+    </div>
+
+    <figure class="explore" data-widget="triIneq">
+      <figcaption><strong>Explore:</strong> Set three stick lengths. The dashed circles show every place the two arms can reach. A triangle exists only when the circles cross. Find lengths that make the triangle collapse flat (degenerate).</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Triangle or not?</h3>
+        <div class="problem"><p>Which of these sets of lengths form a nondegenerate triangle: (a) $3, 4, 8$; (b) $5, 6, 10$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) The two shorter sides add to $3 + 4 = 7$, which is less than $8$. No triangle.</p></div><p class="why">The longest side must be shorter than the sum of the other two.</p></li>
+          <li><div class="do"><p>(b) $5 + 6 = 11 &gt; 10$. A triangle exists.</p></div><p class="why">Once the longest side passes, the other two inequalities hold automatically.</p></li>
+        </ol>
+        <p class="answer">(a) No; (b) yes.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A flat triangle</h3>
+        <div class="problem"><p>What happens with lengths $4$, $6$, $10$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4 + 6 = 10$ exactly.</p></div><p class="why">This is the boundary case between "triangle" and "no triangle".</p></li>
+          <li><div class="do"><p>The only way to place the sides is in a straight line, with the third vertex on the long side.</p></div><p class="why">The path through the third vertex is exactly as long as the straight path, so the vertex lies on the segment.</p></li>
+        </ol>
+        <p class="answer">The triangle is degenerate: the three vertices are collinear.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Range for a third side</h3>
+        <div class="problem"><p>Two sides of a triangle are $5$ and $11$. What lengths are possible for the third side $x$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$5 + 11 &gt; x$ gives $x &lt; 16$.</p></div><p class="why">The third side can't be as long as the other two together.</p></li>
+          <li><div class="do"><p>$x + 5 &gt; 11$ gives $x &gt; 6$.</p></div><p class="why">The short side plus $x$ must beat the long side.</p></li>
+          <li><div class="do"><p>$x + 11 &gt; 5$ holds for every positive $x$.</p></div><p class="why">We check all three inequalities, but this one adds no information.</p></li>
+        </ol>
+        <p class="answer">$6 &lt; x &lt; 16$</p>
+        <p class="book-next">Compare with the book's Example 11-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Count the integer options</h3>
+        <div class="problem"><p>A triangle has sides $5$ and $11$ and an integer third side. How many values are possible?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>From the previous example, $6 &lt; x &lt; 16$.</p></div><p class="why">The integer condition just narrows down the interval we already have.</p></li>
+          <li><div class="do"><p>The integers are $7, 8, \ldots, 15$: that is $15 - 7 + 1 = 9$ values.</p></div><p class="why">Both endpoints are excluded because the inequalities are strict.</p></li>
+        </ol>
+        <p class="answer">$9$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Which side is repeated?</h3>
+        <div class="problem"><p>An isosceles triangle has sides of length $4$ and $9$ (one of them appears twice). Find its perimeter.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Option 1: sides $4, 4, 9$. But $4 + 4 = 8 &lt; 9$. Impossible.</p></div><p class="why">Test each choice of which length is repeated.</p></li>
+          <li><div class="do"><p>Option 2: sides $9, 9, 4$. Here $4 + 9 &gt; 9$. This works.</p></div><p class="why">The two shorter sides, $4$ and $9$, beat the longest, $9$.</p></li>
+          <li><div class="do"><p>Perimeter $= 9 + 9 + 4 = 22$.</p></div><p class="why">Only one option survived, so the answer is unique.</p></li>
+        </ol>
+        <p class="answer">$22$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Triangles with perimeter 12</h3>
+        <div class="problem"><p>How many noncongruent triangles have integer sides and perimeter $12$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>List sides $a \le b \le c$ with $a + b + c = 12$ and $a + b &gt; c$. Since $a + b = 12 - c$, the condition says $12 - c &gt; c$, so $c &lt; 6$.</p></div><p class="why">Sorting the sides avoids counting the same triangle twice, and the only inequality to check involves the largest side.</p></li>
+          <li><div class="do"><p>Also $c \ge 4$, since the largest of three numbers adding to $12$ is at least $12/3$. So $c = 4$ or $c = 5$.</p></div><p class="why">The largest side is at least the average.</p></li>
+          <li><div class="do"><p>$c = 5$: $a + b = 7$ with $a \le b \le 5$ gives $(2, 5)$ and $(3, 4)$. $c = 4$: $a + b = 8$ with $b \le 4$ gives $(4, 4)$.</p></div><p class="why">Go through the cases one at a time.</p></li>
+        </ol>
+        <p class="answer">$3$ triangles: $(2, 5, 5)$, $(3, 4, 5)$, $(4, 4, 4)$.</p>
+        <p class="book-next">Next in the book: Exercise 11-4.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A point inside a triangle</h3>
+        <div class="problem"><p>$P$ is any point inside $\triangle ABC$. Show that $PA + PB + PC$ is greater than the semiperimeter $s$.</p></div>
+        <ol class="steps">
+          <li data-think="Which triangles contain two of the segments $PA$, $PB$, $PC$ together with a side?"><div class="do"><p>Apply the triangle inequality to $\triangle PAB$, $\triangle PBC$ and $\triangle PCA$: $$PA + PB &gt; c, \quad PB + PC &gt; a, \quad PC + PA &gt; b.$$</p></div><p class="why">Joining $P$ to the vertices cuts $\triangle ABC$ into three triangles, each with one side of the original.</p></li>
+          <li><div class="do"><p>Add them: $2(PA + PB + PC) &gt; a + b + c$.</p></div><p class="why">Each of $PA$, $PB$, $PC$ appears in exactly two of the inequalities.</p></li>
+          <li><div class="do"><p>Divide by $2$: $PA + PB + PC &gt; \dfrac{a+b+c}{2} = s$.</p></div><p class="why">That is the definition of the semiperimeter.</p></li>
+        </ol>
+        <p class="answer">$PA + PB + PC &gt; s$, by adding three triangle inequalities.</p>
+        <p class="key-idea">Adding several triangle inequalities, chosen so that the terms repeat evenly, proves many length inequalities.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.4 ===================== -->
+  <section class="lesson" id="s11-4" data-title="The Pythagorean Theorem">
+    <h2><span class="sec-num">11.4</span> The Pythagorean Theorem</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A TV is sold as "55 inches", but that is the diagonal, not the width. If the screen is $48$ inches wide and $27$ inches tall, is the diagonal really $55$? One formula answers it: $48^2 + 27^2 = 3033$, and $\sqrt{3033} \approx 55.07$. Close enough to sell.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>In a right triangle with legs $a$, $b$ and hypotenuse $c$, the squares built on the legs have the same total area as the square on the hypotenuse:</p>
+      <div class="rule"><p>$$a^2 + b^2 = c^2.$$</p></div>
+      <p>Given any two sides of a right triangle, this gives the third. The comparison also works when the angle isn't right: if $c$ is the longest side, then</p>
+      <div class="rule"><p>$$a^2 + b^2 &gt; c^2 \Rightarrow \text{acute}, \qquad a^2 + b^2 = c^2 \Rightarrow \text{right}, \qquad a^2 + b^2 &lt; c^2 \Rightarrow \text{obtuse}.$$</p></div>
+      <p><strong>Pythagorean triples</strong> are whole numbers with $a^2 + b^2 = c^2$: $(3,4,5)$, $(5,12,13)$, $(8,15,17)$, $(7,24,25)$. Any multiple of a triple is again a right triangle, since $(ka)^2 + (kb)^2 = k^2(a^2+b^2) = (kc)^2$. So whenever two sides are given, write their ratio in whole numbers and look for a familiar triple before squaring anything.</p>
+    </div>
+
+    <figure class="explore" data-widget="pythagSquares">
+      <figcaption><strong>Explore:</strong> Drag vertex $C$ around the grid. The readout compares the two smaller squares with the big one. Find the spots where $a^2 + b^2 = c^2$ exactly, and notice what kind of angle $C$ makes when the small squares fall short or overshoot.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Find the hypotenuse</h3>
+        <div class="problem"><p>The legs of a right triangle are $5$ and $12$. Find the hypotenuse.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$c^2 = 5^2 + 12^2 = 25 + 144 = 169$.</p></div><p class="why">The hypotenuse squared is the sum of the squares of the legs.</p></li>
+          <li><div class="do"><p>$c = \sqrt{169} = 13$.</p></div><p class="why">Lengths are positive, so take the positive root. This is the $5$-$12$-$13$ triple.</p></li>
+        </ol>
+        <p class="answer">$13$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Find a leg</h3>
+        <div class="problem"><p>A right triangle has hypotenuse $10$ and one leg $6$. Find the other leg.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$6^2 + b^2 = 10^2$, so $b^2 = 100 - 36 = 64$.</p></div><p class="why">This time the unknown is a leg, so we subtract.</p></li>
+          <li><div class="do"><p>$b = 8$.</p></div><p class="why">It is the $3$-$4$-$5$ triple doubled.</p></li>
+        </ol>
+        <p class="answer">$8$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A hypotenuse that isn't a whole number</h3>
+        <div class="problem"><p>The legs of a right triangle are $6$ and $9$. Find the hypotenuse in simplest radical form.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$c^2 = 36 + 81 = 117$.</p></div><p class="why">Square and add.</p></li>
+          <li><div class="do"><p>$c = \sqrt{117} = \sqrt{9 \cdot 13} = 3\sqrt{13}$.</p></div><p class="why">Pull out the perfect square factor (Chapter 1).</p></li>
+        </ol>
+        <p class="answer">$3\sqrt{13}$</p>
+        <p class="key-idea">Faster: $6 : 9 = 2 : 3$, so the hypotenuse is $3\sqrt{2^2 + 3^2} = 3\sqrt{13}$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Spot a scaled triple</h3>
+        <div class="problem"><p>The legs of a right triangle are $2.4$ and $3.2$. Find the hypotenuse without squaring decimals.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2.4 : 3.2 = 24 : 32 = 3 : 4$, so the legs are $3(0.8)$ and $4(0.8)$.</p></div><p class="why">Writing the ratio in whole numbers reveals the triple.</p></li>
+          <li><div class="do"><p>The triangle is a $3$-$4$-$5$ triangle scaled by $0.8$, so the hypotenuse is $5(0.8) = 4$.</p></div><p class="why">Every length scales by the same factor.</p></li>
+        </ol>
+        <p class="answer">$4$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The altitude of an isosceles triangle</h3>
+        <div class="problem"><p>An isosceles triangle has legs $13$ and base $10$. Find the altitude to the base.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The altitude to the base cuts the base into two halves of $5$ each.</p></div><p class="why">In an isosceles triangle the two halves are congruent right triangles (Section 11.5), so the foot of the altitude is the midpoint.</p></li>
+          <li><div class="do"><p>Each half is a right triangle with hypotenuse $13$ and leg $5$, so the altitude is $\sqrt{169 - 25} = \sqrt{144} = 12$.</p></div><p class="why">A $5$-$12$-$13$ triangle.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+        <p class="book-next">Next in the book: Exercise 11-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Acute, right or obtuse?</h3>
+        <div class="problem"><p>Classify the triangles with sides (a) $6, 7, 10$ and (b) $7, 8, 10$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) $6^2 + 7^2 = 85$ and $10^2 = 100$. Since $85 &lt; 100$, the angle opposite $10$ is obtuse.</p></div><p class="why">Compare the two smaller squares with the square of the longest side.</p></li>
+          <li><div class="do"><p>(b) $7^2 + 8^2 = 113 &gt; 100$, so the largest angle is acute, and so are the others.</p></div><p class="why">The largest angle is opposite the longest side; if it is acute, all of them are.</p></li>
+        </ol>
+        <p class="answer">(a) Obtuse; (b) acute.</p>
+        <p class="book-next">Next in the book: Exercises 11-6 and 11-7.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The long diagonal of a box</h3>
+        <div class="problem"><p>A box measures $3 \times 4 \times 12$. Find the distance between opposite corners.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The diagonal of the $3 \times 4$ bottom face is $\sqrt{9 + 16} = 5$.</p></div><p class="why">The bottom face is a rectangle, and its diagonal is the hypotenuse of a right triangle.</p></li>
+          <li data-think="Is there a right triangle with that floor diagonal as one leg?"><div class="do"><p>The vertical edge of length $12$ is perpendicular to that diagonal, so the long diagonal is $\sqrt{5^2 + 12^2} = 13$.</p></div><p class="why">Apply Pythagoras a second time in a vertical right triangle.</p></li>
+        </ol>
+        <p class="answer">$13$ (in general $\sqrt{a^2 + b^2 + c^2}$).</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Perimeter and hypotenuse</h3>
+        <div class="problem"><p>A right triangle has perimeter $30$ and hypotenuse $13$. Find its area and its legs.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The legs satisfy $a + b = 30 - 13 = 17$ and $a^2 + b^2 = 169$.</p></div><p class="why">The perimeter gives a sum; Pythagoras gives a sum of squares.</p></li>
+          <li data-think="How are $(a+b)^2$ and $a^2 + b^2$ related?"><div class="do"><p>$(a + b)^2 = a^2 + 2ab + b^2$, so $289 = 169 + 2ab$ and $ab = 60$.</p></div><p class="why">Squaring the sum produces the sum of squares plus twice the product we want.</p></li>
+          <li><div class="do"><p>Area $= \tfrac12 ab = 30$. The legs have sum $17$ and product $60$, so they are $5$ and $12$.</p></div><p class="why">The legs are perpendicular, so one is the height on the other. Two numbers with sum $17$ and product $60$ are $5$ and $12$.</p></li>
+        </ol>
+        <p class="answer">Area $30$; legs $5$ and $12$.</p>
+        <p class="key-idea">$(a+b)^2 - (a^2 + b^2) = 2ab$ links perimeter, hypotenuse and area.</p>
+        <p class="book-next">Next in the book: Exercises 11-8 to 11-10.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.5 ===================== -->
+  <section class="lesson" id="s11-5" data-title="Congruent Triangles">
+    <h2><span class="sec-num">11.5</span> Congruent Triangles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A carpenter nails three boards into a triangle and it is rigid; nail four into a square and it wobbles into a rhombus. Three side lengths lock a triangle's shape completely. That rigidity is what congruence theorems are about: a few measurements force everything else.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Two figures are <strong>congruent</strong> if one is an exact copy of the other. For triangles, $\triangle ABC \cong \triangle DEF$ means all corresponding sides and angles are equal, with the vertices listed in matching order: $A \leftrightarrow D$, $B \leftrightarrow E$, $C \leftrightarrow F$.</p>
+      <p>You don't need all six equalities. Any one of these is enough:</p>
+      <ul>
+        <li><strong>SSS</strong>: three pairs of equal sides.</li>
+        <li><strong>SAS</strong>: two sides and the angle <em>between</em> them.</li>
+        <li><strong>ASA</strong>: two angles and the side between them.</li>
+        <li><strong>AAS</strong>: two angles and a side that isn't between them (the third angles match automatically).</li>
+        <li>For right triangles: <strong>HL</strong> (hypotenuse and a leg), <strong>LL</strong> (both legs), or an acute angle and a corresponding side.</li>
+      </ul>
+      <div class="note"><p><strong>Warning: there is no SSA.</strong> Two sides and an angle that is <em>not</em> between them can fit two different triangles. The explorer shows how.</p></div>
+      <p>The payoff: once two triangles are congruent, every corresponding part is equal. Congruent triangles are the main way to prove that two segments or two angles are equal. Mark equal parts on your diagram as you find them.</p>
+    </div>
+
+    <figure class="explore" data-widget="congruence">
+      <figcaption><strong>Explore:</strong> Pick a set of given parts and adjust them. SSS, SAS and ASA always build exactly one triangle. In SSA mode, shorten side $a$ and watch a second triangle appear with the same three given parts.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Read off corresponding parts</h3>
+        <div class="problem"><p>$\triangle PQR \cong \triangle XYZ$, with $PQ = 5$, $QR = 7$ and $\angle X = 40^\circ$. Find $XY$, $YZ$ and $\angle P$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The order of letters matches $P \leftrightarrow X$, $Q \leftrightarrow Y$, $R \leftrightarrow Z$.</p></div><p class="why">The congruence statement itself tells you which parts correspond.</p></li>
+          <li><div class="do"><p>$XY = PQ = 5$, $YZ = QR = 7$, and $\angle P = \angle X = 40^\circ$.</p></div><p class="why">Corresponding parts of congruent triangles are equal.</p></li>
+        </ol>
+        <p class="answer">$XY = 5$, $YZ = 7$, $\angle P = 40^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Name the criterion</h3>
+        <div class="problem"><p>Which congruence criterion applies? (a) $AB = DE$, $BC = EF$, $\angle B = \angle E$. (b) $\angle A = \angle D$, $\angle B = \angle E$, $BC = EF$. (c) $AB = DE$, $AC = DF$, $\angle B = \angle E$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) $\angle B$ is between sides $AB$ and $BC$: <strong>SAS</strong>.</p></div><p class="why">The angle's vertex is the shared endpoint of the two sides.</p></li>
+          <li><div class="do"><p>(b) Two angles, and side $BC$ is not between $A$ and $B$: <strong>AAS</strong>.</p></div><p class="why">With two angles known, the third is known too, so any matching side works.</p></li>
+          <li><div class="do"><p>(c) $\angle B$ is not between $AB$ and $AC$ (they meet at $A$): this is SSA, which <strong>does not</strong> prove congruence.</p></div><p class="why">The given angle must be the one included between the given sides.</p></li>
+        </ol>
+        <p class="answer">(a) SAS; (b) AAS; (c) no conclusion (SSA).</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A kite's equal angles</h3>
+        <div class="problem"><p>In quadrilateral $ABCD$, $AB = AD$ and $CB = CD$. Prove that $\angle B = \angle D$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw diagonal $AC$ and compare $\triangle ABC$ with $\triangle ADC$.</p></div><p class="why">The angles we want are in two triangles that look like mirror images.</p></li>
+          <li><div class="do"><p>$AB = AD$, $CB = CD$, and $AC = AC$. So $\triangle ABC \cong \triangle ADC$ by SSS.</p></div><p class="why">A shared side counts as a pair of equal sides.</p></li>
+          <li><div class="do"><p>$\angle B$ and $\angle D$ correspond, so they are equal.</p></div><p class="why">Corresponding parts of congruent triangles are equal.</p></li>
+        </ol>
+        <p class="answer">$\triangle ABC \cong \triangle ADC$ (SSS), so $\angle ABC = \angle ADC$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Segments that bisect each other</h3>
+        <div class="problem"><p>Segments $AC$ and $BD$ cross at $M$, the midpoint of both. Prove that $AB = CD$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Compare $\triangle AMB$ and $\triangle CMD$: $AM = CM$ and $BM = DM$.</p></div><p class="why">$M$ is the midpoint of each segment.</p></li>
+          <li><div class="do"><p>$\angle AMB = \angle CMD$ as vertical angles. So $\triangle AMB \cong \triangle CMD$ by SAS.</p></div><p class="why">The angle at $M$ is between the two known sides in each triangle.</p></li>
+          <li><div class="do"><p>Therefore $AB = CD$.</p></div><p class="why">They are corresponding sides.</p></li>
+        </ol>
+        <p class="answer">$AB = CD$ by SAS congruence.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The perpendicular bisector property</h3>
+        <div class="problem"><p>$P$ lies on the perpendicular bisector of $AB$, which meets $AB$ at $M$. Prove that $PA = PB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In $\triangle PMA$ and $\triangle PMB$: $AM = BM$, $\angle PMA = \angle PMB = 90^\circ$, and $PM = PM$.</p></div><p class="why">The perpendicular bisector passes through the midpoint at a right angle.</p></li>
+          <li><div class="do"><p>So $\triangle PMA \cong \triangle PMB$ by SAS (or LL), and $PA = PB$.</p></div><p class="why">$PA$ and $PB$ are corresponding hypotenuses.</p></li>
+        </ol>
+        <p class="answer">$PA = PB$; this is why the circumcenter is equidistant from all three vertices.</p>
+        <p class="book-next">Next in the book: Exercises 11-11 to 11-13.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Why SSA fails</h3>
+        <div class="problem"><p>Show that there are two noncongruent triangles with $AB = 10$, $\angle A = 30^\circ$ and $BC = 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Put $C$ on the ray from $A$ making $30^\circ$ with $AB$, at distance $t$ from $A$. Drop the perpendicular from $B$ to that ray: it has length $10 \sin 30^\circ = 5$, and its foot is $10\cos 30^\circ = 5\sqrt3$ from $A$.</p></div><p class="why">The distance from $B$ to the ray decides how many points on it are exactly $6$ from $B$.</p></li>
+          <li data-think="A circle of radius 6 around $B$, and a line 5 away from $B$. How many crossings?"><div class="do"><p>Since $6 &gt; 5$, the circle of radius $6$ about $B$ crosses the ray twice, at distance $\sqrt{6^2 - 5^2} = \sqrt{11}$ on either side of the foot: $t = 5\sqrt3 \pm \sqrt{11}$.</p></div><p class="why">Each crossing is a right triangle with hypotenuse $6$ and leg $5$.</p></li>
+          <li><div class="do"><p>Both values are positive ($\approx 11.98$ and $\approx 5.34$), so both points lie on the ray. The two triangles have different $AC$, so they are not congruent.</p></div><p class="why">Same $AB$, same $\angle A$, same $BC$, yet different triangles.</p></li>
+        </ol>
+        <p class="answer">$AC = 5\sqrt3 + \sqrt{11}$ or $AC = 5\sqrt3 - \sqrt{11}$: two different triangles, so SSA is not a congruence test.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two equilateral triangles</h3>
+        <div class="problem"><p>$B$ lies on segment $AC$. Equilateral triangles $ABD$ and $BCE$ are drawn on the same side of $AC$. Prove that $AE = DC$.</p></div>
+        <ol class="steps">
+          <li data-think="$AE$ and $DC$ are sides of which two triangles?"><div class="do"><p>Compare $\triangle ABE$ and $\triangle DBC$.</p></div><p class="why">$AE$ is a side of the first and $DC$ is the corresponding side of the second.</p></li>
+          <li><div class="do"><p>$AB = DB$ (sides of equilateral $\triangle ABD$) and $BE = BC$ (sides of equilateral $\triangle BCE$).</p></div><p class="why">In an equilateral triangle all sides are equal.</p></li>
+          <li><div class="do"><p>$\angle ABE = \angle ABD + \angle DBE = 60^\circ + \angle DBE$ and $\angle DBC = \angle DBE + \angle EBC = \angle DBE + 60^\circ$. So $\angle ABE = \angle DBC$ (both are $120^\circ$).</p></div><p class="why">Each angle is made of a $60^\circ$ angle plus the shared angle $\angle DBE$. (The angles on a line give $\angle DBE = 180^\circ - 60^\circ - 60^\circ = 60^\circ$.)</p></li>
+          <li><div class="do"><p>By SAS, $\triangle ABE \cong \triangle DBC$, so $AE = DC$.</p></div><p class="why">The equal angles are between the equal sides.</p></li>
+        </ol>
+        <p class="answer">$\triangle ABE \cong \triangle DBC$ by SAS, so $AE = DC$.</p>
+        <p class="key-idea">To prove two segments equal, find two triangles that contain them and prove those triangles congruent.</p>
+        <p class="book-next">Next in the book: Exercises 11-14 and 11-15.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.6 ===================== -->
+  <section class="lesson" id="s11-6" data-title="Similar Triangles">
+    <h2><span class="sec-num">11.6</span> Similar Triangles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>How tall is a tree you can't climb? Stand in the sun: if you are $1.5$ m tall and cast a $2$ m shadow while the tree casts an $18$ m shadow, the tree is $13.5$ m tall. The sun's rays make the same angle everywhere, so you and the tree form the same triangle at two different sizes.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Two triangles are <strong>similar</strong> if one is a scaled copy of the other: corresponding angles are equal and corresponding sides share one ratio $k$. We write $\triangle ABC \sim \triangle DEF$, again in matching order, and</p>
+      <div class="rule"><p>$$\frac{DE}{AB} = \frac{EF}{BC} = \frac{FD}{CA} = k, \qquad \frac{[DEF]}{[ABC]} = k^2.$$</p></div>
+      <p>Every other length (altitudes, medians, perimeters) scales by $k$ too, and areas scale by $k^2$. Ways to prove similarity:</p>
+      <ul>
+        <li><strong>AA</strong>: two pairs of equal angles (the third follows). By far the most useful.</li>
+        <li><strong>SAS</strong>: two sides in the same ratio with equal included angles.</li>
+        <li><strong>SSS</strong>: all three sides in the same ratio.</li>
+      </ul>
+      <p>Parallel lines are the usual source of equal angles. If $DE \parallel BC$ with $D$ on $AB$ and $E$ on $AC$, then $\triangle ADE \sim \triangle ABC$. Two other patterns come up constantly. In a right triangle, the altitude to the hypotenuse creates three similar triangles. And an angle bisector divides the opposite side in the ratio of the adjacent sides (the <strong>Angle Bisector Theorem</strong>): if $AD$ bisects $\angle A$, then $\dfrac{BD}{DC} = \dfrac{AB}{AC}$.</p>
+    </div>
+
+    <figure class="explore" data-widget="similarSlide">
+      <figcaption><strong>Explore:</strong> Drag $D$ along side $AB$; segment $DE$ stays parallel to $BC$. All three side ratios stay equal to the same $k$, while the area ratio is $k^2$. Drag $A$ to change the shape: the ratios still match.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Use the scale factor</h3>
+        <div class="problem"><p>$\triangle ABC \sim \triangle DEF$ with $AB = 4$, $BC = 6$ and $DE = 10$. Find $EF$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$k = \dfrac{DE}{AB} = \dfrac{10}{4} = \dfrac52$.</p></div><p class="why">$AB$ and $DE$ correspond (first two letters of each name), so they give the ratio.</p></li>
+          <li><div class="do"><p>$EF = \tfrac52 \cdot BC = \tfrac52 \cdot 6 = 15$.</p></div><p class="why">$EF$ corresponds to $BC$, and every side scales by $k$.</p></li>
+        </ol>
+        <p class="answer">$15$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Shadows</h3>
+        <div class="problem"><p>A $1.5$ m post casts a $2$ m shadow. At the same moment a tree casts an $18$ m shadow. How tall is the tree?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Both make right triangles (vertical object, flat ground) with the same angle of the sun's rays, so they are similar by AA.</p></div><p class="why">A right angle plus one shared angle is two pairs of equal angles.</p></li>
+          <li><div class="do"><p>$\dfrac{h}{18} = \dfrac{1.5}{2}$, so $h = 18 \cdot 0.75 = 13.5$.</p></div><p class="why">Height over shadow is the same ratio in both triangles.</p></li>
+        </ol>
+        <p class="answer">$13.5$ m</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A parallel segment</h3>
+        <div class="problem"><p>In $\triangle ABC$, $D$ is on $AB$ and $E$ is on $AC$ with $DE \parallel BC$. If $AD = 3$, $DB = 6$ and $DE = 4$, find $BC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle ADE = \angle ABC$ and $\angle AED = \angle ACB$ (corresponding angles), so $\triangle ADE \sim \triangle ABC$.</p></div><p class="why">Parallel lines cut by a transversal make equal corresponding angles: AA similarity.</p></li>
+          <li data-think="Is the ratio $AD/DB$ or $AD/AB$?"><div class="do"><p>$k = \dfrac{AB}{AD} = \dfrac{3 + 6}{3} = 3$.</p></div><p class="why">Corresponding sides are $AD$ and $AB$, the whole side, not $DB$.</p></li>
+          <li><div class="do"><p>$BC = 3 \cdot DE = 12$.</p></div><p class="why">Scale the corresponding side.</p></li>
+        </ol>
+        <p class="answer">$12$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The midpoint triangle</h3>
+        <div class="problem"><p>A triangle has sides $8$, $10$ and $14$. Find the perimeter of the triangle formed by joining the midpoints of its sides.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Joining the midpoints of two sides gives a segment parallel to the third side and half as long.</p></div><p class="why">If $M$, $N$ are midpoints of $AB$, $AC$, then $\triangle AMN \sim \triangle ABC$ by SAS with ratio $\tfrac12$ (both sides halved, common angle $A$).</p></li>
+          <li><div class="do"><p>The midpoint triangle has sides $4$, $5$, $7$ and perimeter $16$.</p></div><p class="why">Each of its sides is half of the side it is parallel to.</p></li>
+        </ol>
+        <p class="answer">$16$</p>
+        <p class="book-next">Next in the book: Exercise 11-17.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The altitude to the hypotenuse</h3>
+        <div class="problem"><p>In right $\triangle ABC$ with the right angle at $C$, altitude $CD$ cuts the hypotenuse into $AD = 9$ and $DB = 16$. Find $CD$, $AC$ and $BC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\triangle ADC \sim \triangle CDB$: both have a right angle at $D$, and $\angle ACD = 90^\circ - \angle A = \angle B$.</p></div><p class="why">AA: the two small triangles share their angles with the big one.</p></li>
+          <li><div class="do"><p>$\dfrac{AD}{CD} = \dfrac{CD}{DB}$, so $CD^2 = 9 \cdot 16 = 144$ and $CD = 12$.</p></div><p class="why">Match the short leg to the long leg in each small triangle.</p></li>
+          <li><div class="do"><p>$AC = \sqrt{9^2 + 12^2} = 15$ and $BC = \sqrt{16^2 + 12^2} = 20$.</p></div><p class="why">Pythagoras in each small right triangle. Check: $15^2 + 20^2 = 625 = 25^2$. ✓</p></li>
+        </ol>
+        <p class="answer">$CD = 12$, $AC = 15$, $BC = 20$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The Angle Bisector Theorem</h3>
+        <div class="problem"><p>In $\triangle ABC$, $AB = 6$, $AC = 9$ and $BC = 10$. The bisector of $\angle A$ meets $BC$ at $D$. Find $BD$ and $DC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{BD}{DC} = \dfrac{AB}{AC} = \dfrac{6}{9} = \dfrac23$.</p></div><p class="why">The bisector divides the opposite side in the ratio of the two sides next to the angle.</p></li>
+          <li><div class="do"><p>Write $BD = 2t$, $DC = 3t$. Then $5t = 10$, so $t = 2$.</p></div><p class="why">The two pieces make up all of $BC$.</p></li>
+          <li><div class="do"><p>$BD = 4$, $DC = 6$.</p></div><p class="why">The shorter piece is next to the shorter side.</p></li>
+        </ol>
+        <p class="answer">$BD = 4$, $DC = 6$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Areas scale by the square</h3>
+        <div class="problem"><p>Two similar triangles have corresponding sides in the ratio $3 : 5$. The smaller has area $18$. Find the area of the larger.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$k = \dfrac53$, so the area ratio is $k^2 = \dfrac{25}{9}$.</p></div><p class="why">Area is base times height over two, and both base and height scale by $k$.</p></li>
+          <li><div class="do"><p>Larger area $= 18 \cdot \dfrac{25}{9} = 50$.</p></div><p class="why">Multiply by the area ratio, not the side ratio.</p></li>
+        </ol>
+        <p class="answer">$50$</p>
+        <p class="key-idea">Lengths scale by $k$, areas by $k^2$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A square in a right triangle</h3>
+        <div class="problem"><p>A right triangle has legs $3$ and $4$. A square sits in the right-angle corner, with two sides along the legs and its far vertex on the hypotenuse. Find the side of the square.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the side be $s$. Above the square, along the leg of length $3$, is a small right triangle with vertical leg $3 - s$ and horizontal leg $s$ (the top side of the square).</p></div><p class="why">Name what we want and look at the pieces left over.</p></li>
+          <li data-think="Why is the small triangle similar to the whole one?"><div class="do"><p>The top of the square is parallel to the leg of length $4$, so the small triangle is similar to the whole triangle: $\dfrac{3 - s}{s} = \dfrac{3}{4}$.</p></div><p class="why">Parallel lines give equal corresponding angles (AA). Vertical leg over horizontal leg is the same ratio in both.</p></li>
+          <li><div class="do"><p>$4(3 - s) = 3s$, so $12 = 7s$ and $s = \dfrac{12}{7}$.</p></div><p class="why">Cross-multiply and solve.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{12}{7}$</p>
+        <p class="key-idea">When a length is unknown, look for a parallel line that creates a smaller similar triangle.</p>
+        <p class="book-next">Next in the book: Exercises 11-16, 11-18 and 11-19.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.7 ===================== -->
+  <section class="lesson" id="s11-7" data-title="Introduction to Trigonometry">
+    <h2><span class="sec-num">11.7</span> Introduction to Trigonometry</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Every right triangle with a $30^\circ$ angle is a scaled copy of every other one, by AA similarity. So the ratio "side opposite $30^\circ$ over hypotenuse" is the same number for all of them, $\tfrac12$. Trigonometry gives these fixed ratios names, so one angle and one side are enough to find the rest.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>In right $\triangle ABC$ with $\angle C = 90^\circ$, relative to $\angle A$ the side $a = BC$ is <em>opposite</em>, $b = AC$ is <em>adjacent</em>, and $c = AB$ is the <em>hypotenuse</em>.</p>
+      <div class="rule"><p>$$\sin A = \frac{a}{c}, \quad \cos A = \frac{b}{c}, \quad \tan A = \frac{a}{b} = \frac{\sin A}{\cos A}$$</p>
+      <p>$$\csc A = \frac{1}{\sin A}, \quad \sec A = \frac{1}{\cos A}, \quad \cot A = \frac{1}{\tan A}.$$</p></div>
+      <p>Because $\angle B = 90^\circ - \angle A$ and the roles of $a$ and $b$ swap, $\sin A = \cos(90^\circ - A)$. Dividing $a^2 + b^2 = c^2$ by $c^2$ gives the key identity</p>
+      <div class="rule"><p>$$\sin^2 A + \cos^2 A = 1, \qquad \tan^2 A + 1 = \sec^2 A, \qquad 1 + \cot^2 A = \csc^2 A.$$</p></div>
+      <p><strong>Special right triangles.</strong> Half a square gives the $45^\circ$-$45^\circ$-$90^\circ$ triangle with sides $1 : 1 : \sqrt2$. Half an equilateral triangle gives the $30^\circ$-$60^\circ$-$90^\circ$ triangle with sides $1 : \sqrt3 : 2$: the hypotenuse is twice the side opposite $30^\circ$.</p>
+      <div class="rule"><p>$$\sin 30^\circ = \tfrac12,\ \ \cos 30^\circ = \tfrac{\sqrt3}{2},\ \ \tan 30^\circ = \tfrac{\sqrt3}{3}; \qquad \sin 45^\circ = \cos 45^\circ = \tfrac{\sqrt2}{2},\ \ \tan 45^\circ = 1;$$ $$\sin 60^\circ = \tfrac{\sqrt3}{2},\ \ \cos 60^\circ = \tfrac12,\ \ \tan 60^\circ = \sqrt3.$$</p></div>
+      <div class="note"><p>If you forget which of $\sin 30^\circ$ and $\cos 30^\circ$ is $\tfrac12$, sketch the triangle: the side opposite the small angle is the short one.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="trigTriangle">
+      <figcaption><strong>Explore:</strong> Drag $B$ around the arc to change the angle $\theta$ at $A$. The hypotenuse stays $1$, so the vertical leg <em>is</em> $\sin\theta$ and the horizontal leg <em>is</em> $\cos\theta$. Jump to $30^\circ$, $45^\circ$ and $60^\circ$ to see the exact values.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Ratios in a 3-4-5 triangle</h3>
+        <div class="problem"><p>In right $\triangle ABC$ with $\angle C = 90^\circ$, $BC = 3$, $AC = 4$ and $AB = 5$. Find $\sin A$, $\cos A$ and $\tan A$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>From $A$: opposite is $BC = 3$, adjacent is $AC = 4$, hypotenuse is $5$.</p></div><p class="why">Labels depend on which angle you stand at.</p></li>
+          <li><div class="do"><p>$\sin A = \tfrac35$, $\cos A = \tfrac45$, $\tan A = \tfrac34$.</p></div><p class="why">Apply the definitions.</p></li>
+        </ol>
+        <p class="answer">$\sin A = \tfrac35$, $\cos A = \tfrac45$, $\tan A = \tfrac34$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Special triangles</h3>
+        <div class="problem"><p>(a) A $45$-$45$-$90$ triangle has legs $7$. Find the hypotenuse. (b) A $30$-$60$-$90$ triangle has shorter leg $5$. Find the other sides.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Hypotenuse $= 7\sqrt2$.</p></div><p class="why">Ratio $1 : 1 : \sqrt2$.</p></li>
+          <li><div class="do"><p>(b) Longer leg $= 5\sqrt3$ and hypotenuse $= 10$.</p></div><p class="why">Ratio $1 : \sqrt3 : 2$, with the shorter leg opposite $30^\circ$.</p></li>
+        </ol>
+        <p class="answer">(a) $7\sqrt2$; (b) $5\sqrt3$ and $10$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Start from the hypotenuse</h3>
+        <div class="problem"><p>A $30$-$60$-$90$ triangle has hypotenuse $12$. Find both legs.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Shorter leg $= \tfrac12 \cdot 12 = 6$.</p></div><p class="why">The hypotenuse is twice the leg opposite $30^\circ$; equivalently $12 \sin 30^\circ = 6$.</p></li>
+          <li><div class="do"><p>Longer leg $= 6\sqrt3$.</p></div><p class="why">Or $12\cos 30^\circ = 12 \cdot \tfrac{\sqrt3}{2} = 6\sqrt3$.</p></li>
+        </ol>
+        <p class="answer">$6$ and $6\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>All six from one</h3>
+        <div class="problem"><p>$\angle A$ is acute and $\cos A = \dfrac{5}{13}$. Find the other five trigonometric ratios of $A$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw a right triangle with adjacent side $5$ and hypotenuse $13$. The opposite side is $\sqrt{169 - 25} = 12$.</p></div><p class="why">Any triangle with these ratios will do; this one has whole-number sides.</p></li>
+          <li><div class="do"><p>$\sin A = \tfrac{12}{13}$, $\tan A = \tfrac{12}{5}$.</p></div><p class="why">Read them off the triangle.</p></li>
+          <li><div class="do"><p>$\sec A = \tfrac{13}{5}$, $\csc A = \tfrac{13}{12}$, $\cot A = \tfrac{5}{12}$.</p></div><p class="why">These are reciprocals of cos, sin, tan.</p></li>
+        </ol>
+        <p class="answer">$\sin A = \tfrac{12}{13}$, $\tan A = \tfrac{12}{5}$, $\sec A = \tfrac{13}{5}$, $\csc A = \tfrac{13}{12}$, $\cot A = \tfrac{5}{12}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Height from an angle</h3>
+        <div class="problem"><p>From a point $20$ m from the base of a building, the angle up to the top is $60^\circ$. How tall is the building?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The height $h$ is opposite the $60^\circ$ angle, and the $20$ m is adjacent, so $\tan 60^\circ = \dfrac{h}{20}$.</p></div><p class="why">Tangent links the two legs, which is exactly what we have and want.</p></li>
+          <li><div class="do"><p>$h = 20\sqrt3 \approx 34.6$ m.</p></div><p class="why">$\tan 60^\circ = \sqrt3$.</p></li>
+        </ol>
+        <p class="answer">$20\sqrt3 \approx 34.6$ m</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Complementary angles</h3>
+        <div class="problem"><p>Find the acute angle $\theta$ such that $\sin(2\theta + 20^\circ) = \cos(\theta + 10^\circ)$, assuming both angles are acute.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\cos(\theta + 10^\circ) = \sin\big(90^\circ - (\theta + 10^\circ)\big) = \sin(80^\circ - \theta)$.</p></div><p class="why">Sine of an angle is cosine of its complement.</p></li>
+          <li data-think="If two acute angles have the same sine, what can you say about them?"><div class="do"><p>$2\theta + 20^\circ = 80^\circ - \theta$, so $3\theta = 60^\circ$ and $\theta = 20^\circ$.</p></div><p class="why">For acute angles, equal sines mean equal angles (a bigger acute angle has a bigger opposite side).</p></li>
+          <li><div class="do"><p>Check: $\sin 60^\circ = \cos 30^\circ = \tfrac{\sqrt3}{2}$. ✓</p></div><p class="why">Substitute back.</p></li>
+        </ol>
+        <p class="answer">$\theta = 20^\circ$</p>
+        <p class="book-next">Next in the book: Exercise 11-21.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Split a triangle into special ones</h3>
+        <div class="problem"><p>In $\triangle ABC$, $\angle B = 45^\circ$, $\angle C = 60^\circ$ and $AB = 6\sqrt2$. Find $BC$.</p></div>
+        <ol class="steps">
+          <li data-think="Neither $45^\circ$ nor $60^\circ$ is in a right triangle yet. Which line creates one at each?"><div class="do"><p>Drop altitude $AD$ to $BC$. Both base angles are acute, so $D$ lies between $B$ and $C$.</p></div><p class="why">The altitude creates two right triangles: one with a $45^\circ$ angle, one with $60^\circ$.</p></li>
+          <li><div class="do"><p>$\triangle ABD$ is $45$-$45$-$90$ with hypotenuse $6\sqrt2$, so $AD = BD = 6$.</p></div><p class="why">Legs are hypotenuse divided by $\sqrt2$.</p></li>
+          <li><div class="do"><p>$\triangle ADC$ is $30$-$60$-$90$ with the $60^\circ$ at $C$. $AD = 6$ is the longer leg, so $DC = \dfrac{6}{\sqrt3} = 2\sqrt3$.</p></div><p class="why">The longer leg is $\sqrt3$ times the shorter leg; equivalently $DC = AD / \tan 60^\circ$.</p></li>
+          <li><div class="do"><p>$BC = BD + DC = 6 + 2\sqrt3$.</p></div><p class="why">$D$ is between $B$ and $C$.</p></li>
+        </ol>
+        <p class="answer">$6 + 2\sqrt3$</p>
+        <p class="key-idea">Dropping an altitude often splits a triangle into two special right triangles.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>From tangent to sine times cosine</h3>
+        <div class="problem"><p>$\theta$ is acute and $\tan\theta = 2$. Find $\sin\theta\cos\theta$ and $\sec^2\theta$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Build a right triangle with opposite side $2$ and adjacent side $1$. Its hypotenuse is $\sqrt5$.</p></div><p class="why">$\tan\theta = \tfrac{\text{opp}}{\text{adj}} = \tfrac21$.</p></li>
+          <li><div class="do"><p>$\sin\theta = \tfrac{2}{\sqrt5}$ and $\cos\theta = \tfrac{1}{\sqrt5}$, so $\sin\theta\cos\theta = \tfrac{2}{5}$.</p></div><p class="why">The $\sqrt5$'s multiply to $5$.</p></li>
+          <li><div class="do"><p>$\sec^2\theta = 1 + \tan^2\theta = 5$. Check: $\sec\theta = \tfrac{1}{\cos\theta} = \sqrt5$. ✓</p></div><p class="why">The identity and the triangle agree.</p></li>
+        </ol>
+        <p class="answer">$\sin\theta\cos\theta = \tfrac25$ and $\sec^2\theta = 5$</p>
+        <p class="key-idea">Given one ratio, draw any right triangle that has it; the others follow.</p>
+        <p class="book-next">Next in the book: Exercises 11-20 and 11-22.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.8 ===================== -->
+  <section class="lesson" id="s11-8" data-title="Area of a Triangle">
+    <h2><span class="sec-num">11.8</span> Area of a Triangle</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Slide the top vertex of a triangle along a line parallel to its base. The triangle leans, stretches and looks completely different, but its area never changes. Area depends only on the base and the height, and that one idea leads to every area formula in this section.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Write $[ABC]$ for the area of $\triangle ABC$. Two copies of a right triangle make a rectangle, so its area is half the product of the legs. Splitting any triangle by an altitude reduces it to right triangles, which gives three formulas:</p>
+      <div class="rule"><p>$$[ABC] = \frac{a\,h_a}{2} = \frac{ab \sin C}{2} = rs.$$</p></div>
+      <ul>
+        <li><strong>Half base times height</strong>: the most common. Pick a side whose altitude you can find. In an obtuse triangle the altitude may fall outside, on the extended base.</li>
+        <li><strong>Two sides and the included angle</strong>: the altitude from $A$ to $BC$ is $b \sin C$. For an obtuse angle use $\sin(180^\circ - \theta) = \sin\theta$.</li>
+        <li><strong>Inradius times semiperimeter</strong>: join the incenter to the vertices. You get three triangles with heights $r$ and bases $a, b, c$, so $[ABC] = \tfrac12 r(a+b+c) = rs$. Use it whenever the incircle appears.</li>
+      </ul>
+      <p>The formulas also work backwards: because area is the same however you compute it, $a h_a = b h_b = c h_c$, and the shortest altitude goes to the longest side. For similar triangles with ratio $k$, the areas have ratio $k^2$.</p>
+    </div>
+
+    <figure class="explore" data-widget="areaFormulas">
+      <figcaption><strong>Explore:</strong> Drag the vertices on the grid and pick a formula. Each one draws its own construction (an altitude, an angle, or the incircle and three small triangles), yet the readout shows all three give the same area.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Base and height</h3>
+        <div class="problem"><p>A triangle has a base of $10$ and a height of $7$ to that base. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$[ABC] = \tfrac12 \cdot 10 \cdot 7 = 35$.</p></div><p class="why">Half of base times height.</p></li>
+        </ol>
+        <p class="answer">$35$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Two ways to compute one area</h3>
+        <div class="problem"><p>A right triangle has legs $9$ and $12$. Find its area and the altitude to its hypotenuse.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area $= \tfrac12 \cdot 9 \cdot 12 = 54$, and the hypotenuse is $15$ (a $3$-$4$-$5$ triangle times $3$).</p></div><p class="why">Each leg is the altitude to the other.</p></li>
+          <li><div class="do"><p>Using the hypotenuse as base: $\tfrac12 \cdot 15 \cdot h = 54$, so $h = \dfrac{108}{15} = 7.2$.</p></div><p class="why">Same area, different base, so we can solve for the new height.</p></li>
+        </ol>
+        <p class="answer">Area $54$; altitude to the hypotenuse $7.2$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two sides and the angle between</h3>
+        <div class="problem"><p>Find the area of a triangle with sides $8$ and $10$ and included angle (a) $30^\circ$; (b) $150^\circ$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) $\tfrac12 \cdot 8 \cdot 10 \cdot \sin 30^\circ = 40 \cdot \tfrac12 = 20$.</p></div><p class="why">$\tfrac12 ab \sin C$ with the angle between the two sides.</p></li>
+          <li><div class="do"><p>(b) $\sin 150^\circ = \sin 30^\circ = \tfrac12$, so the area is again $20$.</p></div><p class="why">Opening the angle to $150^\circ$ gives the same height as $30^\circ$, just on the other side.</p></li>
+        </ol>
+        <p class="answer">$20$ in both cases.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Equilateral triangle</h3>
+        <div class="problem"><p>Find the area of an equilateral triangle with side $6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\tfrac12 \cdot 6 \cdot 6 \cdot \sin 60^\circ = 18 \cdot \tfrac{\sqrt3}{2} = 9\sqrt3$.</p></div><p class="why">All angles are $60^\circ$.</p></li>
+          <li><div class="do"><p>Check: the altitude is $3\sqrt3$ (a $30$-$60$-$90$ triangle with hypotenuse $6$), and $\tfrac12 \cdot 6 \cdot 3\sqrt3 = 9\sqrt3$. ✓</p></div><p class="why">In general an equilateral triangle with side $s$ has area $\tfrac{\sqrt3}{4}s^2$.</p></li>
+        </ol>
+        <p class="answer">$9\sqrt3$</p>
+        <p class="book-next">Next in the book: Exercise 11-23.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find an inradius</h3>
+        <div class="problem"><p>Find the inradius of a triangle with sides $5$, $12$, $13$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$5^2 + 12^2 = 13^2$, so it is a right triangle with area $\tfrac12 \cdot 5 \cdot 12 = 30$.</p></div><p class="why">Always check for a right triangle when given three sides.</p></li>
+          <li><div class="do"><p>$s = \tfrac{5 + 12 + 13}{2} = 15$, so $r = \dfrac{30}{15} = 2$.</p></div><p class="why">$[ABC] = rs$, solved for $r$.</p></li>
+        </ol>
+        <p class="answer">$r = 2$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Isosceles: area, then inradius</h3>
+        <div class="problem"><p>An isosceles triangle has sides $10$, $10$, $12$. Find its area and inradius.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The altitude to the base of $12$ bisects it, so it is $\sqrt{10^2 - 6^2} = 8$.</p></div><p class="why">Two $6$-$8$-$10$ right triangles.</p></li>
+          <li><div class="do"><p>Area $= \tfrac12 \cdot 12 \cdot 8 = 48$.</p></div><p class="why">Half base times height.</p></li>
+          <li><div class="do"><p>$s = 16$, so $r = \tfrac{48}{16} = 3$.</p></div><p class="why">$r = [ABC]/s$.</p></li>
+        </ol>
+        <p class="answer">Area $48$, inradius $3$.</p>
+        <p class="book-next">Next in the book: Exercises 11-24 and 11-25.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Comparing altitudes</h3>
+        <div class="problem"><p>A triangle has sides $4$, $5$ and $6$. What fraction of the longest altitude is the shortest altitude?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>With area $K$, each altitude is $h = \dfrac{2K}{\text{side}}$, so altitudes are inversely proportional to their sides.</p></div><p class="why">$K = \tfrac12 \cdot \text{side} \cdot h$ for every side.</p></li>
+          <li><div class="do"><p>Shortest altitude: to the side $6$, $\tfrac{2K}{6}$. Longest: to the side $4$, $\tfrac{2K}{4}$.</p></div><p class="why">Longest side, shortest altitude.</p></li>
+          <li><div class="do"><p>Ratio $= \dfrac{2K/6}{2K/4} = \dfrac46 = \dfrac23$.</p></div><p class="why">$K$ cancels, so we never needed the area.</p></li>
+        </ol>
+        <p class="answer">$\dfrac23$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The 13-14-15 triangle</h3>
+        <div class="problem"><p>Find the area and inradius of the triangle with sides $13$, $14$, $15$.</p></div>
+        <ol class="steps">
+          <li data-think="Which side should be the base, and where does the altitude land?"><div class="do"><p>Drop the altitude $h$ to the side of $14$, splitting it into $x$ and $14 - x$ (next to the sides $13$ and $15$).</p></div><p class="why">The altitude makes two right triangles that share the leg $h$.</p></li>
+          <li><div class="do"><p>$13^2 - x^2 = h^2 = 15^2 - (14 - x)^2$, so $169 - x^2 = 29 + 28x - x^2$, giving $x = 5$.</p></div><p class="why">Set the two expressions for $h^2$ equal; the $x^2$ terms cancel.</p></li>
+          <li><div class="do"><p>$h = \sqrt{169 - 25} = 12$, so the area is $\tfrac12 \cdot 14 \cdot 12 = 84$.</p></div><p class="why">The triangle is a $5$-$12$-$13$ and a $9$-$12$-$15$ glued together.</p></li>
+          <li><div class="do"><p>$s = 21$, so $r = \tfrac{84}{21} = 4$.</p></div><p class="why">$[ABC] = rs$.</p></li>
+        </ol>
+        <p class="answer">Area $84$, inradius $4$.</p>
+        <p class="key-idea">With three sides and no right angle, drop an altitude and write two Pythagorean equations for it.</p>
+        <p class="book-next">Next in the book: Exercise 11-26.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 11.9 ===================== -->
+  <section class="lesson" id="s11-9" data-title="A Handful of Helpful Hints">
+    <h2><span class="sec-num">11.9</span> A Handful of Helpful Hints</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Many geometry problems look impossible until you draw one extra line, and then they fall apart. Which line? There are signs to look for. Ratios ask for a parallel. Areas and distances ask for a perpendicular. A right angle asks for a circle.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Your best friends are <strong>parallel lines, perpendicular lines, congruent triangles and similar triangles</strong>. Lines show up in three ways: some are given, some you draw, and some you discover.</p>
+      <p><em>Proving two lines parallel:</em> equal alternate interior angles, equal corresponding angles, supplementary same-side interior angles, or two points of one line at the same distance from the other.</p>
+      <p><em>Proving an angle is right:</em></p>
+      <ul>
+        <li>the angle is inscribed in a semicircle;</li>
+        <li>two adjacent angles on a line are equal (each is then $90^\circ$);</li>
+        <li>the other two angles of its triangle are complementary;</li>
+        <li>the sides satisfy $a^2 + b^2 = c^2$;</li>
+        <li>the triangle is similar or congruent to a right triangle;</li>
+        <li>the median to a side is half that side.</li>
+      </ul>
+      <p><em>Perpendicular without angles:</em> a radius to a point of tangency, a radius that bisects a chord, or a line through a vertex and the orthocenter.</p>
+      <div class="note"><p>Rule of thumb: congruent triangles prove things <em>equal</em>; similar triangles find <em>lengths and ratios</em>; perpendiculars help with <em>areas</em>. If the triangles you need aren't there, draw a line that makes them.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="rightDetect">
+      <figcaption><strong>Explore:</strong> Drag $C$. Three different tests for a right angle at $C$ are checked live: the angle itself, the median $CM$ compared with $\tfrac12 AB$, and $a^2 + b^2$ compared with $c^2$. They all pass at the same moment, exactly when $C$ is on the circle with diameter $AB$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Are the lines parallel?</h3>
+        <div class="problem"><p>A transversal crosses lines $\ell$ and $m$. (a) A pair of alternate interior angles measure $65^\circ$ and $65^\circ$. (b) In another figure, two same-side interior angles measure $110^\circ$ and $75^\circ$. Are the lines parallel?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Equal alternate interior angles: yes, $\ell \parallel m$.</p></div><p class="why">This is one of the standard tests for parallel lines.</p></li>
+          <li><div class="do"><p>(b) $110^\circ + 75^\circ = 185^\circ \ne 180^\circ$: not parallel.</p></div><p class="why">Same-side interior angles of parallel lines must be supplementary.</p></li>
+        </ol>
+        <p class="answer">(a) Parallel; (b) not parallel.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Test for a right triangle</h3>
+        <div class="problem"><p>Is the triangle with sides $20$, $21$, $29$ a right triangle?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$20^2 + 21^2 = 400 + 441 = 841 = 29^2$.</p></div><p class="why">If the sides satisfy Pythagoras, the triangle must be right (an acute or obtuse triangle can't).</p></li>
+        </ol>
+        <p class="answer">Yes; the right angle is opposite the side $29$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A right angle from a semicircle</h3>
+        <div class="problem"><p>$AB$ is a diameter of a circle with radius $6.5$, and $C$ is on the circle with $AC = 5$. Find $BC$ and the area of $\triangle ABC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle ACB = 90^\circ$ because it is inscribed in a semicircle.</p></div><p class="why">This is a right angle we <em>discover</em>.</p></li>
+          <li><div class="do"><p>$AB = 13$, so $BC = \sqrt{13^2 - 5^2} = 12$.</p></div><p class="why">The diameter is the hypotenuse.</p></li>
+          <li><div class="do"><p>Area $= \tfrac12 \cdot 5 \cdot 12 = 30$.</p></div><p class="why">The legs are perpendicular.</p></li>
+        </ol>
+        <p class="answer">$BC = 12$, area $30$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Draw an altitude</h3>
+        <div class="problem"><p>An isosceles triangle has legs $8$ and vertex angle $120^\circ$. Find its base and area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Drop the altitude from the vertex. It bisects the vertex angle and the base, making two right triangles with angles $60^\circ$ at the top and $30^\circ$ at the base.</p></div><p class="why">The base angles are $\tfrac{180^\circ - 120^\circ}{2} = 30^\circ$; the altitude produces special right triangles.</p></li>
+          <li><div class="do"><p>Each is $30$-$60$-$90$ with hypotenuse $8$: altitude $4$, half-base $4\sqrt3$.</p></div><p class="why">The altitude is opposite the $30^\circ$ angle.</p></li>
+          <li><div class="do"><p>Base $= 8\sqrt3$, area $= \tfrac12 \cdot 8\sqrt3 \cdot 4 = 16\sqrt3$.</p></div><p class="why">Half base times height.</p></li>
+        </ol>
+        <p class="answer">Base $8\sqrt3$, area $16\sqrt3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Draw a parallel</h3>
+        <div class="problem"><p>In $\triangle ABC$, $D$ is the midpoint of $BC$ and $E$ is on $AC$ with $AE = 2\,EC$. Segments $AD$ and $BE$ meet at $F$. Find $AF : FD$.</p></div>
+        <ol class="steps">
+          <li data-think="Ratios on $AD$ and on $AC$. Which parallel line would put them in similar triangles?"><div class="do"><p>Through $D$, draw a line parallel to $BE$, meeting $AC$ at $G$.</p></div><p class="why">Ratios suggest similar triangles, and a parallel line creates them.</p></li>
+          <li><div class="do"><p>In $\triangle CBE$, $D$ is the midpoint of $CB$ and $DG \parallel BE$, so $G$ is the midpoint of $CE$: $EG = GC = \tfrac12 EC$.</p></div><p class="why">$\triangle CDG \sim \triangle CBE$ with ratio $\tfrac12$.</p></li>
+          <li><div class="do"><p>$AE = 2\,EC = 4\,EG$.</p></div><p class="why">Rewrite both lengths in the same unit, $EG$.</p></li>
+          <li><div class="do"><p>In $\triangle ADG$, $FE \parallel DG$, so $\dfrac{AF}{FD} = \dfrac{AE}{EG} = 4$.</p></div><p class="why">$\triangle AFE \sim \triangle ADG$ again by parallel lines: the line $FE$ cuts both sides in the same ratio.</p></li>
+        </ol>
+        <p class="answer">$AF : FD = 4 : 1$</p>
+        <p class="key-idea">One well-chosen parallel line can turn a ratio problem into two similar-triangle steps.</p>
+        <p class="book-next">Compare with the book's Example 11-25.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The Angle Bisector Theorem by areas</h3>
+        <div class="problem"><p>$AD$ bisects $\angle A$ of $\triangle ABC$, with $D$ on $BC$. Prove $\dfrac{BD}{DC} = \dfrac{AB}{AC}$ using areas.</p></div>
+        <ol class="steps">
+          <li data-think="Triangles $ABD$ and $ACD$ share something. What?"><div class="do"><p>$\triangle ABD$ and $\triangle ACD$ have the same altitude from $A$ to line $BC$, so $\dfrac{[ABD]}{[ACD]} = \dfrac{BD}{DC}$.</p></div><p class="why">Same height, so the areas are in the ratio of the bases.</p></li>
+          <li><div class="do"><p>With $\theta = \angle BAD = \angle DAC$: $\dfrac{[ABD]}{[ACD]} = \dfrac{\tfrac12 \cdot AB \cdot AD \sin\theta}{\tfrac12 \cdot AC \cdot AD \sin\theta} = \dfrac{AB}{AC}$.</p></div><p class="why">Compute the same two areas with $\tfrac12 ab\sin C$, using the equal angles at $A$.</p></li>
+          <li><div class="do"><p>Both expressions equal $\dfrac{[ABD]}{[ACD]}$, so $\dfrac{BD}{DC} = \dfrac{AB}{AC}$.</p></div><p class="why">Computing one quantity two ways gives an equation.</p></li>
+        </ol>
+        <p class="answer">Both ratios equal $[ABD]/[ACD]$, so $BD/DC = AB/AC$.</p>
+        <p class="key-idea">Computing an area (or a ratio of areas) in two different ways is a powerful proof technique.</p>
+        <p class="book-next">You're ready for the book's Problems to Solve for Chapter 11.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-11">
+    <h2 id="further-11">Further reading in the book</h2>
+    <ul>
+      <li><strong>§11.1 Classifying Triangles</strong>: the definitions of acute, right, obtuse, scalene, isosceles and equilateral.</li>
+      <li><strong>§11.2 Parts of a Triangle</strong>: Example 11-1 and Exercises 11-1 to 11-3.</li>
+      <li><strong>§11.3 The Triangle Inequality</strong>: Example 11-2 and Exercise 11-4.</li>
+      <li><strong>§11.4 The Pythagorean Theorem</strong>: Examples 11-3 to 11-8 and Exercises 11-5 to 11-10.</li>
+      <li><strong>§11.5 Congruent Triangles</strong>: Examples 11-9, 11-10 and Exercises 11-11 to 11-15.</li>
+      <li><strong>§11.6 Similar Triangles</strong>: Examples 11-11 to 11-15 and Exercises 11-16 to 11-19.</li>
+      <li><strong>§11.7 Introduction to Trigonometry</strong>: Examples 11-16, 11-17 and Exercises 11-20 to 11-22.</li>
+      <li><strong>§11.8 Area of a Triangle</strong>: Examples 11-18 to 11-24 and Exercises 11-23 to 11-26.</li>
+      <li><strong>§11.9 A Handful of Helpful Hints</strong>: Example 11-25.</li>
+      <li><strong>Problems to Solve for Chapter 11</strong>: Problems 167–196. The book suggests trying some after each section rather than saving them all for the end.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 11 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* ---- small geometry kit (svg coordinates, y down) ---- */
+  var DEG = Math.PI / 180;
+  function P(x, y) { return { x: x, y: y }; }
+  function sub(p, q) { return P(p.x - q.x, p.y - q.y); }
+  function add(p, q) { return P(p.x + q.x, p.y + q.y); }
+  function mul(p, k) { return P(p.x * k, p.y * k); }
+  function len(p) { return Math.hypot(p.x, p.y); }
+  function dist(p, q) { return len(sub(p, q)); }
+  function unit(p) { var l = len(p) || 1; return P(p.x / l, p.y / l); }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function angAt(Q, A, B) { /* angle AQB in degrees */
+    var u = sub(A, Q), v = sub(B, Q), l = len(u) * len(v);
+    if (!l) return 0;
+    return Math.acos(clamp((u.x * v.x + u.y * v.y) / l, -1, 1)) / DEG;
+  }
+  function areaT(A, B, C) { return Math.abs((B.x - A.x) * (C.y - A.y) - (C.x - A.x) * (B.y - A.y)) / 2; }
+  function foot(Q, A, B) {
+    var d = sub(B, A), t = ((Q.x - A.x) * d.x + (Q.y - A.y) * d.y) / (d.x * d.x + d.y * d.y || 1);
+    return { x: A.x + t * d.x, y: A.y + t * d.y, t: t };
+  }
+  function circumcenter(A, B, C) {
+    var d = 2 * (A.x * (B.y - C.y) + B.x * (C.y - A.y) + C.x * (A.y - B.y));
+    if (Math.abs(d) < 1e-9) return null;
+    var a2 = A.x * A.x + A.y * A.y, b2 = B.x * B.x + B.y * B.y, c2 = C.x * C.x + C.y * C.y;
+    return P((a2 * (B.y - C.y) + b2 * (C.y - A.y) + c2 * (A.y - B.y)) / d,
+             (a2 * (C.x - B.x) + b2 * (A.x - C.x) + c2 * (B.x - A.x)) / d);
+  }
+  function arcD(Q, A, B, r) { /* small arc at Q from ray QA to ray QB */
+    var a1 = Math.atan2(A.y - Q.y, A.x - Q.x), a2 = Math.atan2(B.y - Q.y, B.x - Q.x), d = a2 - a1;
+    while (d <= -Math.PI) d += 2 * Math.PI;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    var x1 = Q.x + r * Math.cos(a1), y1 = Q.y + r * Math.sin(a1), x2 = Q.x + r * Math.cos(a1 + d), y2 = Q.y + r * Math.sin(a1 + d);
+    return "M" + x1.toFixed(1) + " " + y1.toFixed(1) + "A" + r + " " + r + " 0 0 " + (d > 0 ? 1 : 0) + " " + x2.toFixed(1) + " " + y2.toFixed(1);
+  }
+  function rightD(Q, A, B, s) {
+    var u = mul(unit(sub(A, Q)), s), v = mul(unit(sub(B, Q)), s);
+    return "M" + (Q.x + u.x) + " " + (Q.y + u.y) + "L" + (Q.x + u.x + v.x) + " " + (Q.y + u.y + v.y) + "L" + (Q.x + v.x) + " " + (Q.y + v.y);
+  }
+  function bis(Q, A, B) { return unit(add(unit(sub(A, Q)), unit(sub(B, Q)))); }
+  function pts(arr) { return arr.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" "); }
+  function seg(p, q, attrs) { var a = { x1: p.x, y1: p.y, x2: q.x, y2: q.y }; for (var k in attrs) a[k] = attrs[k]; return W.s("line", a); }
+  function txt(p, s, attrs) {
+    var a = { x: p.x, y: p.y, "text-anchor": "middle", "dominant-baseline": "middle", style: "font: 700 15px var(--font-body); fill: var(--ink)", text: s };
+    for (var k in attrs) a[k] = attrs[k];
+    return W.s("text", a);
+  }
+  function small(p, s, fill) { return W.s("text", { x: p.x, y: p.y, "text-anchor": "middle", "dominant-baseline": "middle", style: "font: 600 12.5px var(--font-mono); fill: " + (fill || "var(--muted)"), text: s }); }
+  function vlabels(g, T, names) {
+    var G = P((T[0].x + T[1].x + T[2].x) / 3, (T[0].y + T[1].y + T[2].y) / 3);
+    T.forEach(function (V, i) { g.appendChild(txt(add(V, mul(unit(sub(V, G)), 22)), names[i])); });
+  }
+  function fillCol(n, pct) { return "color-mix(in srgb, var(--plot-" + n + ") " + (pct || 22) + "%, transparent)"; }
+  /* three draggable vertices; o: { snap(v), box:[x0,y0,x1,y1], keyStep, onChange } */
+  function dragTri(svg, T, o) {
+    var b = o.box || [20, 20, svg._w - 20, svg._h - 20];
+    return T.map(function (p, i) {
+      return W.handle(svg, { x: p.x, y: p.y, r: 9, label: "Vertex " + "ABC"[i] + ": drag, or focus and use the arrow keys", keyStep: o.keyStep || 8,
+        onMove: function (x, y) {
+          x = clamp(x, b[0], b[2]); y = clamp(y, b[1], b[3]);
+          if (o.snap) { x = o.snap(x, "x"); y = o.snap(y, "y"); }
+          for (var j = 0; j < 3; j++) if (j !== i && Math.hypot(T[j].x - x, T[j].y - y) < 4) { x = T[i].x; y = T[i].y; }
+          T[i].x = x; T[i].y = y; o.onChange(); return [x, y];
+        },
+        valueText: function () { return "ABC"[i] + " at " + Math.round(T[i].x) + ", " + Math.round(T[i].y); } });
+    });
+  }
+  function dotGrid(svg, S, ox, oy) {
+    var g = W.s("g");
+    for (var x = ox; x <= svg._w; x += S) for (var y = oy; y <= svg._h; y += S)
+      g.appendChild(W.s("circle", { cx: x, cy: y, r: 1.6, fill: "var(--faint)" }));
+    svg.appendChild(g);
+  }
+  function f1(n) { return W.fmt(n, 1); }
+
+  /* 11.1 — classify a triangle */
+  AOPS.registerWidget("classifyTri", function (body) {
+    var svg = W.stage(body, { w: 620, h: 380, label: "Triangle with draggable vertices, classified by its angles and sides" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var S = 30, snap = true;
+    dotGrid(svg, S, 10, 10);
+    var g = W.s("g"); svg.appendChild(g);
+    var T = [P(130, 310), P(490, 310), P(250, 100)];
+    var snapFn = function (v) { return snap ? Math.round((v - 10) / S) * S + 10 : v; };
+    dragTri(svg, T, { snap: snapFn, keyStep: S, box: [40, 40, 580, 350], onChange: draw });
+    W.segmented(ctl, { title: "Vertices", value: "grid", options: [{ value: "grid", label: "Snap to grid" }, { value: "free", label: "Free" }], onChange: function (v) { snap = v === "grid"; draw(); } });
+    function draw() {
+      W.clear(g);
+      var A = T[0], B = T[1], C = T[2];
+      var a = dist(B, C), b = dist(C, A), c = dist(A, B);
+      var ang = [angAt(A, B, C), angAt(B, C, A), angAt(C, A, B)];
+      var deg = areaT(A, B, C) < 40;
+      g.appendChild(W.s("polygon", { points: pts(T), fill: fillCol(2), stroke: "var(--plot-2)", "stroke-width": 3, "stroke-linejoin": "round" }));
+      var tol = snap ? 1e-6 : 0.75;
+      // exact checks on grid via squared lengths in grid units
+      function sq(p, q) { return Math.round(((p.x - q.x) * (p.x - q.x) + (p.y - q.y) * (p.y - q.y)) / (S * S) * 1000) / 1000; }
+      var s2 = [sq(B, C), sq(C, A), sq(A, B)];
+      var eqSide = function (i, j) { return snap ? s2[i] === s2[j] : Math.abs(ang[i] - ang[j]) < tol * 2; };
+      var right = -1, obtuse = -1;
+      for (var i = 0; i < 3; i++) {
+        var j = (i + 1) % 3, k = (i + 2) % 3;
+        var isRight = snap ? Math.abs(s2[j] + s2[k] - s2[i]) < 1e-6 : Math.abs(ang[i] - 90) < tol;
+        if (isRight) right = i; else if (ang[i] > 90) obtuse = i;
+      }
+      // tick marks for equal sides
+      var sides = [[B, C], [C, A], [A, B]], eqPairs = [];
+      if (!deg) {
+        var marks = [0, 0, 0];
+        if (eqSide(0, 1) && eqSide(1, 2)) marks = [1, 1, 1];
+        else for (i = 0; i < 3; i++) for (j = i + 1; j < 3; j++) if (eqSide(i, j)) { marks[i] = 1; marks[j] = 1; eqPairs.push([i, j]); }
+        marks.forEach(function (m, idx) {
+          if (!m) return;
+          var p = sides[idx][0], q = sides[idx][1], M = mul(add(p, q), 0.5), n = unit(P(-(q.y - p.y), q.x - p.x));
+          g.appendChild(seg(add(M, mul(n, 8)), add(M, mul(n, -8)), { stroke: "var(--accent)", "stroke-width": 3 }));
+        });
+      }
+      // angles
+      var V = [A, B, C], names = ["A", "B", "C"];
+      V.forEach(function (Q, idx) {
+        var X = V[(idx + 1) % 3], Y = V[(idx + 2) % 3];
+        if (deg) return;
+        if (idx === right) g.appendChild(W.s("path", { d: rightD(Q, X, Y, 16), fill: "none", stroke: "var(--accent)", "stroke-width": 2 }));
+        else g.appendChild(W.s("path", { d: arcD(Q, X, Y, 22), fill: "none", stroke: idx === obtuse ? "var(--plot-5)" : "var(--accent)", "stroke-width": 2 }));
+        var lp = add(Q, mul(bis(Q, X, Y), ang[idx] < 40 ? 56 : 44));
+        g.appendChild(small(lp, f1(ang[idx]) + "°", idx === obtuse ? "var(--plot-5)" : "var(--ink)"));
+      });
+      vlabels(g, V, names);
+      // classification
+      var byAng = deg ? "degenerate" : right >= 0 ? "right" : obtuse >= 0 ? "obtuse" : "acute";
+      var nEq = eqSide(0, 1) + eqSide(1, 2) + eqSide(0, 2);
+      var bySide = deg ? "" : (eqSide(0, 1) && eqSide(1, 2)) ? "equilateral" : nEq ? "isosceles" : "scalene";
+      var sum = ang[0] + ang[1] + ang[2];
+      if (deg) { out.set("The three points are (almost) on one line: a <strong>degenerate</strong> triangle. Pull a vertex off the line."); return; }
+      out.set("$\\angle A + \\angle B + \\angle C = " + f1(ang[0]) + "^\\circ + " + f1(ang[1]) + "^\\circ + " + f1(ang[2]) + "^\\circ = " + Math.round(sum) + "^\\circ$<br>By angles: <strong>" + byAng + "</strong> &nbsp;·&nbsp; By sides: <strong>" + bySide + "</strong>" +
+        (snap && bySide === "isosceles" && byAng === "acute" ? "" : "") +
+        (snap ? "<br><span class=\"ctl-label\">Grid mode tests right angles and equal sides exactly, using squared lengths.</span>" : "<br><span class=\"ctl-label\">Free mode treats angles within 1.5° of each other as equal.</span>"));
+    }
+    draw();
+  });
+
+  /* 11.2 — centers of a triangle */
+  AOPS.registerWidget("triCenters", function (body) {
+    var svg = W.stage(body, { w: 620, h: 420, label: "Triangle with draggable vertices showing medians, angle bisectors, perpendicular bisectors or altitudes" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var mode = "med", U = 40;
+    var g = W.s("g"); svg.appendChild(g);
+    var T = [P(170, 330), P(480, 330), P(260, 110)];
+    dragTri(svg, T, { box: [30, 30, 590, 390], keyStep: 8, onChange: draw });
+    W.segmented(ctl, { title: "Lines", value: mode, options: [
+      { value: "med", label: "Medians" }, { value: "bis", label: "Angle bisectors" }, { value: "perp", label: "Perp. bisectors" }, { value: "alt", label: "Altitudes" }],
+      onChange: function (v) { mode = v; draw(); } });
+    function longLine(M, dir, attrs) { var d = mul(unit(dir), 900); return seg(sub(M, d), add(M, d), attrs); }
+    function where(Q, A, B, C) {
+      var s1 = Math.sign((B.x - A.x) * (Q.y - A.y) - (B.y - A.y) * (Q.x - A.x));
+      var s2 = Math.sign((C.x - B.x) * (Q.y - B.y) - (C.y - B.y) * (Q.x - B.x));
+      var s3 = Math.sign((A.x - C.x) * (Q.y - C.y) - (A.y - C.y) * (Q.x - C.x));
+      return (s1 === s2 && s2 === s3) ? "inside" : "outside";
+    }
+    function draw() {
+      W.clear(g);
+      var A = T[0], B = T[1], C = T[2];
+      var a = dist(B, C), b = dist(C, A), c = dist(A, B);
+      var angs = [angAt(A, B, C), angAt(B, C, A), angAt(C, A, B)];
+      var mx = Math.max.apply(null, angs), kind = Math.abs(mx - 90) < 1 ? "right" : mx > 90 ? "obtuse" : "acute";
+      var line = { stroke: "var(--plot-3)", "stroke-width": 2 };
+      var dash = { stroke: "var(--faint)", "stroke-width": 1.5, "stroke-dasharray": "5 5" };
+      var ptC = function (Q, name) { g.appendChild(W.s("circle", { cx: Q.x, cy: Q.y, r: 6, fill: "var(--plot-5)", stroke: "var(--surface-solid)", "stroke-width": 2 })); g.appendChild(txt(add(Q, P(14, -14)), name, { style: "font: 700 15px var(--font-body); fill: var(--plot-5)" })); };
+      var deg = areaT(A, B, C) < 60;
+      var html = "";
+      if (!deg && mode === "perp") {
+        var O = circumcenter(A, B, C), R = dist(O, A);
+        g.appendChild(W.s("circle", { cx: O.x, cy: O.y, r: R, fill: "none", stroke: "var(--plot-4)", "stroke-width": 2, "stroke-dasharray": "7 5" }));
+      }
+      g.appendChild(W.s("polygon", { points: pts(T), fill: fillCol(2, 18), stroke: "var(--plot-2)", "stroke-width": 3, "stroke-linejoin": "round" }));
+      if (deg) { vlabels(g, T, ["A", "B", "C"]); out.set("The vertices are nearly collinear. Pull one away to make a real triangle."); return; }
+      if (mode === "med") {
+        var D = mul(add(B, C), 0.5), E = mul(add(C, A), 0.5), F = mul(add(A, B), 0.5), G = P((A.x + B.x + C.x) / 3, (A.y + B.y + C.y) / 3);
+        [[A, D], [B, E], [C, F]].forEach(function (pq) { g.appendChild(seg(pq[0], pq[1], line)); g.appendChild(W.s("circle", { cx: pq[1].x, cy: pq[1].y, r: 4, fill: "var(--plot-3)" })); });
+        ptC(G, "G");
+        html = "Medians meet at the centroid $G$. Along median $AD$: $AG \\approx " + f1(dist(A, G) / U) + "$, $GD \\approx " + f1(dist(G, D) / U) + "$, so $AG : GD = 2 : 1$. $G$ is always inside.";
+      } else if (mode === "bis") {
+        var I = P((a * A.x + b * B.x + c * C.x) / (a + b + c), (a * A.y + b * B.y + c * C.y) / (a + b + c));
+        var r = areaT(A, B, C) / ((a + b + c) / 2);
+        g.appendChild(W.s("circle", { cx: I.x, cy: I.y, r: r, fill: "none", stroke: "var(--plot-4)", "stroke-width": 2, "stroke-dasharray": "7 5" }));
+        var Dp = add(B, mul(sub(C, B), c / (b + c))), Ep = add(C, mul(sub(A, C), a / (a + c))), Fp = add(A, mul(sub(B, A), b / (a + b)));
+        [[A, Dp], [B, Ep], [C, Fp]].forEach(function (pq) { g.appendChild(seg(pq[0], pq[1], line)); });
+        [[B, C], [C, A], [A, B]].forEach(function (s) { var f = foot(I, s[0], s[1]); g.appendChild(seg(I, f, dash)); g.appendChild(W.s("path", { d: rightD(f, I, s[0], 8), fill: "none", stroke: "var(--faint)" })); });
+        ptC(I, "I");
+        html = "Angle bisectors meet at the incenter $I$, the same distance $r \\approx " + W.fmt(r / U, 2) + "$ from all three sides, so the incircle touches each side once. $I$ is always inside.";
+      } else if (mode === "perp") {
+        var O2 = circumcenter(A, B, C), R2 = dist(O2, A);
+        [[B, C], [C, A], [A, B]].forEach(function (s) {
+          var M = mul(add(s[0], s[1]), 0.5), d = sub(s[1], s[0]);
+          g.appendChild(longLine(M, P(-d.y, d.x), line));
+          g.appendChild(W.s("path", { d: rightD(M, s[1], add(M, P(-d.y, d.x)), 8), fill: "none", stroke: "var(--plot-3)" }));
+        });
+        [A, B, C].forEach(function (V) { g.appendChild(seg(O2, V, dash)); });
+        ptC(O2, "O");
+        var loc = kind === "right" ? "on the hypotenuse (its midpoint)" : where(O2, A, B, C);
+        html = "Perpendicular bisectors meet at the circumcenter $O$: $OA = OB = OC = R \\approx " + W.fmt(R2 / U, 2) + "$. This triangle is <strong>" + kind + "</strong>, and $O$ is <strong>" + loc + "</strong>.";
+      } else {
+        var O3 = circumcenter(A, B, C), H = P(A.x + B.x + C.x - 2 * O3.x, A.y + B.y + C.y - 2 * O3.y);
+        [[A, B, C], [B, C, A], [C, A, B]].forEach(function (t) {
+          var V = t[0], f = foot(V, t[1], t[2]);
+          if (f.t < 0) g.appendChild(seg(t[1], f, dash)); else if (f.t > 1) g.appendChild(seg(t[2], f, dash));
+          g.appendChild(seg(V, f, line));
+          if (dist(V, f) > 12) g.appendChild(W.s("path", { d: rightD(f, V, f.t > 0.5 ? t[1] : t[2], 9), fill: "none", stroke: "var(--plot-3)" }));
+          if (dist(H, f) > dist(V, f) - 1 || where(H, A, B, C) === "outside") g.appendChild(seg(f, H, dash));
+        });
+        ptC(H, "H");
+        var loc2 = kind === "right" ? "at the right-angle vertex" : where(H, A, B, C);
+        html = "Altitudes (extended where needed) meet at the orthocenter $H$. This triangle is <strong>" + kind + "</strong>, and $H$ is <strong>" + loc2 + "</strong>.";
+      }
+      vlabels(g, T, ["A", "B", "C"]);
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* 11.3 — triangle inequality with sticks */
+  AOPS.registerWidget("triIneq", function (body) {
+    var svg = W.stage(body, { w: 620, h: 330, label: "Three sticks: base c with arms a and b; a triangle forms only if the arms can meet" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 6, b = 5, c = 9;
+    W.slider(ctl, { label: "a = BC", min: 1, max: 12, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b = CA", min: 1, max: 12, value: b, onInput: function (v) { b = v; draw(); } });
+    W.slider(ctl, { label: "c = AB", min: 1, max: 12, value: c, onInput: function (v) { c = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      // work in units with A = (0,0), B = (c,0), y up; then fit
+      var ok = a + b > c && b + c > a && c + a > b, flat = !ok && (a + b === c || b + c === a || a + c === b);
+      var Cp = null, armA, armB;
+      if (ok || flat) {
+        var x = (b * b - a * a + c * c) / (2 * c), y = Math.sqrt(Math.max(0, b * b - x * x));
+        Cp = P(x, y); armA = Cp; armB = Cp;
+      } else if (c > a + b) { armA = P(b, 0); armB = P(c - a, 0); }
+      else if (a > b + c) { armA = P(-b, 0); armB = P(c - a, 0); }
+      else { armA = P(b, 0); armB = P(c + a, 0); }
+      var xs = [0, c, armA.x, armB.x], ys = [0, armA.y, armB.y];
+      var minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs), maxY = Math.max.apply(null, ys);
+      var U = Math.min(40, 520 / Math.max(maxX - minX, 1), 210 / Math.max(maxY, 0.01));
+      var ox = 310 - (minX + maxX) / 2 * U, oy = 265;
+      function S(p) { return P(ox + p.x * U, oy - p.y * U); }
+      var A = S(P(0, 0)), B = S(P(c, 0));
+      svg.appendChild(W.s("circle", { cx: A.x, cy: A.y, r: b * U, fill: "none", stroke: "var(--plot-1)", "stroke-dasharray": "5 6", "stroke-width": 1.5, opacity: 0.8 }));
+      svg.appendChild(W.s("circle", { cx: B.x, cy: B.y, r: a * U, fill: "none", stroke: "var(--plot-3)", "stroke-dasharray": "5 6", "stroke-width": 1.5, opacity: 0.8 }));
+      if (ok) svg.appendChild(W.s("polygon", { points: pts([A, B, S(Cp)]), fill: fillCol(4, 25), stroke: "none" }));
+      svg.appendChild(seg(A, B, { stroke: "var(--plot-2)", "stroke-width": 6, "stroke-linecap": "round" }));
+      var EA = S(armA), EB = S(armB);
+      svg.appendChild(seg(A, EA, { stroke: "var(--plot-1)", "stroke-width": 6, "stroke-linecap": "round", opacity: 0.95 }));
+      svg.appendChild(seg(B, EB, { stroke: "var(--plot-3)", "stroke-width": 6, "stroke-linecap": "round", opacity: 0.85 }));
+      if (!ok && !flat) {
+        var gy = oy - 18;
+        svg.appendChild(seg(P(EA.x, gy), P(EB.x, gy), { stroke: "var(--plot-5)", "stroke-width": 2 }));
+        svg.appendChild(small(P((EA.x + EB.x) / 2, gy - 14), "gap " + Math.abs(armB.x - armA.x), "var(--plot-5)"));
+      }
+      svg.appendChild(txt(add(A, P(-4, 22)), "A")); svg.appendChild(txt(add(B, P(4, 22)), "B"));
+      if (ok || flat) svg.appendChild(txt(add(S(Cp), P(0, flat ? -18 : -18)), "C"));
+      svg.appendChild(small(P((A.x + B.x) / 2, oy + 24), "c = " + c, "var(--plot-2)"));
+      svg.appendChild(W.s("text", { x: 14, y: 22, class: "lbl", text: "dashed circles: everywhere the arms b (from A) and a (from B) can reach" }));
+      function row(p, q, r, P1, Q1, R1) {
+        var good = P1 + Q1 > R1;
+        return "$" + p + " + " + q + " = " + (P1 + Q1) + (good ? " \\gt " : (P1 + Q1 === R1 ? " = " : " \\lt ")) + R1 + "$ " + (good ? "✓" : "✗");
+      }
+      var verdict = ok ? "<strong>A triangle exists.</strong>" : flat ? "<strong>Degenerate:</strong> the arms meet only on the line, so $A$, $B$, $C$ are collinear." : "<strong>No triangle:</strong> the circles never meet.";
+      out.set(row("a", "b", "c", a, b, c) + " &nbsp; " + row("b", "c", "a", b, c, a) + " &nbsp; " + row("c", "a", "b", c, a, b) + "<br>" + verdict);
+    }
+    draw();
+  });
+
+  /* 11.4 — squares on the sides */
+  AOPS.registerWidget("pythagSquares", function (body) {
+    var svg = W.stage(body, { w: 620, h: 470, label: "Triangle ABC with squares on its sides; drag C to compare the areas" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var U = 26, c = 5, base = 250;
+    var g = W.s("g"); svg.appendChild(g);
+    var Cg = P(1, 2); // grid coords relative to A, y up
+    function Ax() { return 310 - c * U / 2; }
+    function toS(p) { return P(Ax() + p.x * U, base - p.y * U); }
+    var h;
+    W.slider(ctl, { label: "AB = c", min: 3, max: 8, value: c, onInput: function (v) { c = v; draw(); h.set(toS(Cg).x, toS(Cg).y, true); } });
+    h = W.handle(svg, { x: toS(Cg).x, y: toS(Cg).y, label: "Vertex C: drag, or use the arrow keys to move one grid step", keyStep: U,
+      onMove: function (x, y) {
+        var gx = Math.round((x - Ax()) / U), gy = Math.round((base - y) / U);
+        Cg = P(clamp(gx, -3, c + 3), clamp(gy, 1, 6)); draw(); var s = toS(Cg); return [s.x, s.y];
+      }, valueText: function () { return "C at (" + Cg.x + ", " + Cg.y + ")"; } });
+    function sq(p, q, third, col) {
+      var d = sub(q, p), n = P(-d.y, d.x);
+      var mid = mul(add(p, q), 0.5);
+      if ((third.x - mid.x) * n.x + (third.y - mid.y) * n.y > 0) n = mul(n, -1);
+      var r = add(q, n), s = add(p, n);
+      g.appendChild(W.s("polygon", { points: pts([p, q, r, s]), fill: fillCol(col, 26), stroke: "var(--plot-" + col + ")", "stroke-width": 2 }));
+      return mul(add(add(p, q), add(r, s)), 0.25);
+    }
+    function draw() {
+      W.clear(g);
+      var A = toS(P(0, 0)), B = toS(P(c, 0)), C = toS(Cg);
+      var a2 = (Cg.x - c) * (Cg.x - c) + Cg.y * Cg.y, b2 = Cg.x * Cg.x + Cg.y * Cg.y, c2 = c * c;
+      var mA = sq(B, C, A, 3), mB = sq(C, A, B, 1), mC = sq(A, B, C, 2);
+      g.appendChild(W.s("polygon", { points: pts([A, B, C]), fill: "var(--surface-solid)", stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }));
+      g.appendChild(small(mA, "a² = " + a2, "var(--ink)")); g.appendChild(small(mB, "b² = " + b2, "var(--ink)")); g.appendChild(small(mC, "c² = " + c2, "var(--ink)"));
+      var angC = angAt(C, A, B);
+      if (a2 + b2 === c2) g.appendChild(W.s("path", { d: rightD(C, A, B, 12), fill: "none", stroke: "var(--accent)", "stroke-width": 2.5 }));
+      else g.appendChild(W.s("path", { d: arcD(C, A, B, 18), fill: "none", stroke: "var(--accent)", "stroke-width": 2.5 }));
+      vlabels(g, [A, B, C], ["A", "B", "C"]);
+      var cmp = a2 + b2 === c2 ? "=" : a2 + b2 > c2 ? "\\gt" : "\\lt";
+      var verdict = a2 + b2 === c2 ? "so $\\angle C$ is a <strong>right angle</strong>." : a2 + b2 > c2 ? "so $\\angle C$ is <strong>acute</strong>." : "so $\\angle C$ is <strong>obtuse</strong>.";
+      out.set("$a^2 + b^2 = " + a2 + " + " + b2 + " = " + (a2 + b2) + " " + cmp + " " + c2 + " = c^2$, " + verdict + " ($\\angle C \\approx " + f1(angC) + "^\\circ$)");
+    }
+    draw();
+  });
+
+  /* 11.5 — what determines a triangle */
+  AOPS.registerWidget("congruence", function (body) {
+    var svg = W.stage(body, { w: 620, h: 330, label: "Triangles built from given parts: SSS, SAS, ASA, or the ambiguous SSA" });
+    var ctl = W.controls(body);
+    var sl = W.el("div", { class: "controls" }); body.appendChild(sl);
+    var out = W.readout(body);
+    var mode = "SSA";
+    var v = { a: 6, b: 8, c: 9, A: 35, B: 60 };
+    W.segmented(ctl, { title: "Given parts", value: mode, options: ["SSS", "SAS", "ASA", "SSA"].map(function (m) { return { value: m, label: m }; }), onChange: function (m) { mode = m; build(); } });
+    var spec = {
+      SSS: [["a", "a = BC", 2, 12, 1], ["b", "b = CA", 2, 12, 1], ["c", "c = AB", 2, 12, 1]],
+      SAS: [["b", "b = AC", 2, 12, 1], ["A", "∠A", 10, 170, 5], ["c", "c = AB", 2, 12, 1]],
+      ASA: [["A", "∠A", 10, 170, 5], ["c", "c = AB", 2, 12, 1], ["B", "∠B", 10, 170, 5]],
+      SSA: [["c", "c = AB", 2, 12, 1], ["A", "∠A", 10, 170, 5], ["a", "a = BC", 1, 12, 0.5]]
+    };
+    function build() {
+      W.clear(sl);
+      spec[mode].forEach(function (s) {
+        W.slider(sl, { label: s[1], min: s[2], max: s[3], step: s[4], value: v[s[0]], format: function (x) { return s[0] === "A" || s[0] === "B" ? x + "°" : String(x); }, onInput: function (x) { v[s[0]] = x; draw(); } });
+      });
+      draw();
+    }
+    function draw() {
+      W.clear(svg);
+      var c = v.c, sols = [], note = "";
+      var cosA = Math.cos(v.A * DEG), sinA = Math.sin(v.A * DEG);
+      if (mode === "SSS") {
+        if (v.a + v.b > c && v.b + c > v.a && c + v.a > v.b) { var x = (v.b * v.b - v.a * v.a + c * c) / (2 * c); sols.push(P(x, Math.sqrt(v.b * v.b - x * x))); }
+        else note = "These lengths break the triangle inequality.";
+      } else if (mode === "SAS") {
+        sols.push(P(v.b * cosA, v.b * sinA));
+      } else if (mode === "ASA") {
+        if (v.A + v.B < 180) {
+          var t = c * Math.sin(v.B * DEG) / Math.sin((v.A + v.B) * DEG); sols.push(P(t * cosA, t * sinA)); }
+        else note = "The two angles already add to 180° or more, so the rays never meet.";
+      } else {
+        var disc = c * c * cosA * cosA - (c * c - v.a * v.a);
+        if (disc >= -1e-9) {
+          var r = Math.sqrt(Math.max(0, disc));
+          [c * cosA + r, c * cosA - r].forEach(function (t, i) { if (t > 1e-6 && !(i === 1 && r < 1e-9)) sols.push(P(t * cosA, t * sinA)); });
+        }
+        if (!sols.length) note = "Side a is too short to reach the ray from A.";
+      }
+      // fit
+      var all = [P(0, 0), P(c, 0)].concat(sols);
+      if (mode === "SSA" || !sols.length) { var L = Math.max(c, 6) * 1.1; all.push(P(L * cosA, L * sinA)); }
+      var xs = all.map(function (p) { return p.x; }), ys = all.map(function (p) { return p.y; });
+      var minX = Math.min.apply(null, xs), maxX = Math.max.apply(null, xs), maxY = Math.max.apply(null, ys);
+      var U = Math.min(38, 540 / Math.max(maxX - minX, 1), 240 / Math.max(maxY, 0.1));
+      var ox = 310 - (minX + maxX) / 2 * U, oy = 290;
+      function S(p) { return P(ox + p.x * U, oy - p.y * U); }
+      var A = S(P(0, 0)), B = S(P(c, 0));
+      if (mode === "SSA" || mode === "SAS" || !sols.length) { var Lr = Math.max(c, 6) * 1.1; svg.appendChild(seg(A, S(P(Lr * cosA, Lr * sinA)), { stroke: "var(--faint)", "stroke-width": 1.5, "stroke-dasharray": "6 6" })); }
+      if (mode === "SSA") svg.appendChild(W.s("circle", { cx: B.x, cy: B.y, r: v.a * U, fill: "none", stroke: "var(--plot-3)", "stroke-width": 1.5, "stroke-dasharray": "4 6" }));
+      var cols = [2, 5];
+      sols.forEach(function (Cp, i) {
+        var C = S(Cp);
+        svg.appendChild(W.s("polygon", { points: pts([A, B, C]), fill: fillCol(cols[i], 20), stroke: "var(--plot-" + cols[i] + ")", "stroke-width": 3, "stroke-linejoin": "round" }));
+        svg.appendChild(txt(add(C, mul(unit(sub(C, mul(add(A, B), 0.5))), 22)), sols.length > 1 ? "C" + (i + 1) : "C", { style: "font: 700 15px var(--font-body); fill: var(--plot-" + cols[i] + ")" }));
+        if (mode === "SSA") svg.appendChild(seg(B, C, { stroke: "var(--plot-3)", "stroke-width": 4 }));
+      });
+      // highlight given parts
+      var given = { stroke: "var(--accent)", "stroke-width": 6, "stroke-linecap": "round" };
+      svg.appendChild(seg(A, B, given));
+      if (mode === "SAS" && sols[0]) svg.appendChild(seg(A, S(sols[0]), given));
+      if (mode === "SSS" && sols[0]) { svg.appendChild(seg(A, S(sols[0]), given)); svg.appendChild(seg(B, S(sols[0]), given)); }
+      if (mode !== "SSS") {
+        var Aray = S(P(cosA * 3, sinA * 3));
+        svg.appendChild(W.s("path", { d: arcD(A, B, Aray, 30), fill: "none", stroke: "var(--accent)", "stroke-width": 3 }));
+      }
+      if (mode === "ASA" && sols[0]) svg.appendChild(W.s("path", { d: arcD(B, A, S(sols[0]), 30), fill: "none", stroke: "var(--accent)", "stroke-width": 3 }));
+      svg.appendChild(txt(add(A, P(-6, 20)), "A")); svg.appendChild(txt(add(B, P(6, 20)), "B"));
+      svg.appendChild(W.s("text", { x: 14, y: 22, class: "lbl", text: "gold = the given parts" }));
+      var msg;
+      if (!sols.length) msg = "<strong>No triangle.</strong> " + note;
+      else if (sols.length === 1) msg = "<strong>Exactly one triangle</strong> fits these parts" + (mode === "SSA" ? " (here $a \\ge c$, or $a$ just touches the ray)." : ", so two triangles with these parts must be congruent: " + mode + " works.");
+      else msg = "<strong>Two different triangles</strong> share $c = " + c + "$, $\\angle A = " + v.A + "^\\circ$ and $a = " + v.a + "$, with $AC_1 \\approx " + f1(len(sols[0])) + "$ and $AC_2 \\approx " + f1(len(sols[1])) + "$. That is why SSA is not a congruence test.";
+      out.set(msg);
+    }
+    build();
+  });
+
+  /* 11.6 — similar triangles from a parallel */
+  AOPS.registerWidget("similarSlide", function (body) {
+    var svg = W.stage(body, { w: 620, h: 380, label: "Triangle ABC with segment DE parallel to BC; drag D along AB" });
+    var out = W.readout(body);
+    var U = 40;
+    var A = P(250, 50), B = P(80, 340), C = P(540, 340), k = 0.5;
+    var g = W.s("g"); svg.appendChild(g);
+    function Dp() { return add(A, mul(sub(B, A), k)); }
+    var hD = W.handle(svg, { x: Dp().x, y: Dp().y, label: "Point D on side AB: drag, or use the arrow keys", keyStep: 8,
+      onMove: function (x, y) { var f = foot(P(x, y), A, B); k = clamp(f.t, 0.08, 1); draw(); var d = Dp(); return [d.x, d.y]; },
+      valueText: function () { return "AD over AB = " + W.fmt(k, 2); } });
+    W.handle(svg, { x: A.x, y: A.y, label: "Vertex A: drag, or use the arrow keys", keyStep: 8,
+      onMove: function (x, y) { A = P(clamp(x, 40, 580), clamp(y, 30, 270)); draw(); var d = Dp(); hD.set(d.x, d.y, true); return [A.x, A.y]; } });
+    function draw() {
+      W.clear(g);
+      var D = Dp(), E = add(A, mul(sub(C, A), k));
+      g.appendChild(W.s("polygon", { points: pts([A, B, C]), fill: fillCol(2, 14), stroke: "var(--plot-2)", "stroke-width": 3, "stroke-linejoin": "round" }));
+      g.appendChild(W.s("polygon", { points: pts([A, D, E]), fill: fillCol(1, 34), stroke: "var(--plot-1)", "stroke-width": 3, "stroke-linejoin": "round" }));
+      // equal angle marks
+      g.appendChild(W.s("path", { d: arcD(D, add(D, sub(D, A)), E, 18), fill: "none", stroke: "var(--plot-4)", "stroke-width": 2.5 }));
+      g.appendChild(W.s("path", { d: arcD(B, A, C, 18), fill: "none", stroke: "var(--plot-4)", "stroke-width": 2.5 }));
+      g.appendChild(W.s("path", { d: arcD(E, A, D, 16), fill: "none", stroke: "var(--plot-3)", "stroke-width": 2.5 }));
+      g.appendChild(W.s("path", { d: arcD(C, A, B, 16), fill: "none", stroke: "var(--plot-3)", "stroke-width": 2.5 }));
+      vlabels(g, [A, B, C], ["A", "B", "C"]);
+      g.appendChild(txt(add(D, P(-18, 0)), "D")); g.appendChild(txt(add(E, P(18, 0)), "E"));
+      var r1 = dist(A, D) / dist(A, B), ar = areaT(A, D, E) / areaT(A, B, C);
+      out.set("$AD/AB = " + f1(dist(A, D) / U) + "/" + f1(dist(A, B) / U) + "$, &nbsp;$AE/AC = " + f1(dist(A, E) / U) + "/" + f1(dist(A, C) / U) + "$, &nbsp;$DE/BC = " + f1(dist(D, E) / U) + "/" + f1(dist(B, C) / U) + "$, all $\\approx " + W.fmt(r1, 2) + " = k$.<br>" +
+        "Area ratio: $[ADE] / [ABC] \\approx " + W.fmt(ar, 3) + " = k^2$, since $" + W.fmt(r1, 2) + "^2 \\approx " + W.fmt(r1 * r1, 3) + "$.");
+    }
+    draw();
+  });
+
+  /* 11.7 — trig ratios on a unit hypotenuse */
+  AOPS.registerWidget("trigTriangle", function (body) {
+    var svg = W.stage(body, { w: 620, h: 380, label: "Right triangle with hypotenuse 1; drag B around the arc to change the angle at A" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var A = P(90, 340), R = 300, th = 35;
+    var g = W.s("g"); svg.appendChild(g);
+    svg.appendChild(W.s("path", { d: "M" + (A.x + R) + " " + A.y + "A" + R + " " + R + " 0 0 0 " + A.x + " " + (A.y - R), fill: "none", stroke: "var(--faint)", "stroke-dasharray": "4 6" }));
+    function Bp() { return P(A.x + R * Math.cos(th * DEG), A.y - R * Math.sin(th * DEG)); }
+    var h = W.handle(svg, { x: Bp().x, y: Bp().y, label: "Vertex B on the arc: drag, or use the arrow keys", keyStep: 6,
+      onMove: function (x, y) { var t = Math.atan2(A.y - y, x - A.x) / DEG; th = clamp(Math.round(t), 1, 89); draw(); var b = Bp(); return [b.x, b.y]; },
+      valueText: function () { return "angle " + th + " degrees"; } });
+    W.segmented(ctl, { title: "Jump to", value: 0, options: [{ value: 30, label: "30°" }, { value: 45, label: "45°" }, { value: 60, label: "60°" }], onChange: function (v) { th = v; var b = Bp(); h.set(b.x, b.y, true); draw(); } });
+    var exact = {
+      30: ["\\tfrac12", "\\tfrac{\\sqrt3}{2}", "\\tfrac{\\sqrt3}{3}", "1 : \\sqrt3 : 2"],
+      45: ["\\tfrac{\\sqrt2}{2}", "\\tfrac{\\sqrt2}{2}", "1", "1 : 1 : \\sqrt2"],
+      60: ["\\tfrac{\\sqrt3}{2}", "\\tfrac12", "\\sqrt3", "\\sqrt3 : 1 : 2"]
+    };
+    function draw() {
+      W.clear(g);
+      var B = Bp(), C = P(B.x, A.y);
+      g.appendChild(W.s("polygon", { points: pts([A, B, C]), fill: fillCol(2, 16), stroke: "none" }));
+      g.appendChild(seg(A, B, { stroke: "var(--ink)", "stroke-width": 3 }));
+      g.appendChild(seg(B, C, { stroke: "var(--plot-1)", "stroke-width": 5 }));
+      g.appendChild(seg(A, C, { stroke: "var(--plot-2)", "stroke-width": 5 }));
+      g.appendChild(W.s("path", { d: rightD(C, A, B, 14), fill: "none", stroke: "var(--muted)", "stroke-width": 2 }));
+      g.appendChild(W.s("path", { d: arcD(A, C, B, 46), fill: "none", stroke: "var(--accent)", "stroke-width": 2.5 }));
+      g.appendChild(small(add(A, P(70 * Math.cos(th / 2 * DEG), -70 * Math.sin(th / 2 * DEG))), "θ=" + th + "°", "var(--ink)"));
+      var s = Math.sin(th * DEG), c = Math.cos(th * DEG);
+      g.appendChild(small(P(B.x + (B.x > 520 ? -58 : 52), (B.y + C.y) / 2), "sin θ ≈ " + W.fmt(s, 3), "var(--plot-1)"));
+      g.appendChild(small(P((A.x + C.x) / 2, A.y + 20), "cos θ ≈ " + W.fmt(c, 3), "var(--plot-2)"));
+      g.appendChild(small(add(mul(add(A, B), 0.5), mul(unit(P(-(B.y - A.y), B.x - A.x)), 16)), "1", "var(--ink)"));
+      g.appendChild(txt(add(A, P(-16, 6)), "A")); g.appendChild(txt(add(B, P(-8, -18)), "B")); g.appendChild(txt(add(C, P(14, 14)), "C"));
+      var e = exact[th];
+      var line1 = "$\\sin " + th + "^\\circ = \\dfrac{\\text{opp}}{\\text{hyp}} " + (e ? "= " + e[0] : "\\approx " + W.fmt(s, 4)) + "$, $\\cos " + th + "^\\circ = \\dfrac{\\text{adj}}{\\text{hyp}} " + (e ? "= " + e[1] : "\\approx " + W.fmt(c, 4)) + "$, $\\tan " + th + "^\\circ = \\dfrac{\\text{opp}}{\\text{adj}} " + (e ? "= " + e[2] : "\\approx " + W.fmt(s / c, 4)) + "$";
+      var line2 = e ? "Special triangle: sides $\\text{opp} : \\text{adj} : \\text{hyp} = " + e[3] + "$." : "Check: $\\sin^2\\theta + \\cos^2\\theta \\approx " + W.fmt(s * s, 3) + " + " + W.fmt(c * c, 3) + " = 1$, and $\\sin " + th + "^\\circ = \\cos " + (90 - th) + "^\\circ$.";
+      out.set(line1 + "<br>" + line2);
+    }
+    draw();
+  });
+
+  /* 11.8 — three area formulas */
+  AOPS.registerWidget("areaFormulas", function (body) {
+    var svg = W.stage(body, { w: 620, h: 400, label: "Lattice triangle with draggable vertices; constructions for three area formulas" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var S = 40, mode = "bh";
+    dotGrid(svg, S, 30, 20);
+    var g = W.s("g"); svg.appendChild(g);
+    var T = [P(270, 100), P(110, 340), P(510, 340)];
+    var snapFn = function (v, ax) { var o = ax === "x" ? 30 : 20; return Math.round((v - o) / S) * S + o; };
+    dragTri(svg, T, { snap: snapFn, keyStep: S, box: [30, 20, 590, 380], onChange: draw });
+    W.segmented(ctl, { title: "Formula", value: mode, options: [{ value: "bh", label: "½ · base · height" }, { value: "sin", label: "½ ab sin C" }, { value: "rs", label: "r · s" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(g);
+      var A = T[0], B = T[1], C = T[2];
+      var a = dist(B, C) / S, b = dist(C, A) / S, c = dist(A, B) / S, K = areaT(A, B, C) / (S * S);
+      if (K < 0.01) { g.appendChild(W.s("polygon", { points: pts(T), fill: "none", stroke: "var(--plot-2)", "stroke-width": 3 })); vlabels(g, T, ["A", "B", "C"]); out.set("Degenerate: the vertices are collinear, so the area is $0$."); return; }
+      var s = (a + b + c) / 2, r = K / s, Cang = angAt(C, A, B);
+      var I = P((a * A.x + b * B.x + c * C.x) / (a + b + c), (a * A.y + b * B.y + c * C.y) / (a + b + c));
+      g.appendChild(W.s("polygon", { points: pts(T), fill: fillCol(2, 18), stroke: "var(--plot-2)", "stroke-width": 3, "stroke-linejoin": "round" }));
+      var dash = { stroke: "var(--faint)", "stroke-width": 1.5, "stroke-dasharray": "5 5" };
+      var ha = 2 * K / a;
+      if (mode === "bh") {
+        var f = foot(A, B, C);
+        if (f.t < 0) g.appendChild(seg(B, f, dash)); if (f.t > 1) g.appendChild(seg(C, f, dash));
+        g.appendChild(seg(A, f, { stroke: "var(--plot-1)", "stroke-width": 3 }));
+        g.appendChild(W.s("path", { d: rightD(f, A, f.t > 0.5 ? B : C, 10), fill: "none", stroke: "var(--plot-1)", "stroke-width": 2 }));
+        g.appendChild(seg(B, C, { stroke: "var(--plot-3)", "stroke-width": 5 }));
+        g.appendChild(small(add(mul(add(A, f), 0.5), P(26, 0)), "h ≈ " + W.fmt(ha, 2), "var(--plot-1)"));
+      } else if (mode === "sin") {
+        g.appendChild(seg(B, C, { stroke: "var(--plot-3)", "stroke-width": 5 }));
+        g.appendChild(seg(C, A, { stroke: "var(--plot-4)", "stroke-width": 5 }));
+        g.appendChild(W.s("path", { d: arcD(C, A, B, 30), fill: "none", stroke: "var(--accent)", "stroke-width": 3 }));
+        g.appendChild(small(add(C, mul(bis(C, A, B), 54)), f1(Cang) + "°", "var(--accent)"));
+      } else {
+        [A, B, C].forEach(function (V) { g.appendChild(seg(I, V, { stroke: "var(--plot-3)", "stroke-width": 1.5 })); });
+        g.appendChild(W.s("circle", { cx: I.x, cy: I.y, r: r * S, fill: fillCol(4, 18), stroke: "var(--plot-4)", "stroke-width": 2 }));
+        [[B, C], [C, A], [A, B]].forEach(function (sd) { var ft = foot(I, sd[0], sd[1]); g.appendChild(seg(I, ft, { stroke: "var(--plot-1)", "stroke-width": 2.5 })); });
+        g.appendChild(W.s("circle", { cx: I.x, cy: I.y, r: 4, fill: "var(--plot-5)" }));
+      }
+      vlabels(g, T, ["A", "B", "C"]);
+      var hl = function (m, s2) { return m === mode ? "<strong>" + s2 + "</strong>" : s2; };
+      out.set(hl("bh", "$\\tfrac12 \\cdot a \\cdot h_a \\approx \\tfrac12 \\cdot " + W.fmt(a, 2) + " \\cdot " + W.fmt(ha, 2) + " = " + W.fmt(K, 2) + "$") + "<br>" +
+        hl("sin", "$\\tfrac12 ab\\sin C \\approx \\tfrac12 \\cdot " + W.fmt(a, 2) + " \\cdot " + W.fmt(b, 2) + " \\cdot \\sin " + f1(Cang) + "^\\circ = " + W.fmt(0.5 * a * b * Math.sin(Cang * DEG), 2) + "$") + "<br>" +
+        hl("rs", "$r \\cdot s \\approx " + W.fmt(r, 3) + " \\cdot " + W.fmt(s, 3) + " = " + W.fmt(r * s, 2) + "$") +
+        " &nbsp;<span class=\"ctl-label\">(1 grid square = 1 unit²)</span>");
+    }
+    draw();
+  });
+
+  /* 11.9 — three tests for a right angle */
+  AOPS.registerWidget("rightDetect", function (body) {
+    var svg = W.stage(body, { w: 620, h: 330, label: "Segment AB with its circle; drag C and watch three right-angle tests" });
+    var out = W.readout(body);
+    var U = 40, A = P(150, 290), B = P(470, 290), M = P(310, 290), R = 160;
+    svg.appendChild(W.s("circle", { cx: M.x, cy: M.y, r: R, fill: "none", stroke: "var(--faint)", "stroke-width": 1.5, "stroke-dasharray": "6 6" }));
+    var g = W.s("g"); svg.appendChild(g);
+    var C = P(250, 160);
+    W.handle(svg, { x: C.x, y: C.y, label: "Vertex C: drag, or use the arrow keys", keyStep: 6,
+      onMove: function (x, y) {
+        var p = P(clamp(x, 20, 600), clamp(y, 40, 282));
+        var d = dist(p, M);
+        if (Math.abs(d - R) < 7) p = add(M, mul(unit(sub(p, M)), R));
+        C = p; draw(); return [C.x, C.y];
+      } });
+    function draw() {
+      W.clear(g);
+      var angC = angAt(C, A, B), cm = dist(C, M) / U, half = R / U;
+      var a2 = Math.pow(dist(B, C) / U, 2), b2 = Math.pow(dist(A, C) / U, 2), c2 = Math.pow(dist(A, B) / U, 2);
+      var on = Math.abs(dist(C, M) - R) < 0.5;
+      g.appendChild(W.s("polygon", { points: pts([A, B, C]), fill: fillCol(on ? 4 : 2, 20), stroke: on ? "var(--plot-4)" : "var(--plot-2)", "stroke-width": 3, "stroke-linejoin": "round" }));
+      g.appendChild(seg(C, M, { stroke: "var(--plot-3)", "stroke-width": 2.5, "stroke-dasharray": "2 0" }));
+      g.appendChild(W.s("circle", { cx: M.x, cy: M.y, r: 4.5, fill: "var(--plot-3)" }));
+      if (on) g.appendChild(W.s("path", { d: rightD(C, A, B, 14), fill: "none", stroke: "var(--accent)", "stroke-width": 2.5 }));
+      else g.appendChild(W.s("path", { d: arcD(C, A, B, 20), fill: "none", stroke: "var(--accent)", "stroke-width": 2.5 }));
+      g.appendChild(txt(add(A, P(-14, 14)), "A")); g.appendChild(txt(add(B, P(14, 14)), "B")); g.appendChild(txt(add(M, P(0, 22)), "M"));
+      g.appendChild(txt(add(C, mul(unit(sub(C, M)), 24)), "C"));
+      g.appendChild(W.s("text", { x: 14, y: 22, class: "lbl", text: "C snaps onto the circle with diameter AB when it gets close" }));
+      function tick(ok) { return ok ? " ✓" : " ✗"; }
+      var cmpM = on ? "=" : (cm > half ? "\\gt" : "\\lt"), cmpP = on ? "=" : (a2 + b2 > c2 ? "\\gt" : "\\lt");
+      out.set("Angle: $\\angle C \\approx " + f1(angC) + "^\\circ$" + tick(on) + "<br>" +
+        "Median: $CM \\approx " + W.fmt(cm, 2) + " " + cmpM + " " + W.fmt(half, 2) + " = \\tfrac12 AB$" + tick(on) + "<br>" +
+        "Pythagoras: $a^2 + b^2 \\approx " + W.fmt(a2 + b2, 2) + " " + cmpP + " " + W.fmt(c2, 2) + " = c^2$" + tick(on));
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 16: The Power of Coordinates · AoPS Learner</title>
+  <meta name="description" content="Cartesian and polar coordinates, slopes and line equations, plotting lines, the distance formula, circles, intersections and analytic proofs, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="16" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 16 · Geometry</span>
+    <h1>The Power of Coordinates</h1>
+    <p class="lede">Put a grid on the plane and every point gets an address, every line gets an equation, and every circle gets a formula. Geometry questions turn into algebra questions, which you already know how to grind through. This chapter builds that dictionary between pictures and equations, and shows when it is worth using.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>A point is an ordered pair $(x, y)$: distance right, then distance up. In polar form it is $(r, \theta)$: distance from the origin and angle from the positive $x$-axis, with $x = r\cos\theta$, $y = r\sin\theta$.</li>
+      <li>Translations are easy in Cartesian coordinates, $(x, y) \to (x + a, y + b)$; rotations about the origin are easy in polar, $(r, \theta) \to (r, \theta + \alpha)$.</li>
+      <li>Slope is rise over run: $m = \dfrac{y_2 - y_1}{x_2 - x_1}$. Lines: $y = mx + b$ (slope-intercept) or $Ax + By = C$ (standard, slope $-A/B$).</li>
+      <li>Parallel lines have equal slopes; perpendicular lines have slopes whose product is $-1$.</li>
+      <li>Find intercepts by setting the other variable to $0$. Plot a line from two convenient points or by walking the slope from the $y$-intercept.</li>
+      <li>Distance: $d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}$. Circle: $(x - p)^2 + (y - q)^2 = R^2$; complete the square to find the center and radius.</li>
+      <li>Intersections come from solving the equations together: substitute or eliminate.</li>
+      <li>Midpoint $\left(\frac{x_1 + x_2}{2}, \frac{y_1 + y_2}{2}\right)$; centroid is the average of the three vertices. For proofs, place the axes to make the coordinates as simple as possible.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 16.1 ===================== -->
+  <section class="lesson" id="s16-1" data-title="Labelling the Plane">
+    <h2><span class="sec-num">16.1</span> Labelling the Plane</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>In a game of Battleship you never say "the ship near the left edge, a bit above the middle." You say "C-7." Two labels pin down one square exactly. Coordinates do the same thing for every point of the plane, with numbers instead of letters, and that is enough to turn geometry into arithmetic.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Start with a number line, the <strong>$x$-axis</strong>. Draw a second number line, the <strong>$y$-axis</strong>, perpendicular to it and crossing at $0$; the crossing point is the <strong>origin</strong>. Every point now gets an <em>ordered pair</em> $(x, y)$: how far right (negative means left) and how far up (negative means down). These are its <strong>Cartesian coordinates</strong>. Order matters: $(2, 5)$ and $(5, 2)$ are different points.</p>
+      <p>The axes cut the plane into four <strong>quadrants</strong>, numbered I, II, III, IV counterclockwise starting from the upper right, where both coordinates are positive. Points on an axis belong to no quadrant.</p>
+      <div class="rule"><p>Quadrant I: $(+, +)$ &nbsp; II: $(-, +)$ &nbsp; III: $(-, -)$ &nbsp; IV: $(+, -)$</p></div>
+      <p>The grid is a choice, not a law of nature. Another very useful choice is <strong>polar coordinates</strong> $(r, \theta)$: $r$ is the distance from the origin and $\theta$ is the angle measured counterclockwise from the positive $x$-axis. A right triangle with hypotenuse $r$ connects the two systems:</p>
+      <div class="rule"><p>$$x = r\cos\theta, \quad y = r\sin\theta, \qquad r = \sqrt{x^2 + y^2}.$$</p></div>
+      <div class="note"><p>A point has only one Cartesian name, but many polar names: adding $360^\circ$ to $\theta$ gives the same point, so $(2, 30^\circ)$ and $(2, 390^\circ)$ coincide. Unless told otherwise, "coordinates" means Cartesian.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="coordPlot">
+      <figcaption><strong>Explore:</strong> Drag the point (or focus it and use the arrow keys). Watch the signs of $x$ and $y$ as you cross into each quadrant, then switch on the polar grid and read the same point as a distance and an angle.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Which quadrant?</h3>
+        <div class="problem"><p>Name the quadrant of each point: $(-3, 5)$, $(4, -2)$, $(-1, -6)$, $(0, 6)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(-3, 5)$: left and up, so Quadrant II. $(4, -2)$: right and down, so Quadrant IV.</p></div><p class="why">Read the signs: the first coordinate says left or right, the second says up or down.</p></li>
+          <li><div class="do"><p>$(-1, -6)$: both negative, so Quadrant III.</p></div><p class="why">Left and down is the lower-left quadrant, the third one counterclockwise from Quadrant I.</p></li>
+          <li><div class="do"><p>$(0, 6)$ sits on the $y$-axis, so it is in no quadrant.</p></div><p class="why">The axes are the borders between quadrants and belong to none of them.</p></li>
+        </ol>
+        <p class="answer">II, IV, III, and none (on the $y$-axis).</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Following directions</h3>
+        <div class="problem"><p>Start at $(3, -1)$. Walk $5$ units left, then $4$ units up. Where are you, and in which quadrant?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Left $5$: $x$ goes from $3$ to $3 - 5 = -2$.</p></div><p class="why">Horizontal moves change only the first coordinate; left means subtract.</p></li>
+          <li><div class="do"><p>Up $4$: $y$ goes from $-1$ to $-1 + 4 = 3$. You are at $(-2, 3)$.</p></div><p class="why">Vertical moves change only the second coordinate.</p></li>
+        </ol>
+        <p class="answer">$(-2, 3)$, in Quadrant II.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Polar to Cartesian</h3>
+        <div class="problem"><p>Find the Cartesian coordinates of the polar point $(4, 60^\circ)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Drop a perpendicular from the point to the $x$-axis. This makes a right triangle with hypotenuse $4$ and a $60^\circ$ angle at the origin.</p></div><p class="why">The horizontal leg is $x$ and the vertical leg is $y$.</p></li>
+          <li><div class="do"><p>It is a $30^\circ$-$60^\circ$-$90^\circ$ triangle, so the short leg (next to the $60^\circ$ angle) is $2$ and the long leg is $2\sqrt3$.</p></div><p class="why">In a $30$-$60$-$90$ triangle the sides are in ratio $1 : \sqrt3 : 2$. Equivalently, $x = 4\cos 60^\circ$ and $y = 4\sin 60^\circ$.</p></li>
+        </ol>
+        <p class="answer">$(2, 2\sqrt3)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Cartesian to polar</h3>
+        <div class="problem"><p>Give polar coordinates for $(-3, 3)$, with $0^\circ \le \theta &lt; 360^\circ$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$r = \sqrt{(-3)^2 + 3^2} = \sqrt{18} = 3\sqrt2$.</p></div><p class="why">$r$ is the distance to the origin: the hypotenuse of a right triangle with legs $3$ and $3$.</p></li>
+          <li data-think="The point is in Quadrant II. Does that put $\theta$ below or above $90^\circ$?"><div class="do"><p>The legs are equal, so the segment to the origin makes a $45^\circ$ angle with the negative $x$-axis. Measured from the positive $x$-axis, $\theta = 180^\circ - 45^\circ = 135^\circ$.</p></div><p class="why">Always sketch the quadrant first. The triangle tells you a reference angle; the quadrant tells you where to measure it from.</p></li>
+        </ol>
+        <p class="answer">$(3\sqrt2, 135^\circ)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Many names for one point</h3>
+        <div class="problem"><p>Find the Cartesian coordinates of $(2, 270^\circ)$, and give two other polar names for the same point.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$270^\circ$ is three quarter-turns from the positive $x$-axis, pointing straight down. Two units down is $(0, -2)$.</p></div><p class="why">The angles $0^\circ, 90^\circ, 180^\circ, 270^\circ$ point right, up, left and down.</p></li>
+          <li><div class="do"><p>Turning $90^\circ$ clockwise also points down, so $(2, -90^\circ)$ works; so does $(2, 270^\circ + 360^\circ) = (2, 630^\circ)$.</p></div><p class="why">Any two angles that differ by a multiple of $360^\circ$ point in the same direction.</p></li>
+        </ol>
+        <p class="answer">$(0, -2)$; for example $(2, -90^\circ)$ and $(2, 630^\circ)$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A square in polar coordinates</h3>
+        <div class="problem"><p>A square is centered at the origin and one vertex is the polar point $(4, 10^\circ)$. Find polar coordinates for the other three vertices and the side length of the square.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>All four vertices are the same distance from the center, so each has $r = 4$.</p></div><p class="why">The diagonals of a square are equal and bisect each other, so the center is equidistant from the vertices.</p></li>
+          <li><div class="do"><p>The diagonals are perpendicular, so the vertices are $90^\circ$ apart: $(4, 100^\circ)$, $(4, 190^\circ)$, $(4, 280^\circ)$.</p></div><p class="why">Going around a square, each vertex is a quarter-turn further around the center.</p></li>
+          <li><div class="do"><p>Two neighbouring vertices and the center form an isosceles right triangle with legs $4$, so the side is $4\sqrt2$.</p></div><p class="why">The angle between neighbouring radii is $90^\circ$; the side is the hypotenuse.</p></li>
+        </ol>
+        <p class="answer">$(4, 100^\circ)$, $(4, 190^\circ)$, $(4, 280^\circ)$; side $4\sqrt2$.</p>
+        <p class="key-idea">Polar coordinates shine when a figure is symmetric about the origin.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Distance between polar points</h3>
+        <div class="problem"><p>Find the distance between (a) $(3, 40^\circ)$ and $(5, 220^\circ)$; (b) $(5, 20^\circ)$ and $(5, 80^\circ)$.</p></div>
+        <ol class="steps">
+          <li data-think="How are the angles $40^\circ$ and $220^\circ$ related?"><div class="do"><p>(a) $220^\circ = 40^\circ + 180^\circ$, so the points lie on opposite rays from the origin. The origin is between them, and the distance is $3 + 5 = 8$.</p></div><p class="why">Adding $180^\circ$ reverses direction, so the two segments to the origin form one straight segment.</p></li>
+          <li data-think="What kind of triangle do the two points make with the origin?"><div class="do"><p>(b) Both points are $5$ from the origin and the angle between their rays is $80^\circ - 20^\circ = 60^\circ$. The triangle with the origin is isosceles with a $60^\circ$ apex angle.</p></div><p class="why">The two radii are the equal sides; the apex angle is the difference of the angles.</p></li>
+          <li><div class="do"><p>Its base angles are $(180^\circ - 60^\circ)/2 = 60^\circ$ each, so it is equilateral and the distance is $5$.</p></div><p class="why">An isosceles triangle with one $60^\circ$ angle at the apex has all angles $60^\circ$.</p></li>
+        </ol>
+        <p class="answer">(a) $8$; (b) $5$.</p>
+        <p class="key-idea">Two polar points and the origin form a triangle with two known sides and the included angle.</p>
+        <p class="book-next">Next in the book: Exercises 16-1 and 16-2.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 16.2 ===================== -->
+  <section class="lesson" id="s16-2" data-title="What's it Good For?">
+    <h2><span class="sec-num">16.2</span> What's it Good For?</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Tell a friend "move the couch two metres toward the window" and it is easy. Tell them "spin the couch a third of a turn about the lamp" and directions in metres get awkward fast. Different coordinate systems are good at describing different motions, and picking the right one can make a problem trivial.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>An equation in $x$ and $y$ describes the <em>set of all points</em> whose coordinates make it true. The simplest Cartesian equations give straight lines: $x = 1$ lets $y$ be anything, so it is a <strong>vertical line</strong>; $y = -5$ is a <strong>horizontal line</strong>.</p>
+      <p>The simplest polar equations give different shapes. $r = 3$ lets $\theta$ be anything while the distance stays $3$: a <strong>circle</strong> of radius $3$ about the origin. $\theta = 47^\circ$ fixes the direction and lets the distance vary: a <strong>ray</strong> from the origin.</p>
+      <p>The systems also handle motions differently:</p>
+      <div class="rule">
+        <p>Translation by $(a, b)$: $(x, y) \to (x + a,\ y + b)$ (simple in Cartesian).</p>
+        <p>Rotation by $\alpha$ about the origin: $(r, \theta) \to (r,\ \theta + \alpha)$ (simple in polar).</p>
+        <p>Reflection in the $x$-axis: $(x, y) \to (x, -y)$ and $(r, \theta) \to (r, -\theta)$.<br>Reflection in the $y$-axis: $(x, y) \to (-x, y)$ and $(r, \theta) \to (r, 180^\circ - \theta)$.</p>
+      </div>
+      <div class="note"><p>Rule of thumb: Cartesian coordinates for lines and sliding; polar coordinates for circles about the origin and turning. You will meet these motions again in Chapter 19.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="transformPoint">
+      <figcaption><strong>Explore:</strong> Drag the point $P$, choose a motion, and adjust it. Compare the two readouts: one coordinate system changes in a simple way, the other gets messy.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Two simple lines</h3>
+        <div class="problem"><p>Describe the graphs of $x = -2$ and $y = 3$, and find where they cross.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x = -2$: every point with first coordinate $-2$, a vertical line $2$ units left of the $y$-axis.</p></div><p class="why">The equation says nothing about $y$, so $y$ is free.</p></li>
+          <li><div class="do"><p>$y = 3$: a horizontal line $3$ units above the $x$-axis.</p></div><p class="why">Now $x$ is free and $y$ is pinned.</p></li>
+          <li><div class="do"><p>The crossing point must satisfy both: $(-2, 3)$.</p></div><p class="why">An intersection point lies on both graphs, so it obeys both equations.</p></li>
+        </ol>
+        <p class="answer">A vertical line and a horizontal line meeting at $(-2, 3)$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A circle meets a ray</h3>
+        <div class="problem"><p>Where does the polar curve $r = 4$ meet $\theta = 45^\circ$? Give the point in both systems.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$r = 4$ is the circle of radius $4$ about the origin; $\theta = 45^\circ$ is the ray along the line $y = x$ in Quadrant I. They meet at the polar point $(4, 45^\circ)$.</p></div><p class="why">The meeting point has both properties at once.</p></li>
+          <li><div class="do"><p>In Cartesian form, $x = y$ and $x^2 + y^2 = 16$, so $2x^2 = 16$ and $x = y = 2\sqrt2$.</p></div><p class="why">A $45^\circ$-$45^\circ$-$90^\circ$ triangle with hypotenuse $4$ has legs $4/\sqrt2 = 2\sqrt2$.</p></li>
+        </ol>
+        <p class="answer">$(4, 45^\circ) = (2\sqrt2, 2\sqrt2)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Sliding a point</h3>
+        <div class="problem"><p>Translate $(3, -1)$ by $5$ units left and $2$ units up. Then translate the result by $(4, -6)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$5$ left, $2$ up is the translation $(a, b) = (-5, 2)$: $(3 - 5, -1 + 2) = (-2, 1)$.</p></div><p class="why">A translation just adds a fixed amount to each coordinate.</p></li>
+          <li><div class="do"><p>$(-2 + 4, 1 - 6) = (2, -5)$.</p></div><p class="why">Two translations in a row add: $(-5, 2) + (4, -6) = (-1, -4)$, and indeed $(3, -1) + (-1, -4) = (2, -5)$.</p></li>
+        </ol>
+        <p class="answer">$(-2, 1)$, then $(2, -5)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Turning a point</h3>
+        <div class="problem"><p>Rotate the polar point $(6, 25^\circ)$ counterclockwise by $70^\circ$ about the origin, then by another $300^\circ$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>After $70^\circ$: $(6, 95^\circ)$.</p></div><p class="why">Rotation about the origin keeps the distance $r$ and adds to the angle.</p></li>
+          <li><div class="do"><p>After $300^\circ$ more: $(6, 395^\circ) = (6, 35^\circ)$.</p></div><p class="why">Subtract $360^\circ$ to bring the angle back into the usual range; it is the same point.</p></li>
+        </ol>
+        <p class="answer">$(6, 95^\circ)$, then $(6, 35^\circ)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Reflecting in both systems</h3>
+        <div class="problem"><p>The point $P$ has polar coordinates $(2, 30^\circ)$. Reflect it in the $y$-axis. Give the image in both systems.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Cartesian form of $P$: $(2\cos 30^\circ, 2\sin 30^\circ) = (\sqrt3, 1)$.</p></div><p class="why">A $30$-$60$-$90$ triangle with hypotenuse $2$ has legs $1$ and $\sqrt3$.</p></li>
+          <li><div class="do"><p>Reflect in the $y$-axis: $(-\sqrt3, 1)$.</p></div><p class="why">The mirror swaps left and right, so only $x$ changes sign.</p></li>
+          <li><div class="do"><p>In polar form the angle becomes $180^\circ - 30^\circ = 150^\circ$: the image is $(2, 150^\circ)$.</p></div><p class="why">The image makes a $30^\circ$ angle with the <em>negative</em> $x$-axis, and the distance to the origin is unchanged.</p></li>
+        </ol>
+        <p class="answer">$(-\sqrt3, 1) = (2, 150^\circ)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Rotating a Cartesian point by $90^\circ$</h3>
+        <div class="problem"><p>Rotate $(3, 4)$ counterclockwise by $90^\circ$ about the origin.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $\theta$ be the angle of $(3, 4)$. Then $r = 5$, $\cos\theta = \tfrac35$ and $\sin\theta = \tfrac45$.</p></div><p class="why">Rotations are easy in polar form, so convert first.</p></li>
+          <li data-think="If you turn a right triangle with legs 3 (across) and 4 (up) a quarter turn to the left, which way does each leg now point?"><div class="do"><p>Turn the triangle a quarter turn: the leg of length $3$ that pointed right now points up, and the leg of length $4$ that pointed up now points left. So the image is $(-4, 3)$.</p></div><p class="why">A rigid quarter turn carries the whole right triangle with it; leg lengths are preserved.</p></li>
+          <li><div class="do"><p>Check: $\sqrt{(-4)^2 + 3^2} = 5$, and the slopes $\tfrac43$ and $-\tfrac34$ multiply to $-1$.</p></div><p class="why">The distance to the origin is unchanged and the two radii are perpendicular, as they should be.</p></li>
+        </ol>
+        <p class="answer">$(-4, 3)$. In general, a $90^\circ$ turn sends $(x, y)$ to $(-y, x)$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Regions in polar form</h3>
+        <div class="problem"><p>Find the area of the region of points satisfying $1 \le r \le 2$ and $0^\circ \le \theta \le 90^\circ$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$1 \le r \le 2$ alone is a ring between circles of radius $1$ and $2$, with area $4\pi - \pi = 3\pi$.</p></div><p class="why">Subtract the inner disc from the outer one.</p></li>
+          <li><div class="do"><p>$0^\circ \le \theta \le 90^\circ$ keeps only the quarter of the ring in Quadrant I, so the area is $\tfrac14 \cdot 3\pi = \tfrac{3\pi}{4}$.</p></div><p class="why">The ring is symmetric, so a $90^\circ$ wedge holds exactly a quarter of it.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{3\pi}{4}$</p>
+        <p class="key-idea">Inequalities in $r$ give rings; inequalities in $\theta$ give wedges.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two reflections make a rotation</h3>
+        <div class="problem"><p>Show that reflecting in the $x$-axis and then in the $y$-axis is the same as a $180^\circ$ rotation about the origin. Use it to find the image of $(-2, 7)$ and of the polar point $(3, 200^\circ)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Cartesian: $(x, y) \to (x, -y) \to (-x, -y)$.</p></div><p class="why">Apply the two reflection rules one after the other.</p></li>
+          <li data-think="What does the polar rule for reflection in the $y$-axis do to the angle $-\theta$?"><div class="do"><p>Polar: $(r, \theta) \to (r, -\theta) \to (r, 180^\circ - (-\theta)) = (r, \theta + 180^\circ)$, which is a $180^\circ$ rotation.</p></div><p class="why">The polar description makes the rotation visible: the angle grows by $180^\circ$ and the distance stays put.</p></li>
+          <li><div class="do"><p>$(-2, 7) \to (2, -7)$, and $(3, 200^\circ) \to (3, 380^\circ) = (3, 20^\circ)$.</p></div><p class="why">Use whichever form the point is already given in.</p></li>
+        </ol>
+        <p class="answer">$(2, -7)$ and $(3, 20^\circ)$.</p>
+        <p class="key-idea">Seeing a motion in the right coordinate system can reveal what it really is.</p>
+        <p class="book-next">Next in the book: Exercises 16-3 and 16-4.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 16.3 ===================== -->
+  <section class="lesson" id="s16-3" data-title="Straight and Narrow">
+    <h2><span class="sec-num">16.3</span> Straight and Narrow</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A road sign reading "8% grade" means the road climbs $8$ metres for every $100$ metres you travel horizontally. That ratio, rise over run, is all you need to know about how steep a straight road is, and it is the heart of the equation of a line.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Where a line crosses the $y$-axis is its <strong>$y$-intercept</strong> $(0, b)$; where it crosses the $x$-axis is its <strong>$x$-intercept</strong>. To find an intercept, set the <em>other</em> variable equal to $0$.</p>
+      <p>The <strong>slope</strong> $m$ measures steepness: move right along a non-vertical line by any amount, and you must move up by $m$ times that amount to stay on it. Between two points,</p>
+      <div class="rule"><p>$$m = \frac{\text{rise}}{\text{run}} = \frac{y_2 - y_1}{x_2 - x_1}.$$</p></div>
+      <p>Positive slope climbs, negative slope falls, zero slope is horizontal, and a vertical line has no slope (the run is $0$). A line with slope $m$ and $y$-intercept $b$ has equation $y = mx + b$, the <strong>slope-intercept form</strong>. The <strong>standard form</strong> is $Ax + By = C$ with integer coefficients and $A \ge 0$; solving for $y$ shows its slope is $-A/B$.</p>
+      <div class="rule"><p>Parallel lines: equal slopes. &nbsp; Perpendicular lines: $m_1 m_2 = -1$ (neither line vertical).</p></div>
+      <div class="note"><p>Why $-1$? If one line runs $a$ and rises $b$, turning it a quarter turn makes it run $-b$ and rise $a$. The slopes are $\frac{b}{a}$ and $-\frac{a}{b}$, whose product is $-1$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="slopeLine">
+      <figcaption><strong>Explore:</strong> Drag $A$ and $B$ to grid points. The rise-over-run triangle and the equations update. Turn on the perpendicular through $A$ and check that the two slopes always multiply to $-1$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Intercepts</h3>
+        <div class="problem"><p>Find the $x$- and $y$-intercepts of $3x + 5y = 30$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Set $y = 0$: $3x = 30$, so $x = 10$. The $x$-intercept is $(10, 0)$.</p></div><p class="why">Every point on the $x$-axis has $y = 0$.</p></li>
+          <li><div class="do"><p>Set $x = 0$: $5y = 30$, so $y = 6$. The $y$-intercept is $(0, 6)$.</p></div><p class="why">Every point on the $y$-axis has $x = 0$.</p></li>
+        </ol>
+        <p class="answer">$(10, 0)$ and $(0, 6)$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Slope from two points</h3>
+        <div class="problem"><p>Find the slope of the line through $(2, -1)$ and $(6, 7)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Run: $6 - 2 = 4$. Rise: $7 - (-1) = 8$.</p></div><p class="why">Subtract in the same order for both coordinates.</p></li>
+          <li><div class="do"><p>$m = \dfrac{8}{4} = 2$.</p></div><p class="why">Slope is rise divided by run.</p></li>
+        </ol>
+        <p class="answer">$2$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Equation through two points</h3>
+        <div class="problem"><p>Find the equation of the line through $(-2, 5)$ and $(4, 2)$ in slope-intercept and standard form.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$m = \dfrac{2 - 5}{4 - (-2)} = \dfrac{-3}{6} = -\dfrac12$.</p></div><p class="why">The line falls, so a negative slope is expected.</p></li>
+          <li><div class="do"><p>$y = -\tfrac12 x + b$. Plug in $(4, 2)$: $2 = -2 + b$, so $b = 4$.</p></div><p class="why">Any point on the line must satisfy the equation; use it to find $b$.</p></li>
+          <li><div class="do"><p>$y = -\tfrac12 x + 4$. Multiply by $2$ and rearrange: $x + 2y = 8$.</p></div><p class="why">Clearing fractions gives the standard form. Check $(-2, 5)$: $-2 + 10 = 8$. ✓</p></li>
+        </ol>
+        <p class="answer">$y = -\tfrac12 x + 4$, or $x + 2y = 8$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Reading a standard-form line</h3>
+        <div class="problem"><p>Find the slope and both intercepts of $4x - 6y = 12$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Solve for $y$: $-6y = -4x + 12$, so $y = \tfrac23 x - 2$.</p></div><p class="why">Slope-intercept form shows the slope and $y$-intercept directly. (Check with $-A/B = -4/(-6) = \tfrac23$.)</p></li>
+          <li><div class="do"><p>Slope $\tfrac23$, $y$-intercept $(0, -2)$. For the $x$-intercept, $4x = 12$ gives $(3, 0)$.</p></div><p class="why">Set $y = 0$ in the original equation.</p></li>
+        </ol>
+        <p class="answer">Slope $\tfrac23$; intercepts $(3, 0)$ and $(0, -2)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A parallel line</h3>
+        <div class="problem"><p>Find the line through $(3, 4)$ parallel to $2x + y = 7$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2x + y = 7$ means $y = -2x + 7$: slope $-2$.</p></div><p class="why">Parallel lines share a slope.</p></li>
+          <li><div class="do"><p>$y = -2x + b$ through $(3, 4)$: $4 = -6 + b$, so $b = 10$.</p></div><p class="why">Same slope, new intercept chosen to pass through the given point.</p></li>
+        </ol>
+        <p class="answer">$y = -2x + 10$, or $2x + y = 10$.</p>
+        <p class="key-idea">A parallel line keeps $A$ and $B$ and changes only $C$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A perpendicular line</h3>
+        <div class="problem"><p>Find the line through $(4, -1)$ perpendicular to $3x - 2y = 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The given line has slope $-A/B = -3/(-2) = \tfrac32$.</p></div><p class="why">Read the slope straight from the standard form.</p></li>
+          <li><div class="do"><p>A perpendicular slope satisfies $\tfrac32 m = -1$, so $m = -\tfrac23$.</p></div><p class="why">Take the negative reciprocal.</p></li>
+          <li><div class="do"><p>$y = -\tfrac23 x + b$ through $(4, -1)$: $-1 = -\tfrac83 + b$, so $b = \tfrac53$. Multiply by $3$: $2x + 3y = 5$.</p></div><p class="why">Check: $2(4) + 3(-1) = 5$. ✓</p></li>
+        </ol>
+        <p class="answer">$2x + 3y = 5$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Triangle cut off by a line</h3>
+        <div class="problem"><p>Find the area of the triangle bounded by $5x + 2y = 20$ and the two coordinate axes.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Intercepts: $y = 0$ gives $x = 4$; $x = 0$ gives $y = 10$.</p></div><p class="why">The triangle's vertices are the origin and the two intercepts.</p></li>
+          <li><div class="do"><p>It is a right triangle with legs $4$ and $10$: area $\tfrac12 \cdot 4 \cdot 10 = 20$.</p></div><p class="why">The axes are perpendicular, so the legs lie along them.</p></li>
+        </ol>
+        <p class="answer">$20$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three points in a row</h3>
+        <div class="problem"><p>For what value of $t$ are $(1, 2)$, $(4, 8)$ and $(t, 15)$ on one line?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Slope from $(1, 2)$ to $(4, 8)$: $\tfrac{6}{3} = 2$.</p></div><p class="why">Collinear points give the same slope between any two of them.</p></li>
+          <li><div class="do"><p>Slope from $(1, 2)$ to $(t, 15)$ must also be $2$: $\dfrac{13}{t - 1} = 2$, so $t - 1 = 6.5$ and $t = 7.5$.</p></div><p class="why">Set the slopes equal and solve.</p></li>
+        </ol>
+        <p class="answer">$t = \tfrac{15}{2}$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Tuning a coefficient</h3>
+        <div class="problem"><p>For what value of $a$ is the line $ax + 4y = 7$ (a) parallel to, (b) perpendicular to the line $3x - 2y = 1$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Slopes: $ax + 4y = 7$ has slope $-\tfrac{a}{4}$; $3x - 2y = 1$ has slope $\tfrac32$.</p></div><p class="why">Use $-A/B$ for each.</p></li>
+          <li><div class="do"><p>(a) $-\tfrac{a}{4} = \tfrac32$ gives $a = -6$. The lines $-6x + 4y = 7$ and $3x - 2y = 1$ are then distinct, since doubling the second gives $-6x + 4y = -2$.</p></div><p class="why">Equal slopes give parallel lines, but check they are not the same line.</p></li>
+          <li data-think="Set up the product of the slopes. What must it equal?"><div class="do"><p>(b) $\left(-\tfrac{a}{4}\right)\left(\tfrac32\right) = -1$, so $\tfrac{3a}{8} = 1$ and $a = \tfrac83$.</p></div><p class="why">Perpendicular slopes multiply to $-1$.</p></li>
+        </ol>
+        <p class="answer">(a) $a = -6$; (b) $a = \tfrac83$.</p>
+        <p class="key-idea">In standard form, $A_1A_2 + B_1B_2 = 0$ exactly when the lines are perpendicular: here $3a - 8 = 0$.</p>
+        <p class="book-next">Next in the book: Exercises 16-5 to 16-13.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 16.4 ===================== -->
+  <section class="lesson" id="s16-4" data-title="Plotting a Line">
+    <h2><span class="sec-num">16.4</span> Plotting a Line</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A builder laying a straight fence only needs two posts; a string pulled tight between them shows where every other post goes. Plotting a line is the same: find two points you trust, and the rest of the line follows.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The universal method for any equation: <strong>plug in</strong> a few $x$ values, solve for the matching $y$ values, plot the points and connect them. For a line, two points suffice, and a third is a good check.</p>
+      <p>Choose $x$ values that make $y$ come out as an integer; for $Ax + By = C$ the intercepts are often the easiest pair. For $y = mx + b$ with $m = \frac{p}{q}$, you can <strong>walk the slope</strong>: start at $(0, b)$, then repeatedly go right $q$ and up $p$ (down if $p$ is negative), or left $q$ and down $p$.</p>
+      <div class="rule"><p>Point-slope form: the line through $(x_1, y_1)$ with slope $m$ is $y - y_1 = m(x - x_1)$.</p></div>
+      <div class="note"><p>Walking the slope with $\frac{p}{q}$ in lowest terms lands on <em>every</em> grid point of the line, which is handy for counting lattice points.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="slopeWalk">
+      <figcaption><strong>Explore:</strong> Set the rise and run, drag the starting point up and down the $y$-axis, then press the step buttons to walk the slope. The table lists every point you land on.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A table of values</h3>
+        <div class="problem"><p>Find three points on $y = 2x - 3$ to plot it.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x = 0$: $y = -3$. $x = 1$: $y = -1$. $x = 2$: $y = 1$.</p></div><p class="why">Small $x$ values keep the arithmetic easy.</p></li>
+          <li><div class="do"><p>Plot $(0, -3)$, $(1, -1)$, $(2, 1)$ and draw the line through them.</p></div><p class="why">Two points determine the line; the third confirms there was no slip.</p></li>
+        </ol>
+        <p class="answer">$(0, -3)$, $(1, -1)$, $(2, 1)$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Walking the slope</h3>
+        <div class="problem"><p>Plot $y = -\tfrac32 x + 4$ by walking the slope. List four points.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Start at the $y$-intercept $(0, 4)$.</p></div><p class="why">The $b$ in $y = mx + b$ tells you where to begin.</p></li>
+          <li><div class="do"><p>Slope $-\tfrac32$: right $2$, down $3$ gives $(2, 1)$, then $(4, -2)$. Left $2$, up $3$ gives $(-2, 7)$.</p></div><p class="why">The denominator is the run and the numerator is the rise; reverse both to walk backward.</p></li>
+        </ol>
+        <p class="answer">$(-2, 7)$, $(0, 4)$, $(2, 1)$, $(4, -2)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Plot by intercepts</h3>
+        <div class="problem"><p>Plot $3x - 4y = 12$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$y = 0$: $x = 4$. $x = 0$: $y = -3$. Plot $(4, 0)$ and $(0, -3)$.</p></div><p class="why">In standard form the intercepts are quick to compute.</p></li>
+          <li><div class="do"><p>Check with a third point: $x = 8$ gives $-4y = -12$, so $y = 3$, and $(8, 3)$ lies on the same line.</p></div><p class="why">From $(4, 0)$ to $(8, 3)$ is run $4$, rise $3$, matching the slope $\frac34$.</p></li>
+        </ol>
+        <p class="answer">The line through $(0, -3)$, $(4, 0)$ and $(8, 3)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Choosing friendly $x$ values</h3>
+        <div class="problem"><p>Find three points with integer coordinates on $2x + 5y = 7$.</p></div>
+        <ol class="steps">
+          <li data-think="Which values of $x$ make $7 - 2x$ a multiple of 5?"><div class="do"><p>$y = \dfrac{7 - 2x}{5}$ is an integer when $7 - 2x$ is a multiple of $5$. Try $x = 1$: $y = 1$.</p></div><p class="why">Choosing $x$ cleverly avoids fractions.</p></li>
+          <li><div class="do"><p>The slope is $-\tfrac25$, so walking right $5$, down $2$ gives $(6, -1)$; walking left $5$, up $2$ gives $(-4, 3)$.</p></div><p class="why">Once one lattice point is known, the slope in lowest terms gives the rest.</p></li>
+        </ol>
+        <p class="answer">$(-4, 3)$, $(1, 1)$, $(6, -1)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Point-slope form</h3>
+        <div class="problem"><p>Plot $y - 1 = -2(x + 3)$ and write it in slope-intercept form.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>This is point-slope form with point $(-3, 1)$ and slope $-2$.</p></div><p class="why">Compare with $y - y_1 = m(x - x_1)$: here $x_1 = -3$ because $x + 3 = x - (-3)$.</p></li>
+          <li><div class="do"><p>Walk: right $1$, down $2$: $(-2, -1)$, $(-1, -3)$.</p></div><p class="why">Slope $-2 = \frac{-2}{1}$.</p></li>
+          <li><div class="do"><p>Expand: $y = -2x - 6 + 1 = -2x - 5$.</p></div><p class="why">Check: $x = -2$ gives $y = -1$. ✓</p></li>
+        </ol>
+        <p class="answer">$y = -2x - 5$, through $(-3, 1)$, $(-2, -1)$, $(-1, -3)$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Is the point on the line?</h3>
+        <div class="problem"><p>A line passes through $(2, 1)$ with slope $\tfrac52$. Does it pass through $(14, 31)$? Through $(9, 18)$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>From $(2, 1)$ to $(14, 31)$: run $12 = 6 \times 2$, so the rise must be $6 \times 5 = 30$, and $1 + 30 = 31$. Yes.</p></div><p class="why">Six slope steps of "right 2, up 5" cover the run of 12.</p></li>
+          <li><div class="do"><p>From $(2, 1)$ to $(9, 18)$: run $7$, rise $17$, and $\tfrac{17}{7} \ne \tfrac52$. No.</p></div><p class="why">A point is on the line exactly when its slope to a known point equals the line's slope.</p></li>
+        </ol>
+        <p class="answer">$(14, 31)$ is on the line; $(9, 18)$ is not.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Counting lattice points</h3>
+        <div class="problem"><p>How many points with integer coordinates lie on the segment from $(-3, 7)$ to $(9, -2)$, including the endpoints?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Run $12$, rise $-9$: slope $-\tfrac{9}{12} = -\tfrac34$.</p></div><p class="why">Reduce to lowest terms; that gives the smallest grid step along the line.</p></li>
+          <li data-think="Why does the reduced fraction give the smallest step that lands on grid points?"><div class="do"><p>Walking "right $4$, down $3$" from $(-3, 7)$: $(1, 4)$, $(5, 1)$, $(9, -2)$.</p></div><p class="why">Any lattice step $(\Delta x, \Delta y)$ along the line has $\Delta y / \Delta x = -3/4$, so $\Delta x$ must be a multiple of $4$.</p></li>
+          <li><div class="do"><p>Count: $(-3, 7)$, $(1, 4)$, $(5, 1)$, $(9, -2)$.</p></div><p class="why">In general there are $\gcd(|\text{run}|, |\text{rise}|) + 1 = \gcd(12, 9) + 1$ of them.</p></li>
+        </ol>
+        <p class="answer">$4$ points</p>
+        <p class="key-idea">A slope in lowest terms is the smallest grid step along a line.</p>
+        <p class="book-next">Next in the book: Example 16-7 and Exercise 16-14.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 16.5 ===================== -->
+  <section class="lesson" id="s16-5" data-title="The Distance Formula and Circles">
+    <h2><span class="sec-num">16.5</span> The Distance Formula and Circles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A city laid out on a grid has streets going east-west and avenues north-south. To get from one corner to another you walk along both, but a crow flies straight across. How far does the crow fly? The streets and the crow's path make a right triangle, and Pythagoras answers the question.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>From $(x_1, y_1)$ to $(x_2, y_2)$ you go across $x_2 - x_1$ and up $y_2 - y_1$. These are the legs of a right triangle whose hypotenuse is the distance $d$:</p>
+      <div class="rule"><p>$$d = \sqrt{(x_2 - x_1)^2 + (y_2 - y_1)^2}.$$</p></div>
+      <p>A circle is the set of points at distance $R$ from a center $(p, q)$. Square the distance formula to get the <strong>standard equation of a circle</strong>:</p>
+      <div class="rule"><p>$$(x - p)^2 + (y - q)^2 = R^2.$$</p></div>
+      <p>Expanding gives the general form $x^2 + y^2 + Dx + Ey + F = 0$, which hides the center and radius. To recover them, make the coefficients of $x^2$ and $y^2$ equal to $1$, then <strong>complete the square</strong> in $x$ and in $y$ separately (as in Chapter 6).</p>
+      <div class="note"><p>If completing the square leaves $0$ on the right, the "circle" is a single point; if it leaves a negative number, no points satisfy the equation at all.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="distanceCircle">
+      <figcaption><strong>Explore:</strong> Drag the center $C$ and the point $Q$. The legs of the right triangle give the distance, and the circle through $Q$ updates its equation in both standard and expanded form.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A distance</h3>
+        <div class="problem"><p>Find the distance between $(1, 2)$ and $(7, 10)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Legs: $7 - 1 = 6$ and $10 - 2 = 8$.</p></div><p class="why">The horizontal and vertical separations form a right triangle.</p></li>
+          <li><div class="do"><p>$d = \sqrt{36 + 64} = \sqrt{100} = 10$.</p></div><p class="why">It is a $6$-$8$-$10$ triangle, a multiple of $3$-$4$-$5$.</p></li>
+        </ol>
+        <p class="answer">$10$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Writing a circle</h3>
+        <div class="problem"><p>Write the equation of the circle with center $(3, -2)$ and radius $5$. Is $(6, 2)$ on it?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x - 3)^2 + (y - (-2))^2 = 25$, that is, $(x - 3)^2 + (y + 2)^2 = 25$.</p></div><p class="why">Substitute $p = 3$, $q = -2$, $R = 5$. Watch the sign: $y - (-2) = y + 2$.</p></li>
+          <li><div class="do"><p>$(6 - 3)^2 + (2 + 2)^2 = 9 + 16 = 25$. Yes.</p></div><p class="why">A point is on the circle exactly when it satisfies the equation.</p></li>
+        </ol>
+        <p class="answer">$(x - 3)^2 + (y + 2)^2 = 25$; yes, $(6, 2)$ is on it.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A missing coordinate</h3>
+        <div class="problem"><p>Find all $y$ such that $(4, y)$ is $13$ units from $(-1, 2)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(4 - (-1))^2 + (y - 2)^2 = 13^2$, so $25 + (y - 2)^2 = 169$.</p></div><p class="why">Square the distance formula to avoid the square root.</p></li>
+          <li><div class="do"><p>$(y - 2)^2 = 144$, so $y - 2 = \pm 12$ and $y = 14$ or $y = -10$.</p></div><p class="why">Both signs count: one point above and one below.</p></li>
+        </ol>
+        <p class="answer">$y = 14$ or $y = -10$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Completing two squares</h3>
+        <div class="problem"><p>Find the center and radius of $x^2 + y^2 - 6x + 10y + 9 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Group: $(x^2 - 6x) + (y^2 + 10y) = -9$.</p></div><p class="why">Collect the $x$ terms and the $y$ terms, and move the constant across.</p></li>
+          <li><div class="do"><p>Add $9$ and $25$ to both sides: $(x - 3)^2 + (y + 5)^2 = -9 + 9 + 25 = 25$.</p></div><p class="why">Half of $-6$ is $-3$, squared is $9$; half of $10$ is $5$, squared is $25$.</p></li>
+        </ol>
+        <p class="answer">Center $(3, -5)$, radius $5$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Circle on a diameter</h3>
+        <div class="problem"><p>The segment from $(-2, 1)$ to $(6, 7)$ is a diameter of a circle. Find its equation.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The center is halfway between the endpoints: $\left(\frac{-2 + 6}{2}, \frac{1 + 7}{2}\right) = (2, 4)$.</p></div><p class="why">The center of a circle bisects every diameter; halfway means averaging the coordinates (proved in 16.7).</p></li>
+          <li><div class="do"><p>Radius: distance from $(2, 4)$ to $(6, 7)$ is $\sqrt{16 + 9} = 5$.</p></div><p class="why">Any endpoint of the diameter is on the circle.</p></li>
+        </ol>
+        <p class="answer">$(x - 2)^2 + (y - 4)^2 = 25$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Divide first</h3>
+        <div class="problem"><p>Find the center and radius of $3x^2 + 3y^2 + 12x - 18y - 9 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Divide by $3$: $x^2 + y^2 + 4x - 6y - 3 = 0$.</p></div><p class="why">Completing the square is simplest when $x^2$ and $y^2$ have coefficient $1$.</p></li>
+          <li><div class="do"><p>$(x^2 + 4x + 4) + (y^2 - 6y + 9) = 3 + 4 + 9$, so $(x + 2)^2 + (y - 3)^2 = 16$.</p></div><p class="why">Add the same amounts to both sides.</p></li>
+        </ol>
+        <p class="answer">Center $(-2, 3)$, radius $4$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Equidistant from three points</h3>
+        <div class="problem"><p>Find the point equidistant from $(0, 0)$, $(8, 0)$ and $(0, 6)$, and that common distance.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the point be $(x, y)$. Equal distance to $(0, 0)$ and $(8, 0)$: $x^2 + y^2 = (x - 8)^2 + y^2$, so $0 = -16x + 64$ and $x = 4$.</p></div><p class="why">Squared distances are equal; the $x^2$ and $y^2$ terms cancel, leaving a linear equation.</p></li>
+          <li><div class="do"><p>Equal distance to $(0, 0)$ and $(0, 6)$ gives $y = 3$ in the same way.</p></div><p class="why">The point must lie on the perpendicular bisector of each side.</p></li>
+          <li><div class="do"><p>Distance from $(4, 3)$ to the origin: $\sqrt{16 + 9} = 5$.</p></div><p class="why">This is the center and radius of the circle through all three points.</p></li>
+        </ol>
+        <p class="answer">$(4, 3)$, at distance $5$.</p>
+        <p class="key-idea">Setting squared distances equal cancels the squares and leaves a line.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>When is it really a circle?</h3>
+        <div class="problem"><p>For which $k$ does $x^2 + y^2 - 4x + 2y + k = 0$ describe a circle? For which $k$ is the radius $3$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Complete the squares: $(x - 2)^2 + (y + 1)^2 = 4 + 1 - k = 5 - k$.</p></div><p class="why">Now the right side plays the role of $R^2$.</p></li>
+          <li data-think="What does the equation describe when the right side is 0? When it is negative?"><div class="do"><p>A circle needs $5 - k > 0$, so $k &lt; 5$. At $k = 5$ only the point $(2, -1)$ works, and for $k > 5$ nothing does.</p></div><p class="why">A sum of squares is never negative and equals $0$ only when both squares are $0$.</p></li>
+          <li><div class="do"><p>Radius $3$: $5 - k = 9$, so $k = -4$.</p></div><p class="why">Set $R^2 = 9$.</p></li>
+        </ol>
+        <p class="answer">A circle for $k &lt; 5$; radius $3$ when $k = -4$.</p>
+        <p class="book-next">Next in the book: Examples 16-8 to 16-10 and Exercise 16-15.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 16.6 ===================== -->
+  <section class="lesson" id="s16-6" data-title="Went Down to the Crossroads">
+    <h2><span class="sec-num">16.6</span> Went Down to the Crossroads</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Two roads drawn on a map cross somewhere. You could squint at the map, or you could notice that the crossing point lies on <em>both</em> roads, so its coordinates satisfy <em>both</em> equations. Finding where figures meet is just solving a system of equations.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To intersect two figures, write both equations and <strong>solve them simultaneously</strong>. For two lines, use substitution or elimination (Chapter 3). For a line and a circle, solve the line for one variable and substitute into the circle; that gives a quadratic.</p>
+      <div class="rule"><p>Two distinct lines: $0$ points (parallel) or $1$ point.<br>Line and circle: the quadratic has $2$, $1$ or $0$ real roots: the line is a secant, a tangent, or misses.<br>Two circles: subtract the equations to get a line, then intersect that line with either circle.</p></div>
+      <div class="note"><p>A quick geometric check for a line and a circle: compare the distance from the center to the line with the radius. Smaller means two points, equal means tangent, larger means none.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="lineCircleCross">
+      <figcaption><strong>Explore:</strong> Change the radius and drag the center and the two points that fix the line. Watch the number of intersection points jump between $2$, $1$ and $0$, and compare the center-to-line distance with the radius.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Two lines by substitution</h3>
+        <div class="problem"><p>Where do $y = 2x + 1$ and $y = -x + 7$ meet?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Set the $y$'s equal: $2x + 1 = -x + 7$, so $3x = 6$ and $x = 2$.</p></div><p class="why">At the crossing, both equations give the same $y$.</p></li>
+          <li><div class="do"><p>$y = 2(2) + 1 = 5$.</p></div><p class="why">Check in the other: $-2 + 7 = 5$. ✓</p></li>
+        </ol>
+        <p class="answer">$(2, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two lines by elimination</h3>
+        <div class="problem"><p>Intersect $3x + 2y = 4$ and $x - 4y = 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Double the first: $6x + 4y = 8$. Add the second: $7x = 14$, so $x = 2$.</p></div><p class="why">Make the $y$ coefficients opposite so they cancel.</p></li>
+          <li><div class="do"><p>$2 - 4y = 6$, so $y = -1$.</p></div><p class="why">Substitute back. Check: $6 - 2 = 4$. ✓</p></li>
+        </ol>
+        <p class="answer">$(2, -1)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Lines that never meet</h3>
+        <div class="problem"><p>Intersect $2x - 3y = 4$ and $4x - 6y = 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Double the first: $4x - 6y = 8$. But the second says $4x - 6y = 1$.</p></div><p class="why">The same expression cannot equal both $8$ and $1$.</p></li>
+          <li><div class="do"><p>No solution: both lines have slope $\tfrac23$ and different intercepts, so they are parallel.</p></div><p class="why">An impossible system is the algebra's way of saying "parallel".</p></li>
+        </ol>
+        <p class="answer">No intersection; the lines are parallel.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A line through a circle</h3>
+        <div class="problem"><p>Find where $y = x + 1$ meets $x^2 + y^2 = 25$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Substitute: $x^2 + (x + 1)^2 = 25$, so $2x^2 + 2x - 24 = 0$, that is, $x^2 + x - 12 = 0$.</p></div><p class="why">Replace $y$ using the line's equation to get one equation in $x$.</p></li>
+          <li><div class="do"><p>$(x + 4)(x - 3) = 0$, so $x = 3$ or $x = -4$, giving $y = 4$ or $y = -3$.</p></div><p class="why">Use the line (not the circle) to find each $y$; the circle would also allow wrong signs.</p></li>
+        </ol>
+        <p class="answer">$(3, 4)$ and $(-4, -3)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Tangent lines</h3>
+        <div class="problem"><p>For which values of $b$ is the line $y = x + b$ tangent to $x^2 + y^2 = 8$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Substitute: $x^2 + (x + b)^2 = 8$, so $2x^2 + 2bx + b^2 - 8 = 0$.</p></div><p class="why">Tangent means exactly one intersection point.</p></li>
+          <li data-think="What condition on a quadratic gives exactly one root?"><div class="do"><p>The discriminant must be $0$: $(2b)^2 - 4 \cdot 2 \cdot (b^2 - 8) = 64 - 4b^2 = 0$, so $b = \pm 4$.</p></div><p class="why">A double root means the line touches the circle at one point.</p></li>
+          <li><div class="do"><p>Check geometrically: the line $y = x + 4$ crosses the axes at $(-4, 0)$ and $(0, 4)$. The distance from the origin to it is half the diagonal of that $4 \times 4$ corner square, $2\sqrt2 = \sqrt8$, the radius. ✓</p></div><p class="why">Tangent lines sit exactly one radius from the center.</p></li>
+        </ol>
+        <p class="answer">$b = 4$ or $b = -4$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two circles</h3>
+        <div class="problem"><p>Find the intersections of $x^2 + y^2 = 25$ and $(x - 6)^2 + y^2 = 13$.</p></div>
+        <ol class="steps">
+          <li data-think="Both equations contain $x^2 + y^2$ in some form. How can you get rid of the squares?"><div class="do"><p>Expand the second: $x^2 - 12x + 36 + y^2 = 13$. Subtract it from the first: $12x - 36 = 12$, so $x = 4$.</p></div><p class="why">Subtracting cancels $x^2$ and $y^2$, leaving a line that contains both intersection points.</p></li>
+          <li><div class="do"><p>$16 + y^2 = 25$, so $y = \pm 3$.</p></div><p class="why">Put $x = 4$ into either circle. Check the other: $(4 - 6)^2 + 9 = 13$. ✓</p></li>
+        </ol>
+        <p class="answer">$(4, 3)$ and $(4, -3)$</p>
+        <p class="key-idea">Subtracting two circle equations gives the line through their crossing points.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Length of a chord</h3>
+        <div class="problem"><p>The line $x + 2y = 5$ cuts the circle $x^2 + y^2 = 25$ in a chord. How long is the chord?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Substitute $x = 5 - 2y$: $(5 - 2y)^2 + y^2 = 25$, so $5y^2 - 20y = 0$ and $y = 0$ or $y = 4$.</p></div><p class="why">Solving for $x$ avoids fractions here.</p></li>
+          <li><div class="do"><p>The endpoints are $(5, 0)$ and $(-3, 4)$. Chord length: $\sqrt{8^2 + 4^2} = \sqrt{80} = 4\sqrt5$.</p></div><p class="why">Use the line to get each $x$, then the distance formula.</p></li>
+          <li><div class="do"><p>Check another way: the line crosses the axes at $(5, 0)$ and $(0, \tfrac52)$, and the distance from the origin to it is $\sqrt5$. Half the chord is $\sqrt{25 - 5} = 2\sqrt5$.</p></div><p class="why">The perpendicular from the center bisects a chord, making a right triangle with the radius as hypotenuse. (The distance $\sqrt5$ comes from area: $\tfrac12 \cdot 5 \cdot \tfrac52 = \tfrac12 \cdot \tfrac{5\sqrt5}{2} \cdot h$.)</p></li>
+        </ol>
+        <p class="answer">$4\sqrt5$</p>
+        <p class="book-next">Next in the book: Example 16-11 and Exercises 16-16, 16-17.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 16.7 ===================== -->
+  <section class="lesson" id="s16-7" data-title="... Fell Down on My Knees">
+    <h2><span class="sec-num">16.7</span> ... Fell Down on My Knees</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Coordinates are a power tool. Used well, they prove theorems in a few lines of algebra; used carelessly, they bury a two-line geometric idea under a page of symbols. The trick is to place the axes cleverly, so the algebra stays small.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Doing geometry with equations is called <strong>analytic geometry</strong>. Two workhorse formulas:</p>
+      <div class="rule"><p>Midpoint of $(x_1, y_1)$ and $(x_2, y_2)$: $\left(\dfrac{x_1 + x_2}{2}, \dfrac{y_1 + y_2}{2}\right)$.<br>Centroid of a triangle (where the three medians meet): $\left(\dfrac{x_1 + x_2 + x_3}{3}, \dfrac{y_1 + y_2 + y_3}{3}\right)$.</p></div>
+      <p>The midpoint formula follows from two congruent right triangles: halfway along the segment you have gone half the run and half the rise. More generally, the point a fraction $t$ of the way from $P$ to $Q$ is $P + t(Q - P)$, coordinate by coordinate.</p>
+      <p>For a proof about a figure (not about specific coordinates), you may <strong>choose the axes</strong>. Put a vertex at the origin, a side along an axis, use symmetry, and use $2a$ instead of $a$ when you expect to take midpoints. Every triangle can be placed with vertices $(a, 0)$, $(b, 0)$, $(0, c)$.</p>
+      <div class="note"><p>When in doubt, try a geometric approach first. Use coordinates when the figure has right angles, midpoints, or a natural place for the axes.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="centroidCoords">
+      <figcaption><strong>Explore:</strong> Drag the three vertices. The medians always meet at one point $G$, its coordinates are always the average of the vertices, and $G$ always cuts each median in the ratio $2 : 1$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A midpoint</h3>
+        <div class="problem"><p>Find the midpoint of the segment from $(-3, 8)$ to $(7, 2)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\left(\frac{-3 + 7}{2}, \frac{8 + 2}{2}\right) = (2, 5)$.</p></div><p class="why">Average the $x$'s and average the $y$'s.</p></li>
+        </ol>
+        <p class="answer">$(2, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>The missing endpoint</h3>
+        <div class="problem"><p>The midpoint of $\overline{PQ}$ is $(1, 4)$ and $P = (-2, 9)$. Find $Q$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>From $P$ to the midpoint is a move of $(+3, -5)$.</p></div><p class="why">The midpoint is halfway, so the same move again reaches $Q$.</p></li>
+          <li><div class="do"><p>$Q = (1 + 3, 4 - 5) = (4, -1)$.</p></div><p class="why">Check: $\left(\frac{-2 + 4}{2}, \frac{9 - 1}{2}\right) = (1, 4)$. ✓</p></li>
+        </ol>
+        <p class="answer">$(4, -1)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A centroid</h3>
+        <div class="problem"><p>Find the centroid of the triangle with vertices $(1, 2)$, $(7, -4)$, $(4, 11)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\left(\frac{1 + 7 + 4}{3}, \frac{2 - 4 + 11}{3}\right) = (4, 3)$.</p></div><p class="why">The centroid is the average of the three vertices.</p></li>
+        </ol>
+        <p class="answer">$(4, 3)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Completing a parallelogram</h3>
+        <div class="problem"><p>$ABCD$ is a parallelogram with $A = (1, 1)$, $B = (5, 2)$, $C = (7, 6)$. Find $D$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The diagonals of a parallelogram bisect each other, so $\overline{AC}$ and $\overline{BD}$ share a midpoint.</p></div><p class="why">Equal midpoints means $A + C = B + D$ coordinate by coordinate.</p></li>
+          <li><div class="do"><p>$D = A + C - B = (1 + 7 - 5, 1 + 6 - 2) = (3, 5)$.</p></div><p class="why">Check: $\overrightarrow{AB} = (4, 1)$ and $\overrightarrow{DC} = (4, 1)$ match. ✓</p></li>
+        </ol>
+        <p class="answer">$(3, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A third of the way</h3>
+        <div class="problem"><p>Find the point one third of the way from $(-4, 1)$ to $(8, 10)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The whole move is $(12, 9)$; a third of it is $(4, 3)$.</p></div><p class="why">Along a straight segment, run and rise scale together.</p></li>
+          <li><div class="do"><p>$(-4 + 4, 1 + 3) = (0, 4)$.</p></div><p class="why">Start at the first point and add the fraction of the move.</p></li>
+        </ol>
+        <p class="answer">$(0, 4)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The midpoint of the hypotenuse</h3>
+        <div class="problem"><p>Prove that the midpoint of the hypotenuse of a right triangle is the same distance from all three vertices.</p></div>
+        <ol class="steps">
+          <li data-think="Where would you put the axes to make the right angle and the midpoint as simple as possible?"><div class="do"><p>Place the right angle at the origin with legs on the axes: vertices $(0, 0)$, $(2a, 0)$, $(0, 2b)$.</p></div><p class="why">The right angle fits the axes perfectly, and using $2a$, $2b$ keeps the midpoint free of fractions.</p></li>
+          <li><div class="do"><p>Midpoint of the hypotenuse: $M = (a, b)$. Its distance to $(2a, 0)$ and to $(0, 2b)$ is half the hypotenuse, $\sqrt{a^2 + b^2}$.</p></div><p class="why">$M$ is the midpoint, so it is halfway along a segment of length $\sqrt{4a^2 + 4b^2}$.</p></li>
+          <li><div class="do"><p>Distance to the origin: $\sqrt{a^2 + b^2}$, the same.</p></div><p class="why">All three distances agree, so $M$ is the center of the circle through the vertices.</p></li>
+        </ol>
+        <p class="answer">All three distances equal $\sqrt{a^2 + b^2}$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The midsegment theorem</h3>
+        <div class="problem"><p>Prove that the segment joining the midpoints of two sides of a triangle is parallel to the third side and half as long.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Place $A = (0, 0)$, $B = (2b, 0)$, $C = (2c, 2d)$.</p></div><p class="why">Side $AB$ along the $x$-axis makes "parallel to $AB$" mean "horizontal".</p></li>
+          <li><div class="do"><p>Midpoint of $AC$: $(c, d)$. Midpoint of $BC$: $(b + c, d)$.</p></div><p class="why">Average the endpoints.</p></li>
+          <li><div class="do"><p>Both have $y$-coordinate $d$, so the segment is horizontal, parallel to $AB$. Its length is $(b + c) - c = b$, half of $AB = 2b$.</p></div><p class="why">Equal $y$-coordinates mean slope $0$.</p></li>
+        </ol>
+        <p class="answer">Parallel to $AB$, with length $\tfrac12 AB$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The length of a median</h3>
+        <div class="problem"><p>In $\triangle ABC$, $M$ is the midpoint of $BC$. Prove $AB^2 + AC^2 = 2AM^2 + 2BM^2$. Then find the median $AM$ when $AB = 7$, $AC = 9$, $BC = 8$.</p></div>
+        <ol class="steps">
+          <li data-think="Which point is the natural origin here?"><div class="do"><p>Put $M$ at the origin and $BC$ on the $x$-axis: $B = (-a, 0)$, $C = (a, 0)$, $A = (p, q)$.</p></div><p class="why">Symmetry about $M$ makes the algebra cancel neatly.</p></li>
+          <li><div class="do"><p>$AB^2 + AC^2 = (p + a)^2 + q^2 + (p - a)^2 + q^2 = 2p^2 + 2q^2 + 2a^2$.</p></div><p class="why">The cross terms $\pm 2pa$ cancel.</p></li>
+          <li><div class="do"><p>And $2AM^2 + 2BM^2 = 2(p^2 + q^2) + 2a^2$, the same. ∎</p></div><p class="why">$AM^2 = p^2 + q^2$ and $BM = a$.</p></li>
+          <li><div class="do"><p>Numbers: $49 + 81 = 2AM^2 + 2 \cdot 16$, so $AM^2 = 49$ and $AM = 7$.</p></div><p class="why">$BM = 4$ is half of $BC$.</p></li>
+        </ol>
+        <p class="answer">$AM = 7$</p>
+        <p class="key-idea">Put the origin at the center of symmetry; opposite terms cancel.</p>
+        <p class="book-next">Next in the book: Examples 16-12, 16-13 and Exercises 16-18, 16-19.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-16">
+    <h2 id="further-16">Further reading in the book</h2>
+    <ul>
+      <li><strong>§16.1 Labelling the Plane</strong>: Exercises 16-1 and 16-2.</li>
+      <li><strong>§16.2 What's it Good For?</strong>: Exercises 16-3 and 16-4.</li>
+      <li><strong>§16.3 Straight and Narrow</strong>: Examples 16-1 to 16-6 and Exercises 16-5 to 16-13.</li>
+      <li><strong>§16.4 Plotting a Line</strong>: Example 16-7 and Exercise 16-14.</li>
+      <li><strong>§16.5 The Distance Formula and Circles</strong>: Examples 16-8 to 16-10 and Exercise 16-15.</li>
+      <li><strong>§16.6 Went Down to the Crossroads</strong>: Example 16-11 and Exercises 16-16, 16-17.</li>
+      <li><strong>§16.7 ... Fell Down on My Knees</strong>: Examples 16-12, 16-13 and Exercises 16-18, 16-19.</li>
+      <li><strong>Problems to Solve for Chapter 16</strong>: Problems 278–293. Problems 278–288 and 290 practise the formulas; 289 and 291–293 ask you to set up coordinates yourself.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 16 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* shared helpers */
+  var clipN = 0;
+  function eqStage(body, w, xr, yr, pad, label) {
+    var h = Math.round(2 * pad + (w - 2 * pad) * (yr[1] - yr[0]) / (xr[1] - xr[0]));
+    var svg = W.stage(body, { w: w, h: h, label: label });
+    var P = W.plane(svg, { x: xr, y: yr, pad: pad, step: 1 });
+    P.u = P.X(1) - P.X(0);
+    var cid = "c16clip" + (++clipN);
+    svg.appendChild(W.s("defs", null, W.s("clipPath", { id: cid }, W.s("rect", { x: pad, y: pad, width: w - 2 * pad, height: h - 2 * pad }))));
+    var layer = W.s("g", { "clip-path": "url(#" + cid + ")" });
+    svg.appendChild(layer);
+    return { svg: svg, P: P, layer: layer };
+  }
+  function clamp(v, r) { return Math.max(r[0], Math.min(r[1], v)); }
+  function gridHandle(svg, P, o) {
+    var st = { x: o.x, y: o.y };
+    var bx = o.bx || [Math.ceil(P.x[0]) + 1, Math.floor(P.x[1]) - 1], by = o.by || [Math.ceil(P.y[0]) + 1, Math.floor(P.y[1]) - 1];
+    var h = W.handle(svg, {
+      x: P.X(o.x), y: P.Y(o.y), label: o.label, keyStep: P.u, color: o.color,
+      onMove: function (px, py) {
+        var x = clamp(Math.round(P.ix(px)), bx), y = clamp(Math.round(P.iy(py)), by);
+        if (o.fixX != null) x = o.fixX;
+        if (o.fixY != null) y = o.fixY;
+        if (o.ok && !o.ok(x, y)) { x = st.x; y = st.y; }
+        st.x = x; st.y = y;
+        if (o.onChange) o.onChange(x, y);
+        return [P.X(x), P.Y(y)];
+      },
+      valueText: function () { return (o.name || "Point") + " at " + st.x + ", " + st.y; }
+    });
+    h.st = st;
+    return h;
+  }
+  function sqrtTex(n) {
+    if (n === 0) return "0";
+    var k = 1, m = n;
+    for (var i = 2; i * i <= m; i++) while (m % (i * i) === 0) { m /= i * i; k *= i; }
+    return m === 1 ? String(k) : (k === 1 ? "" : k) + "\\sqrt{" + m + "}";
+  }
+  function deg(x, y) { var a = Math.atan2(y, x) * 180 / Math.PI; if (a < 0) a += 360; return a; }
+  function lbl(layer, x, y, t, o) {
+    o = o || {};
+    layer.appendChild(W.s("text", { x: x, y: y, class: o.cls || "lbl", "text-anchor": o.anchor || "start", fill: o.fill, style: (o.style || "") + ";paint-order:stroke;stroke:var(--surface-solid);stroke-width:4px;stroke-linejoin:round", text: t }));
+  }
+  function signed(n, first) { // TeX for "+ n" / "- n"
+    if (first) return String(n);
+    return n < 0 ? " - " + (-n) : " + " + n;
+  }
+  function sq(v, n) { // "(x - 3)^2" etc.
+    if (n === 0) return v + "^2";
+    return "(" + v + (n > 0 ? " - " + n : " + " + (-n)) + ")^2";
+  }
+
+  /* 16.1 — coordinate plotter with polar overlay */
+  AOPS.registerWidget("coordPlot", function (body) {
+    var S = eqStage(body, 600, [-7, 7], [-5, 5], 24, "Coordinate plane with a draggable point, showing its Cartesian and polar coordinates");
+    var svg = S.svg, P = S.P, L = S.layer;
+    var ctl = W.controls(body), out = W.readout(body);
+    var polar = false;
+    var polarG = W.s("g");
+    svg.insertBefore(polarG, L);
+    var h = gridHandle(svg, P, { x: 3, y: 2, name: "P", label: "Point P; arrow keys move it one unit", onChange: draw });
+    W.segmented(ctl, { title: "Grid overlay", value: "cart", options: [{ value: "cart", label: "Cartesian" }, { value: "polar", label: "Polar" }], onChange: function (v) { polar = v === "polar"; drawPolar(); draw(); } });
+    function drawPolar() {
+      W.clear(polarG);
+      if (!polar) return;
+      for (var r = 1; r <= 8; r++) polarG.appendChild(W.s("circle", { cx: P.X(0), cy: P.Y(0), r: r * P.u, fill: "none", stroke: "color-mix(in srgb, var(--plot-3) 45%, transparent)", "stroke-width": 1 }));
+      for (var a = 0; a < 360; a += 30) {
+        var t = a * Math.PI / 180;
+        polarG.appendChild(W.s("line", { x1: P.X(0), y1: P.Y(0), x2: P.X(9 * Math.cos(t)), y2: P.Y(9 * Math.sin(t)), stroke: "color-mix(in srgb, var(--plot-3) 45%, transparent)", "stroke-width": 1 }));
+      }
+    }
+    function draw() {
+      var x = h.st.x, y = h.st.y;
+      W.clear(L);
+      L.appendChild(W.s("path", { d: "M" + P.X(x) + " " + P.Y(y) + "V" + P.Y(0) + "M" + P.X(x) + " " + P.Y(y) + "H" + P.X(0), stroke: "var(--accent-2)", "stroke-dasharray": "5 5", "stroke-width": 1.6, fill: "none" }));
+      ["I", "II", "III", "IV"].forEach(function (q, i) {
+        var qx = i === 0 || i === 3 ? 5.6 : -5.6, qy = i < 2 ? 4.2 : -4.2;
+        var on = quad(x, y) === q;
+        lbl(L, P.X(qx), P.Y(qy) + 6, q, { anchor: "middle", fill: on ? "var(--accent)" : "var(--muted)", style: "font: 700 18px var(--font-mono)", cls: "q" });
+      });
+      if (polar && (x || y)) {
+        var r = Math.sqrt(x * x + y * y), th = deg(x, y);
+        L.appendChild(W.s("line", { x1: P.X(0), y1: P.Y(0), x2: P.X(x), y2: P.Y(y), stroke: "var(--plot-3)", "stroke-width": 3 }));
+        var ar = 0.9 * P.u, t = th * Math.PI / 180;
+        L.appendChild(W.s("path", { d: "M" + (P.X(0) + ar) + " " + P.Y(0) + "A" + ar + " " + ar + " 0 " + (th > 180 ? 1 : 0) + " 0 " + (P.X(0) + ar * Math.cos(t)) + " " + (P.Y(0) - ar * Math.sin(t)), fill: "none", stroke: "var(--plot-3)", "stroke-width": 2 }));
+        lbl(L, P.X(x / 2) + 8, P.Y(y / 2) - 8, "r", { fill: "var(--plot-3)", style: "font: 700 15px var(--font-mono)" });
+      }
+      lbl(L, P.X(x) + 12, P.Y(y) - 12, "(" + x + ", " + y + ")", { style: "font: 700 14px var(--font-mono)", fill: "var(--ink)" });
+      var q = quad(x, y);
+      var r2 = x * x + y * y, rt = sqrtTex(r2);
+      var s = "$(x, y) = (" + x + ", " + y + ")$ &nbsp;·&nbsp; " + (q ? "Quadrant " + q : "on an axis (no quadrant)");
+      if (r2) s += "<br>Polar: $r = \\sqrt{" + x + "^2 + " + (y < 0 ? "(" + y + ")" : y) + "^2} = " + rt + (Math.round(Math.sqrt(r2)) ** 2 === r2 ? "" : " \\approx " + W.fmt(Math.sqrt(r2), 2)) + "$, &nbsp; $\\theta \\approx " + W.fmt(deg(x, y), 1) + "^\\circ$";
+      else s += "<br>The origin: $r = 0$ and any angle works.";
+      out.set(s);
+    }
+    function quad(x, y) { if (!x || !y) return ""; return x > 0 ? (y > 0 ? "I" : "IV") : (y > 0 ? "II" : "III"); }
+    draw();
+  });
+
+  /* 16.2 — transformations in two coordinate systems */
+  AOPS.registerWidget("transformPoint", function (body) {
+    var S = eqStage(body, 600, [-7, 7], [-5, 5], 24, "A point P and its image under a translation, rotation or reflection");
+    var svg = S.svg, P = S.P, L = S.layer;
+    var ctl = W.controls(body), out = W.readout(body);
+    var mode = "tr", a = 2, b = 1, al = 90;
+    var h = gridHandle(svg, P, { x: 3, y: 1, name: "P", label: "Point P; arrow keys move it", onChange: draw });
+    var ctlM = ctl; ctl = W.controls(body); body.insertBefore(ctlM, ctl); body.appendChild(out.el);
+    W.segmented(ctlM, { title: "Motion", value: mode, options: [{ value: "tr", label: "Translate" }, { value: "rot", label: "Rotate" }, { value: "rx", label: "Reflect in x-axis" }, { value: "ry", label: "Reflect in y-axis" }], onChange: function (v) { mode = v; vis(); draw(); } });
+    var sa = W.slider(ctl, { label: "Shift right a", min: -5, max: 5, value: a, onInput: function (v) { a = v; draw(); } });
+    var sb = W.slider(ctl, { label: "Shift up b", min: -4, max: 4, value: b, onInput: function (v) { b = v; draw(); } });
+    var sr = W.slider(ctl, { label: "Turn α", min: 0, max: 360, step: 15, value: al, format: function (v) { return v + "°"; }, onInput: function (v) { al = v; draw(); } });
+    function wrap(s) { return s.input.closest(".ctl"); }
+    function vis() {
+      wrap(sa).style.display = wrap(sb).style.display = mode === "tr" ? "" : "none";
+      wrap(sr).style.display = mode === "rot" ? "" : "none";
+    }
+    function pol(x, y) { return "(" + W.fmt(Math.hypot(x, y), 2) + ",\\ " + W.fmt(deg(x, y), 1) + "^\\circ)"; }
+    function draw() {
+      var x = h.st.x, y = h.st.y, x2, y2, cart, polr;
+      var r = Math.hypot(x, y), th = deg(x, y);
+      if (mode === "tr") { x2 = x + a; y2 = y + b; }
+      else if (mode === "rot") { var t = (th + al) * Math.PI / 180; x2 = r * Math.cos(t); y2 = r * Math.sin(t); }
+      else if (mode === "rx") { x2 = x; y2 = -y; }
+      else { x2 = -x; y2 = y; }
+      W.clear(L);
+      if (mode === "rx") L.appendChild(W.s("line", { x1: P.X(-7), y1: P.Y(0), x2: P.X(7), y2: P.Y(0), stroke: "var(--accent-3)", "stroke-width": 3, opacity: 0.7 }));
+      if (mode === "ry") L.appendChild(W.s("line", { x1: P.X(0), y1: P.Y(-5), x2: P.X(0), y2: P.Y(5), stroke: "var(--accent-3)", "stroke-width": 3, opacity: 0.7 }));
+      if (mode === "rot" && r > 0) {
+        var rr = r * P.u, t1 = th * Math.PI / 180, t2 = (th + al) * Math.PI / 180;
+        L.appendChild(W.s("circle", { cx: P.X(0), cy: P.Y(0), r: rr, fill: "none", stroke: "var(--faint)", "stroke-dasharray": "4 6" }));
+        L.appendChild(W.s("path", { d: "M" + P.X(0) + " " + P.Y(0) + "L" + P.X(x) + " " + P.Y(y) + "A" + rr + " " + rr + " 0 " + (al > 180 ? 1 : 0) + " 0 " + P.X(x2) + " " + P.Y(y2) + "Z", fill: "color-mix(in srgb, var(--plot-3) 18%, transparent)", stroke: "var(--plot-3)", "stroke-width": 1.5 }));
+      } else {
+        L.appendChild(W.s("line", { x1: P.X(x), y1: P.Y(y), x2: P.X(x2), y2: P.Y(y2), stroke: "var(--plot-2)", "stroke-width": 2, "stroke-dasharray": "6 4" }));
+      }
+      L.appendChild(W.s("circle", { cx: P.X(x2), cy: P.Y(y2), r: 9, fill: "var(--plot-2)", stroke: "var(--surface-solid)", "stroke-width": 3 }));
+      lbl(L, P.X(x) + 12, P.Y(y) - 12, "P", { style: "font: 700 16px var(--font-mono)", fill: "var(--accent)" });
+      lbl(L, P.X(x2) + 12, P.Y(y2) - 12, "P′", { style: "font: 700 16px var(--font-mono)", fill: "var(--plot-2)" });
+      var c1 = "(" + x + ", " + y + ")", c2 = "(" + W.fmt(x2, 2) + ", " + W.fmt(y2, 2) + ")";
+      var note;
+      if (mode === "tr") note = "Cartesian is simple: add $(" + a + ", " + b + ")$. The polar numbers change in a messy way.";
+      else if (mode === "rot") note = "Polar is simple: keep $r$, add $" + al + "^\\circ$ to $\\theta$. The Cartesian numbers get messy.";
+      else if (mode === "rx") note = "Both are simple: $(x, y) \\to (x, -y)$ and $(r, \\theta) \\to (r, -\\theta)$.";
+      else note = "Both are simple: $(x, y) \\to (-x, y)$ and $(r, \\theta) \\to (r, 180^\\circ - \\theta)$.";
+      out.set("Cartesian: $" + c1 + " \\to " + c2 + "$<br>Polar: $" + (r ? pol(x, y) : "(0, \\text{any})") + " \\to " + (Math.hypot(x2, y2) > 1e-9 ? pol(x2, y2) : "(0, \\text{any})") + "$<br>" + note);
+    }
+    vis(); draw();
+  });
+
+  /* 16.3 — slope from two draggable points */
+  AOPS.registerWidget("slopeLine", function (body) {
+    var S = eqStage(body, 600, [-7, 7], [-5, 5], 24, "Line through two draggable points A and B with its rise and run");
+    var svg = S.svg, P = S.P, L = S.layer;
+    var ctl = W.controls(body), out = W.readout(body);
+    var perp = false;
+    var A = gridHandle(svg, P, { x: -3, y: -2, name: "A", label: "Point A; arrow keys move it", onChange: draw, ok: function (x, y) { return !(B && x === B.st.x && y === B.st.y); } });
+    var B = gridHandle(svg, P, { x: 3, y: 2, name: "B", label: "Point B; arrow keys move it", color: "var(--plot-2)", onChange: draw, ok: function (x, y) { return !(x === A.st.x && y === A.st.y); } });
+    W.segmented(ctl, { title: "Perpendicular through A", value: "off", options: [{ value: "off", label: "Hide" }, { value: "on", label: "Show" }], onChange: function (v) { perp = v === "on"; draw(); } });
+    function lineThrough(x1, y1, dx, dy) {
+      var t = 40;
+      return { x1: P.X(x1 - t * dx), y1: P.Y(y1 - t * dy), x2: P.X(x1 + t * dx), y2: P.Y(y1 + t * dy) };
+    }
+    function slopeInt(x1, y1, dx, dy) {
+      if (dx === 0) return "x = " + x1;
+      var g = W.gcd(dy, dx) || 1; if (dx < 0) g = -g;
+      var mn = dy / g, md = dx / g;
+      var bn = y1 * md - mn * x1, bd = md;
+      var mt = mn === 0 ? "" : (md === 1 ? (mn === 1 ? "" : mn === -1 ? "-" : String(mn)) : (mn < 0 ? "-" : "") + "\\tfrac{" + Math.abs(mn) + "}{" + md + "}") + "x";
+      var bt;
+      if (bn === 0) bt = mn === 0 ? "0" : "";
+      else {
+        var bf = W.frac(Math.abs(bn), bd);
+        bt = mn === 0 ? (bn < 0 ? "-" : "") + bf : (bn < 0 ? " - " : " + ") + bf;
+      }
+      return "y = " + mt + bt;
+    }
+    function standard(x1, y1, dx, dy) {
+      var A_ = dy, B_ = -dx, C_ = dy * x1 - dx * y1;
+      var g = W.gcd(W.gcd(A_, B_), C_) || 1;
+      A_ /= g; B_ /= g; C_ /= g;
+      if (A_ < 0 || (A_ === 0 && B_ < 0)) { A_ = -A_; B_ = -B_; C_ = -C_; }
+      var s = "";
+      if (A_) s += (A_ === 1 ? "" : A_) + "x";
+      if (B_) s += (s ? (B_ < 0 ? " - " : " + ") : (B_ < 0 ? "-" : "")) + (Math.abs(B_) === 1 ? "" : Math.abs(B_)) + "y";
+      return s + " = " + C_;
+    }
+    function draw() {
+      if (!B) return;
+      var x1 = A.st.x, y1 = A.st.y, x2 = B.st.x, y2 = B.st.y, dx = x2 - x1, dy = y2 - y1;
+      W.clear(L);
+      L.appendChild(W.s("line", Object.assign(lineThrough(x1, y1, dx, dy), { stroke: "var(--plot-1)", "stroke-width": 3 })));
+      if (perp) L.appendChild(W.s("line", Object.assign(lineThrough(x1, y1, -dy, dx), { stroke: "var(--plot-3)", "stroke-width": 2.5, "stroke-dasharray": "8 5" })));
+      if (dx && dy) {
+        L.appendChild(W.s("path", { d: "M" + P.X(x1) + " " + P.Y(y1) + "H" + P.X(x2) + "V" + P.Y(y2), fill: "none", stroke: "var(--accent-2)", "stroke-width": 2.5 }));
+        lbl(L, P.X((x1 + x2) / 2), P.Y(y1) + (dy > 0 ? 20 : -10), "run " + dx, { anchor: "middle", fill: "var(--accent-2)", style: "font: 700 13px var(--font-mono)" });
+        lbl(L, P.X(x2) + (dx > 0 ? 8 : -8), P.Y((y1 + y2) / 2) + 4, "rise " + dy, { anchor: dx > 0 ? "start" : "end", fill: "var(--accent-2)", style: "font: 700 13px var(--font-mono)" });
+      }
+      lbl(L, P.X(x1) - 14, P.Y(y1) - 12, "A", { anchor: "end", style: "font: 700 16px var(--font-mono)", fill: "var(--accent)" });
+      lbl(L, P.X(x2) + 14, P.Y(y2) - 12, "B", { style: "font: 700 16px var(--font-mono)", fill: "var(--plot-2)" });
+      var m = dx === 0 ? "\\text{undefined (vertical line)}" : W.frac(dy, dx);
+      var s = "$m = \\dfrac{\\text{rise}}{\\text{run}} = \\dfrac{" + dy + "}{" + dx + "} = " + m + "$<br>Slope-intercept: $" + slopeInt(x1, y1, dx, dy) + "$ &nbsp;·&nbsp; Standard: $" + standard(x1, y1, dx, dy) + "$";
+      if (perp) {
+        if (dx && dy) s += "<br>Perpendicular slope $" + W.frac(-dx, dy) + "$, and $" + W.frac(dy, dx) + " \\times \\left(" + W.frac(-dx, dy) + "\\right) = -1$";
+        else s += "<br>Horizontal and vertical lines are perpendicular, but one has no slope, so the $-1$ test does not apply.";
+      }
+      out.set(s);
+    }
+    draw();
+  });
+
+  /* 16.4 — walking the slope */
+  AOPS.registerWidget("slopeWalk", function (body) {
+    var S = eqStage(body, 600, [-7, 7], [-5, 5], 24, "Walking a slope step by step from the y-intercept");
+    var svg = S.svg, P = S.P, L = S.layer;
+    var ctl = W.controls(body), ctl2 = W.controls(body), out = W.readout(body);
+    var rise = -3, run = 2, fwd = 2, back = 0;
+    var bH = gridHandle(svg, P, { x: 0, y: 3, fixX: 0, name: "y-intercept", label: "Starting point on the y-axis; up and down arrows move it", onChange: draw });
+    W.slider(ctl, { label: "Rise", min: -5, max: 5, value: rise, onInput: function (v) { rise = v; draw(); } });
+    W.slider(ctl, { label: "Run", min: 1, max: 4, value: run, onInput: function (v) { run = v; draw(); } });
+    W.button(ctl2, "Step forward →", function () { if (fwd < 8) fwd++; draw(); });
+    W.button(ctl2, "← Step back", function () { if (back < 8) back++; draw(); });
+    W.button(ctl2, "Clear steps", function () { fwd = 0; back = 0; draw(); });
+    function draw() {
+      var b = bH.st.y;
+      W.clear(L);
+      L.appendChild(W.s("path", { d: W.fnPath(P, function (x) { return b + rise / run * x; }), stroke: "var(--faint)", "stroke-width": 2, fill: "none", "stroke-dasharray": "6 6" }));
+      var pts = [[0, b]], x = 0, y = b, d = "M" + P.X(0) + " " + P.Y(b);
+      for (var i = 0; i < fwd; i++) { d += "H" + P.X(x + run); x += run; d += "V" + P.Y(y + rise); y += rise; pts.push([x, y]); }
+      x = 0; y = b; var d2 = "M" + P.X(0) + " " + P.Y(b);
+      for (i = 0; i < back; i++) { d2 += "H" + P.X(x - run); x -= run; d2 += "V" + P.Y(y - rise); y -= rise; pts.unshift([x, y]); }
+      L.appendChild(W.s("path", { d: d, fill: "none", stroke: "var(--accent-2)", "stroke-width": 2.5 }));
+      L.appendChild(W.s("path", { d: d2, fill: "none", stroke: "var(--plot-3)", "stroke-width": 2.5 }));
+      pts.forEach(function (p) { if (p[0] || p[1] !== b) L.appendChild(W.s("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 6, fill: "var(--plot-1)" })); });
+      var mt = rise === 0 ? "0" : W.frac(rise, run);
+      var vis = pts.filter(function (p) { return Math.abs(p[0]) <= 7 && Math.abs(p[1]) <= 5; }).length;
+      out.set("Line: $y = " + (rise === 0 ? "" : (mt === "1" ? "" : mt === "-1" ? "-" : mt) + "x") + (b === 0 ? (rise === 0 ? "0" : "") : (rise === 0 ? b : (b > 0 ? " + " + b : " - " + (-b)))) + "$ &nbsp;·&nbsp; each step: right " + run + ", " + (rise >= 0 ? "up " + rise : "down " + (-rise)) +
+        "<br>Points: " + pts.map(function (p) { return "$(" + p[0] + ", " + p[1] + ")$"; }).join(", ") + (vis < pts.length ? " <span class=\"lbl\">(some are off the grid)</span>" : ""));
+    }
+    draw();
+  });
+
+  /* 16.5 — distance formula and circle */
+  AOPS.registerWidget("distanceCircle", function (body) {
+    var S = eqStage(body, 600, [-7, 7], [-5, 5], 24, "Circle with draggable center C passing through draggable point Q");
+    var svg = S.svg, P = S.P, L = S.layer;
+    var out = W.readout(body);
+    var C = gridHandle(svg, P, { x: -1, y: 0, name: "Center C", label: "Center C; arrow keys move it", onChange: draw, ok: function (x, y) { return !(Q && x === Q.st.x && y === Q.st.y); } });
+    var Q = gridHandle(svg, P, { x: 2, y: 4, name: "Point Q", label: "Point Q on the circle; arrow keys move it", color: "var(--plot-2)", onChange: draw, ok: function (x, y) { return !(x === C.st.x && y === C.st.y); } });
+    function draw() {
+      if (!Q) return;
+      var p = C.st.x, q = C.st.y, x = Q.st.x, y = Q.st.y, dx = x - p, dy = y - q, r2 = dx * dx + dy * dy;
+      W.clear(L);
+      L.appendChild(W.s("circle", { cx: P.X(p), cy: P.Y(q), r: Math.sqrt(r2) * P.u, fill: "color-mix(in srgb, var(--plot-1) 10%, transparent)", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      L.appendChild(W.s("path", { d: "M" + P.X(p) + " " + P.Y(q) + "H" + P.X(x) + "V" + P.Y(y), fill: "none", stroke: "var(--accent-2)", "stroke-width": 2.5, "stroke-dasharray": "6 4" }));
+      L.appendChild(W.s("line", { x1: P.X(p), y1: P.Y(q), x2: P.X(x), y2: P.Y(y), stroke: "var(--plot-3)", "stroke-width": 3 }));
+      if (dx) lbl(L, P.X((p + x) / 2), P.Y(q) + (dy >= 0 ? 20 : -10), "Δx = " + dx, { anchor: "middle", fill: "var(--accent-2)", style: "font: 700 13px var(--font-mono)" });
+      if (dy) lbl(L, P.X(x) + (dx >= 0 ? 8 : -8), P.Y((q + y) / 2) + 4, "Δy = " + dy, { anchor: dx >= 0 ? "start" : "end", fill: "var(--accent-2)", style: "font: 700 13px var(--font-mono)" });
+      lbl(L, P.X(p) - 12, P.Y(q) + 22, "C", { anchor: "end", style: "font: 700 16px var(--font-mono)", fill: "var(--accent)" });
+      lbl(L, P.X(x) + 12, P.Y(y) - 12, "Q", { style: "font: 700 16px var(--font-mono)", fill: "var(--plot-2)" });
+      var D = -2 * p, E = -2 * q, F = p * p + q * q - r2;
+      var gen = "x^2 + y^2" + (D ? signed(D) + "x" : "") + (E ? signed(E) + "y" : "") + (F ? signed(F) : "") + " = 0";
+      var dt = sqrtTex(r2);
+      out.set("$d = \\sqrt{(" + dx + ")^2 + (" + dy + ")^2} = \\sqrt{" + r2 + "}" + (dt !== "\\sqrt{" + r2 + "}" ? " = " + dt : "") + (Math.round(Math.sqrt(r2)) ** 2 === r2 ? "" : " \\approx " + W.fmt(Math.sqrt(r2), 3)) + "$" +
+        "<br>Circle: $" + sq("x", p) + " + " + sq("y", q) + " = " + r2 + "$ &nbsp;·&nbsp; expanded: $" + gen + "$");
+    }
+    draw();
+  });
+
+  /* 16.6 — line meets circle */
+  AOPS.registerWidget("lineCircleCross", function (body) {
+    var S = eqStage(body, 600, [-7, 7], [-5, 5], 24, "A circle and a line through two draggable points, with their intersection points");
+    var svg = S.svg, P = S.P, L = S.layer;
+    var ctl = W.controls(body), out = W.readout(body);
+    var R = 3;
+    var C = gridHandle(svg, P, { x: 0, y: 0, name: "Center", label: "Circle center; arrow keys move it", onChange: draw });
+    var A = gridHandle(svg, P, { x: -5, y: -3, name: "A", label: "Point A on the line; arrow keys move it", color: "var(--plot-2)", onChange: draw, ok: function (x, y) { return !(B && x === B.st.x && y === B.st.y); } });
+    var B = gridHandle(svg, P, { x: 4, y: 2, name: "B", label: "Point B on the line; arrow keys move it", color: "var(--plot-2)", onChange: draw, ok: function (x, y) { return !(x === A.st.x && y === A.st.y); } });
+    W.slider(ctl, { label: "Radius", min: 0.5, max: 5, step: 0.5, value: R, onInput: function (v) { R = v; draw(); } });
+    function draw() {
+      if (!B) return;
+      var cx = C.st.x, cy = C.st.y, ax = A.st.x, ay = A.st.y, dx = B.st.x - ax, dy = B.st.y - ay;
+      var len = Math.hypot(dx, dy), ux = dx / len, uy = dy / len;
+      // foot of perpendicular from center
+      var t0 = (cx - ax) * ux + (cy - ay) * uy, fx = ax + t0 * ux, fy = ay + t0 * uy;
+      var dist = Math.hypot(cx - fx, cy - fy);
+      W.clear(L);
+      L.appendChild(W.s("circle", { cx: P.X(cx), cy: P.Y(cy), r: R * P.u, fill: "color-mix(in srgb, var(--plot-1) 10%, transparent)", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      L.appendChild(W.s("line", { x1: P.X(ax - 30 * ux), y1: P.Y(ay - 30 * uy), x2: P.X(ax + 30 * ux), y2: P.Y(ay + 30 * uy), stroke: "var(--plot-2)", "stroke-width": 3 }));
+      L.appendChild(W.s("line", { x1: P.X(cx), y1: P.Y(cy), x2: P.X(fx), y2: P.Y(fy), stroke: "var(--accent-2)", "stroke-width": 2, "stroke-dasharray": "5 4" }));
+      L.appendChild(W.s("circle", { cx: P.X(cx), cy: P.Y(cy), r: 4, fill: "var(--ink)" }));
+      var pts = [], eps = 1e-9;
+      if (Math.abs(dist - R) < 1e-6) pts = [[fx, fy]];
+      else if (dist < R) { var hh = Math.sqrt(R * R - dist * dist); pts = [[fx - hh * ux, fy - hh * uy], [fx + hh * ux, fy + hh * uy]]; }
+      pts.forEach(function (p) { L.appendChild(W.s("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 7, fill: "var(--accent-3)", stroke: "var(--surface-solid)", "stroke-width": 2 })); });
+      var verdict = pts.length === 2 ? "distance &lt; radius: the line is a <strong>secant</strong> (2 points)" : pts.length === 1 ? "distance = radius: the line is <strong>tangent</strong> (1 point)" : "distance &gt; radius: the line <strong>misses</strong> (0 points)";
+      var eq;
+      var a_ = dy, b_ = -dx, c_ = dy * ax - dx * ay, g = W.gcd(W.gcd(a_, b_), c_) || 1;
+      a_ /= g; b_ /= g; c_ /= g; if (a_ < 0 || (a_ === 0 && b_ < 0)) { a_ = -a_; b_ = -b_; c_ = -c_; }
+      eq = (a_ ? (a_ === 1 ? "" : a_) + "x" : "") + (b_ ? (a_ ? (b_ < 0 ? " - " : " + ") : (b_ < 0 ? "-" : "")) + (Math.abs(b_) === 1 ? "" : Math.abs(b_)) + "y" : "") + " = " + c_;
+      out.set("Line $" + eq + "$, circle $" + sq("x", cx) + " + " + sq("y", cy) + " = " + W.fmt(R * R, 2) + "$<br>Center-to-line distance $\\approx " + W.fmt(dist, 2) + "$, radius $" + R + "$: " + verdict +
+        (pts.length ? "<br>Intersection" + (pts.length > 1 ? "s" : "") + " $\\approx " + pts.map(function (p) { return "(" + W.fmt(p[0], 2) + ", " + W.fmt(p[1], 2) + ")"; }).join(",\\ ") + "$" : ""));
+    }
+    draw();
+  });
+
+  /* 16.7 — medians and centroid */
+  AOPS.registerWidget("centroidCoords", function (body) {
+    var S = eqStage(body, 600, [-7, 7], [-5, 5], 24, "Triangle with draggable vertices, its medians and centroid");
+    var svg = S.svg, P = S.P, L = S.layer;
+    var ctl = W.controls(body), out = W.readout(body);
+    var show = "med";
+    var V = [];
+    function distinct(i) { return function (x, y) { return V.every(function (h, j) { return !h || j === i || h.st.x !== x || h.st.y !== y; }); }; }
+    V.push(gridHandle(svg, P, { x: -5, y: -3, name: "A", label: "Vertex A; arrow keys move it", onChange: draw, ok: distinct(0) }));
+    V.push(gridHandle(svg, P, { x: 4, y: -3, name: "B", label: "Vertex B; arrow keys move it", onChange: draw, ok: distinct(1) }));
+    V.push(gridHandle(svg, P, { x: 1, y: 4, name: "C", label: "Vertex C; arrow keys move it", onChange: draw, ok: distinct(2) }));
+    W.segmented(ctl, { title: "Show", value: show, options: [{ value: "med", label: "Medians" }, { value: "mid", label: "Midpoint triangle" }], onChange: function (v) { show = v; draw(); } });
+    function draw() {
+      if (V.length < 3) return;
+      var p = V.map(function (h) { return [h.st.x, h.st.y]; });
+      var M = [0, 1, 2].map(function (i) { var a = p[(i + 1) % 3], b = p[(i + 2) % 3]; return [(a[0] + b[0]) / 2, (a[1] + b[1]) / 2]; });
+      var G = [(p[0][0] + p[1][0] + p[2][0]) / 3, (p[0][1] + p[1][1] + p[2][1]) / 3];
+      W.clear(L);
+      L.appendChild(W.s("polygon", { points: p.map(function (q) { return P.X(q[0]) + "," + P.Y(q[1]); }).join(" "), fill: "color-mix(in srgb, var(--plot-1) 12%, transparent)", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      if (show === "med") {
+        [0, 1, 2].forEach(function (i) {
+          L.appendChild(W.s("line", { x1: P.X(p[i][0]), y1: P.Y(p[i][1]), x2: P.X(M[i][0]), y2: P.Y(M[i][1]), stroke: ["var(--plot-2)", "var(--plot-3)", "var(--plot-4)"][i], "stroke-width": 2.2 }));
+        });
+      } else {
+        L.appendChild(W.s("polygon", { points: M.map(function (q) { return P.X(q[0]) + "," + P.Y(q[1]); }).join(" "), fill: "color-mix(in srgb, var(--plot-2) 22%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      }
+      M.forEach(function (q) { L.appendChild(W.s("circle", { cx: P.X(q[0]), cy: P.Y(q[1]), r: 5, fill: "var(--plot-2)" })); });
+      L.appendChild(W.s("circle", { cx: P.X(G[0]), cy: P.Y(G[1]), r: 7, fill: "var(--accent-3)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      lbl(L, P.X(G[0]) + 10, P.Y(G[1]) + 18, "G", { style: "font: 700 15px var(--font-mono)", fill: "var(--accent-3)" });
+      ["A", "B", "C"].forEach(function (n, i) { lbl(L, P.X(p[i][0]) + 12, P.Y(p[i][1]) - 12, n, { style: "font: 700 16px var(--font-mono)", fill: "var(--accent)" }); });
+      var sx = p[0][0] + p[1][0] + p[2][0], sy = p[0][1] + p[1][1] + p[2][1];
+      var AG = Math.hypot(G[0] - p[0][0], G[1] - p[0][1]), GM = Math.hypot(M[0][0] - G[0], M[0][1] - G[1]);
+      var s = "$G = \\left(\\dfrac{" + sx + "}{3}, \\dfrac{" + sy + "}{3}\\right) = \\left(" + W.frac(sx, 3) + ", " + W.frac(sy, 3) + "\\right)$";
+      if (show === "med") s += "<br>Median from $A$: $AG \\approx " + W.fmt(AG, 2) + "$, $GM \\approx " + W.fmt(GM, 2) + "$, ratio $" + W.fmt(AG / GM, 3) + " : 1$";
+      else s += "<br>The midpoint triangle's sides are parallel to the original sides and half as long; it has the same centroid.";
+      out.set(s);
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

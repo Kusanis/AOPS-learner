@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 21: Functions · AoPS Learner</title>
+  <meta name="description" content="Functions as input-output machines: evaluating, graphing, domain and range, composition, even and odd functions, absolute value, floor and piecewise functions, and transformations, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="21" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 21 · Advanced Topics</span>
+    <h1>Functions</h1>
+    <p class="lede">A function is a machine: feed it an input and it hands back exactly one output. That single idea ties together everything from lines and parabolas to rounding and distance. In this chapter you'll evaluate, graph and chain functions, find which inputs they accept, spot their symmetries, meet a few unusual ones, and learn to slide and stretch their graphs without recomputing a thing.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>To evaluate $f(\text{something})$, replace <em>every</em> $x$ in the rule by that something, wrapped in parentheses.</li>
+      <li>Given $f(\text{expression in } x)$, either solve for the $x$ that makes the expression equal your input, or substitute $u = $ expression and rewrite in terms of $u$.</li>
+      <li>Vertical line test: a graph is a function exactly when no vertical line meets it twice.</li>
+      <li>Domain: throw out inputs that divide by zero, take even roots of negatives, or take logs of non-positive numbers. Range: ask which outputs can actually occur.</li>
+      <li>$f^n(x)$ means apply $f$ $n$ times, which is not $[f(x)]^n$. Composition $(g\circ f)(x) = g(f(x))$ applies $f$ first, and order matters.</li>
+      <li>Even: $f(-x) = f(x)$ (mirror in the $y$-axis). Odd: $f(-x) = -f(x)$ (half-turn about the origin).</li>
+      <li>$|M| = N$ splits into $M = N$ or $M = -N$. $\lfloor x \rfloor = n$ means $n \le x &lt; n+1$. Piecewise rules apply only on their own pieces.</li>
+      <li>$f(x - h) + k$ shifts right $h$ and up $k$; $a\,f(x)$ stretches vertically by $a$; $f(bx)$ squeezes horizontally by $b$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 21.1 ===================== -->
+  <section class="lesson" id="s21-1" data-title="Welcome to the Machine">
+    <h2><span class="sec-num">21.1</span> Welcome to the Machine</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>You press button B4 on a vending machine and out drops a granola bar. Press B4 again tomorrow: another granola bar. If B4 sometimes gave a granola bar and sometimes a bottle of water, you'd call the machine broken. Mathematicians feel the same way about rules that turn numbers into numbers, and the well-behaved ones get a special name.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>function</strong> is a rule that assigns to each allowed input <em>exactly one</em> output. If the rule is called $f$ and the input is $x$, the output is written $f(x)$, read "$f$ of $x$." The line $y = 2x + 3$ becomes the function $f(x) = 2x + 3$: put in $x = 4$ and the machine returns $f(4) = 11$, every time.</p>
+      <p>Not every equation describes a function of $x$. The equation $y^2 = x$ gives two values of $y$ when $x = 4$ (namely $2$ and $-2$), so it fails the "exactly one output" requirement. We rescue it by agreeing that $\sqrt{x}$ means only the root that is $\ge 0$.</p>
+      <div class="rule"><p>A function gives <strong>one and only one</strong> output for each input. To evaluate, substitute: replace every $x$ by the input, in parentheses.</p></div>
+      <p>The letter inside the parentheses is just a placeholder. $f(x) = x^2$, $f(t) = t^2$ and $f(\heartsuit) = \heartsuit^2$ all describe the same machine. That's why we may feed it an expression: if $f(x) = x^2$, then $f(a+1) = (a+1)^2$.</p>
+      <div class="note"><p>Sometimes you're given the machine in disguise, such as $f(x+2) = x^2 + 3x - 1$. The input here is $x + 2$, not $x$. To find $f(5)$, choose the $x$ that makes the input equal $5$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="functionMachine">
+      <figcaption><strong>Explore:</strong> Slide the input and pick a machine. A true function always sends out exactly one output. Watch what goes wrong with $1/(x-1)$ at $x = 1$, with $\sqrt{x}$ for negative inputs, and with "$\pm\sqrt{x}$," which isn't a function at all.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Turn the crank</h3>
+        <div class="problem"><p>If $g(x) = 3x - 5$, find $g(4)$, $g(-2)$ and $g(0)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$g(4) = 3(4) - 5 = 7$.</p></div><p class="why">Replace $x$ by $4$ and compute.</p></li>
+          <li><div class="do"><p>$g(-2) = 3(-2) - 5 = -11$.</p></div><p class="why">Parentheses around $-2$ keep the sign attached to the input.</p></li>
+          <li><div class="do"><p>$g(0) = 3(0) - 5 = -5$.</p></div><p class="why">The output at $0$ is where the line crosses the vertical axis.</p></li>
+        </ol>
+        <p class="answer">$g(4) = 7$, $g(-2) = -11$, $g(0) = -5$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Function or not?</h3>
+        <div class="problem"><p>Which of these define $y$ as a function of $x$: $y = 2x + 1$, $\;y^2 = x$, $\;x = 5$, $\;y = |x|$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$y = 2x + 1$ and $y = |x|$ each produce one $y$ for every $x$: functions.</p></div><p class="why">Each is a recipe that you follow to get a single number.</p></li>
+          <li><div class="do"><p>$y^2 = x$: at $x = 9$, both $y = 3$ and $y = -3$ work. Not a function.</p></div><p class="why">One input with two outputs is enough to disqualify it.</p></li>
+          <li><div class="do"><p>$x = 5$: the input $5$ is paired with every $y$ at once, and other inputs get nothing. Not a function.</p></div><p class="why">A vertical line is the most extreme failure: infinitely many outputs for one input.</p></li>
+        </ol>
+        <p class="answer">$y = 2x + 1$ and $y = |x|$ are functions; $y^2 = x$ and $x = 5$ are not.</p>
+        <p class="book-next">Next in the book: Exercises 21-1 and 21-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A fraction machine</h3>
+        <div class="problem"><p>If $h(t) = \dfrac{t^2 - 1}{t + 3}$, find $h(-1)$, $h(2)$ and $h(0)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$h(-1) = \dfrac{(-1)^2 - 1}{-1 + 3} = \dfrac{0}{2} = 0$.</p></div><p class="why">A zero numerator with a nonzero denominator gives $0$.</p></li>
+          <li><div class="do"><p>$h(2) = \dfrac{4 - 1}{5} = \dfrac{3}{5}$.</p></div><p class="why">Substitute into top and bottom separately.</p></li>
+          <li><div class="do"><p>$h(0) = \dfrac{-1}{3} = -\dfrac13$.</p></div><p class="why">The variable is called $t$ here, but the procedure is identical.</p></li>
+        </ol>
+        <p class="answer">$h(-1) = 0$, $h(2) = \dfrac35$, $h(0) = -\dfrac13$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A ratio of outputs</h3>
+        <div class="problem"><p>If $f(x) = 3^x$, find $\dfrac{f(5)}{f(3)}$. Then show that $\dfrac{f(x+2)}{f(x)}$ is the same for every $x$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{f(5)}{f(3)} = \dfrac{3^5}{3^3} = 3^2 = 9$.</p></div><p class="why">Same base, so subtract exponents (Chapter 1).</p></li>
+          <li><div class="do"><p>$\dfrac{f(x+2)}{f(x)} = \dfrac{3^{x+2}}{3^x} = 3^2 = 9$.</p></div><p class="why">The input $x+2$ goes where $x$ was; the $x$'s cancel in the exponent.</p></li>
+        </ol>
+        <p class="answer">$9$, and the ratio $f(x+2)/f(x)$ is always $9$.</p>
+        <p class="book-next">Next in the book: Exercises 21-3 and 21-4.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Feed it an expression</h3>
+        <div class="problem"><p>If $f(x) = x^2 - 2x$, find $f(a + 1)$ and simplify.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f(a+1) = (a+1)^2 - 2(a+1)$.</p></div><p class="why">Every $x$ becomes $(a+1)$, parentheses included.</p></li>
+          <li><div class="do"><p>$= a^2 + 2a + 1 - 2a - 2 = a^2 - 1$.</p></div><p class="why">Expand and collect like terms.</p></li>
+          <li><div class="do"><p>Check with $a = 2$: $f(3) = 9 - 6 = 3$ and $a^2 - 1 = 3$. ✓</p></div><p class="why">A numerical spot check catches algebra slips.</p></li>
+        </ol>
+        <p class="answer">$f(a+1) = a^2 - 1$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Compare two related inputs</h3>
+        <div class="problem"><p>If $f(x) = x^2 + 3x + 1$, simplify $f(2x) - 2f(x)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f(2x) = (2x)^2 + 3(2x) + 1 = 4x^2 + 6x + 1$.</p></div><p class="why">The input is $2x$, so $x^2$ becomes $(2x)^2 = 4x^2$, not $2x^2$.</p></li>
+          <li><div class="do"><p>$2f(x) = 2x^2 + 6x + 2$.</p></div><p class="why">Doubling the output doubles every term.</p></li>
+          <li><div class="do"><p>$f(2x) - 2f(x) = 2x^2 - 1$.</p></div><p class="why">The $6x$ terms cancel; $f(2x)$ and $2f(x)$ are different things.</p></li>
+        </ol>
+        <p class="answer">$2x^2 - 1$</p>
+        <p class="key-idea">Doubling the input and doubling the output are different operations.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A machine in disguise</h3>
+        <div class="problem"><p>Suppose $f(x + 2) = x^2 + 3x - 1$ for all $x$. Find $f(5)$.</p></div>
+        <ol class="steps">
+          <li data-think="The machine's input is $x + 2$. Which $x$ makes that input equal $5$?"><div class="do"><p>We need $x + 2 = 5$, so $x = 3$.</p></div><p class="why">$f(5)$ means "the output when the input is $5$," and the input here is $x + 2$.</p></li>
+          <li><div class="do"><p>$f(5) = 3^2 + 3(3) - 1 = 17$.</p></div><p class="why">Now substitute $x = 3$ into the right side.</p></li>
+        </ol>
+        <p class="answer">$f(5) = 17$</p>
+        <p class="book-next">Next in the book: Exercise 21-5.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Unmask the machine</h3>
+        <div class="problem"><p>Again $f(x + 2) = x^2 + 3x - 1$. Find a formula for $f(x)$.</p></div>
+        <ol class="steps">
+          <li data-think="Can you give the input $x+2$ its own name?"><div class="do"><p>Let $u = x + 2$, so $x = u - 2$. Then $f(u) = (u-2)^2 + 3(u-2) - 1$.</p></div><p class="why">Rewriting the right side in terms of the actual input lets us read off the rule.</p></li>
+          <li><div class="do"><p>$f(u) = u^2 - 4u + 4 + 3u - 6 - 1 = u^2 - u - 3$.</p></div><p class="why">Expand and collect.</p></li>
+          <li><div class="do"><p>Rename the placeholder: $f(x) = x^2 - x - 3$. Check: $f(5) = 25 - 5 - 3 = 17$. ✓</p></div><p class="why">It agrees with the previous example.</p></li>
+        </ol>
+        <p class="answer">$f(x) = x^2 - x - 3$</p>
+        <p class="key-idea">Name the inside expression $u$, solve for $x$ in terms of $u$, and substitute.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two equations from one</h3>
+        <div class="problem"><p>A function satisfies $f(x) + 2f(1 - x) = 3x$ for every real $x$. Find $f(x)$.</p></div>
+        <ol class="steps">
+          <li data-think="What happens if you replace $x$ by $1 - x$ everywhere?"><div class="do"><p>Replace $x$ by $1 - x$: $f(1-x) + 2f(x) = 3(1 - x)$.</p></div><p class="why">The equation holds for every input, including $1 - x$. Since $1 - (1-x) = x$, the same two unknowns reappear.</p></li>
+          <li><div class="do"><p>Write $A = f(x)$, $B = f(1-x)$: $\;A + 2B = 3x$ and $2A + B = 3 - 3x$.</p></div><p class="why">Now it's an ordinary system of two linear equations (Chapter 3).</p></li>
+          <li><div class="do"><p>Double the second and subtract the first: $3A = 6 - 9x$, so $A = 2 - 3x$.</p></div><p class="why">Eliminating $B$ isolates $f(x)$.</p></li>
+          <li><div class="do"><p>Check: $f(x) = 2 - 3x$ gives $f(1-x) = -1 + 3x$, and $(2 - 3x) + 2(-1 + 3x) = 3x$. ✓</p></div><p class="why">Always check a functional equation in the original.</p></li>
+        </ol>
+        <p class="answer">$f(x) = 2 - 3x$</p>
+        <p class="key-idea">Substituting a clever input into a functional equation can produce a second equation with the same unknowns.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 21.2 ===================== -->
+  <section class="lesson" id="s21-2" data-title="Graphing Functions">
+    <h2><span class="sec-num">21.2</span> Graphing Functions</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A table of values is a handful of snapshots. A graph is the whole movie: in one glance you can see where a function rises, where it falls, where it crosses zero and whether two outputs ever agree. Drawing one takes nothing more than evaluating the function many times.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To graph $f$, plot every point $(x, f(x))$: the input runs along the horizontal axis and the output is the height. In practice, compute a few points, look for the pattern, and connect them smoothly. Add extra points wherever the shape is unclear, for example near a zero denominator.</p>
+      <div class="rule"><p><strong>Vertical line test:</strong> a curve is the graph of a function exactly when every vertical line meets it at most once.</p></div>
+      <p>A vertical line $x = c$ collects all the points with input $c$, so two crossings would mean two outputs for one input. Horizontal lines are different: $f(x) = x^2$ gives the output $4$ for both $x = 2$ and $x = -2$, and that's perfectly fine. Many inputs may share an output; one input may not have many outputs.</p>
+      <p>Where two graphs $y = f(x)$ and $y = g(x)$ cross, the inputs agree and so do the outputs, so the crossing points come from solving $f(x) = g(x)$.</p>
+    </div>
+
+    <figure class="explore" data-widget="verticalLine">
+      <figcaption><strong>Explore:</strong> Sweep the vertical line across each curve and count the gold dots. Functions never show two dots at once; the circle and the sideways parabola do.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Plot a line from a table</h3>
+        <div class="problem"><p>Make a table for $f(x) = 2x - 1$ at $x = -1, 0, 1, 2$ and describe the graph.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f(-1) = -3$, $f(0) = -1$, $f(1) = 1$, $f(2) = 3$, giving the points $(-1,-3), (0,-1), (1,1), (2,3)$.</p></div><p class="why">Each input-output pair becomes one point.</p></li>
+          <li><div class="do"><p>Each step of $1$ to the right raises the output by $2$, so the points lie on a line of slope $2$ through $(0, -1)$.</p></div><p class="why">A constant rate of change means a straight line (Chapter 16).</p></li>
+        </ol>
+        <p class="answer">A straight line with slope $2$ and $y$-intercept $-1$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A circle fails the test</h3>
+        <div class="problem"><p>Is the circle $x^2 + y^2 = 25$ the graph of a function of $x$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Take the vertical line $x = 3$: $9 + y^2 = 25$, so $y = 4$ or $y = -4$.</p></div><p class="why">To apply the vertical line test, fix $x$ and count the matching $y$'s.</p></li>
+          <li><div class="do"><p>Two points, $(3, 4)$ and $(3, -4)$, share an input. Not a function.</p></div><p class="why">One failing line is enough.</p></li>
+        </ol>
+        <p class="answer">No. The line $x = 3$ meets the circle twice.</p>
+        <p class="key-idea">The top half alone, $y = \sqrt{25 - x^2}$, <em>is</em> a function.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A parabola point by point</h3>
+        <div class="problem"><p>Graph $f(x) = x^2 - 4$ using $x = -3, \ldots, 3$. Where does it cross the $x$-axis, and what is its lowest point?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Outputs for $x = -3, -2, -1, 0, 1, 2, 3$: $\;5, 0, -3, -4, -3, 0, 5$.</p></div><p class="why">Squaring makes $x$ and $-x$ give the same output, so the table is symmetric.</p></li>
+          <li><div class="do">
+            <svg viewBox="0 50 300 140" width="300" role="img" aria-label="Parabola y equals x squared minus 4 with its seven plotted points">
+              <line x1="20" y1="120" x2="280" y2="120" stroke="var(--border-strong)"/>
+              <line x1="150" y1="55" x2="150" y2="188" stroke="var(--border-strong)"/>
+              <path d="M30 70 Q150 250 270 70" fill="none" stroke="var(--plot-1)" stroke-width="3"/>
+              <g fill="var(--accent)"><circle cx="30" cy="70" r="4"/><circle cx="70" cy="120" r="4"/><circle cx="110" cy="150" r="4"/><circle cx="150" cy="160" r="4"/><circle cx="190" cy="150" r="4"/><circle cx="230" cy="120" r="4"/><circle cx="270" cy="70" r="4"/></g>
+              <text x="70" y="138" class="lbl" text-anchor="middle">−2</text><text x="230" y="138" class="lbl" text-anchor="middle">2</text><text x="160" y="178" class="lbl">(0, −4)</text>
+            </svg>
+            <p>Plot and connect with a smooth U-shaped curve.</p></div><p class="why">The points rise more and more steeply away from the middle, which a smooth curve captures.</p></li>
+          <li><div class="do"><p>It crosses the $x$-axis at $x = \pm 2$; the lowest point is $(0, -4)$.</p></div><p class="why">Zeros are where the output is $0$; $x^2 \ge 0$ makes $-4$ the smallest output.</p></li>
+        </ol>
+        <p class="answer">Crosses at $x = -2$ and $x = 2$; lowest point $(0, -4)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A cubic with three zeros</h3>
+        <div class="problem"><p>Evaluate $f(x) = x^3 - 4x$ at $x = -2, -1, 0, 1, 2$ and sketch its shape.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Outputs: $f(-2) = 0$, $f(-1) = 3$, $f(0) = 0$, $f(1) = -3$, $f(2) = 0$.</p></div><p class="why">For example $f(-1) = -1 + 4 = 3$.</p></li>
+          <li><div class="do"><p>The graph rises from far left, crosses at $-2$, peaks near $x = -1$, crosses at $0$, dips near $x = 1$, crosses at $2$, then climbs forever.</p></div><p class="why">For large $|x|$ the $x^3$ term dominates: very negative on the left, very positive on the right.</p></li>
+        </ol>
+        <p class="answer">An S-like curve crossing the $x$-axis at $-2$, $0$ and $2$.</p>
+        <p class="book-next">Next in the book: Example 21-2 and Exercise 21-6.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Use a point on the graph</h3>
+        <div class="problem"><p>The point $(2, 7)$ lies on the graph of $f(x) = ax^2 - 1$. Find $a$ and then $f(-3)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>"$(2, 7)$ is on the graph" means $f(2) = 7$: $\;4a - 1 = 7$, so $a = 2$.</p></div><p class="why">A point on the graph is an input-output pair.</p></li>
+          <li><div class="do"><p>$f(-3) = 2(9) - 1 = 17$.</p></div><p class="why">With $a$ known, the function is fully determined.</p></li>
+        </ol>
+        <p class="answer">$a = 2$ and $f(-3) = 17$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Zooming in near a gap</h3>
+        <div class="problem"><p>Sketch $f(x) = \dfrac{1}{x}$. What happens near $x = 0$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Integer points: $(1,1), (2, \tfrac12), (4, \tfrac14)$ and $(-1,-1), (-2,-\tfrac12)$.</p></div><p class="why">These show the curve flattening toward the $x$-axis far from $0$.</p></li>
+          <li data-think="Integers can't tell you what happens between $-1$ and $1$. Which inputs would?"><div class="do"><p>Fractions: $f(\tfrac12) = 2$, $f(\tfrac14) = 4$, $f(\tfrac1{10}) = 10$; and $f(-\tfrac1{10}) = -10$.</p></div><p class="why">Small inputs give huge outputs, so the graph shoots up just right of $0$ and down just left of $0$.</p></li>
+          <li><div class="do"><p>$x = 0$ has no output, so the graph has two separate branches.</p></div><p class="why">Division by zero is undefined; the curve never touches the vertical axis.</p></li>
+        </ol>
+        <p class="answer">Two branches, in the first and third quadrants, hugging both axes and never reaching $x = 0$.</p>
+        <p class="book-next">Next in the book: Exercise 21-7.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Which variable is the function?</h3>
+        <div class="problem"><p>Consider $x = y^2 - 2y$. Is $y$ a function of $x$? Is $x$ a function of $y$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>For each $y$, the rule computes exactly one $x$, so $x$ is a function of $y$.</p></div><p class="why">The equation is already a recipe: start from $y$, get $x$.</p></li>
+          <li><div class="do"><p>At $x = 0$: $y^2 - 2y = 0$, so $y = 0$ or $y = 2$. So $y$ is not a function of $x$.</p></div><p class="why">The vertical line $x = 0$ meets the curve at $(0,0)$ and $(0,2)$.</p></li>
+        </ol>
+        <p class="answer">$x$ is a function of $y$; $y$ is not a function of $x$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Where two graphs meet</h3>
+        <div class="problem"><p>Find all intersection points of $y = x^2$ and $y = x + 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Set the outputs equal: $x^2 = x + 6$, so $x^2 - x - 6 = 0$.</p></div><p class="why">At a crossing, the same input gives the same output on both graphs.</p></li>
+          <li><div class="do"><p>$(x - 3)(x + 2) = 0$, so $x = 3$ or $x = -2$.</p></div><p class="why">Factor the quadratic (Chapter 6).</p></li>
+          <li><div class="do"><p>Outputs: $3^2 = 9$ and $(-2)^2 = 4$, giving $(3, 9)$ and $(-2, 4)$.</p></div><p class="why">Check with the line: $3 + 6 = 9$, $-2 + 6 = 4$. ✓</p></li>
+        </ol>
+        <p class="answer">$(3, 9)$ and $(-2, 4)$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A line that just touches</h3>
+        <div class="problem"><p>For which $k$ does the line $y = 2x + k$ meet the parabola $y = x^2$ at exactly one point? Find that point.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Intersections solve $x^2 = 2x + k$, that is, $x^2 - 2x - k = 0$.</p></div><p class="why">Counting meeting points means counting real solutions.</p></li>
+          <li data-think="When does a quadratic equation have exactly one real solution?"><div class="do"><p>Exactly one solution when the discriminant is zero: $(-2)^2 - 4(1)(-k) = 4 + 4k = 0$, so $k = -1$.</p></div><p class="why">The discriminant $b^2 - 4ac$ decides whether there are $2$, $1$ or $0$ real roots.</p></li>
+          <li><div class="do"><p>Then $x^2 - 2x + 1 = (x-1)^2 = 0$, so $x = 1$ and the point is $(1, 1)$.</p></div><p class="why">A double root means the line is tangent to the parabola there.</p></li>
+        </ol>
+        <p class="answer">$k = -1$, touching at $(1, 1)$.</p>
+        <p class="key-idea">Turning "how many crossings" into "how many solutions" lets algebra answer a picture question.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 21.3 ===================== -->
+  <section class="lesson" id="s21-3" data-title="Inputs and Outputs">
+    <h2><span class="sec-num">21.3</span> Inputs and Outputs</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Type $1 \div 0$ or $\sqrt{-4}$ into a calculator and it answers "Error." The machine is telling you that some inputs simply aren't allowed. Knowing in advance which inputs a function accepts, and which outputs it can ever produce, saves you from answers that don't exist.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>domain</strong> of a function is its set of allowed inputs; the <strong>range</strong> is the set of outputs it actually produces. Unless told otherwise, we use real inputs and real outputs, so we exclude any input that would:</p>
+      <ul>
+        <li>make a denominator zero, as in $\dfrac{1}{x-2}$ at $x = 2$;</li>
+        <li>put a negative number under an even root, as in $\sqrt{x}$ for $x &lt; 0$;</li>
+        <li>take the logarithm of zero or a negative number, as in $\log x$ for $x \le 0$.</li>
+      </ul>
+      <p>The range usually takes some thought: $x^2 - 1$ can never go below $-1$, $2^x$ is always positive, and $\dfrac1x$ can be any number except $0$.</p>
+      <p>Outputs can be fed back in. Applying $f$ repeatedly gives $f(f(x))$, written $f^2(x)$, and in general $f^n(x)$ means $n$ applications. Feeding $f$'s output into a different function $g$ gives the <strong>composition</strong>:</p>
+      <div class="rule"><p>$$(g \circ f)(x) = g\big(f(x)\big) \qquad\text{(apply } f \text{ first, then } g\text{)}.$$</p></div>
+      <div class="note"><p>Warning: $f^2(x) = f(f(x))$ is <em>not</em> $[f(x)]^2$. (The one famous exception is trigonometry, where $\sin^2 x$ conventionally means $(\sin x)^2$.) And in general $g \circ f \ne f \circ g$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="domainRange">
+      <figcaption><strong>Explore:</strong> Pick a function and slide the input. The band along the $x$-axis is the domain and the purple band along the $y$-axis is the range; an open dot marks an excluded endpoint. Inputs outside the domain produce no point at all.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="composeChain">
+      <figcaption><strong>Explore:</strong> Choose two machines and an input. The top row runs $f$ then $g$; the bottom row runs $g$ then $f$. Look for pairs where the two orders agree, and pairs where they don't.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Avoid dividing by zero</h3>
+        <div class="problem"><p>Find the domain of $f(x) = \dfrac{5}{x^2 - 9}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The denominator is zero when $x^2 = 9$, that is, $x = 3$ or $x = -3$.</p></div><p class="why">Those are the only inputs that break the formula.</p></li>
+          <li><div class="do"><p>Every other real number is allowed.</p></div><p class="why">There are no roots or logs to worry about.</p></li>
+        </ol>
+        <p class="answer">All real numbers except $3$ and $-3$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Keep the square root happy</h3>
+        <div class="problem"><p>Find the domain of $g(x) = \sqrt{2x - 6}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Need $2x - 6 \ge 0$.</p></div><p class="why">A square root of a negative number isn't real; zero is fine.</p></li>
+          <li><div class="do"><p>So $x \ge 3$.</p></div><p class="why">Add $6$, then divide by $2$.</p></li>
+        </ol>
+        <p class="answer">$x \ge 3$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two conditions at once</h3>
+        <div class="problem"><p>Find the domain of $h(x) = \log(x - 2) + \sqrt{8 - x}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The log needs $x - 2 > 0$, so $x > 2$.</p></div><p class="why">Logs accept only positive inputs, and zero is excluded.</p></li>
+          <li><div class="do"><p>The root needs $8 - x \ge 0$, so $x \le 8$.</p></div><p class="why">Zero under a square root is allowed.</p></li>
+          <li><div class="do"><p>Both must hold: $2 &lt; x \le 8$.</p></div><p class="why">An input is allowed only if every part of the formula accepts it.</p></li>
+        </ol>
+        <p class="answer">$2 &lt; x \le 8$</p>
+        <p class="book-next">Next in the book: Example 21-3 and Exercises 21-8, 21-9.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the range by thinking</h3>
+        <div class="problem"><p>Find the ranges of $p(x) = 5 - x^2$ and $q(x) = \dfrac{3}{x + 4}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2$ takes every value $\ge 0$, so $5 - x^2$ takes every value $\le 5$.</p></div><p class="why">Subtracting a nonnegative amount from $5$ can't exceed $5$, and any smaller value is reached.</p></li>
+          <li><div class="do"><p>$q(x) = 3/(x+4)$ is never $0$ (the numerator is $3$), but any other output $y$ occurs at $x = \tfrac{3}{y} - 4$.</p></div><p class="why">To check a value is in the range, solve for the input that produces it.</p></li>
+        </ol>
+        <p class="answer">Range of $p$: all $y \le 5$. Range of $q$: all reals except $0$.</p>
+        <p class="book-next">Next in the book: Example 21-4 and Exercise 21-10.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Run the machine three times</h3>
+        <div class="problem"><p>If $f(x) = 3x - 2$, find $f^3(x)$ and $f^3(2)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f^2(x) = f(3x - 2) = 3(3x - 2) - 2 = 9x - 8$.</p></div><p class="why">Feed the output back in as the new input.</p></li>
+          <li><div class="do"><p>$f^3(x) = f(9x - 8) = 3(9x - 8) - 2 = 27x - 26$.</p></div><p class="why">One more pass.</p></li>
+          <li><div class="do"><p>$f^3(2) = 54 - 26 = 28$. Check directly: $2 \to 4 \to 10 \to 28$. ✓</p></div><p class="why">Following one number through is a good test of the formula.</p></li>
+        </ol>
+        <p class="answer">$f^3(x) = 27x - 26$ and $f^3(2) = 28$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Iterate vs. power</h3>
+        <div class="problem"><p>If $f(x) = x^3$, compare $f^2(x)$ with $[f(x)]^2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f^2(x) = f(x^3) = (x^3)^3 = x^9$.</p></div><p class="why">Apply the cubing machine twice.</p></li>
+          <li><div class="do"><p>$[f(x)]^2 = (x^3)^2 = x^6$.</p></div><p class="why">Square the single output.</p></li>
+        </ol>
+        <p class="answer">$f^2(x) = x^9$ but $[f(x)]^2 = x^6$; they differ.</p>
+        <p class="book-next">Next in the book: Examples 21-5, 21-6 and Exercise 21-12.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Order matters in composition</h3>
+        <div class="problem"><p>Let $f(x) = x + 4$ and $g(x) = x^2$. Find $(g \circ f)(x)$ and $(f \circ g)(x)$, and evaluate both at $x = 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(g \circ f)(x) = g(x + 4) = (x+4)^2 = x^2 + 8x + 16$.</p></div><p class="why">Add $4$ first, then square.</p></li>
+          <li><div class="do"><p>$(f \circ g)(x) = f(x^2) = x^2 + 4$.</p></div><p class="why">Square first, then add $4$.</p></li>
+          <li><div class="do"><p>At $x = 1$: $(g\circ f)(1) = 25$ but $(f \circ g)(1) = 5$.</p></div><p class="why">A single input where they differ proves $g \circ f \ne f \circ g$.</p></li>
+        </ol>
+        <p class="answer">$(g\circ f)(x) = (x+4)^2$, $(f\circ g)(x) = x^2 + 4$; at $x=1$ they give $25$ and $5$.</p>
+        <p class="book-next">Next in the book: Example 21-7 and Exercise 21-13.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The one missing output</h3>
+        <div class="problem"><p>Find the range of $r(x) = \dfrac{2x + 1}{x - 3}$.</p></div>
+        <ol class="steps">
+          <li data-think="Instead of guessing outputs, can you ask which input would produce a given output $y$?"><div class="do"><p>Set $y = \dfrac{2x+1}{x-3}$ and solve for $x$: $\;yx - 3y = 2x + 1$, so $x(y - 2) = 3y + 1$.</p></div><p class="why">An output $y$ is in the range exactly when some input produces it.</p></li>
+          <li><div class="do"><p>If $y \ne 2$: $x = \dfrac{3y+1}{y-2}$ works (and it's never $3$). If $y = 2$: we'd need $0 = 7$, impossible.</p></div><p class="why">Division by $y - 2$ is only legal when $y \ne 2$, so that case is checked separately.</p></li>
+          <li><div class="do"><p>Equivalently, $r(x) = 2 + \dfrac{7}{x-3}$, and the fraction is never $0$.</p></div><p class="why">Splitting off the whole part shows why $2$ is missed.</p></li>
+        </ol>
+        <p class="answer">All real numbers except $2$.</p>
+        <p class="book-next">Next in the book: Exercise 21-11.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A machine that cycles</h3>
+        <div class="problem"><p>Let $f(x) = \dfrac{1}{1 - x}$ (for $x \ne 0, 1$). Find $f^2(x)$ and $f^3(x)$, then compute $f^{100}(3)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f^2(x) = \dfrac{1}{1 - \frac{1}{1-x}} = \dfrac{1-x}{(1-x) - 1} = \dfrac{x - 1}{x}$.</p></div><p class="why">Multiply top and bottom by $1 - x$ to clear the inner fraction.</p></li>
+          <li><div class="do"><p>$f^3(x) = \dfrac{1}{1 - \frac{x-1}{x}} = \dfrac{x}{x - (x - 1)} = x$.</p></div><p class="why">Three passes return the original input.</p></li>
+          <li data-think="If three applications do nothing, what do $99$ applications do?"><div class="do"><p>$100 = 3 \cdot 33 + 1$, so $f^{100} = f^{1}$ and $f^{100}(3) = \dfrac{1}{1-3} = -\dfrac12$.</p></div><p class="why">Every block of three applications cancels out, leaving one.</p></li>
+          <li><div class="do"><p>Check the cycle: $3 \to -\tfrac12 \to \tfrac23 \to 3$. ✓</p></div><p class="why">Tracing a number confirms the period is $3$.</p></li>
+        </ol>
+        <p class="answer">$f^2(x) = \dfrac{x-1}{x}$, $f^3(x) = x$, and $f^{100}(3) = -\dfrac12$.</p>
+        <p class="key-idea">When iterating, look for a cycle; then reduce the number of applications by the cycle length.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 21.4 ===================== -->
+  <section class="lesson" id="s21-4" data-title="Even and Odd">
+    <h2><span class="sec-num">21.4</span> Even and Odd</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Fold a sheet of graph paper along the $y$-axis and the two halves of $y = x^2$ land exactly on each other. Now stick a pin through the origin of the graph of $y = x^3$ and spin the paper half a turn: the curve lands on itself. Symmetries like these cut your work in half: know one side, and you know the other.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Mirror symmetry in the $y$-axis means the height at $-x$ equals the height at $x$. Half-turn symmetry about the origin means the height at $-x$ is the <em>negative</em> of the height at $x$.</p>
+      <div class="rule"><p>$$\text{even: } f(-x) = f(x) \qquad\qquad \text{odd: } f(-x) = -f(x)$$</p></div>
+      <p>The names come from powers: $x^2, x^4, x^6$ are even, and $x, x^3, x^5$ are odd. A polynomial with only even powers (a constant counts as $x^0$) is even; one with only odd powers is odd; a mixture is neither. Most functions are neither.</p>
+      <p>To <em>prove</em> a function is even or odd, simplify $f(-x)$ and compare it with $f(x)$. To <em>disprove</em>, one number is enough: if $f(1) = 2$ and $f(-1) = 0$, then $f$ is neither.</p>
+      <div class="note"><p>If $f$ is odd and $0$ is in its domain, then $f(0) = -f(0)$, which forces $f(0) = 0$. An odd graph must pass through the origin. Even functions can have any value at $0$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="evenOdd">
+      <figcaption><strong>Explore:</strong> Drag the gold points to shape the right half of a graph. Choose <em>even</em> or <em>odd</em> and the left half is built for you, by mirror or by half-turn. Slide the probe to compare $f(a)$ with $f(-a)$. In odd mode, notice that the point at $x = 0$ is pinned.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Test an even polynomial</h3>
+        <div class="problem"><p>Is $f(x) = x^4 - 3x^2$ even, odd or neither?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f(-x) = (-x)^4 - 3(-x)^2 = x^4 - 3x^2$.</p></div><p class="why">Even powers erase the minus sign.</p></li>
+          <li><div class="do"><p>$f(-x) = f(x)$ for all $x$, so $f$ is even.</p></div><p class="why">That's exactly the definition.</p></li>
+        </ol>
+        <p class="answer">Even</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Test an odd polynomial</h3>
+        <div class="problem"><p>Is $g(x) = 2x^3 + x$ even, odd or neither?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$g(-x) = 2(-x)^3 + (-x) = -2x^3 - x$.</p></div><p class="why">Odd powers keep the minus sign.</p></li>
+          <li><div class="do"><p>$-2x^3 - x = -(2x^3 + x) = -g(x)$, so $g$ is odd.</p></div><p class="why">Factor out $-1$ to compare with $g(x)$.</p></li>
+        </ol>
+        <p class="answer">Odd</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A mixture is neither</h3>
+        <div class="problem"><p>Show that $h(x) = x^2 + x$ is neither even nor odd.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$h(1) = 2$ and $h(-1) = 1 - 1 = 0$.</p></div><p class="why">To disprove a property that must hold for all $x$, one counterexample suffices.</p></li>
+          <li><div class="do"><p>$0 \ne 2$, so not even; $0 \ne -2$, so not odd.</p></div><p class="why">Even would need $h(-1) = h(1)$; odd would need $h(-1) = -h(1)$.</p></li>
+        </ol>
+        <p class="answer">Neither</p>
+        <p class="book-next">Next in the book: Exercises 21-16 to 21-18.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Even and odd beyond polynomials</h3>
+        <div class="problem"><p>Classify $r(x) = \dfrac{x}{x^2 + 1}$ and $q(x) = \dfrac{1}{x^2 - 4}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$r(-x) = \dfrac{-x}{x^2 + 1} = -r(x)$: odd.</p></div><p class="why">The numerator changes sign; the denominator, built from $x^2$, does not.</p></li>
+          <li><div class="do"><p>$q(-x) = \dfrac{1}{(-x)^2 - 4} = q(x)$: even.</p></div><p class="why">The only $x$ appears squared. Its domain, all reals except $\pm 2$, is also symmetric.</p></li>
+        </ol>
+        <p class="answer">$r$ is odd; $q$ is even.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A constant spoils oddness</h3>
+        <div class="problem"><p>Is $f(x) = x^3 + 1$ odd?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f(0) = 1$.</p></div><p class="why">An odd function defined at $0$ must have $f(0) = 0$.</p></li>
+          <li><div class="do"><p>Since $f(0) \ne 0$, $f$ is not odd. (It's not even either: $f(1) = 2$, $f(-1) = 0$.)</p></div><p class="why">The quick test at $0$ settles oddness instantly.</p></li>
+        </ol>
+        <p class="answer">No; $f$ is neither even nor odd.</p>
+        <p class="book-next">Next in the book: Example 21-9 and Exercise 21-19.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Fill in the other side</h3>
+        <div class="problem"><p>An odd function has $f(1) = 2$ and $f(2) = -5$, and it is defined at $0$. Find $f(-1) + f(-2) + f(0)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f(-1) = -f(1) = -2$ and $f(-2) = -f(2) = 5$.</p></div><p class="why">Oddness flips the sign of each output.</p></li>
+          <li><div class="do"><p>$f(0) = 0$.</p></div><p class="why">Odd functions pass through the origin.</p></li>
+          <li><div class="do"><p>Sum: $-2 + 5 + 0 = 3$.</p></div><p class="why">Combine.</p></li>
+        </ol>
+        <p class="answer">$3$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Even times odd</h3>
+        <div class="problem"><p>If $f$ is even and $g$ is odd, is the product $p(x) = f(x)g(x)$ even, odd or neither?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$p(-x) = f(-x)\,g(-x) = f(x)\cdot\big(-g(x)\big) = -p(x)$.</p></div><p class="why">Apply each property separately, then collect the single minus sign.</p></li>
+          <li><div class="do"><p>So $p$ is odd. Example: $x^2 \cdot x^3 = x^5$.</p></div><p class="why">The rule matches the arithmetic of exponents: even $+$ odd $=$ odd.</p></li>
+        </ol>
+        <p class="answer">Odd</p>
+        <p class="key-idea">Even and odd multiply like signs: even·even and odd·odd are even, even·odd is odd.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Split any function into even and odd parts</h3>
+        <div class="problem"><p>Write $f(x) = 2^x$ as the sum of an even function and an odd function.</p></div>
+        <ol class="steps">
+          <li data-think="For a polynomial you'd just split the even and odd powers. What averaging trick works for any $f$?"><div class="do"><p>Let $E(x) = \dfrac{f(x) + f(-x)}{2}$ and $O(x) = \dfrac{f(x) - f(-x)}{2}$. Then $E + O = f$.</p></div><p class="why">Adding the two fractions, the $f(-x)$ terms cancel and two halves of $f(x)$ remain.</p></li>
+          <li><div class="do"><p>$E(-x) = \dfrac{f(-x) + f(x)}{2} = E(x)$, and $O(-x) = \dfrac{f(-x) - f(x)}{2} = -O(x)$.</p></div><p class="why">Replacing $x$ by $-x$ swaps $f(x)$ and $f(-x)$.</p></li>
+          <li><div class="do"><p>For $f(x) = 2^x$: $E(x) = \dfrac{2^x + 2^{-x}}{2}$ and $O(x) = \dfrac{2^x - 2^{-x}}{2}$.</p></div><p class="why">Substitute into the general recipe.</p></li>
+        </ol>
+        <p class="answer">$2^x = \dfrac{2^x + 2^{-x}}{2} + \dfrac{2^x - 2^{-x}}{2}$ (even part plus odd part).</p>
+        <p class="key-idea">Averaging $f(x)$ with $f(-x)$ extracts the even part; half the difference gives the odd part.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Both at once</h3>
+        <div class="problem"><p>Find every function defined for all real $x$ that is both even and odd.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Even gives $f(-x) = f(x)$; odd gives $f(-x) = -f(x)$.</p></div><p class="why">Write down both conditions.</p></li>
+          <li><div class="do"><p>So $f(x) = -f(x)$, meaning $2f(x) = 0$ and $f(x) = 0$ for every $x$.</p></div><p class="why">Both expressions equal $f(-x)$, so they equal each other.</p></li>
+        </ol>
+        <p class="answer">Only the zero function $f(x) = 0$.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 21.5 ===================== -->
+  <section class="lesson" id="s21-5" data-title="Some Special Functions">
+    <h2><span class="sec-num">21.5</span> Some Special Functions</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Your age is a function of time, but it's a strange one: it stays at $13$ for a whole year and then suddenly jumps to $14$. The distance between two towns doesn't care which town you start from. Postage rates follow one rule up to some weight and a different rule beyond it. None of these fit a tidy formula like $2x + 3$, yet all of them are functions.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p><strong>Absolute value.</strong> $|x|$ is the distance from $x$ to $0$: $|5| = 5$, $|-5| = 5$. More generally, $|a - b|$ is the distance between $a$ and $b$ on the number line. To remove absolute value signs, split into cases:</p>
+      <div class="rule"><p>$$|x| = \begin{cases} x, &amp; x \ge 0 \\ -x, &amp; x &lt; 0 \end{cases} \qquad\qquad |M| = N \;(N \ge 0) \iff M = N \text{ or } M = -N.$$</p></div>
+      <p><strong>Floor.</strong> The greatest integer function $\lfloor x \rfloor$ is the largest integer that is $\le x$: $\lfloor 3.7 \rfloor = 3$, $\lfloor 5 \rfloor = 5$, and careful, $\lfloor -2.3 \rfloor = -3$. Its partners are the <strong>ceiling</strong> $\lceil x \rceil$ (smallest integer $\ge x$) and the <strong>fractional part</strong> $\{x\} = x - \lfloor x \rfloor$, which always lies in $0 \le \{x\} &lt; 1$.</p>
+      <div class="rule"><p>$$\lfloor x \rfloor = n \iff n \le x &lt; n + 1 \qquad (n \text{ an integer}).$$</p></div>
+      <p>The floor graph is a staircase. It jumps at every integer, so you can't draw it without lifting your pen: it is not <em>continuous</em>. Closed dots mark included endpoints and open dots excluded ones.</p>
+      <p><strong>Piecewise functions.</strong> Some functions use different formulas on different parts of the number line, written with a brace. The pieces must cover the domain without overlapping, and each formula is used <em>only</em> on its own piece. Absolute value is itself the simplest piecewise function.</p>
+    </div>
+
+    <figure class="explore" data-widget="absFold">
+      <figcaption><strong>Explore:</strong> The dashed curve is $g(x)$; taking the absolute value folds every part below the axis up above it. Slide the height $k$ and count where $|g(x)| = k$. Each crossing solves either $g(x) = k$ or $g(x) = -k$.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="floorStairs">
+      <figcaption><strong>Explore:</strong> Slide $x$ along the staircase. Switch between floor, ceiling and fractional part, and watch which endpoint of each step is filled in.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Absolute values as distances</h3>
+        <div class="problem"><p>Evaluate $|-7| + |3 - 10| - |4|$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$|-7| = 7$, $|3 - 10| = |-7| = 7$, $|4| = 4$.</p></div><p class="why">Work inside the bars first, then take the distance from $0$.</p></li>
+          <li><div class="do"><p>$7 + 7 - 4 = 10$.</p></div><p class="why">Now it's ordinary arithmetic.</p></li>
+        </ol>
+        <p class="answer">$10$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Floors, ceilings and fractional parts</h3>
+        <div class="problem"><p>Find $\lfloor 4.9 \rfloor$, $\lfloor -4.9 \rfloor$, $\lfloor \pi \rfloor$, $\lceil -2.5 \rceil$ and $\{-2.5\}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\lfloor 4.9 \rfloor = 4$ and $\lfloor \pi \rfloor = 3$.</p></div><p class="why">For positive numbers, the floor just chops off the decimals.</p></li>
+          <li><div class="do"><p>$\lfloor -4.9 \rfloor = -5$.</p></div><p class="why">The floor goes <em>down</em> the number line, and the integer just below $-4.9$ is $-5$.</p></li>
+          <li><div class="do"><p>$\lceil -2.5 \rceil = -2$ and $\{-2.5\} = -2.5 - \lfloor -2.5 \rfloor = -2.5 - (-3) = 0.5$.</p></div><p class="why">The ceiling goes up. The fractional part is never negative.</p></li>
+        </ol>
+        <p class="answer">$4,\ -5,\ 3,\ -2,\ 0.5$</p>
+        <p class="book-next">Next in the book: Exercises 21-23 and 21-24.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A linear absolute value equation</h3>
+        <div class="problem"><p>Solve $|2x - 5| = 9$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Either $2x - 5 = 9$ or $2x - 5 = -9$.</p></div><p class="why">Two numbers have absolute value $9$: $9$ and $-9$.</p></li>
+          <li><div class="do"><p>$2x = 14 \Rightarrow x = 7$, or $2x = -4 \Rightarrow x = -2$.</p></div><p class="why">Solve each linear equation.</p></li>
+          <li><div class="do"><p>Check: $|14 - 5| = 9$ and $|-4 - 5| = 9$. ✓</p></div><p class="why">Both work.</p></li>
+        </ol>
+        <p class="answer">$x = 7$ or $x = -2$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Four solutions from two quadratics</h3>
+        <div class="problem"><p>Solve $|x^2 - 5x| = 6$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Case $x^2 - 5x = 6$: $x^2 - 5x - 6 = (x - 6)(x + 1) = 0$, so $x = 6$ or $x = -1$.</p></div><p class="why">The inside equals $+6$.</p></li>
+          <li><div class="do"><p>Case $x^2 - 5x = -6$: $x^2 - 5x + 6 = (x-2)(x-3) = 0$, so $x = 2$ or $x = 3$.</p></div><p class="why">The inside equals $-6$; this case is easy to forget.</p></li>
+          <li><div class="do"><p>Check $x = 2$: $|4 - 10| = |-6| = 6$. ✓ (The others check similarly.)</p></div><p class="why">The explorer above shows the same four crossings at height $6$.</p></li>
+        </ol>
+        <p class="answer">$x = -1, 2, 3, 6$</p>
+        <p class="book-next">Next in the book: Example 21-10 and Exercise 21-22.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Equally far from two points</h3>
+        <div class="problem"><p>Solve $|x - 3| = |x + 5|$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$|x - 3|$ is the distance from $x$ to $3$; $|x + 5| = |x - (-5)|$ is the distance to $-5$.</p></div><p class="why">Reading absolute values as distances often reveals the answer.</p></li>
+          <li><div class="do"><p>The point equally far from $3$ and $-5$ is their midpoint, $\dfrac{3 + (-5)}{2} = -1$.</p></div><p class="why">On a line, only the midpoint is equidistant from two points.</p></li>
+          <li><div class="do"><p>Algebra agrees: $x - 3 = -(x + 5)$ gives $x = -1$; $x - 3 = x + 5$ has no solution.</p></div><p class="why">The case split confirms there's exactly one answer.</p></li>
+        </ol>
+        <p class="answer">$x = -1$</p>
+        <p class="book-next">Next in the book: Exercises 21-20 and 21-21.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Evaluate a piecewise function</h3>
+        <div class="problem"><p>Let $f(x) = \begin{cases} x^2, &amp; x \ge 2 \\ 3x - 1, &amp; -1 \le x &lt; 2 \\ -x, &amp; x &lt; -1 \end{cases}$. Find $f(3)$, $f(2)$, $f(0)$ and $f(-4)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$3 \ge 2$, so $f(3) = 9$; and $2 \ge 2$, so $f(2) = 4$.</p></div><p class="why">First decide which piece the input belongs to. The endpoint $2$ belongs to the top piece.</p></li>
+          <li><div class="do"><p>$0$ is in $-1 \le x &lt; 2$, so $f(0) = 3(0) - 1 = -1$.</p></div><p class="why">Use only the middle formula.</p></li>
+          <li><div class="do"><p>$-4 &lt; -1$, so $f(-4) = -(-4) = 4$.</p></div><p class="why">The bottom piece applies.</p></li>
+        </ol>
+        <p class="answer">$f(3) = 9$, $f(2) = 4$, $f(0) = -1$, $f(-4) = 4$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Solve a floor equation</h3>
+        <div class="problem"><p>Find all real $x$ with $\lfloor 2x + 1 \rfloor = 4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\lfloor y \rfloor = 4$ means $4 \le y &lt; 5$, so $4 \le 2x + 1 &lt; 5$.</p></div><p class="why">Translate the floor statement into a pair of inequalities.</p></li>
+          <li><div class="do"><p>Subtract $1$: $3 \le 2x &lt; 4$. Divide by $2$: $1.5 \le x &lt; 2$.</p></div><p class="why">Do the same operation to all three parts (Chapter 22 explains why this is safe).</p></li>
+        </ol>
+        <p class="answer">$1.5 \le x &lt; 2$</p>
+        <p class="book-next">Next in the book: Exercises 21-25 to 21-28.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Count the zeros of a piecewise function</h3>
+        <div class="problem"><p>How many times does $g(x) = \begin{cases} x^2 - 5, &amp; x \ge 2 \\ x + 1, &amp; x &lt; 2 \end{cases}$ cross the $x$-axis?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Top piece: $x^2 - 5 = 0$ gives $x = \pm\sqrt5$. Only $\sqrt5 \approx 2.24$ satisfies $x \ge 2$.</p></div><p class="why">A solution counts only if it lies in that piece's own region.</p></li>
+          <li><div class="do"><p>Bottom piece: $x + 1 = 0$ gives $x = -1$, and $-1 &lt; 2$. ✓</p></div><p class="why">Check the region again.</p></li>
+        </ol>
+        <p class="answer">Twice, at $x = -1$ and $x = \sqrt{5}$.</p>
+        <p class="book-next">Next in the book: Exercise 21-29.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two absolute values</h3>
+        <div class="problem"><p>Solve $|x - 1| + |x + 2| = 5$.</p></div>
+        <ol class="steps">
+          <li data-think="Where does each expression inside the bars change sign?"><div class="do"><p>The insides change sign at $x = 1$ and $x = -2$, so split into $x \ge 1$, $\;-2 \le x &lt; 1$, and $x &lt; -2$.</p></div><p class="why">Within each region, both absolute values have a fixed sign and can be removed.</p></li>
+          <li><div class="do"><p>$x \ge 1$: $(x-1) + (x+2) = 2x + 1 = 5$, so $x = 2$ ✓.</p></div><p class="why">Both insides are nonnegative here.</p></li>
+          <li><div class="do"><p>$-2 \le x &lt; 1$: $(1 - x) + (x + 2) = 3 \ne 5$. No solutions.</p></div><p class="why">Between the two points, the sum of distances is always the gap between them, $3$.</p></li>
+          <li><div class="do"><p>$x &lt; -2$: $(1-x) + (-x-2) = -2x - 1 = 5$, so $x = -3$ ✓.</p></div><p class="why">Both insides are negative here.</p></li>
+        </ol>
+        <p class="answer">$x = 2$ or $x = -3$</p>
+        <p class="key-idea">Split the number line at the points where the expressions inside absolute values change sign.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A number plus its floor</h3>
+        <div class="problem"><p>Solve $x + \lfloor x \rfloor = 8.6$.</p></div>
+        <ol class="steps">
+          <li data-think="Every real number is an integer plus a fractional part. How does that help?"><div class="do"><p>Write $x = n + f$ with $n = \lfloor x \rfloor$ an integer and $0 \le f &lt; 1$. The equation becomes $2n + f = 8.6$.</p></div><p class="why">Splitting $x$ separates the integer information from the fractional part.</p></li>
+          <li><div class="do"><p>Since $0 \le f &lt; 1$: $7.6 &lt; 2n \le 8.6$. The only even integer there is $8$, so $n = 4$ and $f = 0.6$.</p></div><p class="why">$2n$ must be an even integer, which pins it down.</p></li>
+          <li><div class="do"><p>$x = 4.6$. Check: $4.6 + 4 = 8.6$. ✓</p></div><p class="why">Substitute back.</p></li>
+        </ol>
+        <p class="answer">$x = 4.6$</p>
+        <p class="key-idea">Writing $x = \lfloor x \rfloor + \{x\}$ turns floor equations into integer bookkeeping.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 21.6 ===================== -->
+  <section class="lesson" id="s21-6" data-title="Transforming a Function">
+    <h2><span class="sec-num">21.6</span> Transforming a Function</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>In a photo editor you can drag a picture, stretch it taller or squeeze it narrower without redrawing a single pixel. Graphs work the same way. Once you know the shape of $y = x^2$ or $y = |x|$, small changes to the formula slide and stretch that shape in predictable ways.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Start from a known graph $y = f(x)$. Four basic changes:</p>
+      <div class="rule">
+        <p>$f(x) + k$: shift <strong>up</strong> $k$. $\qquad f(x - h)$: shift <strong>right</strong> $h$.</p>
+        <p>$a\,f(x)$: stretch <strong>vertically</strong> by $a$. $\qquad f(bx)$: squeeze <strong>horizontally</strong> by $b$.</p>
+      </div>
+      <p>Changes <em>outside</em> $f$ act on outputs and behave as you'd expect. Changes <em>inside</em> act on inputs and seem backwards: $f(x - 2)$ moves the graph <em>right</em>. Here's why. The new function reaches the height $f(0)$ when $x - 2 = 0$, that is at $x = 2$, so everything happens $2$ units later. Similarly $f(2x)$ reaches $f(4)$ already at $x = 2$, so the graph is squeezed toward the $y$-axis.</p>
+      <p>Negative factors reflect: $-f(x)$ flips the graph over the $x$-axis, and $f(-x)$ flips it over the $y$-axis.</p>
+      <div class="note"><p>A point $(p, q)$ on $y = f(x)$ moves to $\left(h + \tfrac{p}{b},\; a q + k\right)$ on $y = a\,f\big(b(x - h)\big) + k$. Tracking a single point, such as a vertex, is the fastest way to place a transformed graph.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="transformer">
+      <figcaption><strong>Explore:</strong> Choose a parent graph (dashed) and move the sliders. The gold dots show where the parent's key points end up. Try $b = 2$ against $a = 2$ for $|x|$, then for $\sqrt{x}$: are they the same?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A horizontal shift</h3>
+        <div class="problem"><p>How is the graph of $y = (x - 3)^2$ related to $y = x^2$? Where is its vertex?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x - 3)^2 = f(x - 3)$ with $f(x) = x^2$: a shift right by $3$.</p></div><p class="why">Subtracting inside the function moves the graph right.</p></li>
+          <li><div class="do"><p>The vertex moves from $(0, 0)$ to $(3, 0)$.</p></div><p class="why">The output is $0$ when $x - 3 = 0$.</p></li>
+        </ol>
+        <p class="answer">Shifted right $3$; vertex $(3, 0)$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A vertical shift</h3>
+        <div class="problem"><p>Describe $y = |x| - 4$ and find where it crosses the $x$-axis.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>It is $|x|$ shifted down $4$, with vertex $(0, -4)$.</p></div><p class="why">Subtracting outside lowers every output by $4$.</p></li>
+          <li><div class="do"><p>$|x| - 4 = 0$ gives $x = \pm 4$.</p></div><p class="why">The V now dips below the axis and crosses it twice.</p></li>
+        </ol>
+        <p class="answer">Down $4$; crosses at $x = -4$ and $x = 4$.</p>
+        <p class="book-next">Next in the book: Examples 21-11, 21-12 and Exercise 21-30.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two shifts together</h3>
+        <div class="problem"><p>Describe $y = (x + 1)^2 + 2$ relative to $y = x^2$, and give its vertex and range.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x + 1 = x - (-1)$: shift <em>left</em> $1$. The $+2$ outside: shift up $2$.</p></div><p class="why">Write the inside as $x - h$ to read the direction correctly.</p></li>
+          <li><div class="do"><p>Vertex $(0,0) \to (-1, 2)$. Since $(x+1)^2 \ge 0$, every output is $\ge 2$.</p></div><p class="why">Shifting up by $2$ raises the lowest output from $0$ to $2$.</p></li>
+        </ol>
+        <p class="answer">Left $1$, up $2$; vertex $(-1, 2)$; range $y \ge 2$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Stretch vs. squeeze</h3>
+        <div class="problem"><p>Compare $g(x) = 3\sqrt{x}$ and $h(x) = \sqrt{3x}$ at $x = 12$. Which squeeze of $\sqrt{x}$ gives the same graph as $3\sqrt{x}$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$g(12) = 3\sqrt{12} = 6\sqrt3 \approx 10.39$, but $h(12) = \sqrt{36} = 6$.</p></div><p class="why">A vertical stretch by $3$ and a horizontal squeeze by $3$ are different here.</p></li>
+          <li data-think="Can a factor inside the square root be pulled outside?"><div class="do"><p>$\sqrt{9x} = \sqrt9\,\sqrt{x} = 3\sqrt{x}$.</p></div><p class="why">Roots split over products (Chapter 1).</p></li>
+        </ol>
+        <p class="answer">$g(12) \approx 10.39$, $h(12) = 6$. Squeezing horizontally by $9$, giving $\sqrt{9x}$, matches $3\sqrt{x}$.</p>
+        <p class="book-next">Next in the book: Examples 21-13 and 21-14.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Dividing the input</h3>
+        <div class="problem"><p>For $f(x) = x^2$, describe $y = f(x/3)$. Where does the point $(2, 4)$ move?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$f(x/3)$ reaches the value $f(2)$ when $x/3 = 2$, that is at $x = 6$. So $(2, 4) \to (6, 4)$.</p></div><p class="why">Dividing the input by $3$ means everything happens $3$ times farther out.</p></li>
+          <li><div class="do"><p>It's a horizontal stretch by $3$. Also $(x/3)^2 = \tfrac19 x^2$: the same as a vertical squeeze by $9$.</p></div><p class="why">For $x^2$, stretching sideways and squashing down look identical.</p></li>
+        </ol>
+        <p class="answer">A horizontal stretch by a factor of $3$; $(2, 4)$ moves to $(6, 4)$.</p>
+        <p class="book-next">Next in the book: Exercise 21-31.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Build a function from moves</h3>
+        <div class="problem"><p>Start with $y = |x|$. Shift right $2$, stretch vertically by $3$, then shift down $1$. Write the new function and find its $x$-intercepts.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Right $2$: $|x - 2|$. Stretch by $3$: $3|x-2|$. Down $1$: $g(x) = 3|x - 2| - 1$.</p></div><p class="why">Apply the moves in order, each to the previous formula.</p></li>
+          <li><div class="do"><p>Vertex: $(0,0) \to (2, 0) \to (2, 0) \to (2, -1)$.</p></div><p class="why">The stretch doesn't move a point on the $x$-axis.</p></li>
+          <li><div class="do"><p>$3|x - 2| = 1 \Rightarrow x - 2 = \pm\tfrac13 \Rightarrow x = \tfrac53$ or $x = \tfrac73$.</p></div><p class="why">Solve the absolute value equation by cases.</p></li>
+        </ol>
+        <p class="answer">$g(x) = 3|x - 2| - 1$, with $x$-intercepts $\tfrac53$ and $\tfrac73$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Reflect, then shift</h3>
+        <div class="problem"><p>Explain how $y = \sqrt{4 - x}$ comes from $y = \sqrt{x}$, and find its domain.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\sqrt{4 - x} = \sqrt{-(x - 4)}$: this is $f(-x)$, a reflection over the $y$-axis, then shifted right $4$.</p></div><p class="why">Factor out $-1$ inside so the shift can be read off as $x - 4$.</p></li>
+          <li><div class="do"><p>$\sqrt{x}$ starts at $(0,0)$ and heads right; the new graph starts at $(4, 0)$ and heads <em>left</em>, through $(0, 2)$.</p></div><p class="why">Check: $\sqrt{4 - 0} = 2$.</p></li>
+          <li><div class="do"><p>Domain: $4 - x \ge 0$, so $x \le 4$.</p></div><p class="why">Matches the picture: the graph lives to the left of $x = 4$.</p></li>
+        </ol>
+        <p class="answer">Reflect over the $y$-axis, then shift right $4$; domain $x \le 4$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Track one point through every move</h3>
+        <div class="problem"><p>The graph of $y = f(x)$ passes through $(2, 5)$. Which point must lie on $y = 3f(2x - 4) + 1$?</p></div>
+        <ol class="steps">
+          <li data-think="The only output of $f$ you know is $f(2)$. What input to the new function feeds $2$ into $f$?"><div class="do"><p>We need $2x - 4 = 2$, so $x = 3$.</p></div><p class="why">Make the inside equal the one input we know.</p></li>
+          <li><div class="do"><p>Then $y = 3f(2) + 1 = 3(5) + 1 = 16$.</p></div><p class="why">Outside changes act directly on the known output.</p></li>
+        </ol>
+        <p class="answer">$(3, 16)$</p>
+        <p class="key-idea">Undo the inside changes to find the new $x$; apply the outside changes to find the new $y$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Find the moves hidden in a quadratic</h3>
+        <div class="problem"><p>Show that $y = 2x^2 - 12x + 13$ is a transformed copy of $y = x^2$. Describe the moves and give the vertex.</p></div>
+        <ol class="steps">
+          <li data-think="Which algebra technique turns $x^2 - 6x$ into a perfect square?"><div class="do"><p>Complete the square: $2(x^2 - 6x) + 13 = 2\big[(x-3)^2 - 9\big] + 13 = 2(x - 3)^2 - 5$.</p></div><p class="why">Writing the quadratic as $a(x - h)^2 + k$ shows the moves directly.</p></li>
+          <li><div class="do"><p>From $x^2$: shift right $3$, stretch vertically by $2$, shift down $5$. Vertex $(3, -5)$.</p></div><p class="why">Read $h = 3$, $a = 2$, $k = -5$.</p></li>
+          <li><div class="do"><p>Check: at $x = 3$, $2(9) - 36 + 13 = -5$. ✓</p></div><p class="why">The original formula agrees at the vertex.</p></li>
+        </ol>
+        <p class="answer">$y = 2(x - 3)^2 - 5$: right $3$, stretch by $2$, down $5$; vertex $(3, -5)$.</p>
+        <p class="key-idea">Every parabola $y = ax^2 + bx + c$ is a shifted and stretched copy of $y = x^2$.</p>
+        <p class="book-next">Next in the book: Exercise 21-32, then the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-21">
+    <h2 id="further-21">Further reading in the book</h2>
+    <ul>
+      <li><strong>§21.1 Welcome to the Machine</strong>: Example 21-1 and Exercises 21-1 to 21-5.</li>
+      <li><strong>§21.2 Graphing Functions</strong>: Example 21-2 and Exercises 21-6, 21-7.</li>
+      <li><strong>§21.3 Inputs and Outputs</strong>: Examples 21-3 to 21-7 and Exercises 21-8 to 21-13.</li>
+      <li><strong>§21.4 Even and Odd</strong>: Examples 21-8, 21-9 and Exercises 21-14 to 21-19.</li>
+      <li><strong>§21.5 Some Special Functions</strong>: Example 21-10 and Exercises 21-20 to 21-29.</li>
+      <li><strong>§21.6 Transforming a Function</strong>: Examples 21-11 to 21-14 and Exercises 21-30 to 21-32.</li>
+      <li><strong>Problems to Solve for Chapter 21</strong>: Problems 402–413 mix evaluation, absolute value, floor and graph transformations.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 21 explorers ---------- */
+(function () {
+  "use strict";
+  var MONO = "font: 700 18px var(--font-mono)";
+
+  function arrow(svg, x1, y1, x2, y2, col) {
+    svg.appendChild(W.s("line", { x1: x1, y1: y1, x2: x2, y2: y2, stroke: col, "stroke-width": 2.5 }));
+    var a = Math.atan2(y2 - y1, x2 - x1), s = 9;
+    var p = [[x2, y2], [x2 - s * Math.cos(a - 0.45), y2 - s * Math.sin(a - 0.45)], [x2 - s * Math.cos(a + 0.45), y2 - s * Math.sin(a + 0.45)]];
+    svg.appendChild(W.s("polygon", { points: p.map(function (q) { return q[0].toFixed(1) + "," + q[1].toFixed(1); }).join(" "), fill: col }));
+  }
+  function pill(svg, cx, cy, w, text, col) {
+    svg.appendChild(W.s("rect", { x: cx - w / 2, y: cy - 21, width: w, height: 42, rx: 21, fill: "var(--surface-2)", stroke: col, "stroke-width": 2.5 }));
+    svg.appendChild(W.s("text", { x: cx, y: cy + 6, "text-anchor": "middle", style: MONO, fill: "var(--ink)", text: text }));
+  }
+  function dot(svg, x, y, col, open) {
+    svg.appendChild(W.s("circle", { cx: x, cy: y, r: 5.5, fill: open ? "var(--surface-solid)" : col, stroke: col, "stroke-width": 2.5 }));
+  }
+
+  /* 21.1 — function machine */
+  AOPS.registerWidget("functionMachine", function (body) {
+    var svg = W.stage(body, { w: 640, h: 250, label: "A function machine: an input enters on the left and the outputs leave on the right" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var x = 4, k = "lin";
+    function rootTex(x) { var r = Math.sqrt(x), n = Math.round(r); return n * n === x ? String(n) : W.fmt(r, 3); }
+    var M = {
+      lin: { name: "2x + 3", run: function (x) { return { outs: [2 * x + 3], tex: "f(" + x + ") = 2(" + x + ") + 3 = " + (2 * x + 3) }; } },
+      sq: { name: "x²", run: function (x) { return { outs: [x * x], tex: "f(" + x + ") = (" + x + ")^2 = " + (x * x) }; } },
+      rec: { name: "1 ÷ (x − 1)", run: function (x) {
+        if (x === 1) return { outs: [], why: "division by zero", tex: "f(1) = \\dfrac{1}{1-1} = \\dfrac{1}{0}\\ \\text{is undefined: 1 is not in the domain}" };
+        return { outs: [1 / (x - 1)], tex: "f(" + x + ") = \\dfrac{1}{" + x + "-1} = " + W.frac(1, x - 1) }; } },
+      root: { name: "√x  (root ≥ 0)", run: function (x) {
+        if (x < 0) return { outs: [], why: "no real square root", tex: "\\sqrt{" + x + "}\\ \\text{is not a real number}" };
+        var r = rootTex(x); return { outs: [Math.sqrt(x)], tex: "f(" + x + ") = \\sqrt{" + x + "} " + (r.indexOf(".") < 0 ? "= " : "\\approx ") + r }; } },
+      pm: { name: "± √x", run: function (x) {
+        if (x < 0) return { outs: [], why: "no real square root", tex: "\\pm\\sqrt{" + x + "}\\ \\text{is not real}" };
+        if (x === 0) return { outs: [0], tex: "\\pm\\sqrt{0} = 0\\quad\\text{(only one output here, but other inputs give two)}" };
+        var r = rootTex(x), op = r.indexOf(".") < 0 ? "=" : "\\approx";
+        return { outs: [Math.sqrt(x), -Math.sqrt(x)], tex: "\\pm\\sqrt{" + x + "} " + op + " " + r + " \\text{ or } -" + r, note: "Two outputs: not a function." }; } }
+    };
+    W.slider(ctl, { label: "Input x", min: -4, max: 9, value: x, onInput: function (v) { x = v; draw(); } });
+    W.segmented(ctl, { title: "Machine", value: k, options: [
+      { value: "lin", label: "2x + 3" }, { value: "sq", label: "x²" }, { value: "rec", label: "1/(x−1)" }, { value: "root", label: "√x" }, { value: "pm", label: "±√x" }],
+      onChange: function (v) { k = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var m = M[k], r = m.run(x);
+      svg.appendChild(W.s("text", { x: 70, y: 62, "text-anchor": "middle", class: "lbl", text: "input" }));
+      pill(svg, 70, 120, 84, String(x), "var(--plot-1)");
+      arrow(svg, 114, 120, 184, 120, "var(--plot-1)");
+      svg.appendChild(W.s("rect", { x: 188, y: 62, width: 250, height: 116, rx: 18, fill: "color-mix(in srgb, var(--accent) 16%, transparent)", stroke: "var(--accent)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: 313, y: 90, "text-anchor": "middle", class: "lbl", text: "machine" }));
+      svg.appendChild(W.s("text", { x: 313, y: 132, "text-anchor": "middle", style: MONO, fill: "var(--ink)", text: m.name }));
+      svg.appendChild(W.s("text", { x: 568, y: 40, "text-anchor": "middle", class: "lbl", text: "output" }));
+      if (!r.outs.length) {
+        svg.appendChild(W.s("path", { d: "M548 100 l40 40 M588 100 l-40 40", stroke: "var(--accent-3)", "stroke-width": 5, "stroke-linecap": "round" }));
+        svg.appendChild(W.s("text", { x: 320, y: 220, "text-anchor": "middle", class: "lbl", text: "No output: " + r.why + ". This input is not in the domain." }));
+      } else if (r.outs.length === 1) {
+        arrow(svg, 442, 120, 506, 120, "var(--plot-2)");
+        pill(svg, 568, 120, 112, W.fmt(r.outs[0], 3), "var(--plot-2)");
+        svg.appendChild(W.s("text", { x: 320, y: 220, "text-anchor": "middle", class: "lbl", text: "One input, exactly one output." }));
+      } else {
+        arrow(svg, 442, 108, 506, 74, "var(--accent-3)");
+        arrow(svg, 442, 132, 506, 166, "var(--accent-3)");
+        pill(svg, 568, 70, 112, W.fmt(r.outs[0], 3), "var(--accent-3)");
+        pill(svg, 568, 170, 112, W.fmt(r.outs[1], 3), "var(--accent-3)");
+        svg.appendChild(W.s("text", { x: 320, y: 232, "text-anchor": "middle", class: "lbl", text: "One input, two outputs: this rule is NOT a function." }));
+      }
+      out.set("$" + r.tex + "$" + (r.note ? "<br>" + r.note : ""));
+    }
+    draw();
+  });
+
+  /* 21.2 — vertical line test */
+  AOPS.registerWidget("verticalLine", function (body) {
+    var svg = W.stage(body, { w: 600, h: 440, label: "A curve and a movable vertical line; the meeting points are marked" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 1, k = "para";
+    var C = {
+      para: { tex: "y = \\tfrac12 x^2 - 2", fn: function (x) { return x * x / 2 - 2; } },
+      cubic: { tex: "y = \\tfrac14 x^3 - x", fn: function (x) { return x * x * x / 4 - x; } },
+      abs: { tex: "y = |x| - 1", fn: function (x) { return Math.abs(x) - 1; } },
+      circle: { tex: "x^2 + y^2 = 9", ys: function (x) { if (Math.abs(x) > 3) return []; var r = Math.sqrt(9 - x * x); return r < 1e-9 ? [0] : [r, -r]; }, bad: 0 },
+      side: { tex: "x = \\tfrac12 y^2 - 2", ys: function (x) { if (x < -2) return []; var r = Math.sqrt(2 * (x + 2)); return r < 1e-9 ? [0] : [r, -r]; }, bad: 0 }
+    };
+    W.slider(ctl, { label: "Vertical line x =", min: -5.5, max: 5.5, step: 0.25, value: a, format: function (v) { return v.toFixed(2); }, onInput: function (v) { a = v; draw(); } });
+    W.segmented(ctl, { title: "Curve", value: k, options: [
+      { value: "para", label: "parabola" }, { value: "cubic", label: "cubic" }, { value: "abs", label: "V shape" },
+      { value: "circle", label: "circle" }, { value: "side", label: "sideways" }], onChange: function (v) { k = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var P = W.plane(svg, { x: [-6, 6], y: [-4.26, 4.26], step: 1, pad: 24 });
+      var c = C[k], ys;
+      if (c.fn) {
+        svg.appendChild(W.s("path", { d: W.fnPath(P, c.fn), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+        ys = [c.fn(a)];
+      } else {
+        var d = "", first = true;
+        if (k === "circle") { for (var i = 0; i <= 200; i++) { var t = i / 200 * 2 * Math.PI; d += (first ? "M" : "L") + P.X(3 * Math.cos(t)).toFixed(1) + " " + P.Y(3 * Math.sin(t)).toFixed(1); first = false; } }
+        else { for (var j = 0; j <= 200; j++) { var y = -4.3 + 8.6 * j / 200; d += (first ? "M" : "L") + P.X(y * y / 2 - 2).toFixed(1) + " " + P.Y(y).toFixed(1); first = false; } }
+        svg.appendChild(W.s("path", { d: d, fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+        ys = c.ys(a);
+      }
+      var col = ys.length > 1 ? "var(--accent-3)" : "var(--accent-2)";
+      svg.appendChild(W.s("line", { x1: P.X(a), y1: P.Y(4.26), x2: P.X(a), y2: P.Y(-4.26), stroke: col, "stroke-width": 2.5, "stroke-dasharray": "8 6" }));
+      ys.forEach(function (y) { if (Math.abs(y) <= 4.26) svg.appendChild(W.s("circle", { cx: P.X(a), cy: P.Y(y), r: 8, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 3 })); });
+      var pts = ys.map(function (y) { return "(" + W.fmt(a, 2) + ",\\ " + W.fmt(y, 2) + ")"; }).join(",\\ ");
+      var s = "The line $x = " + W.fmt(a, 2) + "$ meets $" + c.tex + "$ at <strong>" + ys.length + "</strong> point" + (ys.length === 1 ? "" : "s") + (ys.length ? ": $" + pts + "$" : "") + ". ";
+      if (c.fn) s += "Every vertical line meets this curve exactly once, so it <strong>is</strong> the graph of a function.";
+      else s += ys.length > 1 ? "Two outputs for one input: this curve is <strong>not</strong> a function." : "This line is fine, but try others: some vertical lines meet the curve twice, so it is <strong>not</strong> a function.";
+      out.set(s);
+    }
+    draw();
+  });
+
+  /* 21.3 — domain and range */
+  AOPS.registerWidget("domainRange", function (body) {
+    var svg = W.stage(body, { w: 600, h: 420, label: "Graph with the domain marked on the x-axis and the range marked on the y-axis" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var x = 2, k = "root";
+    var INF = 99;
+    var F = {
+      root: { tex: "f(x) = \\sqrt{x-1}", fn: function (x) { return x >= 1 ? Math.sqrt(x - 1) : NaN; }, dom: [[1, INF, false, true]], ran: [[0, INF, false, true]], dt: "x \\ge 1", rt: "y \\ge 0", why: "\\sqrt{\\text{negative}}" },
+      rec: { tex: "f(x) = \\dfrac{1}{x}", fn: function (x) { return x === 0 ? NaN : 1 / x; }, dom: [[-INF, 0, true, true], [0, INF, true, true]], ran: [[-INF, 0, true, true], [0, INF, true, true]], dt: "x \\ne 0", rt: "y \\ne 0", why: "\\tfrac{1}{0}" },
+      quad: { tex: "f(x) = x^2 - 2", fn: function (x) { return x * x - 2; }, dom: [[-INF, INF, true, true]], ran: [[-2, INF, false, true]], dt: "\\text{all real } x", rt: "y \\ge -2" },
+      exp: { tex: "f(x) = 2^x", fn: function (x) { return Math.pow(2, x); }, dom: [[-INF, INF, true, true]], ran: [[0, INF, true, true]], dt: "\\text{all real } x", rt: "y > 0" },
+      log: { tex: "f(x) = \\log_2 x", fn: function (x) { return x > 0 ? Math.log(x) / Math.LN2 : NaN; }, dom: [[0, INF, true, true]], ran: [[-INF, INF, true, true]], dt: "x > 0", rt: "\\text{all real } y", why: "\\log_2(\\text{non-positive})" }
+    };
+    W.slider(ctl, { label: "Input x", min: -5, max: 5, step: 0.25, value: x, format: function (v) { return v.toFixed(2); }, onInput: function (v) { x = v; draw(); } });
+    W.segmented(ctl, { title: "Function", value: k, options: [
+      { value: "root", label: "√(x−1)" }, { value: "rec", label: "1/x" }, { value: "quad", label: "x² − 2" }, { value: "exp", label: "2ˣ" }, { value: "log", label: "log₂ x" }],
+      onChange: function (v) { k = v; draw(); } });
+    function band(P, list, horiz, col) {
+      var lo = horiz ? P.x[0] : P.y[0], hi = horiz ? P.x[1] : P.y[1];
+      list.forEach(function (b) {
+        var a1 = Math.max(b[0], lo), a2 = Math.min(b[1], hi);
+        if (a2 <= a1) return;
+        var at = function (v) { return horiz ? [P.X(v), P.Y(0)] : [P.X(0), P.Y(v)]; };
+        var p1 = at(a1), p2 = at(a2);
+        svg.appendChild(W.s("line", { x1: p1[0], y1: p1[1], x2: p2[0], y2: p2[1], stroke: col, "stroke-width": 9, "stroke-linecap": "butt", opacity: 0.55 }));
+        if (b[0] > lo) dot(svg, p1[0], p1[1], col, b[2]);
+        if (b[1] < hi) dot(svg, p2[0], p2[1], col, b[3]);
+      });
+    }
+    function draw() {
+      W.clear(svg);
+      var f = F[k];
+      var P = W.plane(svg, { x: [-5, 5], y: [-4, 5], step: 1, pad: 26 });
+      band(P, f.dom, true, "var(--plot-2)");
+      band(P, f.ran, false, "var(--plot-3)");
+      svg.appendChild(W.s("path", { d: W.fnPath(P, f.fn, { samples: 600 }), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      svg.appendChild(W.s("text", { x: P.X(4.9), y: P.Y(0) - 12, "text-anchor": "end", class: "lbl", fill: "var(--plot-2)", text: "domain" }));
+      svg.appendChild(W.s("text", { x: P.X(0) + 10, y: P.Y(4.7), class: "lbl", fill: "var(--plot-3)", text: "range" }));
+      var y = f.fn(x), line;
+      if (isFinite(y)) {
+        var yy = Math.max(-4, Math.min(5, y));
+        svg.appendChild(W.s("path", { d: "M" + P.X(x) + " " + P.Y(0) + "V" + P.Y(yy) + "H" + P.X(0), fill: "none", stroke: "var(--accent-2)", "stroke-width": 1.5, "stroke-dasharray": "5 5" }));
+        if (y === yy) svg.appendChild(W.s("circle", { cx: P.X(x), cy: P.Y(y), r: 8, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 3 }));
+        line = "f(" + W.fmt(x, 2) + ") " + (Math.abs(y - Math.round(y * 1000) / 1000) < 1e-9 ? "= " : "\\approx ") + W.fmt(y, 3);
+      } else {
+        svg.appendChild(W.s("path", { d: "M" + (P.X(x) - 8) + " " + (P.Y(0) - 8) + "l16 16m0 -16l-16 16", stroke: "var(--accent-3)", "stroke-width": 4, "stroke-linecap": "round" }));
+        line = "x = " + W.fmt(x, 2) + "\\text{ is not in the domain } (" + f.why + ")";
+      }
+      out.set("$" + f.tex + "$ &nbsp; Domain: $" + f.dt + "$ &nbsp; Range: $" + f.rt + "$<br>$" + line + "$");
+    }
+    draw();
+  });
+
+  /* 21.3 — composition in both orders */
+  AOPS.registerWidget("composeChain", function (body) {
+    var svg = W.stage(body, { w: 640, h: 250, label: "Two pipelines: f then g, and g then f, applied to the same input" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var x = 1, fk = "add3", gk = "sq";
+    var F = {
+      add3: { lab: "x + 3", f: function (v) { return v + 3; }, t: function (s) { return s + "+3"; } },
+      dbl: { lab: "2x", f: function (v) { return 2 * v; }, t: function (s) { return (s === "x" || s === "x^2") ? "2" + s : "2\\left(" + s + "\\right)"; } },
+      sq: { lab: "x²", f: function (v) { return v * v; }, t: function (s) { return s === "x" ? "x^2" : "\\left(" + s + "\\right)^2"; } },
+      rec: { lab: "1 / x", f: function (v) { return v === 0 ? NaN : 1 / v; }, t: function (s) { return "\\dfrac{1}{" + s + "}"; } }
+    };
+    var opts = [{ value: "add3", label: "x + 3" }, { value: "dbl", label: "2x" }, { value: "sq", label: "x²" }, { value: "rec", label: "1/x" }];
+    W.slider(ctl, { label: "Input x", min: -3, max: 5, value: x, onInput: function (v) { x = v; draw(); } });
+    W.segmented(ctl, { title: "f(x) =", value: fk, options: opts, onChange: function (v) { fk = v; draw(); } });
+    W.segmented(ctl, { title: "g(x) =", value: gk, options: opts, onChange: function (v) { gk = v; draw(); } });
+    function val(v) { return isFinite(v) ? W.fmt(v, 3) : "undef"; }
+    function row(cy, first, second, n1, n2, title, col) {
+      svg.appendChild(W.s("text", { x: 14, y: cy - 34, class: "lbl", text: title }));
+      pill(svg, 52, cy, 76, String(x), "var(--plot-1)");
+      arrow(svg, 92, cy, 118, cy, "var(--muted)");
+      svg.appendChild(W.s("rect", { x: 120, y: cy - 24, width: 112, height: 48, rx: 12, fill: "color-mix(in srgb, var(--accent) 16%, transparent)", stroke: "var(--accent)" }));
+      svg.appendChild(W.s("text", { x: 176, y: cy + 6, "text-anchor": "middle", style: MONO, fill: "var(--ink)", text: n1 + ": " + F[first].lab }));
+      var m = F[first].f(x);
+      arrow(svg, 234, cy, 258, cy, "var(--muted)");
+      pill(svg, 300, cy, 80, val(m), "var(--faint)");
+      arrow(svg, 342, cy, 366, cy, "var(--muted)");
+      svg.appendChild(W.s("rect", { x: 368, y: cy - 24, width: 112, height: 48, rx: 12, fill: "color-mix(in srgb, var(--accent) 16%, transparent)", stroke: "var(--accent)" }));
+      svg.appendChild(W.s("text", { x: 424, y: cy + 6, "text-anchor": "middle", style: MONO, fill: "var(--ink)", text: n2 + ": " + F[second].lab }));
+      var r = isFinite(m) ? F[second].f(m) : NaN;
+      arrow(svg, 482, cy, 506, cy, "var(--muted)");
+      pill(svg, 562, cy, 104, val(r), col);
+      return r;
+    }
+    function draw() {
+      W.clear(svg);
+      var r1 = row(78, fk, gk, "f", "g", "g(f(x)): f first, then g", "var(--plot-2)");
+      var r2 = row(194, gk, fk, "g", "f", "f(g(x)): g first, then f", "var(--plot-3)");
+      var same = (isFinite(r1) && isFinite(r2) && Math.abs(r1 - r2) < 1e-9) || (!isFinite(r1) && !isFinite(r2));
+      var gf = F[gk].t(F[fk].t("x")), fg = F[fk].t(F[gk].t("x"));
+      out.set("$(g\\circ f)(x) = " + gf + "$ &nbsp;&nbsp; $(f\\circ g)(x) = " + fg + "$<br>At $x = " + x + "$: " + (same ? "the two orders agree here." : "<strong>different results</strong>, so order matters."));
+    }
+    draw();
+  });
+
+  /* 21.4 — even / odd builder */
+  AOPS.registerWidget("evenOdd", function (body) {
+    var svg = W.stage(body, { w: 600, h: 400, label: "Build the right half of a graph; the left half is completed as an even or odd function" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var ys = [1, 2, 0.5, -1, 1.5], mode = "even", a = 2;
+    var P = W.plane(svg, { x: [-5, 5], y: [-4, 4], step: 1, pad: 24 });
+    var g = W.s("g"); svg.appendChild(g);
+    function f(t) {
+      var s = Math.abs(t), i = Math.min(3, Math.floor(s)), u = s - i;
+      var v = ys[i] * (1 - u) + ys[i + 1] * u;
+      return t < 0 && mode === "odd" ? -v : v;
+    }
+    W.slider(ctl, { label: "Probe a", min: 0, max: 4, step: 0.5, value: a, format: function (v) { return v.toFixed(1); }, onInput: function (v) { a = v; redraw(); } });
+    W.segmented(ctl, { title: "Complete as", value: mode, options: [{ value: "even", label: "even (mirror)" }, { value: "odd", label: "odd (half-turn)" }], onChange: function (v) {
+      mode = v; if (mode === "odd") { ys[0] = 0; hs[0].set(P.X(0), P.Y(0), true); } redraw(); } });
+    function redraw() {
+      W.clear(g);
+      var right = "", left = "";
+      for (var i = 0; i <= 4; i++) { right += (i ? "L" : "M") + P.X(i) + " " + P.Y(ys[i]); left += (i ? "L" : "M") + P.X(-i) + " " + P.Y(f(-i)); }
+      g.appendChild(W.s("path", { d: left, fill: "none", stroke: "var(--plot-2)", "stroke-width": 3, "stroke-dasharray": "2 0" }));
+      g.appendChild(W.s("path", { d: right, fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      var fa = f(a), fm = f(-a);
+      g.appendChild(W.s("line", { x1: P.X(a), y1: P.Y(fa), x2: P.X(-a), y2: P.Y(fm), stroke: "var(--accent-2)", "stroke-width": 1.5, "stroke-dasharray": "5 5" }));
+      [[a, fa], [-a, fm]].forEach(function (p) {
+        g.appendChild(W.s("line", { x1: P.X(p[0]), y1: P.Y(0), x2: P.X(p[0]), y2: P.Y(p[1]), stroke: "var(--accent-2)", "stroke-width": 2 }));
+        g.appendChild(W.s("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 6, fill: "var(--accent-2)" }));
+      });
+      g.appendChild(W.s("text", { x: P.X(-4.8), y: P.Y(3.6), class: "lbl", fill: "var(--plot-2)", text: mode === "even" ? "left half: mirror image" : "left half: rotated 180°" }));
+      var A = W.fmt(a, 1), t;
+      if (mode === "even") t = "f(-" + A + ") = f(" + A + ") = " + W.fmt(fa, 2);
+      else if (a === 0) t = "f(0) = -f(0) \\;\\Rightarrow\\; f(0) = 0";
+      else t = "f(-" + A + ") = -f(" + A + ") = " + W.fmt(fm, 2);
+      out.tex(t);
+    }
+    var hs = ys.map(function (yv, i) {
+      return W.handle(svg, { x: P.X(i), y: P.Y(yv), label: "Height of the graph at x = " + i + "; up and down arrows change it", keyStep: P.Y(0) - P.Y(0.5),
+        onMove: function (px, py) {
+          var v = Math.max(-3.5, Math.min(3.5, Math.round(P.iy(py) * 2) / 2));
+          if (mode === "odd" && i === 0) v = 0;
+          ys[i] = v; redraw(); return [P.X(i), P.Y(v)];
+        },
+        valueText: function () { return "f(" + i + ") = " + ys[i]; } });
+    });
+    redraw();
+  });
+
+  /* 21.5 — absolute value folds */
+  AOPS.registerWidget("absFold", function (body) {
+    var svg = W.stage(body, { w: 600, h: 420, label: "Graph of the absolute value of g of x with a horizontal line at height k" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var k = 6, q = "q1";
+    var G = { q1: { c: [1, -5, 0], tex: "x^2 - 5x" }, q2: { c: [1, 0, -4], tex: "x^2 - 4" }, lin: { c: [0, 2, -5], tex: "2x - 5" } };
+    W.slider(ctl, { label: "Height k", min: 0, max: 10, step: 0.5, value: k, format: function (v) { return v.toFixed(1); }, onInput: function (v) { k = v; draw(); } });
+    W.segmented(ctl, { title: "g(x) =", value: q, options: [{ value: "q1", label: "x² − 5x" }, { value: "q2", label: "x² − 4" }, { value: "lin", label: "2x − 5" }], onChange: function (v) { q = v; draw(); } });
+    function roots(a, b, c) {
+      if (Math.abs(a) < 1e-12) return Math.abs(b) < 1e-12 ? [] : [-c / b];
+      var D = b * b - 4 * a * c;
+      if (D < -1e-12) return [];
+      if (Math.abs(D) < 1e-12) return [-b / (2 * a)];
+      var s = Math.sqrt(D); return [(-b - s) / (2 * a), (-b + s) / (2 * a)];
+    }
+    function draw() {
+      W.clear(svg);
+      var c = G[q].c, gfn = function (x) { return c[0] * x * x + c[1] * x + c[2]; };
+      var P = W.plane(svg, { x: [-3, 8], y: [-7, 11], step: 1, ystep: 2, pad: 26 });
+      svg.appendChild(W.s("path", { d: W.fnPath(P, gfn), fill: "none", stroke: "var(--faint)", "stroke-width": 2, "stroke-dasharray": "6 6" }));
+      svg.appendChild(W.s("path", { d: W.fnPath(P, function (x) { return Math.abs(gfn(x)); }, { samples: 800 }), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      svg.appendChild(W.s("line", { x1: P.X(-3), y1: P.Y(k), x2: P.X(8), y2: P.Y(k), stroke: "var(--accent-2)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: P.X(7.9), y: P.Y(k) - 8, "text-anchor": "end", class: "lbl", text: "y = " + W.fmt(k, 1) }));
+      var rs = roots(c[0], c[1], c[2] - k).concat(k > 0 ? roots(c[0], c[1], c[2] + k) : []);
+      rs.sort(function (u, v) { return u - v; });
+      rs = rs.filter(function (r, i) { return i === 0 || Math.abs(r - rs[i - 1]) > 1e-9; });
+      rs.forEach(function (r) { if (r >= -3 && r <= 8) svg.appendChild(W.s("circle", { cx: P.X(r), cy: P.Y(k), r: 7, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 3 })); });
+      var t = G[q].tex, K = W.fmt(k, 1);
+      var s = "$|" + t + "| = " + K + "$ " + (k > 0 ? "splits into $" + t + " = " + K + "$ or $" + t + " = -" + K + "$." : "means $" + t + " = 0$.");
+      s += "<br>" + (rs.length ? rs.length + " real solution" + (rs.length > 1 ? "s" : "") + ": $x = " + rs.map(function (r) { return W.fmt(r, 3); }).join(",\\ ") + "$" : "No real solutions.");
+      out.set(s);
+    }
+    draw();
+  });
+
+  /* 21.5 — floor, ceiling, fractional part */
+  AOPS.registerWidget("floorStairs", function (body) {
+    var svg = W.stage(body, { w: 600, h: 380, label: "Staircase graph of the floor, ceiling or fractional part function" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var x = 1.7, mode = "floor";
+    W.slider(ctl, { label: "x", min: -3, max: 3, step: 0.1, value: x, format: function (v) { return v.toFixed(1); }, onInput: function (v) { x = Math.round(v * 10) / 10; draw(); } });
+    W.segmented(ctl, { title: "Function", value: mode, options: [{ value: "floor", label: "floor ⌊x⌋" }, { value: "ceil", label: "ceiling ⌈x⌉" }, { value: "frac", label: "fractional {x}" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var fr = mode === "frac";
+      var P = W.plane(svg, fr ? { x: [-3.5, 3.5], y: [-0.5, 1.5], step: 1, ystep: 0.5, pad: 28 } : { x: [-3.5, 3.5], y: [-4, 4], step: 1, pad: 28 });
+      for (var n = -4; n <= 3; n++) {
+        var x1 = Math.max(n, -3.5), x2 = Math.min(n + 1, 3.5);
+        if (x2 <= x1) continue;
+        var y1, y2, open1, open2;
+        if (mode === "floor") { y1 = n; y2 = n; open1 = false; open2 = true; }
+        else if (mode === "ceil") { y1 = n + 1; y2 = n + 1; open1 = true; open2 = false; }
+        else { y1 = x1 - n; y2 = x2 - n; open1 = false; open2 = true; }
+        svg.appendChild(W.s("line", { x1: P.X(x1), y1: P.Y(y1), x2: P.X(x2), y2: P.Y(y2), stroke: "var(--plot-1)", "stroke-width": 3.5 }));
+        if (x1 === n) dot(svg, P.X(x1), P.Y(y1), "var(--plot-1)", open1);
+        if (x2 === n + 1) dot(svg, P.X(x2), P.Y(y2), "var(--plot-1)", open2);
+      }
+      var fl = Math.floor(x + 1e-9), ce = Math.ceil(x - 1e-9), fp = Math.round((x - fl) * 10) / 10;
+      var v = mode === "floor" ? fl : mode === "ceil" ? ce : fp;
+      svg.appendChild(W.s("line", { x1: P.X(x), y1: P.Y(0), x2: P.X(x), y2: P.Y(v), stroke: "var(--accent-2)", "stroke-width": 2, "stroke-dasharray": "5 5" }));
+      svg.appendChild(W.s("circle", { cx: P.X(x), cy: P.Y(v), r: 8, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 3 }));
+      var X = W.fmt(x, 1), t;
+      if (mode === "floor") t = "\\lfloor " + X + " \\rfloor = " + fl + "\\qquad\\text{because } " + fl + " \\le " + X + " < " + (fl + 1);
+      else if (mode === "ceil") t = "\\lceil " + X + " \\rceil = " + ce + "\\qquad\\text{because } " + (ce - 1) + " < " + X + " \\le " + ce;
+      else t = "\\{" + X + "\\} = " + X + " - \\lfloor " + X + " \\rfloor = " + X + " - (" + fl + ") = " + W.fmt(fp, 1);
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 21.6 — transformations */
+  AOPS.registerWidget("transformer", function (body) {
+    var svg = W.stage(body, { w: 600, h: 440, label: "A parent graph and its transformed copy y equals a f of b times x minus h, plus k" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var h = 0, k = 0, a = 1, b = 1, base = "abs";
+    var B = {
+      abs: { f: function (x) { return Math.abs(x); }, pts: [[-1, 1], [0, 0], [1, 1]], t: function (s) { return "\\left|" + s + "\\right|"; } },
+      sq: { f: function (x) { return x * x; }, pts: [[-1, 1], [0, 0], [1, 1]], t: function (s) { return s === "x" ? "x^2" : "\\left(" + s + "\\right)^2"; } },
+      sqrt: { f: function (x) { return x >= 0 ? Math.sqrt(x) : NaN; }, pts: [[0, 0], [1, 1], [4, 2]], t: function (s) { return "\\sqrt{" + s + "}"; } },
+      cube: { f: function (x) { return x * x * x; }, pts: [[-1, -1], [0, 0], [1, 1]], t: function (s) { return s === "x" ? "x^3" : "\\left(" + s + "\\right)^3"; } }
+    };
+    function fm(v) { return v.toFixed(1).replace(/\.0$/, ""); }
+    W.slider(ctl, { label: "Shift right h", min: -4, max: 4, step: 0.5, value: h, format: fm, onInput: function (v) { h = v; draw(); } });
+    W.slider(ctl, { label: "Shift up k", min: -4, max: 4, step: 0.5, value: k, format: fm, onInput: function (v) { k = v; draw(); } });
+    W.slider(ctl, { label: "Vertical factor a", min: -3, max: 3, step: 0.5, value: a, format: fm, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Horizontal factor b", min: 0.5, max: 3, step: 0.5, value: b, format: fm, onInput: function (v) { b = v; draw(); } });
+    W.segmented(ctl, { title: "Parent f(x)", value: base, options: [{ value: "abs", label: "|x|" }, { value: "sq", label: "x²" }, { value: "sqrt", label: "√x" }, { value: "cube", label: "x³" }], onChange: function (v) { base = v; draw(); } });
+    function texOf() {
+      var inner = h === 0 ? "x" : "x" + (h > 0 ? "-" : "+") + fm(Math.abs(h));
+      if (b !== 1) inner = h === 0 ? fm(b) + "x" : fm(b) + "\\left(" + inner + "\\right)";
+      var core = B[base].t(inner);
+      var s = a === 1 ? core : a === -1 ? "-" + core : a === 0 ? "0" : fm(a) + core;
+      if (k !== 0) s += (k > 0 ? "+" : "-") + fm(Math.abs(k));
+      return s;
+    }
+    function draw() {
+      W.clear(svg);
+      var P = W.plane(svg, { x: [-6, 6], y: [-6, 6], step: 1, pad: 24, labelEvery: 2 });
+      var f = B[base].f, g = function (x) { return a * f(b * (x - h)) + k; };
+      svg.appendChild(W.s("path", { d: W.fnPath(P, f, { samples: 600 }), fill: "none", stroke: "var(--faint)", "stroke-width": 2.5, "stroke-dasharray": "7 6" }));
+      svg.appendChild(W.s("path", { d: W.fnPath(P, g, { samples: 600 }), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3.5 }));
+      B[base].pts.forEach(function (p) {
+        var nx = h + p[0] / b, ny = a * p[1] + k;
+        svg.appendChild(W.s("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: 4.5, fill: "var(--faint)" }));
+        if (Math.abs(nx) <= 6 && Math.abs(ny) <= 6) {
+          svg.appendChild(W.s("line", { x1: P.X(p[0]), y1: P.Y(p[1]), x2: P.X(nx), y2: P.Y(ny), stroke: "var(--accent-2)", "stroke-width": 1.2, "stroke-dasharray": "3 4" }));
+          svg.appendChild(W.s("circle", { cx: P.X(nx), cy: P.Y(ny), r: 6.5, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        }
+      });
+      var moves = [];
+      if (b > 1) moves.push("squeeze horizontally by " + fm(b)); else if (b < 1) moves.push("stretch horizontally by " + fm(1 / b));
+      if (a < 0) moves.push("reflect over the x-axis");
+      if (Math.abs(a) > 1) moves.push("stretch vertically by " + fm(Math.abs(a))); else if (Math.abs(a) < 1 && a !== 0) moves.push("squash vertically by " + fm(Math.abs(a))); else if (a === 0) moves.push("flatten to the x-axis");
+      if (h) moves.push("shift " + (h > 0 ? "right " : "left ") + fm(Math.abs(h)));
+      if (k) moves.push("shift " + (k > 0 ? "up " : "down ") + fm(Math.abs(k)));
+      var p0 = B[base].pts[1];
+      out.set("$g(x) = " + texOf() + "$<br>" + (moves.length ? moves.join(" → ") : "no change: g is the parent") +
+        "<br>Key point $(" + p0[0] + ", " + p0[1] + ") \\to (" + fm(h + p0[0] / b) + ",\\ " + fm(a * p0[1] + k) + ")$");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

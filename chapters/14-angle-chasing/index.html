@@ -1,0 +1,612 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 14: Angle Chasing · AoPS Learner</title>
+  <meta name="description" content="Angle chasing with parallel lines, triangle and polygon sums, isosceles and equilateral triangles, and angles in circles, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="14" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 14 · Geometry</span>
+    <h1>Angle Chasing</h1>
+    <p class="lede">Some geometry problems ask for one angle and give you a few others. You won't find the answer with one clever formula. You find it by chasing: fill in every angle you can, one small fact at a time, until the one you want is surrounded. This chapter collects the facts you chase with and shows the habits that make the chase short.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Angles on a line add to $180^\circ$; angles around a point add to $360^\circ$; vertical angles are equal.</li>
+      <li>Parallel lines: corresponding and alternate interior angles are equal; same-side interior angles are supplementary.</li>
+      <li>Triangle: angles add to $180^\circ$, and an exterior angle equals the sum of the two remote interior angles. Quadrilateral: angles add to $360^\circ$.</li>
+      <li>Equal sides mean equal opposite angles. Every equilateral angle is $60^\circ$; two radii of a circle form an isosceles triangle.</li>
+      <li>Circles: an inscribed angle is half its arc, a central angle equals its arc, an angle inscribed in a semicircle is $90^\circ$, a tangent is perpendicular to the radius, and opposite angles of an inscribed quadrilateral add to $180^\circ$.</li>
+      <li>Habit: write every angle you find on the diagram, and name one unknown $x$ so that many angles can be written in terms of it.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 14.1 ===================== -->
+  <section class="lesson" id="s14-1" data-title="Lines, Parallels and Angle Sums">
+    <h2><span class="sec-num">14.1</span> Lines, Parallels and Angle Sums</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A road crosses two parallel railway tracks, then bends between them and crosses again. You know the angle at each crossing. What is the angle of the bend? You don't need a protractor; you need one extra line, drawn parallel to the tracks through the bend.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The basic facts you chase with:</p>
+      <ul>
+        <li><strong>On a line</strong>, adjacent angles add to $180^\circ$. <strong>Around a point</strong>, angles add to $360^\circ$. <strong>Vertical angles</strong> (opposite angles where two lines cross) are equal.</li>
+        <li><strong>Parallel lines</strong> cut by a transversal make equal corresponding angles and equal alternate interior angles; same-side interior angles add to $180^\circ$.</li>
+        <li><strong>Triangle sum</strong> $180^\circ$; <strong>quadrilateral sum</strong> $360^\circ$ (a diagonal makes two triangles).</li>
+        <li><strong>Exterior angle</strong>: extend one side of a triangle; the outside angle equals the sum of the two interior angles at the other vertices.</li>
+      </ul>
+      <div class="rule"><p>$$\text{exterior angle at } C = \angle A + \angle B$$</p></div>
+      <p>The chase itself is a routine. Mark everything you are given. Look for any angle that one fact determines, and write it in. Repeat. When the chase stalls, give one unknown angle a name, $x$, and express others in terms of it. Then use some fact (a triangle sum, a straight line) that produces an equation.</p>
+      <div class="note"><p>If the angles you know are scattered between parallel lines, draw another parallel line through the vertex you care about. It turns one hard angle into two easy alternate angles.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="zigzag">
+      <figcaption><strong>Explore:</strong> Lines $\ell$ and $m$ are parallel. Drag the bend point $P$, or slide $A$ and $B$ along the lines. The angle at $P$ always equals $\angle 1 + \angle 2$. Turn on the helper line to see why: it splits $\angle APB$ into two alternate angles.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Angles on a line</h3>
+        <div class="problem"><p>Two lines cross. Two adjacent angles measure $(3x + 10)^\circ$ and $(5x - 30)^\circ$. Find all four angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(3x + 10) + (5x - 30) = 180$, so $8x - 20 = 180$ and $x = 25$.</p></div><p class="why">Adjacent angles formed by two crossing lines lie along a straight line.</p></li>
+          <li><div class="do"><p>The angles are $3(25) + 10 = 85^\circ$ and $5(25) - 30 = 95^\circ$.</p></div><p class="why">Substitute back. They add to $180^\circ$, as they should.</p></li>
+          <li><div class="do"><p>The other two angles are $85^\circ$ and $95^\circ$ as well.</p></div><p class="why">Each angle is vertical to one of the first two.</p></li>
+        </ol>
+        <p class="answer">$85^\circ, 95^\circ, 85^\circ, 95^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Angles around a point</h3>
+        <div class="problem"><p>Four rays from a point make angles of $90^\circ$, $x^\circ$, $2x^\circ$ and $3x^\circ$, going around. Find $x$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$90 + x + 2x + 3x = 360$, so $6x = 270$.</p></div><p class="why">A full turn is $360^\circ$.</p></li>
+          <li><div class="do"><p>$x = 45$, so the angles are $90^\circ, 45^\circ, 90^\circ, 135^\circ$.</p></div><p class="why">Check: $90 + 45 + 90 + 135 = 360$.</p></li>
+        </ol>
+        <p class="answer">$x = 45$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The exterior angle shortcut</h3>
+        <div class="problem"><p>An exterior angle of a triangle is $130^\circ$. The two interior angles not next to it are $x^\circ$ and $(x + 20)^\circ$. Find all three interior angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x + (x + 20) = 130$, so $x = 55$.</p></div><p class="why">An exterior angle equals the sum of the two remote interior angles.</p></li>
+          <li><div class="do"><p>The remote angles are $55^\circ$ and $75^\circ$; the third interior angle is $180^\circ - 130^\circ = 50^\circ$.</p></div><p class="why">The third interior angle and the exterior angle form a straight line.</p></li>
+        </ol>
+        <p class="answer">$55^\circ, 75^\circ, 50^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A bend between parallel lines</h3>
+        <div class="problem">
+          <p>Lines $\ell \parallel m$. Point $A$ is on $\ell$, $B$ is on $m$, and $P$ lies between the lines. Segment $AP$ makes a $35^\circ$ angle with $\ell$, and $BP$ makes a $50^\circ$ angle with $m$, both measured on the side facing $P$'s bend. Find $\angle APB$.</p>
+          <svg viewBox="0 0 270 150" width="340" style="display:block;margin:.6rem auto;max-width:100%" role="img" aria-label="Parallel lines l and m with a bent path from A on l to P to B on m">
+            <line x1="10" y1="25" x2="260" y2="25" stroke="var(--plot-2)" stroke-width="2.5"/>
+            <line x1="10" y1="125" x2="260" y2="125" stroke="var(--plot-2)" stroke-width="2.5"/>
+            <line x1="131" y1="75" x2="250" y2="75" stroke="var(--faint)" stroke-width="1.5" stroke-dasharray="5 5"/>
+            <polyline points="60,25 131,75 89,125" fill="none" stroke="var(--accent)" stroke-width="3"/>
+            <text x="240" y="18" style="font: 600 13px var(--font-body); fill: var(--ink)">ℓ</text>
+            <text x="240" y="143" style="font: 600 13px var(--font-body); fill: var(--ink)">m</text>
+            <text x="52" y="17" style="font: 700 13px var(--font-body); fill: var(--ink)">A</text>
+            <text x="138" y="73" style="font: 700 13px var(--font-body); fill: var(--ink)">P</text>
+            <text x="80" y="143" style="font: 700 13px var(--font-body); fill: var(--ink)">B</text>
+            <text x="86" y="40" style="font: 600 12px var(--font-mono); fill: var(--muted)">35°</text>
+            <text x="108" y="120" style="font: 600 12px var(--font-mono); fill: var(--muted)">50°</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li data-think="No triangle contains $\angle APB$ and the given angles. What line could you add?"><div class="do"><p>Through $P$, draw a line parallel to $\ell$ (and so to $m$), as dashed above. It splits $\angle APB$ into an upper part and a lower part.</p></div><p class="why">A new parallel line produces alternate interior angles that are equal to the given ones.</p></li>
+          <li><div class="do"><p>The upper part is $35^\circ$ (alternate to the angle at $A$) and the lower part is $50^\circ$ (alternate to the angle at $B$).</p></div><p class="why">$AP$ is a transversal of $\ell$ and the new line; $BP$ is a transversal of $m$ and the new line.</p></li>
+          <li><div class="do"><p>$\angle APB = 35^\circ + 50^\circ = 85^\circ$.</p></div><p class="why">The two parts make up the whole angle.</p></li>
+        </ol>
+        <p class="answer">$85^\circ$</p>
+        <p class="key-idea">A bend between two parallel lines equals the sum of the angles the two arms make with the lines.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A quadrilateral</h3>
+        <div class="problem"><p>The angles of a quadrilateral are $80^\circ$, $95^\circ$, $(2x)^\circ$ and $(3x)^\circ$. Find the two unknown angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$80 + 95 + 2x + 3x = 360$, so $5x = 185$ and $x = 37$.</p></div><p class="why">A diagonal splits a quadrilateral into two triangles, so its angles add to $2 \cdot 180^\circ$.</p></li>
+          <li><div class="do"><p>The angles are $2(37) = 74^\circ$ and $3(37) = 111^\circ$.</p></div><p class="why">Check: $80 + 95 + 74 + 111 = 360$.</p></li>
+        </ol>
+        <p class="answer">$74^\circ$ and $111^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two bisectors between parallel lines</h3>
+        <div class="problem"><p>A transversal crosses parallel lines $\ell$ and $m$ at $A$ and $B$. The bisectors of the two same-side interior angles at $A$ and $B$ meet at $P$. Find $\angle APB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Call the interior angles at $A$ and $B$ (on the same side) $\alpha$ and $\beta$. Then $\alpha + \beta = 180^\circ$.</p></div><p class="why">Same-side interior angles of parallel lines are supplementary.</p></li>
+          <li><div class="do"><p>In $\triangle APB$: $\angle PAB = \tfrac12\alpha$ and $\angle PBA = \tfrac12\beta$, which add to $\tfrac12(\alpha + \beta) = 90^\circ$.</p></div><p class="why">Each bisector takes half of its angle, and the halves are the two base angles of $\triangle APB$.</p></li>
+          <li><div class="do"><p>$\angle APB = 180^\circ - 90^\circ = 90^\circ$.</p></div><p class="why">Triangle sum.</p></li>
+        </ol>
+        <p class="answer">$90^\circ$, no matter what angle the transversal makes.</p>
+        <p class="key-idea">When an answer doesn't depend on the given numbers, look for a sum that is fixed, here $\alpha + \beta = 180^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Bisectors of exterior angles</h3>
+        <div class="problem"><p>In $\triangle ABC$, $\angle A = 64^\circ$. The bisectors of the exterior angles at $B$ and $C$ meet at $P$. Find $\angle BPC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The exterior angle at $B$ is $180^\circ - \angle B$, so the bisector makes $\angle PBC = 90^\circ - \tfrac12\angle B$. Likewise $\angle PCB = 90^\circ - \tfrac12\angle C$.</p></div><p class="why">The exterior angle and the interior angle at $B$ form a straight line; then we halve.</p></li>
+          <li data-think="We don't know $\angle B$ or $\angle C$ separately. What do we know about them?"><div class="do"><p>$\angle BPC = 180^\circ - \left(90^\circ - \tfrac12\angle B\right) - \left(90^\circ - \tfrac12\angle C\right) = \tfrac12(\angle B + \angle C)$.</p></div><p class="why">Triangle sum in $\triangle BPC$. Only the sum $\angle B + \angle C$ is needed.</p></li>
+          <li><div class="do"><p>$\angle B + \angle C = 180^\circ - 64^\circ = 116^\circ$, so $\angle BPC = 58^\circ$.</p></div><p class="why">Triangle sum in $\triangle ABC$.</p></li>
+        </ol>
+        <p class="answer">$58^\circ$ (in general $90^\circ - \tfrac12\angle A$).</p>
+        <p class="key-idea">Name the angles you don't know; often only their sum survives to the end.</p>
+        <p class="book-next">Try Problems 237 and 245 in the book's Problems to Solve for Chapter 14.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 14.2 ===================== -->
+  <section class="lesson" id="s14-2" data-title="Isosceles and Equilateral Triangles">
+    <h2><span class="sec-num">14.2</span> Isosceles and Equilateral Triangles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Lay toothpicks of equal length in a zigzag between the two sides of a narrow angle. Each new toothpick makes a steeper triangle than the last, and eventually the zigzag can't continue. How many fit? Every step is an isosceles triangle, and equal sides are one of the strongest clues in angle chasing.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Equal sides are opposite equal angles, and the converse holds too. So whenever a problem mentions equal lengths, turn them into equal angles at once:</p>
+      <div class="rule"><p>$$AB = AC \iff \angle B = \angle C, \qquad \text{base angle} = \frac{180^\circ - \text{vertex angle}}{2}.$$</p></div>
+      <ul>
+        <li>Every angle of an equilateral triangle is $60^\circ$, and every angle of a square is $90^\circ$. When these shapes are glued together, the shared sides create new isosceles triangles.</li>
+        <li>Two radii of the same circle are equal, so any triangle with two radii as sides is isosceles.</li>
+        <li>In chains of isosceles triangles the angles grow by repeated use of the exterior angle theorem: $x$, then $2x$, then $3x$, and so on.</li>
+      </ul>
+      <div class="note"><p>Mark equal segments with tick marks and equal angles with arcs as soon as you see them. Many chases finish with a single equation like $5x = 180^\circ$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="isoStaircase">
+      <figcaption><strong>Explore:</strong> Equal segments zigzag outward between the two sides of an angle $x$. Each new triangle is isosceles, and its base angles are $x, 2x, 3x, \ldots$ by the exterior angle theorem. Slide $x$ and count how many segments fit before the next base angle would reach $90^\circ$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Vertex angle from a base angle</h3>
+        <div class="problem"><p>In $\triangle ABC$, $AB = AC$ and $\angle B = 68^\circ$. Find $\angle A$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle C = \angle B = 68^\circ$.</p></div><p class="why">$AB = AC$, so the angles opposite them, $\angle C$ and $\angle B$, are equal.</p></li>
+          <li><div class="do"><p>$\angle A = 180^\circ - 68^\circ - 68^\circ = 44^\circ$.</p></div><p class="why">Triangle sum.</p></li>
+        </ol>
+        <p class="answer">$44^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two radii make an isosceles triangle</h3>
+        <div class="problem"><p>$AB$ is a chord of a circle with center $O$, and $\angle OAB = 25^\circ$. Find $\angle AOB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$OA = OB$ (radii), so $\angle OBA = \angle OAB = 25^\circ$.</p></div><p class="why">Radii are the hidden equal sides in circle problems.</p></li>
+          <li><div class="do"><p>$\angle AOB = 180^\circ - 25^\circ - 25^\circ = 130^\circ$.</p></div><p class="why">Triangle sum in $\triangle OAB$.</p></li>
+        </ol>
+        <p class="answer">$130^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An isosceles triangle inside another</h3>
+        <div class="problem"><p>In $\triangle ABC$, $AB = AC$ and $\angle B = 40^\circ$. Point $D$ on $BC$ satisfies $AD = BD$. Find $\angle DAC$ and $\angle ADC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle C = 40^\circ$ and $\angle BAC = 180^\circ - 80^\circ = 100^\circ$.</p></div><p class="why">Base angles of the big isosceles triangle.</p></li>
+          <li><div class="do"><p>$AD = BD$ gives $\angle BAD = \angle B = 40^\circ$, so $\angle DAC = 100^\circ - 40^\circ = 60^\circ$.</p></div><p class="why">$\triangle ABD$ is isosceles too, with its equal angles at $A$ and $B$.</p></li>
+          <li><div class="do"><p>$\angle ADC = \angle BAD + \angle B = 80^\circ$.</p></div><p class="why">$\angle ADC$ is an exterior angle of $\triangle ABD$. Check in $\triangle ADC$: $60^\circ + 80^\circ + 40^\circ = 180^\circ$.</p></li>
+        </ol>
+        <p class="answer">$\angle DAC = 60^\circ$, $\angle ADC = 80^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Extending an equilateral triangle</h3>
+        <div class="problem"><p>$\triangle ABC$ is equilateral. Side $BC$ is extended past $C$ to $D$ so that $CD = CA$. Find $\angle BAD$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle ACD = 180^\circ - 60^\circ = 120^\circ$.</p></div><p class="why">$\angle ACB$ and $\angle ACD$ lie along line $BD$.</p></li>
+          <li><div class="do"><p>$CA = CD$, so $\angle CAD = \angle CDA = \dfrac{180^\circ - 120^\circ}{2} = 30^\circ$.</p></div><p class="why">$\triangle ACD$ is isosceles with vertex angle $120^\circ$.</p></li>
+          <li><div class="do"><p>$\angle BAD = \angle BAC + \angle CAD = 60^\circ + 30^\circ = 90^\circ$.</p></div><p class="why">The two angles are side by side at $A$.</p></li>
+        </ol>
+        <p class="answer">$90^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>An equilateral triangle on a square</h3>
+        <div class="problem">
+          <p>Equilateral $\triangle ABC$ sits on side $BC$ of square $BCDE$, outside the square, with $D$ next to $C$ and $E$ next to $B$. Find $\angle DAE$.</p>
+          <svg viewBox="0 -14 260 228" width="300" style="display:block;margin:.6rem auto;max-width:100%" role="img" aria-label="Equilateral triangle ABC above square BCDE, with segments AE and AD drawn">
+            <polygon points="130,8 80,95 180,95" fill="color-mix(in srgb, var(--plot-1) 22%, transparent)" stroke="var(--plot-1)" stroke-width="2.5"/>
+            <polygon points="80,95 180,95 180,195 80,195" fill="color-mix(in srgb, var(--plot-2) 18%, transparent)" stroke="var(--plot-2)" stroke-width="2.5"/>
+            <line x1="130" y1="8" x2="80" y2="195" stroke="var(--accent-3)" stroke-width="2" stroke-dasharray="5 4"/>
+            <line x1="130" y1="8" x2="180" y2="195" stroke="var(--accent-3)" stroke-width="2" stroke-dasharray="5 4"/>
+            <text x="125" y="-1" style="font: 700 13px var(--font-body); fill: var(--ink)">A</text>
+            <text x="64" y="96" style="font: 700 13px var(--font-body); fill: var(--ink)">B</text>
+            <text x="186" y="96" style="font: 700 13px var(--font-body); fill: var(--ink)">C</text>
+            <text x="186" y="208" style="font: 700 13px var(--font-body); fill: var(--ink)">D</text>
+            <text x="64" y="208" style="font: 700 13px var(--font-body); fill: var(--ink)">E</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li data-think="Which segments in the figure have the same length as $BC$?"><div class="do"><p>$BA = BC = BE$, so $\triangle ABE$ is isosceles with $BA = BE$.</p></div><p class="why">The triangle and the square share side $BC$, so all their sides are equal.</p></li>
+          <li><div class="do"><p>$\angle ABE = \angle ABC + \angle CBE = 60^\circ + 90^\circ = 150^\circ$, so $\angle BAE = \dfrac{180^\circ - 150^\circ}{2} = 15^\circ$.</p></div><p class="why">Base angles of an isosceles triangle with vertex angle $150^\circ$.</p></li>
+          <li><div class="do"><p>By symmetry $\angle CAD = 15^\circ$ as well.</p></div><p class="why">The same argument works on the right with $CA = CD$.</p></li>
+          <li><div class="do"><p>$\angle DAE = \angle BAC - \angle BAE - \angle CAD = 60^\circ - 15^\circ - 15^\circ = 30^\circ$.</p></div><p class="why">Rays $AE$ and $AD$ lie inside $\angle BAC$, so we subtract the two outer slivers.</p></li>
+        </ol>
+        <p class="answer">$30^\circ$</p>
+        <p class="key-idea">Shapes glued along a side share a length, and that creates new isosceles triangles.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Three equal segments</h3>
+        <div class="problem">
+          <p>In $\triangle ABC$, $AB = AC$. Point $D$ on side $AC$ satisfies $AD = BD = BC$. Find $\angle A$.</p>
+          <svg viewBox="0 -6 260 186" width="300" style="display:block;margin:.6rem auto;max-width:100%" role="img" aria-label="Isosceles triangle ABC with D on AC and segment BD">
+            <polygon points="130,10 80.6,162 179.4,162" fill="color-mix(in srgb, var(--plot-2) 18%, transparent)" stroke="var(--plot-2)" stroke-width="2.5"/>
+            <line x1="80.6" y1="162" x2="160.5" y2="104" stroke="var(--accent)" stroke-width="2.5"/>
+            <text x="125" y="3" style="font: 700 13px var(--font-body); fill: var(--ink)">A</text>
+            <text x="64" y="172" style="font: 700 13px var(--font-body); fill: var(--ink)">B</text>
+            <text x="184" y="172" style="font: 700 13px var(--font-body); fill: var(--ink)">C</text>
+            <text x="166" y="104" style="font: 700 13px var(--font-body); fill: var(--ink)">D</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $\angle A = x$. Since $AD = BD$, $\angle ABD = x$.</p></div><p class="why">Name one angle and push it as far as it will go.</p></li>
+          <li><div class="do"><p>$\angle BDC = x + x = 2x$.</p></div><p class="why">Exterior angle of $\triangle ABD$ at $D$.</p></li>
+          <li><div class="do"><p>$BD = BC$, so $\angle C = \angle BDC = 2x$. And $AB = AC$, so $\angle ABC = \angle C = 2x$.</p></div><p class="why">Two more isosceles triangles: $\triangle BDC$ and $\triangle ABC$.</p></li>
+          <li><div class="do"><p>In $\triangle ABC$: $x + 2x + 2x = 180^\circ$, so $x = 36^\circ$.</p></div><p class="why">Triangle sum gives the equation.</p></li>
+        </ol>
+        <p class="answer">$\angle A = 36^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>How many equal segments fit?</h3>
+        <div class="problem"><p>Rays $OX$ and $OY$ form a $12^\circ$ angle. Starting at $O$, equal segments $OA_1 = A_1A_2 = A_2A_3 = \cdots$ zigzag outward, with $A_1, A_3, \ldots$ on $OX$ and $A_2, A_4, \ldots$ on $OY$, each new point farther from $O$ than the one before on its ray. What is the largest possible number of segments (counting $OA_1$)?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\triangle OA_1A_2$ has $OA_1 = A_1A_2$, so its base angles are $\angle A_1OA_2 = \angle A_1A_2O = 12^\circ$.</p></div><p class="why">The first segment pair forms an isosceles triangle with apex $A_1$.</p></li>
+          <li data-think="What is the exterior angle of $\triangle OA_1A_2$ at $A_1$?"><div class="do"><p>$\triangle A_1A_2A_3$ has $A_1A_2 = A_2A_3$. Its base angle at $A_1$ is the exterior angle of $\triangle OA_1A_2$, which is $12^\circ + 12^\circ = 24^\circ$.</p></div><p class="why">Exterior angle theorem.</p></li>
+          <li><div class="do"><p>Repeating, the $k$th isosceles triangle has base angles $12k$ degrees: $12^\circ, 24^\circ, 36^\circ, \ldots$</p></div><p class="why">Each exterior angle adds the fixed $12^\circ$ at $O$ to the previous base angle.</p></li>
+          <li><div class="do"><p>A triangle needs base angles below $90^\circ$: $12k &lt; 90$ means $k \le 7$ (since $7 \cdot 12 = 84$ and $8 \cdot 12 = 96$).</p></div><p class="why">Two angles of $90^\circ$ or more can't fit in one triangle.</p></li>
+          <li><div class="do"><p>Seven triangles use $OA_1$ plus seven more segments: $8$ in all.</p></div><p class="why">The first triangle uses two segments; each later triangle adds one.</p></li>
+        </ol>
+        <p class="answer">$8$ segments</p>
+        <p class="key-idea">In a chain of isosceles triangles, the exterior angle theorem makes the angles grow in a steady pattern.</p>
+        <p class="book-next">Try Problems 236, 239, 242 and 244 in the book's Problems to Solve for Chapter 14.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 14.3 ===================== -->
+  <section class="lesson" id="s14-3" data-title="Angles in Circles">
+    <h2><span class="sec-num">14.3</span> Angles in Circles</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Stand anywhere on the curved edge of a circular stage and look at the two ends of a fixed chord. Walk around the edge: the angle between your two lines of sight never changes. Circles hide many equal angles, and finding them is half of every circle chase.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The facts from Chapter 10, collected for chasing:</p>
+      <ul>
+        <li>A <strong>central angle</strong> equals its arc. An <strong>inscribed angle</strong> is half its arc. So inscribed angles on the same arc are equal, and an angle inscribed in a semicircle is $90^\circ$.</li>
+        <li>Opposite angles of an inscribed (cyclic) quadrilateral add to $180^\circ$, because their arcs add to the full $360^\circ$.</li>
+        <li>A tangent is perpendicular to the radius at the point of contact. Two tangents from one point are equal, and the angle between a tangent and a chord is half the arc it cuts off.</li>
+        <li>Two chords crossing inside make an angle equal to half the <em>sum</em> of the intercepted arcs; two secants or tangents meeting outside make half the <em>difference</em>.</li>
+      </ul>
+      <div class="rule"><p>$$\text{inscribed angle} = \tfrac12\,\text{arc}, \qquad \text{inside: } \tfrac12(\text{arc}_1 + \text{arc}_2), \qquad \text{outside: } \tfrac12(\text{far arc} - \text{near arc})$$</p></div>
+      <div class="note"><p>In circle problems, chase arcs as well as angles. Converting each angle to "half an arc" lets you add and compare them easily, and the arcs around the circle always total $360^\circ$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="inscribedAngle">
+      <figcaption><strong>Explore:</strong> Drag $A$ and $B$ to set an arc, and drag $P$ and $Q$ around the circle. When $P$ and $Q$ are on the same side of chord $AB$, they see it at equal angles, each half the central angle. Move $Q$ across to the other arc: the two angles now add to $180^\circ$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Inscribed versus central</h3>
+        <div class="problem"><p>An inscribed angle measures $35^\circ$. What is its arc, and what central angle cuts off the same arc?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Arc $= 2 \cdot 35^\circ = 70^\circ$.</p></div><p class="why">An inscribed angle is half its arc.</p></li>
+          <li><div class="do"><p>The central angle is also $70^\circ$.</p></div><p class="why">A central angle equals its arc.</p></li>
+        </ol>
+        <p class="answer">Arc $70^\circ$; central angle $70^\circ$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A right angle from a diameter</h3>
+        <div class="problem"><p>$AB$ is a diameter and $C$ is on the circle, with $\angle CAB = 28^\circ$. Find $\angle ABC$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle ACB = 90^\circ$.</p></div><p class="why">It is inscribed in a semicircle.</p></li>
+          <li><div class="do"><p>$\angle ABC = 180^\circ - 90^\circ - 28^\circ = 62^\circ$.</p></div><p class="why">Triangle sum.</p></li>
+        </ol>
+        <p class="answer">$62^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>An inscribed quadrilateral</h3>
+        <div class="problem"><p>Quadrilateral $ABCD$ is inscribed in a circle with $\angle A = 75^\circ$ and $\angle B = 110^\circ$. Find $\angle C$ and $\angle D$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle A$ is half of arc $BCD$ and $\angle C$ is half of arc $DAB$. These two arcs make up the whole circle, so $\angle A + \angle C = \tfrac12 \cdot 360^\circ = 180^\circ$.</p></div><p class="why">This is why opposite angles of an inscribed quadrilateral are supplementary.</p></li>
+          <li><div class="do"><p>$\angle C = 180^\circ - 75^\circ = 105^\circ$ and $\angle D = 180^\circ - 110^\circ = 70^\circ$.</p></div><p class="why">Apply the rule to both pairs of opposite angles.</p></li>
+        </ol>
+        <p class="answer">$\angle C = 105^\circ$, $\angle D = 70^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two tangents</h3>
+        <div class="problem">
+          <p>Tangents from $P$ touch a circle with center $O$ at $A$ and $B$, and $\angle APB = 50^\circ$. Find $\angle AOB$, and the inscribed angle $\angle ACB$ for a point $C$ on the major arc.</p>
+          <svg viewBox="0 0 230 170" width="320" style="display:block;margin:.6rem auto;max-width:100%" role="img" aria-label="Circle with center O, tangents from P touching at A and B, and point C on the far side">
+            <circle cx="80" cy="85" r="50" fill="none" stroke="var(--plot-2)" stroke-width="2.5"/>
+            <polyline points="101,39.7 198,85 101,130.3" fill="none" stroke="var(--accent)" stroke-width="2.5"/>
+            <polyline points="101,39.7 80,85 101,130.3" fill="none" stroke="var(--faint)" stroke-width="1.8" stroke-dasharray="4 4"/>
+            <polyline points="101,39.7 30,85 101,130.3" fill="none" stroke="var(--accent-3)" stroke-width="2"/>
+            <circle cx="80" cy="85" r="3" fill="var(--ink)"/>
+            <text x="98" y="32" style="font: 700 13px var(--font-body); fill: var(--ink)">A</text>
+            <text x="98" y="148" style="font: 700 13px var(--font-body); fill: var(--ink)">B</text>
+            <text x="203" y="90" style="font: 700 13px var(--font-body); fill: var(--ink)">P</text>
+            <text x="64" y="90" style="font: 700 13px var(--font-body); fill: var(--ink)">O</text>
+            <text x="16" y="90" style="font: 700 13px var(--font-body); fill: var(--ink)">C</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle OAP = \angle OBP = 90^\circ$.</p></div><p class="why">A tangent is perpendicular to the radius at the point of contact.</p></li>
+          <li><div class="do"><p>In quadrilateral $OAPB$: $\angle AOB = 360^\circ - 90^\circ - 90^\circ - 50^\circ = 130^\circ$.</p></div><p class="why">Quadrilateral angle sum.</p></li>
+          <li><div class="do"><p>$\angle ACB = \tfrac12 \cdot 130^\circ = 65^\circ$.</p></div><p class="why">$\angle ACB$ is inscribed on the minor arc $AB$, which has measure $130^\circ$ (the central angle).</p></li>
+        </ol>
+        <p class="answer">$\angle AOB = 130^\circ$, $\angle ACB = 65^\circ$</p>
+        <p class="book-next">Next in the book: Problem 247.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Chords crossing inside</h3>
+        <div class="problem"><p>Chords $AC$ and $BD$ cross at $E$ inside a circle. Arc $AB = 80^\circ$ and arc $CD = 40^\circ$ (the arcs cut off by $\angle AEB$ and its vertical angle). Find $\angle AEB$, and explain the formula.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw chord $BC$. Then $\angle ACB = \tfrac12 \cdot 80^\circ = 40^\circ$ and $\angle DBC = \tfrac12 \cdot 40^\circ = 20^\circ$.</p></div><p class="why">Each is an inscribed angle on one of the given arcs.</p></li>
+          <li data-think="$\angle AEB$ sits outside $\triangle EBC$. Which theorem relates them?"><div class="do"><p>$\angle AEB$ is an exterior angle of $\triangle EBC$, so $\angle AEB = \angle ECB + \angle EBC = 40^\circ + 20^\circ = 60^\circ$.</p></div><p class="why">Exterior angle theorem: this is exactly where "half the sum of the arcs" comes from.</p></li>
+        </ol>
+        <p class="answer">$60^\circ = \tfrac12(80^\circ + 40^\circ)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Equal angles on the same arc</h3>
+        <div class="problem"><p>$ABCD$ is inscribed in a circle, and its diagonals meet at $E$. Given $\angle BAC = 30^\circ$ and $\angle ABD = 45^\circ$, find $\angle BDC$, $\angle ACD$ and $\angle AEB$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle BDC = \angle BAC = 30^\circ$.</p></div><p class="why">Both are inscribed angles on arc $BC$.</p></li>
+          <li><div class="do"><p>$\angle ACD = \angle ABD = 45^\circ$.</p></div><p class="why">Both are inscribed angles on arc $AD$.</p></li>
+          <li><div class="do"><p>In $\triangle ABE$: $\angle AEB = 180^\circ - 30^\circ - 45^\circ = 105^\circ$.</p></div><p class="why">$\angle BAE = \angle BAC$ and $\angle ABE = \angle ABD$, because $E$ lies on both diagonals.</p></li>
+        </ol>
+        <p class="answer">$\angle BDC = 30^\circ$, $\angle ACD = 45^\circ$, $\angle AEB = 105^\circ$</p>
+        <p class="key-idea">In a cyclic quadrilateral, each diagonal creates pairs of equal inscribed angles.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A tangent meets an extended side</h3>
+        <div class="problem"><p>$\triangle ABC$ is inscribed in a circle with $\angle A = 50^\circ$, $\angle B = 60^\circ$, $\angle C = 70^\circ$. The tangent at $A$ meets line $BC$ at $P$. Find $\angle APB$.</p></div>
+        <ol class="steps">
+          <li data-think="Which side of the triangle is $P$ on? Try both and see which one gives a sensible triangle."><div class="do"><p>The angle between the tangent and chord $AC$ equals an inscribed angle on arc $AC$, which is $\angle B = 60^\circ$. Similarly, the angle between the tangent and chord $AB$ equals $\angle C = 70^\circ$.</p></div><p class="why">Tangent-chord angles are half their arc, just like inscribed angles on that arc.</p></li>
+          <li><div class="do"><p>Suppose $P$ is beyond $B$ (order $P, B, C$). Then $\triangle PAB$ would have $\angle PAB = 70^\circ$ and $\angle PBA = 180^\circ - 60^\circ = 120^\circ$, which already exceed $180^\circ$. Impossible.</p></div><p class="why">Test each possible position; a negative angle rules one out.</p></li>
+          <li><div class="do"><p>So $P$ is beyond $C$ (order $B, C, P$). In $\triangle PAC$: $\angle PAC = 60^\circ$ and $\angle PCA = 180^\circ - 70^\circ = 110^\circ$.</p></div><p class="why">$\angle PCA$ and $\angle ACB$ lie along line $BP$.</p></li>
+          <li><div class="do"><p>$\angle APB = \angle APC = 180^\circ - 60^\circ - 110^\circ = 10^\circ$.</p></div><p class="why">Triangle sum.</p></li>
+        </ol>
+        <p class="answer">$10^\circ$ (in general the difference $\angle B - \angle C$, in absolute value).</p>
+        <p class="key-idea">When the position of a point is unclear, try each case; the angle sums will rule out the impossible one.</p>
+        <p class="book-next">Try Problems 241, 243, 248, 250 and 251 in the book's Problems to Solve for Chapter 14.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-14">
+    <h2 id="further-14">Further reading in the book</h2>
+    <ul>
+      <li><strong>Chapter 14 introduction</strong>: the checklist of angle-chasing tools. Return to it whenever a problem stalls.</li>
+      <li><strong>§14.1 Lines, Parallels and Angle Sums</strong>: Problems 237, 238 and 245 lean on triangle and quadrilateral sums and parallel lines.</li>
+      <li><strong>§14.2 Isosceles and Equilateral Triangles</strong>: Problems 236, 239, 240, 242 and 244.</li>
+      <li><strong>§14.3 Angles in Circles</strong>: Problems 241, 243, 247, 248, 249, 250 and 251.</li>
+      <li><strong>Problems to Solve for Chapter 14</strong>: Problems 236–251 (Problem 246 is a proof about quadrilaterals).</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 14 explorers ---------- */
+(function () {
+  "use strict";
+  var DEG = Math.PI / 180;
+  function P(x, y) { return { x: x, y: y }; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function seg(p, q, attrs) { var a = { x1: p.x, y1: p.y, x2: q.x, y2: q.y }; for (var k in attrs) a[k] = attrs[k]; return W.s("line", a); }
+  function txt(p, s, style) { return W.s("text", { x: p.x, y: p.y, "text-anchor": "middle", "dominant-baseline": "middle", style: style || "font: 700 15px var(--font-body); fill: var(--ink)", text: s }); }
+  function small(p, s, fill) { return txt(p, s, "font: 600 13px var(--font-mono); fill: " + (fill || "var(--muted)")); }
+  /* arc at Q from direction angle a1 to a2 (radians, svg orientation), going the short way */
+  function arcAng(Q, a1, a2, r) {
+    var d = a2 - a1;
+    while (d <= -Math.PI) d += 2 * Math.PI;
+    while (d > Math.PI) d -= 2 * Math.PI;
+    return "M" + (Q.x + r * Math.cos(a1)).toFixed(1) + " " + (Q.y + r * Math.sin(a1)).toFixed(1) + "A" + r + " " + r + " 0 0 " + (d > 0 ? 1 : 0) + " " + (Q.x + r * Math.cos(a1 + d)).toFixed(1) + " " + (Q.y + r * Math.sin(a1 + d)).toFixed(1);
+  }
+  function angAt(Q, A, B) {
+    var ux = A.x - Q.x, uy = A.y - Q.y, vx = B.x - Q.x, vy = B.y - Q.y, l = Math.hypot(ux, uy) * Math.hypot(vx, vy);
+    return l ? Math.acos(clamp((ux * vx + uy * vy) / l, -1, 1)) / DEG : 0;
+  }
+  function f1(n) { return W.fmt(n, 1); }
+
+  /* 14.1 — a bend between parallel lines */
+  AOPS.registerWidget("zigzag", function (body) {
+    var svg = W.stage(body, { w: 620, h: 360, label: "Parallel lines l and m with a bent path A, P, B; drag P, A or B" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var Y1 = 70, Y2 = 300, helper = true;
+    var A = P(170, Y1), B = P(230, Y2), Pt = P(400, 170);
+    svg.appendChild(seg(P(10, Y1), P(610, Y1), { stroke: "var(--plot-2)", "stroke-width": 3 }));
+    svg.appendChild(seg(P(10, Y2), P(610, Y2), { stroke: "var(--plot-2)", "stroke-width": 3 }));
+    svg.appendChild(txt(P(596, Y1 - 16), "ℓ")); svg.appendChild(txt(P(596, Y2 + 18), "m"));
+    var g = W.s("g"); svg.appendChild(g);
+    W.handle(svg, { x: Pt.x, y: Pt.y, label: "Bend point P: drag, or use the arrow keys", keyStep: 8,
+      onMove: function (x, y) { Pt = P(clamp(x, 20, 600), clamp(y, Y1 + 25, Y2 - 25)); draw(); return [Pt.x, Pt.y]; } });
+    W.handle(svg, { x: A.x, y: A.y, label: "Point A on line l: drag left or right", keyStep: 8,
+      onMove: function (x) { A = P(clamp(x, 30, 590), Y1); draw(); return [A.x, A.y]; } });
+    W.handle(svg, { x: B.x, y: B.y, label: "Point B on line m: drag left or right", keyStep: 8,
+      onMove: function (x) { B = P(clamp(x, 30, 590), Y2); draw(); return [B.x, B.y]; } });
+    W.segmented(ctl, { title: "Helper line through P", value: "on", options: [{ value: "on", label: "Show" }, { value: "off", label: "Hide" }], onChange: function (v) { helper = v === "on"; draw(); } });
+    function draw() {
+      W.clear(g);
+      var aAP = Math.atan2(Pt.y - A.y, Pt.x - A.x);      // direction A->P (svg radians, 0..pi since P is below)
+      var aBP = Math.atan2(Pt.y - B.y, Pt.x - B.x);      // direction B->P (−pi..0)
+      var alpha = aAP / DEG, beta = -aBP / DEG;          // angles with the rightward rays
+      var right = alpha + beta <= 180;                   // P bulges to the right?
+      var a1 = right ? alpha : 180 - alpha, a2 = right ? beta : 180 - beta;
+      var dirRay = right ? 0 : Math.PI;
+      var angP = angAt(Pt, A, B);
+      if (helper) {
+        g.appendChild(seg(P(10, Pt.y), P(610, Pt.y), { stroke: "var(--faint)", "stroke-width": 1.8, "stroke-dasharray": "7 6" }));
+        g.appendChild(W.s("path", { d: arcAng(Pt, Math.atan2(A.y - Pt.y, A.x - Pt.x), right ? Math.PI : 0, 34), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+        g.appendChild(W.s("path", { d: arcAng(Pt, right ? Math.PI : 0, Math.atan2(B.y - Pt.y, B.x - Pt.x), 44), fill: "none", stroke: "var(--plot-3)", "stroke-width": 3 }));
+      } else {
+        g.appendChild(W.s("path", { d: arcAng(Pt, Math.atan2(A.y - Pt.y, A.x - Pt.x), Math.atan2(B.y - Pt.y, B.x - Pt.x), 36), fill: "none", stroke: "var(--accent)", "stroke-width": 3 }));
+      }
+      g.appendChild(W.s("polyline", { points: A.x + "," + A.y + " " + Pt.x + "," + Pt.y + " " + B.x + "," + B.y, fill: "none", stroke: "var(--accent)", "stroke-width": 4, "stroke-linejoin": "round" }));
+      g.appendChild(W.s("path", { d: arcAng(A, dirRay, aAP, 40), fill: "none", stroke: "var(--plot-1)", "stroke-width": 3 }));
+      g.appendChild(W.s("path", { d: arcAng(B, dirRay, aBP, 40), fill: "none", stroke: "var(--plot-3)", "stroke-width": 3 }));
+      var sg = right ? 1 : -1;
+      var labA = P(A.x + sg * 100, A.y + 18), labB = P(B.x + sg * 100, B.y - 18);
+      g.appendChild(small(labA, "∠1 = " + f1(a1) + "°", "var(--plot-1)"));
+      g.appendChild(small(labB, "∠2 = " + f1(a2) + "°", "var(--plot-3)"));
+      g.appendChild(txt(P(A.x, A.y - 22), "A")); g.appendChild(txt(P(B.x, B.y + 22), "B"));
+      g.appendChild(txt(P(Pt.x + (right ? 22 : -22), Pt.y - 18), "P"));
+      out.set("$\\angle APB \\approx " + f1(angP) + "^\\circ$ and $\\angle 1 + \\angle 2 \\approx " + f1(a1) + "^\\circ + " + f1(a2) + "^\\circ = " + f1(a1 + a2) + "^\\circ$." +
+        (helper ? "<br>The dashed line through $P$ is parallel to $\\ell$ and $m$, so it cuts $\\angle APB$ into a copy of $\\angle 1$ and a copy of $\\angle 2$ (alternate interior angles)." : "<br>Show the helper line to see why the two always match."));
+    }
+    draw();
+  });
+
+  /* 14.2 — isosceles staircase */
+  AOPS.registerWidget("isoStaircase", function (body) {
+    var svg = W.stage(body, { w: 620, h: 340, label: "Equal segments zigzagging between two rays at angle x" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var x = 15;
+    W.slider(ctl, { label: "Angle x", min: 6, max: 40, value: x, format: function (v) { return v + "°"; }, onInput: function (v) { x = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var u1 = P(1, 0), u2 = P(Math.cos(x * DEG), Math.sin(x * DEG));
+      var pts = [P(0, 0), P(1, 0)];           // math coords (y up), segment length 1
+      var tPrev = [0, 0], rays = [u1, u2];    // last parameter used on each ray
+      tPrev[0] = 1;                           // A1 at t = 1 on ray 1
+      var k = 1;
+      while (k < 40) {
+        var ray = k % 2;                      // A2 on ray 2 (index 1), A3 on ray 1 (index 0), ...
+        var Pk = pts[pts.length - 1], u = rays[ray];
+        var tNew = 2 * (u.x * Pk.x + u.y * Pk.y) - tPrev[ray];
+        if (tNew <= tPrev[ray] + 1e-9 || k * x >= 90) break;
+        tPrev[ray] = tNew;
+        pts.push(P(tNew * u.x, tNew * u.y));
+        k++;
+      }
+      var tri = pts.length - 2, segs = pts.length - 1;
+      // fit
+      var maxX = Math.max.apply(null, pts.map(function (p) { return p.x; })) * 1.12, maxY = Math.max.apply(null, pts.map(function (p) { return p.y; }));
+      var U = Math.min(560 / maxX, 240 / Math.max(maxY, 0.01));
+      var O = P(40, 300);
+      function S(p) { return P(O.x + p.x * U, O.y - p.y * U); }
+      var Lr = maxX / Math.cos(x * DEG);
+      svg.appendChild(seg(O, S(P(maxX, 0)), { stroke: "var(--plot-2)", "stroke-width": 3 }));
+      svg.appendChild(seg(O, S(P(Lr * u2.x, Lr * u2.y)), { stroke: "var(--plot-2)", "stroke-width": 3 }));
+      for (var i = 1; i < pts.length; i++) {
+        var p = S(pts[i - 1]), q = S(pts[i]);
+        if (i >= 2) svg.appendChild(W.s("polygon", { points: [S(pts[i - 2]), p, q].map(function (z) { return z.x + "," + z.y; }).join(" "), fill: "color-mix(in srgb, var(--plot-" + (i % 2 ? 1 : 3) + ") 16%, transparent)", stroke: "none" }));
+        svg.appendChild(seg(p, q, { stroke: "var(--accent)", "stroke-width": 3.5, "stroke-linecap": "round" }));
+        var m = P((p.x + q.x) / 2, (p.y + q.y) / 2), dx = q.x - p.x, dy = q.y - p.y, l = Math.hypot(dx, dy) || 1;
+        svg.appendChild(seg(P(m.x - dy / l * 6, m.y + dx / l * 6), P(m.x + dy / l * 6, m.y - dx / l * 6), { stroke: "var(--ink)", "stroke-width": 2 }));
+      }
+      pts.forEach(function (pt, i) { var s = S(pt); svg.appendChild(W.s("circle", { cx: s.x, cy: s.y, r: 3.5, fill: "var(--ink)" })); });
+      // base-angle labels at the newest point of each triangle
+      var show = Math.min(tri, 9);
+      for (var j = 1; j <= show; j++) {
+        var at = S(pts[j + 1]), off = (j % 2) ? -16 : 16;
+        svg.appendChild(small(P(at.x, at.y + off), (j * x) + "°", "var(--ink)"));
+      }
+      svg.appendChild(txt(P(O.x - 14, O.y + 4), "O"));
+      svg.appendChild(small(P(O.x + 52, O.y - 10), "x", "var(--plot-2)"));
+      svg.appendChild(W.s("text", { x: 14, y: 22, class: "lbl", text: "labels: base angle of each new isosceles triangle" }));
+      var nextA = (tri + 1) * x;
+      out.set("Base angles: $" + Array.from({ length: Math.min(tri, 8) }, function (_, i) { return (i + 1) + "x = " + (i + 1) * x + "^\\circ"; }).join(",\\ ") + (tri > 8 ? ",\\ \\ldots" : "") + "$.<br>" +
+        "The next one would need base angles of $" + (tri + 1) + "x = " + nextA + "^\\circ \\ge 90^\\circ$, impossible. So <strong>" + tri + " triangles</strong> and <strong>" + segs + " equal segments</strong> fit.");
+    }
+    draw();
+  });
+
+  /* 14.3 — inscribed angles */
+  AOPS.registerWidget("inscribedAngle", function (body) {
+    var svg = W.stage(body, { w: 620, h: 400, label: "Circle with points A, B, P and Q; compare inscribed angles with the central angle" });
+    var out = W.readout(body);
+    var O = P(310, 200), R = 160;
+    var th = { A: 200, B: 340, P: 95, Q: 55 }; // degrees, math orientation (y up)
+    function at(t) { return P(O.x + R * Math.cos(t * DEG), O.y - R * Math.sin(t * DEG)); }
+    svg.appendChild(W.s("circle", { cx: O.x, cy: O.y, r: R, fill: "none", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+    var g = W.s("g"); svg.appendChild(g);
+    var order = ["P", "Q", "A", "B"], names = { P: "P", Q: "Q", A: "A", B: "B" };
+    order.forEach(function (k) {
+      var p = at(th[k]);
+      W.handle(svg, { x: p.x, y: p.y, label: "Point " + k + " on the circle: drag, or use the arrow keys", keyStep: 10, color: k === "A" || k === "B" ? "var(--plot-4)" : null,
+        onMove: function (x, y) {
+          var t = Math.atan2(O.y - y, x - O.x) / DEG; t = (Math.round(t) + 360) % 360;
+          for (var o in th) if (o !== k && Math.abs(((t - th[o] + 540) % 360) - 180) < 4) return [at(th[k]).x, at(th[k]).y];
+          th[k] = t; draw(); var q = at(t); return [q.x, q.y];
+        } });
+    });
+    function onArcCCW(from, to, t) { var d = (to - from + 360) % 360, e = (t - from + 360) % 360; return e > 0 && e < d; }
+    function draw() {
+      W.clear(g);
+      var A = at(th.A), B = at(th.B), Pp = at(th.P), Q = at(th.Q);
+      // arc AB not containing P
+      var pOnCCW = onArcCCW(th.A, th.B, th.P);
+      var arcMeasure = pOnCCW ? 360 - (th.B - th.A + 360) % 360 : (th.B - th.A + 360) % 360;
+      var sweep = pOnCCW ? 1 : 0; // svg: ccw in math = sweep 0
+      var large = arcMeasure > 180 ? 1 : 0;
+      g.appendChild(W.s("path", { d: "M" + A.x + " " + A.y + "A" + R + " " + R + " 0 " + large + " " + sweep + " " + B.x + " " + B.y, fill: "none", stroke: "var(--plot-4)", "stroke-width": 7, opacity: 0.6, "stroke-linecap": "round" }));
+      // central angle (only the reflex-free version drawn when arc <= 180; otherwise draw as reflex)
+      g.appendChild(W.s("path", { d: "M" + A.x + " " + A.y + "L" + O.x + " " + O.y + "L" + B.x + " " + B.y, fill: "none", stroke: "var(--plot-4)", "stroke-width": 2, "stroke-dasharray": "5 5" }));
+      g.appendChild(W.s("circle", { cx: O.x, cy: O.y, r: 4, fill: "var(--ink)" }));
+      g.appendChild(txt(P(O.x - 14, O.y - 12), "O"));
+      g.appendChild(seg(A, B, { stroke: "var(--faint)", "stroke-width": 1.5 }));
+      var angP = angAt(Pp, A, B), angQ = angAt(Q, A, B);
+      [[Pp, "var(--plot-1)"], [Q, "var(--plot-3)"]].forEach(function (pc) {
+        g.appendChild(W.s("polyline", { points: A.x + "," + A.y + " " + pc[0].x + "," + pc[0].y + " " + B.x + "," + B.y, fill: "none", stroke: pc[1], "stroke-width": 3, "stroke-linejoin": "round" }));
+        g.appendChild(W.s("path", { d: arcAng(pc[0], Math.atan2(A.y - pc[0].y, A.x - pc[0].x), Math.atan2(B.y - pc[0].y, B.x - pc[0].x), 26), fill: "none", stroke: pc[1], "stroke-width": 2.5 }));
+      });
+      ["A", "B", "P", "Q"].forEach(function (k) { g.appendChild(txt(P(O.x + (R + 24) * Math.cos(th[k] * DEG), O.y - (R + 24) * Math.sin(th[k] * DEG)), names[k])); });
+      var same = onArcCCW(th.A, th.B, th.P) === onArcCCW(th.A, th.B, th.Q);
+      var line1 = "Arc $AB$ (green, the one not containing $P$) $\\approx " + Math.round(arcMeasure) + "^\\circ$, and $\\angle APB \\approx " + f1(angP) + "^\\circ = \\tfrac12 \\cdot \\text{arc}$.";
+      var line2 = same ? "$Q$ is on the same side of chord $AB$ as $P$: $\\angle AQB \\approx " + f1(angQ) + "^\\circ = \\angle APB$ (same arc)."
+                       : "$Q$ is on the other arc: $\\angle AQB \\approx " + f1(angQ) + "^\\circ$, and $\\angle APB + \\angle AQB \\approx " + f1(angP + angQ) + "^\\circ = 180^\\circ$ ($APBQ$ is a cyclic quadrilateral).";
+      out.set(line1 + "<br>" + line2);
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

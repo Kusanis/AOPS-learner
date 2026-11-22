@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 15: Areas · AoPS Learner</title>
+  <meta name="description" content="Areas of similar figures, triangles with the same base or altitude, and complicated regions built by adding and subtracting simple pieces, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="15" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 15 · Geometry</span>
+    <h1>Areas</h1>
+    <p class="lede">You already know the area formulas for triangles, quadrilaterals and circles. This chapter is about using them cleverly: comparing areas without computing them, sliding a vertex without changing an area, and finding the area of strange shaded regions by adding and subtracting simple pieces like a jigsaw.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>If two figures are similar with ratio $k$, their areas have ratio $k^2$. Going back, the length ratio is the square root of the area ratio.</li>
+      <li>Triangles with the same altitude have areas in the ratio of their bases; triangles with the same base have areas in the ratio of their altitudes.</li>
+      <li>"Same base" is often literally the same segment, and "same altitude" often means a shared vertex with bases on one line.</li>
+      <li>Sliding a vertex parallel to the opposite side keeps a triangle's area fixed.</li>
+      <li>For a strange region, find simple pieces (triangles, rectangles, sectors) and add or subtract them.</li>
+      <li>Circular segment $=$ sector $-$ triangle. Draw radii to the ends of every arc.</li>
+      <li>Overlaps counted twice can be found by "adding everything, then subtracting the whole."</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 15.1 ===================== -->
+  <section class="lesson" id="s15-1" data-title="Similar Figures">
+    <h2><span class="sec-num">15.1</span> Similar Figures</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A 16-inch pizza costs a bit more than an 8-inch one. Is it a good deal? Its diameter is only twice as big, but it has <em>four</em> times as much pizza. Doubling every length quadruples the area, and that is true for every shape, not just circles.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Two figures are <strong>similar</strong> if one is a scaled copy of the other: every length is multiplied by the same factor $k$. Area is length times length, so it gets multiplied by $k \cdot k$:</p>
+      <div class="rule"><p>$$\frac{\text{area of copy}}{\text{area of original}} = k^2, \qquad \text{so} \qquad k = \sqrt{\frac{\text{area of copy}}{\text{area of original}}}.$$</p></div>
+      <p>You can see it directly: a triangle scaled by $3$ can be tiled by exactly $3^2 = 9$ copies of the original. The same goes for any shape, because any shape can be approximated by tiny squares, and every tiny square grows by $k^2$.</p>
+      <p>All circles are similar, all squares are similar, and all equilateral triangles are similar. Two triangles are similar when you can prove it by AA, SAS or SSS similarity (Chapter 11). Once you know two figures are similar, <em>any</em> pair of corresponding lengths (sides, heights, diagonals, perimeters, radii) gives the ratio $k$.</p>
+      <div class="note"><p>Perimeters scale by $k$, areas by $k^2$. Don't mix them up.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="similarScale">
+      <figcaption><strong>Explore:</strong> Drag $B$ and $C$ to shape the small triangle, then raise the scale factor $k$. At whole-number $k$, the big triangle is tiled by $k^2$ copies of the small one: some upright, some upside down.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Triple the sides</h3>
+        <div class="problem"><p>Triangle $T$ has area $5$. A similar triangle has sides $3$ times as long. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area ratio $= 3^2 = 9$, so the area is $9 \times 5 = 45$.</p></div><p class="why">Areas scale by the square of the length ratio.</p></li>
+        </ol>
+        <p class="answer">$45$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Two circles</h3>
+        <div class="problem"><p>One circle has radius $2$ and another has radius $6$. How many times larger is the second circle's area?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The radius ratio is $3$, so the area ratio is $9$.</p></div><p class="why">All circles are similar, and the radius is a corresponding length.</p></li>
+          <li><div class="do"><p>Check: $\pi \cdot 6^2 = 36\pi$ and $\pi \cdot 2^2 = 4\pi$; $36\pi / 4\pi = 9$.</p></div><p class="why">Computing both areas confirms the shortcut.</p></li>
+        </ol>
+        <p class="answer">$9$ times</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>From areas back to lengths</h3>
+        <div class="problem"><p>Two similar pentagons have areas $49$ and $25$. The smaller one has perimeter $20$. Find the perimeter of the larger.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Length ratio $= \sqrt{49/25} = 7/5$.</p></div><p class="why">Take the square root of the area ratio to get the length ratio.</p></li>
+          <li><div class="do"><p>Perimeter $= 20 \times \tfrac75 = 28$.</p></div><p class="why">Perimeter is a length, so it scales by $k$, not $k^2$.</p></li>
+        </ol>
+        <p class="answer">$28$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The midpoint triangle</h3>
+        <div class="problem"><p>A triangle has area $60$. Joining the midpoints of its sides forms a smaller triangle. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Each side of the midpoint triangle is half of a side of the original, so the two are similar with $k = \tfrac12$.</p></div><p class="why">A segment joining two midpoints is parallel to the third side and half as long; that gives SSS similarity.</p></li>
+          <li><div class="do"><p>Area $= \left(\tfrac12\right)^2 \cdot 60 = 15$.</p></div><p class="why">Square the length ratio.</p></li>
+          <li><div class="do"><p>Check: the three corner triangles are also similar with $k = \tfrac12$, so the four pieces are $15$ each, total $60$.</p></div><p class="why">The midpoint triangle and the three corners tile the original.</p></li>
+        </ol>
+        <p class="answer">$15$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Diagonals of two squares</h3>
+        <div class="problem"><p>The area of one square is $8$ times the area of another. Find the ratio of their diagonals.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Length ratio $= \sqrt8 = 2\sqrt2$.</p></div><p class="why">All squares are similar, and a diagonal is a corresponding length.</p></li>
+        </ol>
+        <p class="answer">$2\sqrt2 : 1$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Triangles in a trapezoid</h3>
+        <div class="problem"><p>In trapezoid $ABCD$ with $AB \parallel CD$, $AB = 5$, $CD = 15$, and the diagonals meet at $E$. If $[ABE] = 4$, find $[CDE]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\triangle ABE \sim \triangle CDE$ by AA.</p></div><p class="why">Alternate angles along the parallel bases: $\angle BAE = \angle DCE$ and $\angle ABE = \angle CDE$.</p></li>
+          <li><div class="do"><p>$k = CD / AB = 3$, so $[CDE] = 9 \times 4 = 36$.</p></div><p class="why">Corresponding sides give the ratio; square it for areas.</p></li>
+        </ol>
+        <p class="answer">$36$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Cutting a triangle in half</h3>
+        <div class="problem"><p>A triangle has height $10$. A line parallel to the base cuts off a small triangle at the top with exactly half the area. How far below the apex is the line?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The small triangle is similar to the whole (AA, because the line is parallel to the base).</p></div><p class="why">Parallel lines give equal corresponding angles.</p></li>
+          <li data-think="If the area ratio is $\tfrac12$, what is the length ratio?"><div class="do"><p>Area ratio $\tfrac12$, so $k = \sqrt{\tfrac12} = \tfrac{1}{\sqrt2}$.</p></div><p class="why">Lengths scale by the square root of the area ratio.</p></li>
+          <li><div class="do"><p>Height of the small triangle $= \dfrac{10}{\sqrt2} = 5\sqrt2 \approx 7.07$.</p></div><p class="why">Heights are corresponding lengths too. Not $5$: halving the height would leave only a quarter of the area.</p></li>
+        </ol>
+        <p class="answer">$5\sqrt2 \approx 7.07$</p>
+        <p class="key-idea">To halve an area, scale lengths by $\tfrac{1}{\sqrt2}$, not $\tfrac12$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Three equal strips</h3>
+        <div class="problem"><p>Triangle $ABC$ has base $BC = 12$. Two lines parallel to $BC$ divide it into three regions of equal area. Find the lengths of the two parallel segments inside the triangle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Measured from $A$, the two lines cut off triangles with $\tfrac13$ and $\tfrac23$ of the total area.</p></div><p class="why">The top triangle is one region; the top triangle plus the next strip is two regions.</p></li>
+          <li><div class="do"><p>Their length ratios are $\sqrt{\tfrac13}$ and $\sqrt{\tfrac23}$.</p></div><p class="why">Each cut-off triangle is similar to $ABC$.</p></li>
+          <li><div class="do"><p>Segments: $12\sqrt{\tfrac13} = \dfrac{12}{\sqrt3} = 4\sqrt3$ and $12\sqrt{\tfrac23} = \dfrac{12\sqrt6}{3} = 4\sqrt6$.</p></div><p class="why">Each parallel segment is the base of its similar triangle.</p></li>
+        </ol>
+        <p class="answer">$4\sqrt3 \approx 6.93$ and $4\sqrt6 \approx 9.80$</p>
+        <p class="key-idea">Think about the cut-off triangles from the apex, not the strips.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 15.2 ===================== -->
+  <section class="lesson" id="s15-2" data-title="Same Base/Same Altitude">
+    <h2><span class="sec-num">15.2</span> Same Base/Same Altitude</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Stretch a rubber band between two pins to make a base, and loop it around a pencil held at a fixed height above. Slide the pencil left and right: the triangle leans wildly, yet its area never changes. Area only cares about base and height.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Since $[\triangle] = \tfrac12 \cdot \text{base} \cdot \text{height}$, if two triangles share a height $h$, the $\tfrac12 h$ cancels when we compare them:</p>
+      <div class="rule"><p>$$\text{same altitude:}\quad \frac{[ABD]}{[ADC]} = \frac{BD}{DC}, \qquad \text{same base:}\quad \frac{[XYZ_1]}{[XYZ_2]} = \frac{h_1}{h_2}.$$</p></div>
+      <p>The most common setting: a vertex $A$ and a point $D$ on the opposite side $BC$. Triangles $ABD$ and $ADC$ have the same altitude from $A$, so the segment $AD$ splits the area in the ratio $BD : DC$. In particular a <strong>median</strong> splits a triangle into two equal areas.</p>
+      <p>The flip side: if $X$ moves along a line parallel to $AB$, the height from $X$ to $AB$ never changes, so $[ABX]$ stays the same. This is how you prove two areas are equal without computing either one.</p>
+      <div class="note"><p>Notation reminder: $[ABC]$ means the area of triangle $ABC$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="sameBase">
+      <figcaption><strong>Explore:</strong> Drag apex $A$ (with the height locked, it slides along a parallel line and the area stays fixed). Drag $D$ along the base: segment $AD$ splits the area in exactly the ratio $BD : DC$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Splitting by a cevian</h3>
+        <div class="problem"><p>In triangle $ABC$, point $D$ on $BC$ has $BD = 3$ and $DC = 5$. If $[ABC] = 40$, find $[ABD]$ and $[ADC]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$ABD$ and $ADC$ have the same altitude from $A$, so $[ABD] : [ADC] = 3 : 5$.</p></div><p class="why">Their bases lie on the same line $BC$.</p></li>
+          <li><div class="do"><p>$[ABD] = \tfrac38 \cdot 40 = 15$, $[ADC] = \tfrac58 \cdot 40 = 25$.</p></div><p class="why">Split $40$ in the ratio $3 : 5$.</p></li>
+        </ol>
+        <p class="answer">$[ABD] = 15$, $[ADC] = 25$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Sliding the apex</h3>
+        <div class="problem"><p>Segment $AB$ has length $8$, and line $\ell$ is parallel to $AB$ at distance $5$. For points $X$ on $\ell$, what values can $[ABX]$ take?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>For every $X$ on $\ell$, the height from $X$ to $AB$ is $5$.</p></div><p class="why">Parallel lines are the same distance apart everywhere.</p></li>
+          <li><div class="do"><p>$[ABX] = \tfrac12 \cdot 8 \cdot 5 = 20$, always.</p></div><p class="why">Same base, same height, same area.</p></li>
+        </ol>
+        <p class="answer">Only $20$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Medians make six equal pieces</h3>
+        <div class="problem"><p>The three medians of a triangle with area $72$ meet at the centroid $G$. Find the area of each of the six small triangles, and $[ABG]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Median $AD$ splits $ABC$ into two halves of area $36$; so $[ADC] = 36$.</p></div><p class="why">$BD = DC$ and the triangles share the altitude from $A$.</p></li>
+          <li><div class="do"><p>$G$ divides $AD$ with $GD = \tfrac13 AD$, so $[GDC] = \tfrac13 [ADC] = 12$.</p></div><p class="why">$GDC$ and $ADC$ share the altitude from $C$, and their bases lie on line $AD$. (The centroid fact is from Chapter 11.)</p></li>
+          <li><div class="do"><p>By the same argument all six pieces have area $12$, and $[ABG]$ is two of them: $24$.</p></div><p class="why">$ABG$ consists of the two small triangles touching side $AB$.</p></li>
+        </ol>
+        <p class="answer">Each piece $12$; $[ABG] = 24$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two steps of ratios</h3>
+        <div class="problem"><p>In triangle $ABC$ with area $54$, point $D$ on $AB$ has $AD : DB = 2 : 1$, and $E$ is the midpoint of $AC$. Find $[ADE]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$[ADC] = \tfrac23 [ABC] = 36$.</p></div><p class="why">$ADC$ and $ABC$ share the altitude from $C$; their bases are $AD$ and $AB$, with $AD = \tfrac23 AB$.</p></li>
+          <li><div class="do"><p>$[ADE] = \tfrac12 [ADC] = 18$.</p></div><p class="why">$ADE$ and $ADC$ share the altitude from $D$; their bases are $AE$ and $AC$, with $AE = \tfrac12 AC$.</p></li>
+        </ol>
+        <p class="answer">$18$</p>
+        <p class="key-idea">Chain several same-altitude steps, choosing a new apex each time.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A point inside a cevian</h3>
+        <div class="problem"><p>In triangle $ABC$ with area $60$, $D$ is on $BC$ with $BD : DC = 1 : 2$, and $E$ is on $AD$ with $AE : ED = 3 : 1$. Find $[BED]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$[ABD] = \tfrac13 \cdot 60 = 20$.</p></div><p class="why">Same altitude from $A$; $BD$ is one third of $BC$.</p></li>
+          <li data-think="Triangles $BED$ and $BAD$ share which vertex, with bases on which line?"><div class="do"><p>$[BED] = \tfrac{ED}{AD} \cdot [BAD] = \tfrac14 \cdot 20 = 5$.</p></div><p class="why">Both have apex $B$ and bases $ED$ and $AD$ on line $AD$, so they share the altitude from $B$.</p></li>
+        </ol>
+        <p class="answer">$5$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Equal side triangles in a trapezoid</h3>
+        <div class="problem"><p>In trapezoid $ABCD$ with $AB \parallel CD$, the diagonals meet at $E$. Prove $[ADE] = [BCE]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$[ADC] = [BDC]$.</p></div><p class="why">Same base $DC$, and $A$ and $B$ are the same distance from $DC$ because $AB \parallel DC$.</p></li>
+          <li><div class="do"><p>$[ADE] = [ADC] - [DEC]$ and $[BCE] = [BDC] - [DEC]$.</p></div><p class="why">Each big triangle is a side triangle plus the bottom triangle $DEC$.</p></li>
+          <li><div class="do"><p>Equal amounts minus the same amount are equal, so $[ADE] = [BCE]$.</p></div><p class="why">Subtracting a shared piece preserves equality.</p></li>
+        </ol>
+        <p class="answer">$[ADE] = [BCE]$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The whole trapezoid from one small triangle</h3>
+        <div class="problem"><p>In trapezoid $ABCD$, $AB \parallel CD$, $AB = 5$, $CD = 15$, and the diagonals meet at $E$. If $[ABE] = 4$, find $[ABCD]$.</p>
+          <svg class="stage" viewBox="0 0 300 160" style="max-width:300px;display:block;margin:10px auto 0" role="img" aria-label="Trapezoid with short top base AB and long bottom base DC, diagonals crossing at E">
+            <polygon points="20,140 280,140 175,30 95,30" fill="none" stroke="var(--plot-2)" stroke-width="2"/>
+            <polygon points="95,30 175,30 135,57.5" fill="color-mix(in srgb, var(--plot-1) 40%, transparent)"/>
+            <polygon points="20,140 280,140 135,57.5" fill="color-mix(in srgb, var(--plot-3) 30%, transparent)"/>
+            <polygon points="95,30 20,140 135,57.5" fill="color-mix(in srgb, var(--plot-4) 28%, transparent)"/>
+            <polygon points="175,30 280,140 135,57.5" fill="color-mix(in srgb, var(--plot-4) 28%, transparent)"/>
+            <line x1="95" y1="30" x2="280" y2="140" stroke="var(--plot-2)"/><line x1="175" y1="30" x2="20" y2="140" stroke="var(--plot-2)"/>
+            <text x="88" y="24" class="lbl">A</text><text x="178" y="24" class="lbl">B</text><text x="284" y="152" class="lbl">C</text><text x="6" y="152" class="lbl">D</text><text x="130" y="76" class="lbl">E</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>$[CDE] = 3^2 \cdot 4 = 36$.</p></div><p class="why">$\triangle ABE \sim \triangle CDE$ with ratio $CD/AB = 3$ (as in §15.1).</p></li>
+          <li data-think="$ADE$ and $ABE$ share vertex $A$. Where do their bases lie?"><div class="do"><p>$\dfrac{[ADE]}{[ABE]} = \dfrac{DE}{EB} = 3$, so $[ADE] = 12$.</p></div><p class="why">Same altitude from $A$, bases on line $BD$; and $DE : EB = 3 : 1$ from the similar triangles.</p></li>
+          <li><div class="do"><p>$[BCE] = [ADE] = 12$, so $[ABCD] = 4 + 36 + 12 + 12 = 64$.</p></div><p class="why">The previous example showed the two side triangles are equal.</p></li>
+        </ol>
+        <p class="answer">$64$</p>
+        <p class="key-idea">Notice $64 = (\sqrt4 + \sqrt{36})^2$: the side triangles are each $\sqrt{[ABE][CDE]}$.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 15.3 ===================== -->
+  <section class="lesson" id="s15-3" data-title="Complicated Figures">
+    <h2><span class="sec-num">15.3</span> Complicated Figures</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>No formula gives the area of a crescent moon, a lens, or a four-leaf clover drawn with a compass. But each is what's left over when simple shapes overlap. Treat them like a jigsaw: find pieces whose areas you know, then add and subtract.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The method is always the same: <strong>identify simple pieces</strong> (rectangles, triangles, circles, sectors) and <strong>combine them</strong> with $+$ and $-$ to make the shaded region. Some reliable moves:</p>
+      <ul>
+        <li><strong>Draw radii</strong> to the ends of every arc. That separates sectors and circular segments from the rest.</li>
+        <li>A <strong>circular segment</strong> (between a chord and its arc) is a sector minus a triangle: with central angle $\theta$ and radius $r$, $\dfrac{\theta}{360^\circ}\pi r^2 - \tfrac12 r^2 \sin\theta$.</li>
+        <li><strong>Look for right and equilateral triangles</strong>; draw the missing side to cut them out.</li>
+        <li>For polygons, <strong>split along diagonals</strong> or <strong>enclose in a rectangle</strong> and subtract the corners.</li>
+        <li>If shapes overlap, adding their areas counts the overlap twice: $\text{(sum of pieces)} - \text{(whole)} = \text{(overlap)}$.</li>
+      </ul>
+      <div class="note"><p>A ring between two circles with the same centre is an <strong>annulus</strong>: its area is $\pi R^2 - \pi r^2$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="areaPuzzle">
+      <figcaption><strong>Explore:</strong> Pick a figure and press <em>Next piece</em> to build its shaded area one simple piece at a time. Green pieces are added, red ones subtracted. The size slider changes the numbers.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="lensOverlap">
+      <figcaption><strong>Explore:</strong> Drag the centre of the right circle. The overlap is two circular segments, and each segment is a sector minus a triangle. Try making each circle pass through the other's centre.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>An annulus</h3>
+        <div class="problem"><p>Two circles share a centre and have radii $5$ and $3$. Find the area of the ring between them.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Big circle: $25\pi$. Small circle: $9\pi$.</p></div><p class="why">The ring is the big disc with the small disc removed.</p></li>
+          <li><div class="do"><p>Ring $= 25\pi - 9\pi = 16\pi$.</p></div><p class="why">Subtract the piece that isn't shaded.</p></li>
+        </ol>
+        <p class="answer">$16\pi$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>An L-shaped room</h3>
+        <div class="problem"><p>A room is a $10 \times 8$ rectangle with a $4 \times 3$ rectangle cut out of one corner. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$10 \times 8 - 4 \times 3 = 80 - 12 = 68$.</p></div><p class="why">Enclose the L in a rectangle and subtract the missing corner; it's quicker than cutting the L into two pieces.</p></li>
+        </ol>
+        <p class="answer">$68$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The corners outside a circle</h3>
+        <div class="problem"><p>A circle is inscribed in a square of side $6$. Find the total area inside the square but outside the circle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The circle touches all four sides, so its diameter is $6$ and its radius is $3$.</p></div><p class="why">An inscribed circle's diameter equals the square's side.</p></li>
+          <li><div class="do"><p>$36 - 9\pi \approx 7.73$.</p></div><p class="why">Square minus circle.</p></li>
+        </ol>
+        <p class="answer">$36 - 9\pi$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A regular octagon, from a square</h3>
+        <div class="problem"><p>Find the area of a regular octagon with side $4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Extend alternate sides to form a square. Each corner cut off is an isosceles right triangle with hypotenuse $4$, so legs $2\sqrt2$.</p></div><p class="why">The octagon's $135^\circ$ angles leave $45^\circ$ angles at the corners.</p></li>
+          <li><div class="do"><p>Square side $= 2\sqrt2 + 4 + 2\sqrt2 = 4 + 4\sqrt2$; square area $= (4 + 4\sqrt2)^2 = 48 + 32\sqrt2$.</p></div><p class="why">$(4 + 4\sqrt2)^2 = 16 + 32\sqrt2 + 32$.</p></li>
+          <li><div class="do"><p>Each corner has area $\tfrac12 (2\sqrt2)^2 = 4$, so the octagon is $48 + 32\sqrt2 - 16 = 32 + 32\sqrt2$.</p></div><p class="why">Square minus the four corners.</p></li>
+        </ol>
+        <p class="answer">$32 + 32\sqrt2 \approx 77.25$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A circular segment</h3>
+        <div class="problem"><p>A chord of a circle of radius $6$ subtends a $90^\circ$ angle at the centre. Find the area between the chord and the shorter arc.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sector: $\dfrac{90}{360} \cdot 36\pi = 9\pi$.</p></div><p class="why">Draw the radii to the chord's ends; the sector is a quarter of the circle.</p></li>
+          <li><div class="do"><p>Triangle: $\tfrac12 \cdot 6 \cdot 6 = 18$.</p></div><p class="why">The two radii are perpendicular legs.</p></li>
+          <li><div class="do"><p>Segment $= 9\pi - 18$.</p></div><p class="why">The segment is the sector with the triangle removed.</p></li>
+        </ol>
+        <p class="answer">$9\pi - 18 \approx 10.27$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A lens in a square</h3>
+        <div class="problem"><p>Square $ABCD$ has side $6$. Quarter circles of radius $6$ are drawn inside it, centred at $A$ and at $C$. Find the area of the lens-shaped region where they overlap.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Both arcs pass through $B$ and $D$, so diagonal $BD$ cuts the lens into two pieces.</p></div><p class="why">$AB = AD = 6$ and $CB = CD = 6$.</p></li>
+          <li><div class="do"><p>The piece on $C$'s side of $BD$ is a $90^\circ$ segment of the circle centred at $A$: area $9\pi - 18$ (previous example).</p></div><p class="why">Quarter circle at $A$ minus triangle $ABD$.</p></li>
+          <li><div class="do"><p>The other piece is the same by symmetry, so the lens is $2(9\pi - 18) = 18\pi - 36$.</p></div><p class="why">Reflecting across $BD$ swaps the two circles.</p></li>
+        </ol>
+        <p class="answer">$18\pi - 36 \approx 20.55$</p>
+        <p class="key-idea">A lens is two segments back to back: cut it along its chord.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Two circles through each other's centres</h3>
+        <div class="problem"><p>Two circles of radius $6$ each pass through the other's centre. Find the area of their overlap.</p></div>
+        <ol class="steps">
+          <li data-think="Join the two centres and the two crossing points. What triangles appear?"><div class="do"><p>Let the centres be $O_1, O_2$ and the crossing points $P, Q$. Then $O_1O_2 = O_1P = O_2P = 6$: triangle $O_1O_2P$ is equilateral, and so is $O_1O_2Q$.</p></div><p class="why">Every one of those segments is a radius of one of the circles.</p></li>
+          <li><div class="do"><p>So $\angle PO_1Q = 120^\circ$. The segment of circle $O_1$ cut off by chord $PQ$ has area $\dfrac{120}{360}\cdot 36\pi - \tfrac12 \cdot 6^2 \sin 120^\circ = 12\pi - 9\sqrt3$.</p></div><p class="why">Sector minus triangle $PO_1Q$.</p></li>
+          <li><div class="do"><p>The overlap is two such segments: $24\pi - 18\sqrt3$.</p></div><p class="why">Chord $PQ$ splits the lens into one segment from each circle.</p></li>
+        </ol>
+        <p class="answer">$24\pi - 18\sqrt3 \approx 44.22$</p>
+        <p class="book-next">Next in the book: Example 15-12, which uses the same idea with four circles.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The shoemaker's knife</h3>
+        <div class="problem"><p>Point $C$ lies on segment $AB$ with $AC = 6$ and $CB = 4$. Semicircles are drawn on the same side of $AB$ with diameters $AB$, $AC$ and $CB$. Find the area inside the big semicircle but outside the two small ones. Then show it equals the area of the circle whose diameter is the perpendicular segment from $C$ up to the big semicircle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A semicircle with diameter $d$ has area $\tfrac{\pi d^2}{8}$, so the region is $\tfrac{\pi}{8}(10^2 - 6^2 - 4^2) = \tfrac{\pi}{8}\cdot 48 = 6\pi$.</p></div><p class="why">Big semicircle minus the two small ones.</p></li>
+          <li data-think="Let $D$ be the top of that perpendicular. What is $\angle ADB$?"><div class="do"><p>Let $D$ be where the perpendicular at $C$ meets the big semicircle. $\angle ADB = 90^\circ$, and $\triangle ACD \sim \triangle DCB$, so $\dfrac{AC}{CD} = \dfrac{CD}{CB}$ and $CD^2 = 6 \cdot 4 = 24$.</p></div><p class="why">An angle in a semicircle is right; the altitude to the hypotenuse makes two similar right triangles.</p></li>
+          <li><div class="do"><p>The circle with diameter $CD$ has area $\pi \cdot \dfrac{CD^2}{4} = \pi \cdot \dfrac{24}{4} = 6\pi$. ✓</p></div><p class="why">Radius squared is $CD^2/4$.</p></li>
+        </ol>
+        <p class="answer">$6\pi$, the same as the circle on $CD$.</p>
+        <p class="key-idea">Expanding $(a + b)^2 - a^2 - b^2 = 2ab$ is what makes the two areas match.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-15">
+    <h2 id="further-15">Further reading in the book</h2>
+    <ul>
+      <li><strong>§15.1 Similar Figures</strong>: Examples 15-1 to 15-3.</li>
+      <li><strong>§15.2 Same Base/Same Altitude</strong>: the ratio argument and Examples 15-4 to 15-7.</li>
+      <li><strong>§15.3 Complicated Figures</strong>: the three tips and Examples 15-8 to 15-12.</li>
+      <li><strong>Problems to Solve for Chapter 15</strong>: Problems 252–277; 256, 265 and 268 use §15.1–15.2, while 257, 263 and 277 are add-and-subtract puzzles with circles.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 15 explorers ---------- */
+(function () {
+  "use strict";
+
+  function snap(v, s) { return Math.round(v / s) * s; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function pts(P) { return P.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" "); }
+  function lerp(p, q, t) { return { x: p.x + (q.x - p.x) * t, y: p.y + (q.y - p.y) * t }; }
+  function txt(svg, x, y, t, attrs) {
+    var a = { x: x, y: y, "text-anchor": "middle", style: "font: 600 14px var(--font-mono)", text: t };
+    if (attrs) Object.keys(attrs).forEach(function (k) { a[k] = attrs[k]; });
+    var e = W.s("text", a); svg.appendChild(e); return e;
+  }
+  var BOLD = "font: 700 15px var(--font-body)";
+
+  /* 15.1 — scaled triangle tiled by k^2 copies */
+  AOPS.registerWidget("similarScale", function (body) {
+    var U = 20, A = { x: 40, y: 390 };
+    var svg = W.stage(body, { w: 640, h: 410, label: "Small triangle ABC and its copy scaled by k from A, tiled by k squared small copies" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var k = 2, B = { x: 200, y: 390 }, C = { x: 120, y: 280 };
+    var layer = W.s("g"); svg.appendChild(layer);
+    W.slider(ctl, { label: "Scale factor k", min: 1, max: 3, step: 0.5, value: k, format: function (v) { return v.toFixed(1); }, onInput: function (v) { k = v; draw(); } });
+    W.handle(svg, { x: B.x, y: B.y, label: "Vertex B, slides along the base", keyStep: U,
+      onMove: function (x) { B.x = clamp(snap(x, U), A.x + 2 * U, A.x + 9 * U); draw(); return [B.x, B.y]; } });
+    W.handle(svg, { x: C.x, y: C.y, label: "Vertex C; arrow keys move it", keyStep: U,
+      onMove: function (x, y) { C.x = clamp(snap(x, U), A.x, A.x + 9 * U); C.y = clamp(snap(y, U), A.y - 6 * U, A.y - 2 * U); draw(); return [C.x, C.y]; } });
+    function draw() {
+      W.clear(layer);
+      var B2 = lerp(A, B, k), C2 = lerp(A, C, k);
+      var vb = { x: B.x - A.x, y: B.y - A.y }, vc = { x: C.x - A.x, y: C.y - A.y };
+      function at(i, j) { return { x: A.x + i * vb.x + j * vc.x, y: A.y + i * vb.y + j * vc.y }; }
+      var whole = Math.abs(k - Math.round(k)) < 1e-9, K = Math.round(k), up = 0, dn = 0;
+      if (whole) {
+        for (var i = 0; i < K; i++) for (var j = 0; j < K - i; j++) {
+          layer.appendChild(W.s("polygon", { points: pts([at(i, j), at(i + 1, j), at(i, j + 1)]), fill: "color-mix(in srgb, var(--plot-2) 30%, transparent)", stroke: "var(--plot-2)", "stroke-width": 1.2 })); up++;
+          if (j < K - i - 1) { layer.appendChild(W.s("polygon", { points: pts([at(i + 1, j), at(i + 1, j + 1), at(i, j + 1)]), fill: "color-mix(in srgb, var(--plot-3) 30%, transparent)", stroke: "var(--plot-3)", "stroke-width": 1.2 })); dn++; }
+        }
+      }
+      layer.appendChild(W.s("polygon", { points: pts([A, B2, C2]), fill: whole ? "none" : "color-mix(in srgb, var(--plot-2) 14%, transparent)", stroke: "var(--ink)", "stroke-width": 2.5 }));
+      layer.appendChild(W.s("polygon", { points: pts([A, B, C]), fill: "color-mix(in srgb, var(--accent) 45%, transparent)", stroke: "var(--accent)", "stroke-width": 2.5 }));
+      txt(layer, A.x - 12, A.y + 4, "A", { style: BOLD, "text-anchor": "end" });
+      txt(layer, B.x + 18, B.y + 22, "B", { style: BOLD });
+      txt(layer, C.x - 14, C.y - 8, "C", { style: BOLD });
+      if (k > 1) { txt(layer, B2.x + 4, B2.y - 10, "B′", { style: BOLD, "text-anchor": "start" }); txt(layer, C2.x + 10, C2.y - 6, "C′", { style: BOLD, "text-anchor": "start" }); }
+      var a1 = Math.abs((vb.x * vc.y - vb.y * vc.x)) / 2 / (U * U);
+      var html = "<p>$[ABC] = " + W.fmt(a1, 2) + "$. Every length is multiplied by $k = " + W.fmt(k, 1) + "$, so $[AB'C'] = k^2 \\cdot [ABC] = " + W.fmt(k * k, 2) + " \\times " + W.fmt(a1, 2) + " = " + W.fmt(k * k * a1, 2) + "$.</p>";
+      html += whole ? "<p>Count the copies: $" + up + "$ upright $+ " + dn + "$ upside down $= " + (up + dn) + " = " + K + "^2$.</p>" : "<p>For a non-whole $k$ the copies don't tile neatly, but the area still scales by $k^2 = " + W.fmt(k * k, 2) + "$.</p>";
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* 15.2 — same base / same altitude */
+  AOPS.registerWidget("sameBase", function (body) {
+    var U = 40, Bp = { x: 120, y: 340 }, Cp = { x: 520, y: 340 };
+    var svg = W.stage(body, { w: 640, h: 390, label: "Triangle ABC with draggable apex A and a point D on base BC" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var lock = true, A = { x: 240, y: 140 }, D = { x: 280, y: 340 };
+    var layer = W.s("g"); svg.appendChild(layer);
+    W.handle(svg, { x: A.x, y: A.y, label: "Apex A; arrow keys move it", keyStep: 20,
+      onMove: function (x, y) { A.x = clamp(snap(x, 20), 40, 600); if (!lock) A.y = clamp(snap(y, 20), 60, 300); draw(); return [A.x, A.y]; } });
+    W.handle(svg, { x: D.x, y: D.y, label: "Point D on the base; left and right arrows", keyStep: 20,
+      onMove: function (x) { D.x = clamp(snap(x, 20), Bp.x + 20, Cp.x - 20); draw(); return [D.x, D.y]; } });
+    W.segmented(ctl, { title: "Height", value: "lock", options: [{ value: "lock", label: "Locked" }, { value: "free", label: "Free" }], onChange: function (v) { lock = v === "lock"; draw(); } });
+    function draw() {
+      W.clear(layer);
+      var h = (Bp.y - A.y) / U, bd = (D.x - Bp.x) / U, dc = (Cp.x - D.x) / U, bc = bd + dc;
+      if (lock) layer.appendChild(W.s("line", { x1: 20, y1: A.y, x2: 620, y2: A.y, stroke: "var(--plot-4)", "stroke-dasharray": "8 6", "stroke-width": 1.5 }));
+      layer.appendChild(W.s("line", { x1: 20, y1: Bp.y, x2: 620, y2: Bp.y, stroke: "var(--faint)", "stroke-width": 1 }));
+      layer.appendChild(W.s("polygon", { points: pts([A, Bp, D]), fill: "color-mix(in srgb, var(--plot-2) 32%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      layer.appendChild(W.s("polygon", { points: pts([A, D, Cp]), fill: "color-mix(in srgb, var(--plot-1) 32%, transparent)", stroke: "var(--plot-1)", "stroke-width": 2 }));
+      layer.appendChild(W.s("line", { x1: A.x, y1: A.y, x2: A.x, y2: Bp.y, stroke: "var(--muted)", "stroke-dasharray": "5 4", "stroke-width": 1.5 }));
+      layer.appendChild(W.s("path", { d: "M" + (A.x + (A.x < 560 ? 10 : -10)) + " " + Bp.y + "v-10h" + (A.x < 560 ? -10 : 10), fill: "none", stroke: "var(--muted)" }));
+      var hl = D.x > A.x || A.x > 560;
+      txt(layer, A.x + (hl ? -10 : 10), A.y + (Bp.y - A.y) * 0.82, "h = " + W.fmt(h, 1), { fill: "var(--muted)", "text-anchor": hl ? "end" : "start" });
+      txt(layer, A.x, A.y - 18, "A", { style: BOLD });
+      txt(layer, Bp.x - 6, Bp.y + 22, "B", { style: BOLD });
+      txt(layer, Cp.x + 6, Cp.y + 22, "C", { style: BOLD });
+      txt(layer, D.x, D.y + 40, "D", { style: BOLD });
+      txt(layer, (Bp.x + D.x) / 2, Bp.y + 22, W.fmt(bd, 1), { fill: "var(--plot-2)" });
+      txt(layer, (D.x + Cp.x) / 2, Bp.y + 22, W.fmt(dc, 1), { fill: "var(--plot-1)" });
+      var a1 = bd * h / 2, a2 = dc * h / 2;
+      out.set("<p>$[ABD] = \\tfrac12 \\cdot " + W.fmt(bd, 1) + " \\cdot " + W.fmt(h, 1) + " = " + W.fmt(a1, 2) + "$ and $[ADC] = \\tfrac12 \\cdot " + W.fmt(dc, 1) + " \\cdot " + W.fmt(h, 1) + " = " + W.fmt(a2, 2) + "$, so $[ABD] : [ADC] = " + W.fmt(bd, 1) + " : " + W.fmt(dc, 1) + " = BD : DC$</p>" +
+        "<p>$[ABC] = \\tfrac12 \\cdot " + W.fmt(bc, 1) + " \\cdot " + W.fmt(h, 1) + " = " + W.fmt(a1 + a2, 2) + "$" + (lock ? ", which stays the same wherever $A$ slides along the dashed parallel line." : ". Unlock changes the height, and the area changes with it.") + "</p>");
+    }
+    draw();
+  });
+
+  /* 15.3a — build a shaded area from pieces */
+  AOPS.registerWidget("areaPuzzle", function (body) {
+    var svg = W.stage(body, { w: 640, h: 360, label: "Shaded region built step by step from simple added and subtracted pieces" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var fig = "annulus", s = 5, step = 0;
+    var cx = 200, cy = 180, BOX = 300;
+    var pi = Math.PI, r2 = Math.SQRT2;
+    var FIGS = {
+      annulus: { min: 3, label: "Outer radius R (inner is R − 2)", pieces: function (s) { return [
+          { sign: 1, name: "big circle", tex: "\\pi(" + s + ")^2", val: pi * s * s, draw: function (g, sc) { g.appendChild(W.s("circle", { cx: cx, cy: cy, r: s * sc })); } },
+          { sign: -1, name: "small circle", tex: "\\pi(" + (s - 2) + ")^2", val: pi * (s - 2) * (s - 2), draw: function (g, sc) { g.appendChild(W.s("circle", { cx: cx, cy: cy, r: (s - 2) * sc })); } }
+        ]; }, scale: function (s) { return BOX / (2 * s); },
+        target: function (g, s, sc) { g.appendChild(W.s("path", { d: ring(s * sc, (s - 2) * sc), "fill-rule": "evenodd" })); },
+        result: function (s) { return "\\pi(" + s + "^2 - " + (s - 2) + "^2) = " + (s * s - (s - 2) * (s - 2)) + "\\pi"; } },
+      corners: { min: 2, label: "Square side s", pieces: function (s) { return [
+          { sign: 1, name: "square", tex: s + "^2", val: s * s, draw: function (g, sc) { g.appendChild(W.s("rect", { x: cx - s * sc / 2, y: cy - s * sc / 2, width: s * sc, height: s * sc })); } },
+          { sign: -1, name: "inscribed circle", tex: "\\pi\\left(\\tfrac{" + s + "}{2}\\right)^2", val: pi * s * s / 4, draw: function (g, sc) { g.appendChild(W.s("circle", { cx: cx, cy: cy, r: s * sc / 2 })); } }
+        ]; }, scale: function (s) { return BOX / s; },
+        target: function (g, s, sc) { var h = s * sc / 2; g.appendChild(W.s("path", { d: "M" + (cx - h) + " " + (cy - h) + "h" + 2 * h + "v" + 2 * h + "h" + -2 * h + "Z" + circ(h), "fill-rule": "evenodd" })); },
+        result: function (s) { return s * s + " - " + (s % 2 ? "\\tfrac{" + s * s + "}{4}" : s * s / 4) + "\\pi"; } },
+      octagon: { min: 2, label: "Octagon side s", pieces: function (s) { var L = s + s * r2; return [
+          { sign: 1, name: "enclosing square", tex: "(" + s + " + " + s + "\\sqrt2)^2", val: L * L, draw: function (g, sc) { g.appendChild(W.s("rect", { x: cx - L * sc / 2, y: cy - L * sc / 2, width: L * sc, height: L * sc })); } },
+          { sign: -1, name: "four corner triangles", tex: "4 \\cdot \\tfrac12\\left(\\tfrac{" + s + "}{\\sqrt2}\\right)^2", val: s * s, draw: function (g, sc) { octCorners(s, sc).forEach(function (t) { g.appendChild(W.s("polygon", { points: pts(t) })); }); } }
+        ]; }, scale: function (s) { return BOX / (s + s * r2); },
+        target: function (g, s, sc) { g.appendChild(W.s("polygon", { points: pts(octagon(s, sc)) })); },
+        result: function (s) { return s * s * 2 + " + " + s * s * 2 + "\\sqrt2"; } },
+      leaves: { min: 2, label: "Square side s", pieces: function (s) { return [
+          { sign: 1, name: "four semicircles", tex: "4 \\cdot \\tfrac12\\pi\\left(\\tfrac{" + s + "}{2}\\right)^2", val: pi * s * s / 2, draw: function (g, sc) { semis(s, sc).forEach(function (d) { g.appendChild(W.s("path", { d: d })); }); } },
+          { sign: -1, name: "square", tex: s + "^2", val: s * s, draw: function (g, sc) { g.appendChild(W.s("rect", { x: cx - s * sc / 2, y: cy - s * sc / 2, width: s * sc, height: s * sc })); } }
+        ]; }, scale: function (s) { return BOX / s; },
+        target: function (g, s, sc) { leafPaths(s, sc).forEach(function (d) { g.appendChild(W.s("path", { d: d })); }); },
+        result: function (s) { return (s % 2 ? "\\tfrac{" + s * s + "}{2}" : s * s / 2) + "\\pi - " + s * s; } }
+    };
+    function circ(r) { return "M" + (cx + r) + " " + cy + "A" + r + " " + r + " 0 1 0 " + (cx - r) + " " + cy + "A" + r + " " + r + " 0 1 0 " + (cx + r) + " " + cy + "Z"; }
+    function ring(R, r) { return circ(R) + circ(r); }
+    function octagon(s, sc) { var L = (s + s * r2) * sc / 2, c = s * sc / r2; return [
+      { x: cx - L + c, y: cy - L }, { x: cx + L - c, y: cy - L }, { x: cx + L, y: cy - L + c }, { x: cx + L, y: cy + L - c },
+      { x: cx + L - c, y: cy + L }, { x: cx - L + c, y: cy + L }, { x: cx - L, y: cy + L - c }, { x: cx - L, y: cy - L + c }]; }
+    function octCorners(s, sc) { var L = (s + s * r2) * sc / 2, c = s * sc / r2; return [
+      [{ x: cx - L, y: cy - L }, { x: cx - L + c, y: cy - L }, { x: cx - L, y: cy - L + c }],
+      [{ x: cx + L, y: cy - L }, { x: cx + L - c, y: cy - L }, { x: cx + L, y: cy - L + c }],
+      [{ x: cx + L, y: cy + L }, { x: cx + L - c, y: cy + L }, { x: cx + L, y: cy + L - c }],
+      [{ x: cx - L, y: cy + L }, { x: cx - L + c, y: cy + L }, { x: cx - L, y: cy + L - c }]]; }
+    function semis(s, sc) { var h = s * sc / 2; return [
+      "M" + (cx - h) + " " + (cy - h) + "A" + h + " " + h + " 0 0 0 " + (cx + h) + " " + (cy - h) + "Z",
+      "M" + (cx + h) + " " + (cy - h) + "A" + h + " " + h + " 0 0 0 " + (cx + h) + " " + (cy + h) + "Z",
+      "M" + (cx + h) + " " + (cy + h) + "A" + h + " " + h + " 0 0 0 " + (cx - h) + " " + (cy + h) + "Z",
+      "M" + (cx - h) + " " + (cy + h) + "A" + h + " " + h + " 0 0 0 " + (cx - h) + " " + (cy - h) + "Z"]; }
+    function leafPaths(s, sc) { var h = s * sc / 2; return [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(function (q) {
+      var px = cx + q[0] * h, py = cy + q[1] * h; return "M" + px + " " + py + "A" + h + " " + h + " 0 0 1 " + cx + " " + cy + "A" + h + " " + h + " 0 0 1 " + px + " " + py + "Z"; }); }
+    var layer = W.s("g"); svg.appendChild(layer);
+    var sl;
+    W.segmented(ctl, { title: "Figure", value: fig, options: [{ value: "annulus", label: "Annulus" }, { value: "corners", label: "Square − circle" }, { value: "octagon", label: "Octagon" }, { value: "leaves", label: "Four leaves" }], onChange: function (v) { fig = v; step = 0; s = Math.max(s, FIGS[fig].min); sl.input.min = FIGS[fig].min; lbl.textContent = FIGS[fig].label; sl.set(s); } });
+    sl = W.slider(ctl2, { label: "Size", min: 3, max: 8, value: s, onInput: function (v) { s = v; draw(); } });
+    var lbl = sl.input.parentNode.querySelector("label span");
+    lbl.textContent = FIGS[fig].label;
+    W.button(ctl2, "Next piece", function () { step = (step + 1) % (FIGS[fig].pieces(s).length + 2); draw(); });
+    W.button(ctl2, "Reset", function () { step = 0; draw(); });
+    function draw() {
+      W.clear(layer);
+      var F = FIGS[fig], P = F.pieces(s), sc = F.scale(s);
+      var showTarget = step === 0 || step > P.length;
+      var tg = W.s("g", { fill: showTarget ? "color-mix(in srgb, var(--accent) 55%, transparent)" : "color-mix(in srgb, var(--accent) 14%, transparent)", stroke: "var(--accent)", "stroke-width": 1.5 });
+      F.target(tg, s, sc); layer.appendChild(tg);
+      for (var i = 0; i < Math.min(step, P.length); i++) {
+        var col = P[i].sign > 0 ? "var(--plot-4)" : "var(--plot-5)", cur = i === step - 1;
+        var g = W.s("g", { fill: cur ? "color-mix(in srgb, " + col + " 30%, transparent)" : "none", stroke: col, "stroke-width": cur ? 3 : 1.5, "stroke-dasharray": P[i].sign < 0 ? "7 5" : null });
+        P[i].draw(g, sc); layer.appendChild(g);
+      }
+      var lx = 380, y = 70;
+      txt(layer, lx, y, step === 0 ? "Target region" : step > P.length ? "Result" : "Piece " + step + " of " + P.length, { "text-anchor": "start", style: "font: 700 16px var(--font-body)" });
+      P.forEach(function (p, i) {
+        if (i >= step) return;
+        txt(layer, lx, y + 34 + i * 30, (p.sign > 0 ? "+ " : "− ") + p.name, { "text-anchor": "start", fill: p.sign > 0 ? "var(--plot-4)" : "var(--plot-5)" });
+        txt(layer, lx + 18, y + 52 + i * 30, "≈ " + W.fmt(p.val, 2), { "text-anchor": "start", fill: "var(--muted)", style: "font: 600 12px var(--font-mono)" });
+      });
+      var total = P.reduce(function (t, p) { return t + p.sign * p.val; }, 0);
+      var html;
+      if (step === 0) html = "<p>The shaded region has no formula of its own. Press <strong>Next piece</strong> to build it from simple shapes.</p>";
+      else {
+        var terms = P.slice(0, Math.min(step, P.length)).map(function (p, i) { return (i ? (p.sign > 0 ? " + " : " - ") : (p.sign > 0 ? "" : "-")) + p.tex; }).join("");
+        html = "<p>$" + terms + (step > P.length ? " = " + F.result(s) + " \\approx " + W.fmt(total, 2) : "") + "$</p>";
+        if (step <= P.length) html += "<p>" + (P[step - 1].sign > 0 ? "Add" : "Subtract") + " the " + P[step - 1].name + "." + (fig === "leaves" && step === 2 ? " The semicircles cover the square once, plus each leaf a second time, so subtracting the square leaves just the leaves." : "") + "</p>";
+      }
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* 15.3b — lens of two equal circles */
+  AOPS.registerWidget("lensOverlap", function (body) {
+    var U = 22, r = 6, O1 = { x: 200, y: 185 };
+    var svg = W.stage(body, { w: 640, h: 370, label: "Two equal circles; the overlap is two circular segments" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var d = 8, mode = "lens";
+    var layer = W.s("g"); svg.appendChild(layer);
+    W.handle(svg, { x: O1.x + d * U, y: O1.y, label: "Centre of the right circle; left and right arrows", keyStep: U / 2,
+      onMove: function (x) { d = clamp(snap((x - O1.x) / U, 0.5), 0.5, 12); draw(); return [O1.x + d * U, O1.y]; }, valueText: function () { return "distance between centres " + d; } });
+    W.segmented(ctl, { title: "Show", value: mode, options: [{ value: "lens", label: "Overlap" }, { value: "seg", label: "One segment = sector − triangle" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(layer);
+      var R = r * U, O2 = { x: O1.x + d * U, y: O1.y };
+      layer.appendChild(W.s("circle", { cx: O1.x, cy: O1.y, r: R, fill: "none", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      layer.appendChild(W.s("circle", { cx: O2.x, cy: O2.y, r: R, fill: "none", stroke: "var(--plot-3)", "stroke-width": 2 }));
+      [O1].forEach(function (o) { layer.appendChild(W.s("circle", { cx: o.x, cy: o.y, r: 4, fill: "var(--ink)" })); });
+      txt(layer, O1.x - 6, O1.y + 22, "O₁", { style: BOLD });
+      txt(layer, O2.x + 4, O2.y + 26, "O₂", { style: BOLD });
+      if (d >= 2 * r) { out.set("<p>The circles " + (d === 2 * r ? "just touch" : "don't overlap") + ": the overlap has area $0$.</p>"); return; }
+      var hx = d * U / 2, hy = Math.sqrt(R * R - hx * hx);
+      var P = { x: O1.x + hx, y: O1.y - hy }, Q = { x: O1.x + hx, y: O1.y + hy };
+      var th = 2 * Math.acos(d / (2 * r)), thDeg = th * 180 / Math.PI;
+      var seg = r * r * (th - Math.sin(th)) / 2, sector = r * r * th / 2, tri = r * r * Math.sin(th) / 2;
+      if (mode === "lens") {
+        layer.appendChild(W.s("path", { d: "M" + P.x + " " + P.y + "A" + R + " " + R + " 0 0 0 " + Q.x + " " + Q.y + "A" + R + " " + R + " 0 0 0 " + P.x + " " + P.y + "Z", fill: "color-mix(in srgb, var(--accent) 45%, transparent)", stroke: "var(--accent)", "stroke-width": 2 }));
+        layer.appendChild(W.s("line", { x1: P.x, y1: P.y, x2: Q.x, y2: Q.y, stroke: "var(--ink)", "stroke-dasharray": "5 4", "stroke-width": 1.5 }));
+      } else {
+        layer.appendChild(W.s("path", { d: "M" + O1.x + " " + O1.y + "L" + P.x + " " + P.y + "A" + R + " " + R + " 0 0 1 " + Q.x + " " + Q.y + "Z", fill: "color-mix(in srgb, var(--plot-4) 28%, transparent)", stroke: "var(--plot-4)", "stroke-width": 2 }));
+        layer.appendChild(W.s("polygon", { points: pts([O1, P, Q]), fill: "color-mix(in srgb, var(--plot-5) 30%, transparent)", stroke: "var(--plot-5)", "stroke-width": 2, "stroke-dasharray": "6 4" }));
+        layer.appendChild(W.s("path", { d: "M" + P.x + " " + P.y + "A" + R + " " + R + " 0 0 1 " + Q.x + " " + Q.y + "Z", fill: "color-mix(in srgb, var(--accent) 55%, transparent)", stroke: "var(--accent)", "stroke-width": 2 }));
+        var ar = 26, a0 = -th / 2;
+        layer.appendChild(W.s("path", { d: "M" + O1.x + " " + O1.y + "L" + (O1.x + ar * Math.cos(a0)) + " " + (O1.y + ar * Math.sin(a0)) + "A" + ar + " " + ar + " 0 0 1 " + (O1.x + ar * Math.cos(-a0)) + " " + (O1.y + ar * Math.sin(-a0)) + "Z", fill: "var(--ink)", "fill-opacity": 0.35 }));
+        txt(layer, O1.x + 44, O1.y + 5, W.fmt(thDeg, 1) + "°", { "text-anchor": "start", fill: "var(--ink)" });
+      }
+      [P, Q].forEach(function (p) { layer.appendChild(W.s("circle", { cx: p.x, cy: p.y, r: 4, fill: "var(--accent)" })); });
+      txt(layer, P.x, P.y - 12, "P", { style: BOLD }); txt(layer, Q.x, Q.y + 24, "Q", { style: BOLD });
+      var special = Math.abs(d - r) < 1e-9;
+      var html = "<p>Radius $r = 6$, centres $" + W.fmt(d, 1) + "$ apart. Central angle $\\angle PO_1Q = " + W.fmt(thDeg, 1) + "^\\circ$.</p>";
+      html += "<p>Segment $=$ sector $-$ triangle $= " + W.fmt(sector, 2) + " - " + W.fmt(tri, 2) + " = " + W.fmt(seg, 2) + "$; overlap $= 2 \\times " + W.fmt(seg, 2) + " = " + W.fmt(2 * seg, 2) + "$.</p>";
+      if (special) html += "<p>Each circle passes through the other's centre: $O_1O_2P$ is equilateral, the angle is exactly $120^\\circ$, and the overlap is $2(12\\pi - 9\\sqrt3) = 24\\pi - 18\\sqrt3$.</p>";
+      out.set(html);
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

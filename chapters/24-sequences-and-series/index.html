@@ -1,0 +1,1057 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 24: Sequences and Series · AoPS Learner</title>
+  <meta name="description" content="Arithmetic and geometric series, infinite sums, sigma notation, recursive sequences and arithmetic and geometric means, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="24" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 24 · Advanced Topics</span>
+    <h1>Sequences and Series</h1>
+    <p class="lede">A sequence is a list of numbers that follows a rule; a series is what you get when you add the list up. Adding a hundred terms one at a time is slow, but a single clever trick (write the sum twice, or multiply it and subtract) collapses the whole thing into a formula. In this chapter you'll learn those tricks, see how an infinite list can have a finite total, and meet the shorthand mathematicians use to write sums.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Arithmetic: $n$th term $a + (n-1)d$; sum $S = \dfrac{n}{2}\big(2a + (n-1)d\big) = \dfrac{n}{2}(\text{first} + \text{last})$. Find it by writing the sum forwards and backwards.</li>
+      <li>Geometric: $n$th term $ar^{n-1}$; sum $S = \dfrac{a(1 - r^n)}{1 - r}$ for $r \ne 1$. Find it by computing $S - rS$.</li>
+      <li>An infinite geometric series converges exactly when $|r| &lt; 1$, and then $a + ar + ar^2 + \cdots = \dfrac{a}{1-r}$.</li>
+      <li>Terms tending to $0$ is necessary for convergence but not enough: $1 + \tfrac12 + \tfrac13 + \cdots$ diverges.</li>
+      <li>$\displaystyle\sum_{k=m}^{n} f(k)$ adds $f(k)$ for $k = m, m+1, \ldots, n$. Sums split over $+$ and constants factor out.</li>
+      <li>A recursion defines each term from earlier ones; arithmetic ($a_n = a_{n-1} + d$) and geometric ($a_n = r\,a_{n-1}$) are the simplest.</li>
+      <li>Each term of an arithmetic sequence is the average of its neighbours; each term of a geometric sequence is their geometric mean.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 24.1 ===================== -->
+  <section class="lesson" id="s24-1" data-title="Arithmetic Series">
+    <h2><span class="sec-num">24.1</span> Arithmetic Series</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A staircase of blocks has $1$ block in the first column, $2$ in the next, and so on up to $100$. How many blocks is that? Build a second, identical staircase, flip it upside down and set it on top of the first. Every column now holds exactly $101$ blocks, and there are $100$ columns. The two staircases together hold $10{,}100$ blocks, so one staircase holds $5050$. No adding required.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>sequence</strong> is an ordered list of numbers, called <em>terms</em>. When we add the terms we get a <strong>series</strong>. A sequence is <strong>arithmetic</strong> when each term is the previous one plus a fixed <em>common difference</em> $d$. With first term $a$:</p>
+      <div class="rule"><p>$$a,\quad a+d,\quad a+2d,\quad \ldots,\qquad n\text{th term} = a + (n-1)d.$$</p></div>
+      <p>The $n$th term has $n-1$ steps of size $d$ after the first term, not $n$. That off-by-one is the most common slip in this chapter.</p>
+      <p>To add the first $n$ terms, write the sum $S$ forwards and again backwards, then add the two lines column by column. Every column adds to the same thing, the first term plus the last term, and there are $n$ columns:</p>
+      <div class="rule"><p>$$2S = n\,(\text{first} + \text{last}) \quad\Longrightarrow\quad S = \frac{n}{2}\big(\text{first} + \text{last}\big) = \frac{n}{2}\big(2a + (n-1)d\big).$$</p></div>
+      <p>In words: the sum is the number of terms times the average of the first and last terms. A special case worth knowing by heart is $1 + 2 + \cdots + n = \dfrac{n(n+1)}{2}$.</p>
+      <div class="note"><p>Remember the <em>method</em>, not just the formula. Pairing terms from opposite ends works whenever the terms are evenly spaced.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="arithPairs">
+      <figcaption><strong>Explore:</strong> The bars are the terms $a, a+d, \ldots$. Turn on the reversed copy: it stacks on top so every column reaches the same height, first $+$ last. The whole rectangle is $2S$, so the series is half of it.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Spot the common difference</h3>
+        <div class="problem"><p>Which of these are arithmetic sequences? (a) $7, 11, 15, 19, \ldots$ (b) $2, 4, 8, 16, \ldots$ (c) $20, 17, 14, 11, \ldots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) Differences: $11 - 7 = 4$, $15 - 11 = 4$, $19 - 15 = 4$. Arithmetic with $d = 4$.</p></div><p class="why">A sequence is arithmetic exactly when consecutive differences are all equal.</p></li>
+          <li><div class="do"><p>(b) Differences: $2, 4, 8$. Not arithmetic.</p></div><p class="why">The differences grow, so the gap is not fixed. (Each term is <em>double</em> the last, which makes it geometric; see 24.2.)</p></li>
+          <li><div class="do"><p>(c) Differences: $-3, -3, -3$. Arithmetic with $d = -3$.</p></div><p class="why">The common difference can be negative; the terms then decrease steadily.</p></li>
+        </ol>
+        <p class="answer">(a) and (c) are arithmetic, with $d = 4$ and $d = -3$; (b) is not.</p>
+        <p class="book-next">Next in the book: Exercise 24-1.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Jump straight to the 40th term</h3>
+        <div class="problem"><p>Find the $40$th term of $5, 12, 19, 26, \ldots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Here $a = 5$ and $d = 12 - 5 = 7$.</p></div><p class="why">Every arithmetic sequence is pinned down by its first term and common difference.</p></li>
+          <li><div class="do"><p>$40$th term $= a + 39d = 5 + 39 \cdot 7 = 5 + 273 = 278$.</p></div><p class="why">From term $1$ to term $40$ there are $39$ steps, not $40$.</p></li>
+        </ol>
+        <p class="answer">$278$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Sum with first and last known</h3>
+        <div class="problem"><p>Evaluate $3 + 7 + 11 + \cdots + 99$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Count the terms: $99 = 3 + (n-1)\cdot 4$ gives $n - 1 = 24$, so $n = 25$.</p></div><p class="why">Before using the sum formula we need the number of terms, found from the $n$th-term formula.</p></li>
+          <li><div class="do"><p>$S = \dfrac{25}{2}(3 + 99) = 25 \cdot 51 = 1275$.</p></div><p class="why">Number of terms times the average of first and last.</p></li>
+        </ol>
+        <p class="answer">$1275$</p>
+        <p class="book-next">Next in the book: Exercises 24-2 and 24-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The first $n$ positive integers</h3>
+        <div class="problem"><p>Find $1 + 2 + 3 + \cdots + 200$, and give a formula for $1 + 2 + \cdots + n$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$200$ terms, first $1$, last $200$: $S = \dfrac{200}{2}(1 + 200) = 100 \cdot 201 = 20100$.</p></div><p class="why">The pairs $1 + 200$, $2 + 199$, … all equal $201$.</p></li>
+          <li><div class="do"><p>In general: $n$ terms, first $1$, last $n$, so $1 + 2 + \cdots + n = \dfrac{n(n+1)}{2}$.</p></div><p class="why">The same pairing works for any $n$; this formula appears constantly in counting problems.</p></li>
+        </ol>
+        <p class="answer">$20100$; in general $\dfrac{n(n+1)}{2}$.</p>
+        <p class="book-next">Next in the book: Exercise 24-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Seats in a theater</h3>
+        <div class="problem"><p>A theater's front row has $18$ seats and each row behind it has $2$ more seats than the row in front. There are $25$ rows. How many seats are there in all?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Last row: $18 + 24 \cdot 2 = 66$ seats.</p></div><p class="why">Row counts form an arithmetic sequence with $a = 18$, $d = 2$; row $25$ is $24$ steps past row $1$.</p></li>
+          <li><div class="do"><p>Total: $\dfrac{25}{2}(18 + 66) = 25 \cdot 42 = 1050$.</p></div><p class="why">The average row has $42$ seats, and there are $25$ rows.</p></li>
+        </ol>
+        <p class="answer">$1050$ seats</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Recover the sequence from two terms</h3>
+        <div class="problem"><p>The $4$th term of an arithmetic sequence is $17$ and the $11$th term is $52$. Find the sum of the first $20$ terms.</p></div>
+        <ol class="steps">
+          <li data-think="How many steps of size $d$ separate term 4 from term 11?"><div class="do"><p>From term $4$ to term $11$ is $7$ steps: $7d = 52 - 17 = 35$, so $d = 5$.</p></div><p class="why">The difference between two terms is (number of steps) $\times\, d$.</p></li>
+          <li><div class="do"><p>$a = 17 - 3d = 17 - 15 = 2$.</p></div><p class="why">Term $4$ is three steps after term $1$, so walk back three steps.</p></li>
+          <li><div class="do"><p>$S_{20} = \dfrac{20}{2}\big(2 \cdot 2 + 19 \cdot 5\big) = 10 \cdot 99 = 990$.</p></div><p class="why">With $a$ and $d$ known, the formula $\tfrac{n}{2}(2a + (n-1)d)$ finishes it.</p></li>
+        </ol>
+        <p class="answer">$990$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>How many terms to pass 1000?</h3>
+        <div class="problem"><p>How many terms of $5 + 9 + 13 + \cdots$ must be added before the total first exceeds $1000$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$S_n = \dfrac{n}{2}\big(10 + 4(n-1)\big) = \dfrac{n}{2}(4n + 6) = n(2n + 3)$.</p></div><p class="why">Write the sum as a function of $n$ so we can test values.</p></li>
+          <li><div class="do"><p>We need $n(2n+3) > 1000$. Roughly $2n^2 \approx 1000$, so $n \approx 22$.</p></div><p class="why">An estimate tells us where to look.</p></li>
+          <li><div class="do"><p>$n = 21$: $21 \cdot 45 = 945$. $n = 22$: $22 \cdot 47 = 1034$.</p></div><p class="why">Checking both sides of the estimate pins down the first $n$ that works.</p></li>
+        </ol>
+        <p class="answer">$22$ terms</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Subtract what you don't want</h3>
+        <div class="problem"><p>Find the sum of all integers from $1$ to $100$ that are <em>not</em> multiples of $3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>All of them: $1 + 2 + \cdots + 100 = \dfrac{100 \cdot 101}{2} = 5050$.</p></div><p class="why">It is easier to add everything and remove the multiples of $3$ than to add the leftovers directly.</p></li>
+          <li><div class="do"><p>Multiples of $3$: $3 + 6 + \cdots + 99 = 3(1 + 2 + \cdots + 33) = 3 \cdot \dfrac{33 \cdot 34}{2} = 1683$.</p></div><p class="why">Factoring out $3$ turns it into a sum of the first $33$ integers.</p></li>
+          <li><div class="do"><p>$5050 - 1683 = 3367$.</p></div><p class="why">What remains is exactly the numbers not divisible by $3$.</p></li>
+        </ol>
+        <p class="answer">$3367$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A condition linking two sums</h3>
+        <div class="problem"><p>In an arithmetic sequence with $d \ne 0$, the sum of the first $8$ terms is $3$ times the sum of the first $4$ terms. Find $a/d$.</p></div>
+        <ol class="steps">
+          <li data-think="What do the formulas say $S_8$ and $S_4$ are in terms of $a$ and $d$?"><div class="do"><p>$S_8 = \dfrac82(2a + 7d) = 4(2a+7d)$ and $S_4 = \dfrac42(2a + 3d) = 2(2a + 3d)$.</p></div><p class="why">Everything about an arithmetic series is captured by $a$, $d$ and $n$, so express both sums with them.</p></li>
+          <li><div class="do"><p>$4(2a + 7d) = 3 \cdot 2(2a + 3d) \Rightarrow 8a + 28d = 12a + 18d \Rightarrow 10d = 4a$.</p></div><p class="why">Translate the condition into one linear equation.</p></li>
+          <li><div class="do"><p>$\dfrac{a}{d} = \dfrac{10}{4} = \dfrac52$.</p></div><p class="why">We can't find $a$ and $d$ separately, but their ratio is fixed.</p></li>
+          <li><div class="do"><p>Check with $a = 5$, $d = 2$: $S_4 = 5+7+9+11 = 32$ and $S_8 = 32 + 13+15+17+19 = 96 = 3 \cdot 32$. ✓</p></div><p class="why">A concrete example confirms the algebra.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{a}{d} = \dfrac{5}{2}$</p>
+        <p class="key-idea">Write every sum with $a$, $d$ and $n$; the problem becomes ordinary algebra.</p>
+        <p class="book-next">Next in the book: Exercise 24-4, then compare with Example 24-2.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 24.2 ===================== -->
+  <section class="lesson" id="s24-2" data-title="Geometric Series">
+    <h2><span class="sec-num">24.2</span> Geometric Series</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Offer someone a choice: one million dollars today, or one cent today, two cents tomorrow, four the day after, doubling for 30 days. The pennies look silly at first, but by day 30 the running total is over ten million dollars. Quantities that multiply rather than add grow astonishingly fast, and there is a slick trick for totalling them.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A sequence is <strong>geometric</strong> when each term is the previous one times a fixed <em>common ratio</em> $r$:</p>
+      <div class="rule"><p>$$a,\quad ar,\quad ar^2,\quad \ldots,\qquad n\text{th term} = ar^{n-1}.$$</p></div>
+      <p>To add the first $n$ terms, call the sum $S$ and multiply it by $r$. The list $rS$ is the same list shifted over by one place, so when we subtract, everything cancels except one term at each end:</p>
+      <div class="rule"><p>$$\begin{aligned} S &amp;= a + ar + ar^2 + \cdots + ar^{n-1} \\ rS &amp;= \phantom{a + {}} ar + ar^2 + \cdots + ar^{n-1} + ar^n \\ S - rS &amp;= a - ar^n \end{aligned} \qquad\Longrightarrow\qquad S = \frac{a(1 - r^n)}{1 - r}\quad (r \neq 1).$$</p></div>
+      <p>When $r > 1$ it is often tidier to write $S = \dfrac{a(r^n - 1)}{r - 1}$; it is the same fraction with top and bottom negated. If $r = 1$ every term is $a$ and $S = na$.</p>
+      <div class="note"><p>The multiply-and-subtract idea is more useful than the formula. It works on any sum where multiplying by something shifts the terms into near-copies of themselves.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="geoShift">
+      <figcaption><strong>Explore:</strong> The top row is $S$; the bottom row is $rS$, which is the same terms shifted one place right. Matching columns cancel when you subtract, leaving only $a$ and $ar^n$. Change $r$ and $n$ and watch the cancellation survive every time.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The 10th term</h3>
+        <div class="problem"><p>Find the $10$th term of $3, 6, 12, 24, \ldots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a = 3$ and $r = 6/3 = 2$.</p></div><p class="why">The ratio of consecutive terms is constant, so divide any term by the one before it.</p></li>
+          <li><div class="do"><p>$10$th term $= ar^9 = 3 \cdot 2^9 = 3 \cdot 512 = 1536$.</p></div><p class="why">Nine multiplications by $r$ take us from term $1$ to term $10$.</p></li>
+        </ol>
+        <p class="answer">$1536$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A shrinking ratio</h3>
+        <div class="problem"><p>Find the $7$th term of $81, 27, 9, \ldots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$r = \dfrac{27}{81} = \dfrac13$.</p></div><p class="why">A ratio between $0$ and $1$ makes the terms shrink.</p></li>
+          <li><div class="do"><p>$7$th term $= 81\left(\dfrac13\right)^6 = \dfrac{81}{729} = \dfrac19$.</p></div><p class="why">$3^6 = 729$ and $81 = 3^4$, so the result is $3^{4-6} = 3^{-2}$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{1}{9}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Sum of powers of 3</h3>
+        <div class="problem"><p>Evaluate $1 + 3 + 9 + \cdots + 3^7$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a = 1$, $r = 3$, and the exponents run $0$ to $7$, so $n = 8$ terms.</p></div><p class="why">Count terms by their exponents: $0, 1, \ldots, 7$ is eight values.</p></li>
+          <li><div class="do"><p>$S = \dfrac{1\cdot(3^8 - 1)}{3 - 1} = \dfrac{6561 - 1}{2} = 3280$.</p></div><p class="why">Since $r > 1$, use the form $\dfrac{a(r^n - 1)}{r-1}$ to keep everything positive.</p></li>
+        </ol>
+        <p class="answer">$3280$</p>
+        <p class="book-next">Next in the book: Exercise 24-6, then Example 24-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A negative ratio</h3>
+        <div class="problem"><p>Evaluate $5 - 10 + 20 - 40 + \cdots$ to $8$ terms.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a = 5$, $r = -2$, $n = 8$.</p></div><p class="why">Alternating signs mean a negative ratio.</p></li>
+          <li><div class="do"><p>$S = \dfrac{5\big(1 - (-2)^8\big)}{1 - (-2)} = \dfrac{5(1 - 256)}{3} = \dfrac{-1275}{3} = -425$.</p></div><p class="why">$(-2)^8 = 256$ because the exponent is even. Keep the parentheses around $-2$.</p></li>
+        </ol>
+        <p class="answer">$-425$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The doubling pennies</h3>
+        <div class="problem"><p>You receive $1$ cent on day $1$, $2$ cents on day $2$, $4$ cents on day $3$, doubling each day. How much have you received after $30$ days?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Total $= 1 + 2 + 4 + \cdots + 2^{29}$ cents: $a = 1$, $r = 2$, $n = 30$.</p></div><p class="why">Day $k$ brings $2^{k-1}$ cents, so day $30$ brings $2^{29}$.</p></li>
+          <li><div class="do"><p>$S = \dfrac{2^{30} - 1}{2 - 1} = 2^{30} - 1 = 1{,}073{,}741{,}823$ cents.</p></div><p class="why">With $r = 2$ the denominator is $1$: the sum of the first powers of $2$ is one less than the next power.</p></li>
+          <li><div class="do"><p>That is about $10.7$ million dollars.</p></div><p class="why">Divide by $100$ to convert cents to dollars.</p></li>
+        </ol>
+        <p class="answer">$2^{30} - 1 = 1{,}073{,}741{,}823$ cents, about 10.7 million dollars.</p>
+        <p class="book-next">Next in the book: Exercise 24-7.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Find the ratio first</h3>
+        <div class="problem"><p>A geometric sequence has $2$nd term $6$ and $5$th term $162$. Find the sum of its first $6$ terms.</p></div>
+        <ol class="steps">
+          <li data-think="How many factors of $r$ separate term 2 from term 5?"><div class="do"><p>$\dfrac{162}{6} = r^3$, so $r^3 = 27$ and $r = 3$.</p></div><p class="why">Dividing terms cancels $a$ and leaves a power of $r$: three steps means $r^3$.</p></li>
+          <li><div class="do"><p>$a = 6/3 = 2$.</p></div><p class="why">Step back once from term $2$.</p></li>
+          <li><div class="do"><p>$S_6 = \dfrac{2(3^6 - 1)}{3 - 1} = 3^6 - 1 = 728$.</p></div><p class="why">The $2$ on top cancels the $2$ on the bottom.</p></li>
+        </ol>
+        <p class="answer">$728$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Factoring $x^n - 1$</h3>
+        <div class="problem"><p>Use the geometric series formula to show that $2^{12} - 1$ is divisible by both $7$ and $15$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Read the formula backwards with $a = 1$: $1 + x + x^2 + \cdots + x^{k-1} = \dfrac{x^k - 1}{x - 1}$, so $x^k - 1 = (x - 1)(x^{k-1} + \cdots + x + 1)$.</p></div><p class="why">This turns the sum formula into a factorization.</p></li>
+          <li><div class="do"><p>$2^{12} = 8^4$, so $2^{12} - 1 = (8 - 1)(8^3 + 8^2 + 8 + 1)$, a multiple of $7$.</p></div><p class="why">Choosing $x = 8$, $k = 4$ exposes the factor $x - 1 = 7$.</p></li>
+          <li><div class="do"><p>$2^{12} = 16^3$, so $2^{12} - 1 = (16 - 1)(16^2 + 16 + 1)$, a multiple of $15$.</p></div><p class="why">A different grouping, $x = 16$, $k = 3$, exposes $15$.</p></li>
+          <li><div class="do"><p>Check: $2^{12} - 1 = 4095 = 7 \cdot 585 = 15 \cdot 273$. ✓</p></div><p class="why">Direct computation agrees.</p></li>
+        </ol>
+        <p class="answer">$4095 = 7 \cdot 585 = 15 \cdot 273$, so both divide $2^{12} - 1$.</p>
+        <p class="book-next">Next in the book: Exercise 24-8.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Multiply and subtract on a new sum</h3>
+        <div class="problem"><p>Evaluate $S = 1 + 2\cdot 2 + 3 \cdot 2^2 + 4 \cdot 2^3 + \cdots + 10 \cdot 2^9$.</p></div>
+        <ol class="steps">
+          <li data-think="This isn't geometric, but each term has a power of 2. What happens if you compute $S - 2S$?"><div class="do"><p>$2S = 1\cdot 2 + 2 \cdot 2^2 + \cdots + 9 \cdot 2^9 + 10 \cdot 2^{10}$.</p></div><p class="why">Multiplying by the ratio of the powers shifts each power one place, just as in the geometric case.</p></li>
+          <li><div class="do"><p>Subtract, lining up equal powers: $S - 2S = 1 + (2 - 1)2 + (3-2)2^2 + \cdots + (10 - 9)2^9 - 10 \cdot 2^{10}$.</p></div><p class="why">Each matched pair of terms leaves exactly one copy of that power of $2$.</p></li>
+          <li><div class="do"><p>So $-S = (1 + 2 + \cdots + 2^9) - 10\cdot 2^{10} = 1023 - 10240 = -9217$.</p></div><p class="why">What remains is a plain geometric series, worth $2^{10} - 1 = 1023$.</p></li>
+          <li><div class="do"><p>$S = 9217$.</p></div><p class="why">Multiply both sides by $-1$.</p></li>
+        </ol>
+        <p class="answer">$9217$</p>
+        <p class="key-idea">Multiply-and-subtract turns "number times power" sums into geometric series.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 24.3 ===================== -->
+  <section class="lesson" id="s24-3" data-title="Infinite Series">
+    <h2><span class="sec-num">24.3</span> Infinite Series</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Walk halfway to a wall. Then half the remaining distance, then half of what's left, forever. You take infinitely many steps, yet you never travel more than the original distance. If the wall was $1$ metre away, your steps $\tfrac12 + \tfrac14 + \tfrac18 + \cdots$ add up to exactly $1$. An infinite sum can have a perfectly finite answer.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>For an infinite series, look at the <strong>partial sums</strong> $S_1, S_2, S_3, \ldots$, the totals of the first $1, 2, 3, \ldots$ terms. If they settle down toward a fixed number, the series <strong>converges</strong> and that number is its sum. Otherwise it <strong>diverges</strong>.</p>
+      <p>The terms must shrink to $0$ for a series to converge, so $1 + 1 + 1 + \cdots$ and $1 - 2 + 3 - 4 + \cdots$ diverge. But shrinking terms are not enough. The <em>harmonic series</em> $1 + \tfrac12 + \tfrac13 + \tfrac14 + \cdots$ diverges, because its terms can be grouped into blocks each worth at least $\tfrac12$:</p>
+      <div class="rule"><p>$$1 + \tfrac12 + \underbrace{\left(\tfrac13 + \tfrac14\right)}_{\ge \frac12} + \underbrace{\left(\tfrac15 + \cdots + \tfrac18\right)}_{\ge \frac12} + \underbrace{\left(\tfrac19 + \cdots + \tfrac1{16}\right)}_{\ge \frac12} + \cdots$$</p></div>
+      <p>For a geometric series, the partial sum is $S_n = \dfrac{a}{1-r}\,(1 - r^n)$. If $|r| &lt; 1$, then $r^n \to 0$ and</p>
+      <div class="rule"><p>$$a + ar + ar^2 + \cdots = \frac{a}{1 - r} \qquad (|r| &lt; 1).$$</p></div>
+      <p>If $|r| \ge 1$ (and $a \ne 0$) the terms do not shrink and the series diverges.</p>
+    </div>
+
+    <figure class="explore" data-widget="partialSums">
+      <figcaption><strong>Explore:</strong> Each dot is a partial sum $S_n$. For a geometric series, slide $r$: when $|r| &lt; 1$ the dots close in on the dashed line $a/(1-r)$; past $\pm 1$ they run away. Then switch to the harmonic series and watch it creep upward forever.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Thirds forever</h3>
+        <div class="problem"><p>Evaluate $1 + \dfrac13 + \dfrac19 + \dfrac1{27} + \cdots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a = 1$, $r = \dfrac13$, and $|r| &lt; 1$ so the series converges.</p></div><p class="why">Always check $|r| &lt; 1$ before using the infinite-sum formula.</p></li>
+          <li><div class="do"><p>$S = \dfrac{1}{1 - \frac13} = \dfrac{1}{\frac23} = \dfrac32$.</p></div><p class="why">First term over one minus the ratio.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{3}{2}$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Alternating signs</h3>
+        <div class="problem"><p>Evaluate $8 - 4 + 2 - 1 + \cdots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a = 8$, $r = -\dfrac12$; $|r| = \dfrac12 &lt; 1$.</p></div><p class="why">A negative ratio is fine as long as its absolute value is below $1$.</p></li>
+          <li><div class="do"><p>$S = \dfrac{8}{1 - (-\frac12)} = \dfrac{8}{\frac32} = \dfrac{16}{3}$.</p></div><p class="why">Subtracting a negative ratio makes the denominator larger than $1$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{16}{3}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Repeating decimals are geometric series</h3>
+        <div class="problem"><p>Write $0.\overline{9} = 0.999\ldots$ and $0.\overline{27} = 0.272727\ldots$ as fractions.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$0.999\ldots = \dfrac{9}{10} + \dfrac{9}{100} + \cdots = \dfrac{9/10}{1 - 1/10} = 1$.</p></div><p class="why">Each digit is worth one tenth of the one before, so $r = \tfrac1{10}$.</p></li>
+          <li><div class="do"><p>$0.2727\ldots = \dfrac{27}{100} + \dfrac{27}{100^2} + \cdots = \dfrac{27/100}{1 - 1/100} = \dfrac{27}{99} = \dfrac{3}{11}$.</p></div><p class="why">A two-digit block repeats, so the ratio is $\tfrac{1}{100}$.</p></li>
+        </ol>
+        <p class="answer">$0.\overline{9} = 1$ and $0.\overline{27} = \dfrac{3}{11}$.</p>
+        <p class="book-next">Next in the book: Exercises 24-9 and 24-10.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A bouncing ball</h3>
+        <div class="problem"><p>A ball is dropped from $10$ m. Each bounce takes it back up to $\tfrac35$ of its previous height. What total distance does it travel?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>First drop: $10$ m. After that, each rebound height is travelled twice, up and down.</p></div><p class="why">Splitting the motion this way avoids double-counting the first drop.</p></li>
+          <li><div class="do"><p>Rebound heights: $6 + 3.6 + 2.16 + \cdots = \dfrac{6}{1 - \frac35} = 15$ m.</p></div><p class="why">A geometric series with $a = 6$ and $r = \tfrac35$.</p></li>
+          <li><div class="do"><p>Total $= 10 + 2 \cdot 15 = 40$ m.</p></div><p class="why">Each rebound height counts once going up and once coming down.</p></li>
+        </ol>
+        <p class="answer">$40$ m</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Solve for the ratio</h3>
+        <div class="problem"><p>For what value of $x$ does $1 + 2x + 4x^2 + 8x^3 + \cdots = 3$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Ratio $r = 2x$, so the sum is $\dfrac{1}{1 - 2x}$ when $|2x| &lt; 1$.</p></div><p class="why">Each term is the previous one times $2x$.</p></li>
+          <li><div class="do"><p>$\dfrac{1}{1 - 2x} = 3 \Rightarrow 1 - 2x = \dfrac13 \Rightarrow x = \dfrac13$.</p></div><p class="why">Clear the fraction and solve the linear equation.</p></li>
+          <li><div class="do"><p>Check: $|2x| = \dfrac23 &lt; 1$. ✓</p></div><p class="why">The formula is only valid when the series converges, so the condition must be confirmed.</p></li>
+        </ol>
+        <p class="answer">$x = \dfrac{1}{3}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Split into two geometric series</h3>
+        <div class="problem"><p>Evaluate $\displaystyle\sum_{n=1}^{\infty} \frac{2^n - 1}{4^n}$, that is, $\dfrac{1}{4} + \dfrac{3}{16} + \dfrac{7}{64} + \cdots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{2^n - 1}{4^n} = \left(\dfrac12\right)^n - \left(\dfrac14\right)^n$.</p></div><p class="why">Splitting the numerator separates two geometric patterns.</p></li>
+          <li><div class="do"><p>$\dfrac12 + \dfrac14 + \cdots = \dfrac{1/2}{1 - 1/2} = 1$ and $\dfrac14 + \dfrac1{16} + \cdots = \dfrac{1/4}{1 - 1/4} = \dfrac13$.</p></div><p class="why">Both converge since their ratios are below $1$, so we may sum them separately.</p></li>
+          <li><div class="do"><p>Total $= 1 - \dfrac13 = \dfrac23$.</p></div><p class="why">Subtract the two convergent sums.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{2}{3}$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The harmonic series really grows</h3>
+        <div class="problem"><p>Show that $1 + \dfrac12 + \dfrac13 + \cdots + \dfrac1{16} \ge 3$, and explain why the harmonic series passes any number eventually.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Group: $1 + \dfrac12 + \left(\dfrac13 + \dfrac14\right) + \left(\dfrac15 + \cdots + \dfrac18\right) + \left(\dfrac19 + \cdots + \dfrac1{16}\right)$.</p></div><p class="why">Each block ends at a power of $2$ and has as many terms as its last denominator's half.</p></li>
+          <li><div class="do"><p>In each block every term is at least the last one, so each block is at least $2 \cdot \tfrac14$, $4 \cdot \tfrac18$, $8 \cdot \tfrac1{16}$, all equal to $\tfrac12$.</p></div><p class="why">Replacing terms by smaller ones can only lower the total, giving a lower bound.</p></li>
+          <li><div class="do"><p>So the sum is at least $1 + 4 \cdot \tfrac12 = 3$. (Its actual value is about $3.38$.)</p></div><p class="why">There are four half-sized pieces after the leading $1$.</p></li>
+          <li><div class="do"><p>Going up to $\tfrac1{2^k}$ gives at least $1 + \tfrac{k}{2}$, which exceeds any number once $k$ is large.</p></div><p class="why">Each doubling of the number of terms adds at least another $\tfrac12$, so the partial sums are unbounded.</p></li>
+        </ol>
+        <p class="answer">The sum is at least $3$; in general the first $2^k$ terms total at least $1 + k/2$, so the series diverges.</p>
+        <p class="book-next">Compare with Example 24-4.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Numbers times a shrinking power</h3>
+        <div class="problem"><p>Evaluate $S = 1 + \dfrac23 + \dfrac39 + \dfrac4{27} + \cdots$, where the $n$th term is $\dfrac{n}{3^{n-1}}$.</p></div>
+        <ol class="steps">
+          <li data-think="Try the multiply-and-subtract trick from 24.2. What should you multiply $S$ by?"><div class="do"><p>$\dfrac13 S = \dfrac13 + \dfrac29 + \dfrac3{27} + \cdots$</p></div><p class="why">Multiplying by $\tfrac13$ shifts every power of $3$ along by one place.</p></li>
+          <li><div class="do"><p>$S - \dfrac13 S = 1 + \dfrac13 + \dfrac19 + \dfrac1{27} + \cdots$</p></div><p class="why">Lining up equal powers, each difference of numerators is $1$, for example $\tfrac29 - \tfrac19 = \tfrac19$.</p></li>
+          <li><div class="do"><p>The right side is $\dfrac{1}{1 - \frac13} = \dfrac32$, so $\dfrac23 S = \dfrac32$ and $S = \dfrac94$.</p></div><p class="why">A geometric series appears, which we can sum.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{9}{4}$</p>
+        <p class="key-idea">The same shift-and-subtract trick works for infinite sums, as long as they converge.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 24.4 ===================== -->
+  <section class="lesson" id="s24-4" data-title="Sigma Notation">
+    <h2><span class="sec-num">24.4</span> Sigma Notation: $\sum$</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>"Add up the squares of the whole numbers from one to fifty" takes a sentence to say, and writing all fifty terms takes even longer. Mathematicians write it in one compact symbol: $\displaystyle\sum_{k=1}^{50} k^2$. Once you can read and write this shorthand, long sums become easy to handle.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The Greek capital sigma, $\Sigma$ (an S, for "sum"), means "add up":</p>
+      <div class="rule"><p>$$\sum_{k=m}^{n} f(k) = f(m) + f(m+1) + f(m+2) + \cdots + f(n).$$</p></div>
+      <p>The letter $k$ is a <em>dummy variable</em> (or index): it takes each whole-number value from the lower limit $m$ to the upper limit $n$, and it vanishes from the final answer. Letters $i$, $j$, $k$ are common, and the choice doesn't matter. The number of terms is $n - m + 1$. An infinite sum uses $\infty$ as the upper limit: $\displaystyle\sum_{i=0}^{\infty} ar^i = a + ar + ar^2 + \cdots$</p>
+      <p>Two rules follow straight from the ordinary properties of addition and multiplication:</p>
+      <div class="rule"><p>$$\sum (a_k + b_k) = \sum a_k + \sum b_k, \qquad \sum c\,a_k = c \sum a_k.$$</p></div>
+      <p>Products have a matching shorthand with capital pi: $\displaystyle\prod_{k=1}^{4}(x - k) = (x-1)(x-2)(x-3)(x-4)$.</p>
+      <div class="note"><p>Writing a sum in $\Sigma$ form forces you to find a formula for the general term. If you can't, you may not fully understand the pattern yet.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="sigmaMachine">
+      <figcaption><strong>Explore:</strong> Pick a general term $f(k)$ and the limits. The machine feeds each value of $k$ into $f$, draws the result as a bar, and adds the bars. Notice how changing the lower limit changes the number of terms.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Expand and add</h3>
+        <div class="problem"><p>Evaluate $\displaystyle\sum_{k=1}^{4} k^2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Substitute $k = 1, 2, 3, 4$: $1^2 + 2^2 + 3^2 + 4^2$.</p></div><p class="why">The index takes each whole value from the bottom limit to the top.</p></li>
+          <li><div class="do"><p>$1 + 4 + 9 + 16 = 30$.</p></div><p class="why">Then just add.</p></li>
+        </ol>
+        <p class="answer">$30$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Starting at zero</h3>
+        <div class="problem"><p>Evaluate $\displaystyle\sum_{j=0}^{3} (2j + 1)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$j = 0, 1, 2, 3$ give $1, 3, 5, 7$.</p></div><p class="why">The sum starts at $j = 0$, so there are $3 - 0 + 1 = 4$ terms.</p></li>
+          <li><div class="do"><p>$1 + 3 + 5 + 7 = 16$.</p></div><p class="why">These are the first four odd numbers, and their sum is $4^2$.</p></li>
+        </ol>
+        <p class="answer">$16$</p>
+        <p class="book-next">Next in the book: Example 24-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Write a sum in sigma form</h3>
+        <div class="problem"><p>Write $4 + 7 + 10 + \cdots + 31$ using $\Sigma$ notation, then evaluate it.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The terms go up by $3$ and the first is $4 = 3 \cdot 1 + 1$, so try $f(k) = 3k + 1$.</p></div><p class="why">An arithmetic sequence with difference $3$ has a general term of the form $3k + c$.</p></li>
+          <li><div class="do"><p>$3k + 1 = 31$ gives $k = 10$, so the sum is $\displaystyle\sum_{k=1}^{10} (3k + 1)$.</p></div><p class="why">Solve for the index of the last term to get the upper limit.</p></li>
+          <li><div class="do"><p>Value: $\dfrac{10}{2}(4 + 31) = 175$.</p></div><p class="why">It is an arithmetic series with $10$ terms.</p></li>
+        </ol>
+        <p class="answer">$\displaystyle\sum_{k=1}^{10} (3k + 1) = 175$</p>
+        <p class="book-next">Next in the book: Exercise 24-11.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Signs that alternate</h3>
+        <div class="problem"><p>Write $1 - 2 + 4 - 8 + 16 - 32$ in $\Sigma$ notation and evaluate it.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The terms are $(-2)^0, (-2)^1, \ldots, (-2)^5$, so the sum is $\displaystyle\sum_{k=0}^{5} (-2)^k$.</p></div><p class="why">A power of a negative number produces the alternating signs automatically.</p></li>
+          <li><div class="do"><p>Geometric with $a = 1$, $r = -2$, $n = 6$: $\dfrac{1 - (-2)^6}{1 - (-2)} = \dfrac{1 - 64}{3} = -21$.</p></div><p class="why">Six terms because $k$ runs from $0$ to $5$.</p></li>
+        </ol>
+        <p class="answer">$\displaystyle\sum_{k=0}^{5}(-2)^k = -21$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Split and factor</h3>
+        <div class="problem"><p>Evaluate $\displaystyle\sum_{k=1}^{20} (4k - 3)$ using the sum rules.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\displaystyle\sum_{k=1}^{20}(4k - 3) = 4\sum_{k=1}^{20} k - \sum_{k=1}^{20} 3$.</p></div><p class="why">Sums split over addition, and constant factors come out front.</p></li>
+          <li><div class="do"><p>$\displaystyle\sum_{k=1}^{20} k = \frac{20 \cdot 21}{2} = 210$ and $\displaystyle\sum_{k=1}^{20} 3 = 20 \cdot 3 = 60$.</p></div><p class="why">Adding the constant $3$ twenty times gives $60$, not $3$.</p></li>
+          <li><div class="do"><p>$4 \cdot 210 - 60 = 780$.</p></div><p class="why">Combine the pieces.</p></li>
+        </ol>
+        <p class="answer">$780$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Shift the index</h3>
+        <div class="problem"><p>Rewrite $\displaystyle\sum_{k=3}^{12} k$ as a sum starting at $1$, and evaluate it.</p></div>
+        <ol class="steps">
+          <li data-think="If $k$ starts at 3 and you want a new index starting at 1, how are they related?"><div class="do"><p>Let $j = k - 2$. When $k = 3$, $j = 1$; when $k = 12$, $j = 10$. So $\displaystyle\sum_{k=3}^{12} k = \sum_{j=1}^{10} (j + 2)$.</p></div><p class="why">Substituting $k = j + 2$ in the term and in both limits keeps every term the same.</p></li>
+          <li><div class="do"><p>$\displaystyle\sum_{j=1}^{10} j + \sum_{j=1}^{10} 2 = 55 + 20 = 75$.</p></div><p class="why">Now the standard formula $\tfrac{n(n+1)}{2}$ applies.</p></li>
+        </ol>
+        <p class="answer">$\displaystyle\sum_{j=1}^{10}(j+2) = 75$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A product that telescopes</h3>
+        <div class="problem"><p>Evaluate $\displaystyle\prod_{k=1}^{5}\left(1 + \frac1k\right)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$1 + \dfrac1k = \dfrac{k+1}{k}$, so the product is $\dfrac21 \cdot \dfrac32 \cdot \dfrac43 \cdot \dfrac54 \cdot \dfrac65$.</p></div><p class="why">Rewriting each factor as a single fraction shows the pattern.</p></li>
+          <li><div class="do"><p>Each numerator cancels the next denominator, leaving $\dfrac{6}{1} = 6$.</p></div><p class="why">This collapse is called <em>telescoping</em>.</p></li>
+        </ol>
+        <p class="answer">$6$</p>
+        <p class="book-next">Next in the book: Example 24-6.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A double sum</h3>
+        <div class="problem"><p>Evaluate $\displaystyle\sum_{i=1}^{4}\sum_{j=1}^{4} ij$.</p></div>
+        <ol class="steps">
+          <li data-think="For a fixed $i$, what is the inner sum?"><div class="do"><p>Inner sum, $i$ fixed: $\displaystyle\sum_{j=1}^{4} ij = i(1 + 2 + 3 + 4) = 10i$.</p></div><p class="why">Work from the inside out; $i$ is a constant while $j$ varies, so it factors out.</p></li>
+          <li><div class="do"><p>Outer sum: $\displaystyle\sum_{i=1}^{4} 10i = 10 \cdot 10 = 100$.</p></div><p class="why">The same factoring again.</p></li>
+          <li><div class="do"><p>In general, $\displaystyle\sum_{i}\sum_{j} ij = \Big(\sum_i i\Big)\Big(\sum_j j\Big)$.</p></div><p class="why">Expanding $(1 + 2 + 3 + 4)(1 + 2 + 3 + 4)$ produces every product $ij$ exactly once.</p></li>
+        </ol>
+        <p class="answer">$100$</p>
+        <p class="book-next">Next in the book: Exercises 24-12 and 24-13.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A telescoping sum</h3>
+        <div class="problem"><p>Evaluate $\displaystyle\sum_{k=1}^{99}\frac{1}{k(k+1)}$.</p></div>
+        <ol class="steps">
+          <li data-think="Can $\frac{1}{k(k+1)}$ be written as a difference of two simpler fractions?"><div class="do"><p>$\dfrac{1}{k(k+1)} = \dfrac1k - \dfrac1{k+1}$.</p></div><p class="why">Check: $\dfrac1k - \dfrac1{k+1} = \dfrac{(k+1) - k}{k(k+1)}$. Writing terms as differences is what makes telescoping possible.</p></li>
+          <li><div class="do"><p>The sum is $\left(1 - \tfrac12\right) + \left(\tfrac12 - \tfrac13\right) + \cdots + \left(\tfrac1{99} - \tfrac1{100}\right)$.</p></div><p class="why">Write out the first few and last few terms to see what cancels.</p></li>
+          <li><div class="do"><p>Everything cancels except $1 - \dfrac1{100} = \dfrac{99}{100}$.</p></div><p class="why">Each $-\tfrac1{k+1}$ cancels the $+\tfrac1{k+1}$ of the next term.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{99}{100}$</p>
+        <p class="key-idea">If each term is a difference $g(k) - g(k+1)$, the sum collapses to first minus last.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 24.5 ===================== -->
+  <section class="lesson" id="s24-5" data-title="Sequences">
+    <h2><span class="sec-num">24.5</span> Sequences</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>You can climb a staircase one step or two steps at a time. How many different ways are there to climb $10$ steps? Listing them is hopeless. But your first move is either a single step (leaving $9$) or a double (leaving $8$), so the answer for $10$ is the answer for $9$ plus the answer for $8$. A rule that builds each term from earlier ones can crack problems that a list never could.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>sequence</strong> is just a list of terms, finite or infinite. A compact way to name one is to write its $n$th term in braces: $\{2n\}$ is $2, 4, 6, 8, \ldots$ and $\{(-1)^{n+1}/n\}$ is $1, -\tfrac12, \tfrac13, -\tfrac14, \ldots$, with $n$ starting at $1$.</p>
+      <p>Some sequences are easier to describe <strong>recursively</strong>: give the first term or terms, then a rule that produces each term from the ones before it.</p>
+      <div class="rule"><p>$$\text{arithmetic: } a_n = a_{n-1} + d \qquad \text{geometric: } a_n = r\,a_{n-1} \qquad \text{Fibonacci: } F_n = F_{n-1} + F_{n-2}.$$</p></div>
+      <p>For the Fibonacci sequence we start with $F_0 = F_1 = 1$ (the book's convention), giving $1, 1, 2, 3, 5, 8, 13, 21, \ldots$. A recursion is one of infinitely many possible rules; small changes in the rule or the starting values can produce growth, steady steps, or even cycles.</p>
+      <div class="note"><p>A formula for the $n$th term (an <em>explicit</em> or <em>closed</em> form) lets you jump straight to term $1000$. A recursion makes you walk there, but it is often much easier to find.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="recursionLab">
+      <figcaption><strong>Explore:</strong> Choose two starting terms and a rule, then press <em>Next term</em> to build the sequence. Adding the last two terms grows like Fibonacci (and the ratio of neighbours approaches $1.618\ldots$); "$2a_{n-1} - a_{n-2}$" always gives an arithmetic sequence; "$a_{n-1} - a_{n-2}$" cycles with period $6$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>From formula to terms</h3>
+        <div class="problem"><p>Write the first five terms of $\{n^2 - 1\}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$n = 1, 2, 3, 4, 5$ give $0, 3, 8, 15, 24$.</p></div><p class="why">The braces notation means: substitute $n = 1, 2, 3, \ldots$ in turn.</p></li>
+        </ol>
+        <p class="answer">$0, 3, 8, 15, 24$</p>
+        <p class="book-next">Next in the book: Exercise 24-15.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>From terms to formula</h3>
+        <div class="problem"><p>Write in brace notation: (a) $3, 6, 9, 12, \ldots$ (b) $1, -\tfrac12, \tfrac13, -\tfrac14, \ldots$</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>(a) The $n$th term is $3n$: $\{3n\}$.</p></div><p class="why">Term $n$ is $n$ times $3$.</p></li>
+          <li><div class="do"><p>(b) Size $\tfrac1n$, sign $+$ when $n$ is odd: $\left\{\dfrac{(-1)^{n+1}}{n}\right\}$.</p></div><p class="why">$(-1)^{n+1}$ is $+1$ for odd $n$ and $-1$ for even $n$, a standard way to alternate signs.</p></li>
+        </ol>
+        <p class="answer">$\{3n\}$ and $\left\{\dfrac{(-1)^{n+1}}{n}\right\}$</p>
+        <p class="book-next">Next in the book: Exercise 24-14.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Run a recursion</h3>
+        <div class="problem"><p>A sequence has $a_1 = 2$ and $a_n = 3a_{n-1} - 1$ for $n \ge 2$. Find $a_5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a_2 = 3 \cdot 2 - 1 = 5$, $a_3 = 3 \cdot 5 - 1 = 14$.</p></div><p class="why">A recursion is applied one term at a time, each from the previous one.</p></li>
+          <li><div class="do"><p>$a_4 = 3 \cdot 14 - 1 = 41$, $a_5 = 3 \cdot 41 - 1 = 122$.</p></div><p class="why">Keep going until the term you want.</p></li>
+        </ol>
+        <p class="answer">$a_5 = 122$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Fibonacci by hand</h3>
+        <div class="problem"><p>With $F_0 = F_1 = 1$ and $F_n = F_{n-1} + F_{n-2}$, find $F_{10}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$F_2 = 2,\ F_3 = 3,\ F_4 = 5,\ F_5 = 8,\ F_6 = 13$.</p></div><p class="why">Each term is the sum of the two before it.</p></li>
+          <li><div class="do"><p>$F_7 = 21,\ F_8 = 34,\ F_9 = 55,\ F_{10} = 89$.</p></div><p class="why">Watch the indexing: with this convention $F_{10}$ is the eleventh term in the list.</p></li>
+        </ol>
+        <p class="answer">$F_{10} = 89$</p>
+        <p class="book-next">Next in the book: Exercise 24-16.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Recursive to explicit</h3>
+        <div class="problem"><p>A sequence has $a_1 = 7$ and $a_n = a_{n-1} - 4$. Find a formula for $a_n$ and the value of $a_{20}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Subtracting $4$ each time makes it arithmetic with $a = 7$, $d = -4$.</p></div><p class="why">The recursion $a_n = a_{n-1} + d$ is exactly what "arithmetic" means.</p></li>
+          <li><div class="do"><p>$a_n = 7 + (n-1)(-4) = 11 - 4n$, so $a_{20} = 11 - 80 = -69$.</p></div><p class="why">The explicit form jumps straight to term $20$.</p></li>
+        </ol>
+        <p class="answer">$a_n = 11 - 4n$; $a_{20} = -69$</p>
+        <p class="book-next">Next in the book: Exercise 24-17.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Guess and justify a closed form</h3>
+        <div class="problem"><p>$a_1 = 1$ and $a_n = a_{n-1} + (2n - 1)$. Find $a_n$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Compute: $a_1 = 1,\ a_2 = 4,\ a_3 = 9,\ a_4 = 16$. Guess $a_n = n^2$.</p></div><p class="why">A few terms usually reveal the pattern.</p></li>
+          <li><div class="do"><p>Unrolling the recursion: $a_n = 1 + 3 + 5 + \cdots + (2n - 1)$.</p></div><p class="why">Each step adds the next odd number, so $a_n$ is the sum of the first $n$ odd numbers.</p></li>
+          <li><div class="do"><p>That arithmetic series is $\dfrac{n}{2}\big(1 + (2n - 1)\big) = n^2$. ✓</p></div><p class="why">The sum formula proves the guess.</p></li>
+        </ol>
+        <p class="answer">$a_n = n^2$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A sequence that cycles</h3>
+        <div class="problem"><p>$a_1 = 2$ and $a_n = \dfrac{1}{1 - a_{n-1}}$. Find $a_{100}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a_2 = \dfrac{1}{1 - 2} = -1$, $a_3 = \dfrac{1}{1 - (-1)} = \dfrac12$, $a_4 = \dfrac{1}{1 - \frac12} = 2$.</p></div><p class="why">When a term repeats, the recursion must repeat everything after it too.</p></li>
+          <li data-think="If the pattern repeats every 3 terms, which terms equal 2?"><div class="do"><p>The sequence is $2, -1, \tfrac12, 2, -1, \tfrac12, \ldots$ with period $3$; $a_n = 2$ whenever $n$ leaves remainder $1$ on division by $3$.</p></div><p class="why">Terms $1, 4, 7, \ldots$ are all $2$.</p></li>
+          <li><div class="do"><p>$100 = 3 \cdot 33 + 1$, so $a_{100} = 2$.</p></div><p class="why">Reduce the index modulo the period.</p></li>
+        </ol>
+        <p class="answer">$a_{100} = 2$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A Fibonacci identity by telescoping</h3>
+        <div class="problem"><p>With $F_0 = F_1 = 1$, show that $F_0 + F_2 + F_4 + \cdots + F_{2n} = F_{2n+1}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Test: $F_0 + F_2 = 1 + 2 = 3 = F_3$ and $1 + 2 + 5 = 8 = F_5$.</p></div><p class="why">Checking small cases builds confidence before proving.</p></li>
+          <li data-think="The recursion says $F_{2k+1} = F_{2k} + F_{2k-1}$. Solve it for $F_{2k}$."><div class="do"><p>For $k \ge 1$: $F_{2k} = F_{2k+1} - F_{2k-1}$.</p></div><p class="why">Writing each term as a difference sets up a telescoping sum.</p></li>
+          <li><div class="do"><p>$\displaystyle\sum_{k=1}^{n} F_{2k} = (F_3 - F_1) + (F_5 - F_3) + \cdots + (F_{2n+1} - F_{2n-1}) = F_{2n+1} - F_1$.</p></div><p class="why">Every odd-indexed term except the first and last cancels.</p></li>
+          <li><div class="do"><p>Add $F_0$: the total is $F_{2n+1} - F_1 + F_0 = F_{2n+1}$, since $F_0 = F_1$.</p></div><p class="why">The leftover pieces cancel exactly because both starting values are $1$.</p></li>
+        </ol>
+        <p class="answer">$F_0 + F_2 + \cdots + F_{2n} = F_{2n+1}$ for every $n \ge 0$.</p>
+        <p class="key-idea">Rearrange the recursion to write a term as a difference, then telescope.</p>
+        <p class="book-next">Compare with Example 24-7, which proves a related identity by induction.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Climbing stairs</h3>
+        <div class="problem"><p>In how many ways can you climb $10$ stairs taking $1$ or $2$ steps at a time?</p></div>
+        <ol class="steps">
+          <li data-think="What can your first move be, and what's left after it?"><div class="do"><p>Let $c_n$ be the number of ways for $n$ stairs. The first move is $1$ step (then $c_{n-1}$ ways) or $2$ steps (then $c_{n-2}$ ways), so $c_n = c_{n-1} + c_{n-2}$.</p></div><p class="why">Splitting by the first move covers every climb exactly once.</p></li>
+          <li><div class="do"><p>$c_1 = 1$ and $c_2 = 2$ (either $1 + 1$ or $2$).</p></div><p class="why">The recursion needs two starting values.</p></li>
+          <li><div class="do"><p>$c_3 = 3,\ c_4 = 5,\ c_5 = 8,\ c_6 = 13,\ c_7 = 21,\ c_8 = 34,\ c_9 = 55,\ c_{10} = 89$.</p></div><p class="why">This is the Fibonacci sequence again: $c_n = F_n$ with the book's indexing.</p></li>
+        </ol>
+        <p class="answer">$89$ ways</p>
+        <p class="key-idea">Split by the first move to find a recursion; counting problems often hide Fibonacci numbers.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 24.6 ===================== -->
+  <section class="lesson" id="s24-6" data-title="Sequences and Means">
+    <h2><span class="sec-num">24.6</span> Sequences and Means</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Why are they called <em>arithmetic</em> and <em>geometric</em> sequences? Pick any term of $3, 7, 11, 15, 19$, say $11$. Its neighbours $7$ and $15$ average to exactly $11$. Now pick $12$ in $3, 6, 12, 24, 48$: its neighbours multiply to $144$, and $\sqrt{144} = 12$. Each kind of sequence is built from its own kind of average.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>arithmetic mean</strong> of $x$ and $y$ is $\dfrac{x + y}{2}$; the <strong>geometric mean</strong> of positive $x$ and $y$ is $\sqrt{xy}$. In an arithmetic sequence the neighbours of a term are $t - d$ and $t + d$, and in a geometric one they are $t/r$ and $tr$, so</p>
+      <div class="rule"><p>$$\text{arithmetic: } a_n = \frac{a_{n-1} + a_{n+1}}{2}, \qquad \text{geometric: } a_n^2 = a_{n-1}\,a_{n+1}.$$</p></div>
+      <p>This gives the older phrase "insert $k$ means between $A$ and $B$": find $k$ numbers so that $A$, the $k$ numbers, and $B$ form an arithmetic (or geometric) sequence. There are $k + 1$ gaps between $A$ and $B$, so</p>
+      <div class="rule"><p>$$d = \frac{B - A}{k + 1}, \qquad r^{k+1} = \frac{B}{A}.$$</p></div>
+      <p>For positive numbers the arithmetic mean is never smaller than the geometric mean, because $\dfrac{x + y}{2} - \sqrt{xy} = \dfrac{(\sqrt x - \sqrt y)^2}{2} \ge 0$, with equality only when $x = y$.</p>
+    </div>
+
+    <figure class="explore" data-widget="meansInsert">
+      <figcaption><strong>Explore:</strong> Set the endpoints and the number of means to insert. In arithmetic mode the points are evenly spaced (constant difference); in geometric mode the gaps grow by a constant factor. The readout checks that a middle term is the mean of its neighbours.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The missing middle term</h3>
+        <div class="problem"><p>In an arithmetic sequence the $5$th term is $14$ and the $7$th is $26$. Find the $6$th.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$a_6 = \dfrac{a_5 + a_7}{2} = \dfrac{14 + 26}{2} = 20$.</p></div><p class="why">Each term of an arithmetic sequence is the average of its neighbours.</p></li>
+        </ol>
+        <p class="answer">$20$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A geometric middle</h3>
+        <div class="problem"><p>Find a positive number $g$ so that $4, g, 25$ is a geometric sequence.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$g^2 = 4 \cdot 25 = 100$, so $g = 10$.</p></div><p class="why">The middle term of a geometric sequence is the geometric mean of its neighbours.</p></li>
+          <li><div class="do"><p>Check: $10/4 = 25/10 = \tfrac52$. ✓</p></div><p class="why">The ratios agree, so the sequence is geometric.</p></li>
+        </ol>
+        <p class="answer">$g = 10$</p>
+        <p class="book-next">Next in the book: Exercise 24-19.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Insert arithmetic means</h3>
+        <div class="problem"><p>Insert four arithmetic means between $7$ and $22$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Six numbers in all means $5$ equal gaps: $d = \dfrac{22 - 7}{5} = 3$.</p></div><p class="why">$k$ inserted terms create $k + 1$ gaps.</p></li>
+          <li><div class="do"><p>$7, 10, 13, 16, 19, 22$.</p></div><p class="why">Add $3$ repeatedly; landing on $22$ confirms it.</p></li>
+        </ol>
+        <p class="answer">$10, 13, 16, 19$</p>
+        <p class="book-next">Next in the book: Exercise 24-18.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Insert geometric means</h3>
+        <div class="problem"><p>Insert three real geometric means between $2$ and $162$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Four gaps: $2r^4 = 162$, so $r^4 = 81$ and $r = 3$ or $r = -3$.</p></div><p class="why">An even power has two real roots, one positive and one negative.</p></li>
+          <li><div class="do"><p>$r = 3$: $2, 6, 18, 54, 162$. $r = -3$: $2, -6, 18, -54, 162$.</p></div><p class="why">Both lists are geometric and start and end correctly.</p></li>
+        </ol>
+        <p class="answer">$6, 18, 54$ (or, allowing negatives, $-6, 18, -54$).</p>
+        <p class="book-next">Next in the book: Example 24-8 and Exercise 24-20.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Make three expressions arithmetic</h3>
+        <div class="problem"><p>Find $x$ so that $x + 1,\ 3x,\ 4x + 2$ is an arithmetic sequence.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The middle term is the average: $2(3x) = (x + 1) + (4x + 2)$.</p></div><p class="why">Using the mean property gives one equation directly.</p></li>
+          <li><div class="do"><p>$6x = 5x + 3$, so $x = 3$. The terms are $4, 9, 14$. ✓</p></div><p class="why">Checking shows a common difference of $5$.</p></li>
+        </ol>
+        <p class="answer">$x = 3$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Make three expressions geometric</h3>
+        <div class="problem"><p>Find $x$ so that $x,\ x + 6,\ x + 18$ is a geometric sequence.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x + 6)^2 = x(x + 18)$.</p></div><p class="why">The square of the middle term equals the product of its neighbours.</p></li>
+          <li><div class="do"><p>$x^2 + 12x + 36 = x^2 + 18x$, so $6x = 36$ and $x = 6$.</p></div><p class="why">The $x^2$ terms cancel, leaving a linear equation.</p></li>
+          <li><div class="do"><p>Terms: $6, 12, 24$, with ratio $2$. ✓</p></div><p class="why">Always confirm the ratio is constant.</p></li>
+        </ol>
+        <p class="answer">$x = 6$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Arithmetic mean versus geometric mean</h3>
+        <div class="problem"><p>A rectangle has perimeter $40$. What is the largest possible area?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Sides $x$ and $y$ with $x + y = 20$; area $= xy$.</p></div><p class="why">Half the perimeter is the sum of two adjacent sides.</p></li>
+          <li data-think="Which inequality relates $x + y$ to $xy$?"><div class="do"><p>$\sqrt{xy} \le \dfrac{x + y}{2} = 10$, so $xy \le 100$.</p></div><p class="why">The geometric mean never exceeds the arithmetic mean.</p></li>
+          <li><div class="do"><p>Equality holds when $x = y = 10$: a $10 \times 10$ square.</p></div><p class="why">The two means are equal exactly when the numbers are equal, so $100$ is achieved.</p></li>
+        </ol>
+        <p class="answer">$100$, for a $10 \times 10$ square.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>From arithmetic to geometric</h3>
+        <div class="problem"><p>Three numbers in arithmetic progression add to $15$. If $1$, $1$ and $4$ are added to them respectively, the results form a geometric progression. Find the original numbers.</p></div>
+        <ol class="steps">
+          <li data-think="How can you name three terms of an arithmetic sequence so their sum is simple?"><div class="do"><p>Call them $5 - d,\ 5,\ 5 + d$.</p></div><p class="why">Centring on the middle term makes the sum $3 \cdot (\text{middle}) = 15$, so the middle term is $5$.</p></li>
+          <li><div class="do"><p>New numbers: $6 - d,\ 6,\ 9 + d$. Geometric means $6^2 = (6 - d)(9 + d)$.</p></div><p class="why">Square of the middle term equals product of the outer terms.</p></li>
+          <li><div class="do"><p>$36 = 54 - 3d - d^2 \Rightarrow d^2 + 3d - 18 = 0 \Rightarrow (d + 6)(d - 3) = 0$.</p></div><p class="why">Expand and collect into a quadratic.</p></li>
+          <li><div class="do"><p>$d = 3$: $2, 5, 8 \to 3, 6, 12$ (ratio $2$). $d = -6$: $11, 5, -1 \to 12, 6, 3$ (ratio $\tfrac12$).</p></div><p class="why">Both roots give valid answers, so check each.</p></li>
+        </ol>
+        <p class="answer">$2, 5, 8$ or $11, 5, -1$</p>
+        <p class="key-idea">Name arithmetic terms symmetrically as $m - d, m, m + d$; then use the mean property.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-24">
+    <h2 id="further-24">Further reading in the book</h2>
+    <ul>
+      <li><strong>§24.1 Arithmetic Series</strong>: Examples 24-1, 24-2 and Exercises 24-1 to 24-5.</li>
+      <li><strong>§24.2 Geometric Series</strong>: Example 24-3 and Exercises 24-6 to 24-8.</li>
+      <li><strong>§24.3 Infinite Series</strong>: Example 24-4 and Exercises 24-9, 24-10.</li>
+      <li><strong>§24.4 Sigma Notation</strong>: Examples 24-5, 24-6 and Exercises 24-11 to 24-13.</li>
+      <li><strong>§24.5 Sequences</strong>: Example 24-7 and Exercises 24-14 to 24-17.</li>
+      <li><strong>§24.6 Sequences and Means</strong>: Example 24-8 and Exercises 24-18 to 24-20.</li>
+      <li><strong>Problems to Solve for Chapter 24</strong>: Problems 434–456 mix every section; the Big Picture box on Zeno's paradoxes connects to §24.3.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 24 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 24.1 — arithmetic series: staircase plus reversed copy */
+  AOPS.registerWidget("arithPairs", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Bars for the terms of an arithmetic series, with a reversed copy stacked on top" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 2, d = 3, n = 6, showRev = true;
+    W.slider(ctl, { label: "First term a", min: 1, max: 9, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Difference d", min: 0, max: 5, value: d, onInput: function (v) { d = v; draw(); } });
+    W.slider(ctl, { label: "Terms n", min: 2, max: 12, value: n, onInput: function (v) { n = v; draw(); } });
+    W.segmented(ctl, { title: "Reversed copy", value: true, options: [{ value: true, label: "show" }, { value: false, label: "hide" }], onChange: function (v) { showRev = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var last = a + (n - 1) * d, col = 2 * a + (n - 1) * d;
+      var left = 40, right = 620, base = 300, top = 40;
+      var scale = (base - top) / col;
+      var cw = (right - left) / n;
+      for (var i = 0; i < n; i++) {
+        var t = a + i * d, r = a + (n - 1 - i) * d;
+        var x = left + i * cw + 4, w = cw - 8;
+        svg.appendChild(W.s("rect", { x: x, y: base - t * scale, width: w, height: t * scale, rx: 4, fill: "color-mix(in srgb, var(--plot-1) 55%, transparent)", stroke: "var(--plot-1)" }));
+        svg.appendChild(W.s("text", { x: x + w / 2, y: base - t * scale / 2 + 5, "text-anchor": "middle", style: "font: 700 13px var(--font-mono)", fill: "var(--ink)", text: t }));
+        if (showRev) {
+          svg.appendChild(W.s("rect", { x: x, y: base - col * scale, width: w, height: r * scale, rx: 4, fill: "color-mix(in srgb, var(--plot-2) 40%, transparent)", stroke: "var(--plot-2)", "stroke-dasharray": "5 3" }));
+          svg.appendChild(W.s("text", { x: x + w / 2, y: base - col * scale + r * scale / 2 + 5, "text-anchor": "middle", style: "font: 700 13px var(--font-mono)", fill: "var(--ink)", text: r }));
+        }
+      }
+      svg.appendChild(W.s("line", { x1: left, y1: base, x2: right, y2: base, stroke: "var(--border-strong)" }));
+      if (showRev) {
+        svg.appendChild(W.s("line", { x1: left, y1: base - col * scale, x2: right, y2: base - col * scale, stroke: "var(--accent)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: left, y: base - col * scale - 10, class: "lbl", text: "every column = first + last = " + a + " + " + last + " = " + col }));
+      } else {
+        svg.appendChild(W.s("text", { x: left, y: 24, class: "lbl", text: "terms: a, a + d, ..., a + (n − 1)d" }));
+      }
+      svg.appendChild(W.s("text", { x: 320, y: 326, "text-anchor": "middle", class: "lbl", text: n + " columns" + (showRev ? " × " + col + " = 2S = " + n * col : "") }));
+      out.tex("S = " + Array.apply(null, Array(Math.min(n, 4))).map(function (_, i) { return a + i * d; }).join(" + ") + (n > 4 ? " + \\cdots + " + last : "") +
+        " = \\frac{" + n + "}{2}(" + a + " + " + last + ") = " + (n * col / 2));
+    }
+    draw();
+  });
+
+  /* 24.2 — geometric series: shift and subtract */
+  AOPS.registerWidget("geoShift", function (body) {
+    var svg = W.stage(body, { w: 640, h: 250, label: "Two rows of terms: S and r times S shifted one place, with matching columns cancelling" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 3, n = 5, rIdx = 0;
+    var RS = [{ p: 2, q: 1, t: "2" }, { p: 3, q: 1, t: "3" }, { p: 1, q: 2, t: "1/2" }, { p: -2, q: 1, t: "−2" }];
+    W.slider(ctl, { label: "First term a", min: 1, max: 5, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Terms n", min: 2, max: 7, value: n, onInput: function (v) { n = v; draw(); } });
+    W.segmented(ctl, { title: "Ratio r", value: 0, options: RS.map(function (r, i) { return { value: i, label: r.t }; }), onChange: function (v) { rIdx = v; draw(); } });
+    function term(k) { // a * (p/q)^k as [num, den]
+      var R = RS[rIdx], num = a * Math.pow(R.p, k), den = Math.pow(R.q, k), g = W.gcd(num, den) || 1;
+      return [num / g, den / g];
+    }
+    function txt(f) { return (f[0] < 0 ? "−" : "") + Math.abs(f[0]) + (f[1] === 1 ? "" : "/" + f[1]); }
+    function tex(f) { return f[1] === 1 ? String(f[0]) : (f[0] < 0 ? "-" : "") + "\\tfrac{" + Math.abs(f[0]) + "}{" + f[1] + "}"; }
+    function draw() {
+      W.clear(svg);
+      var cols = n + 1, left = 70, cw = (620 - left) / cols, y1 = 60, y2 = 130, h = 44;
+      svg.appendChild(W.s("text", { x: 14, y: y1 + 28, class: "lbl", text: "S" }));
+      svg.appendChild(W.s("text", { x: 14, y: y2 + 28, class: "lbl", text: "rS" }));
+      for (var c = 0; c < cols; c++) {
+        var x = left + c * cw + 3, w = cw - 6, f = term(c);
+        var inS = c < n, inR = c >= 1, both = inS && inR;
+        svg.appendChild(W.s("text", { x: x + w / 2, y: 40, "text-anchor": "middle", class: "lbl", text: "a·r^" + c }));
+        if (inS) {
+          svg.appendChild(W.s("rect", { x: x, y: y1, width: w, height: h, rx: 6, fill: both ? "var(--surface-2)" : "color-mix(in srgb, var(--plot-1) 45%, transparent)", stroke: both ? "var(--border-strong)" : "var(--plot-1)" }));
+          svg.appendChild(W.s("text", { x: x + w / 2, y: y1 + 28, "text-anchor": "middle", style: "font: 700 13px var(--font-mono)", fill: both ? "var(--muted)" : "var(--ink)", text: txt(f) }));
+        }
+        if (inR) {
+          svg.appendChild(W.s("rect", { x: x, y: y2, width: w, height: h, rx: 6, fill: both ? "var(--surface-2)" : "color-mix(in srgb, var(--plot-2) 45%, transparent)", stroke: both ? "var(--border-strong)" : "var(--plot-2)" }));
+          svg.appendChild(W.s("text", { x: x + w / 2, y: y2 + 28, "text-anchor": "middle", style: "font: 700 13px var(--font-mono)", fill: both ? "var(--muted)" : "var(--ink)", text: txt(f) }));
+        }
+        if (both) svg.appendChild(W.s("line", { x1: x + 6, y1: y1 + 6, x2: x + w - 6, y2: y2 + h - 6, stroke: "var(--accent-2)", "stroke-width": 2, opacity: 0.8 }));
+      }
+      svg.appendChild(W.s("text", { x: 320, y: 214, "text-anchor": "middle", class: "lbl", text: "crossed columns cancel in S − rS; only the first and last boxes survive" }));
+      svg.appendChild(W.s("text", { x: 320, y: 236, "text-anchor": "middle", class: "lbl", text: "S − rS = " + txt(term(0)) + " − (" + txt(term(n)) + ")" }));
+      var R = RS[rIdx], sNum = 0, sDen = 1;
+      for (var k = 0; k < n; k++) { var f2 = term(k); sNum = sNum * f2[1] + f2[0] * sDen; sDen = sDen * f2[1]; var g = W.gcd(sNum, sDen) || 1; sNum /= g; sDen /= g; }
+      out.tex("S(1 - r) = a - ar^{" + n + "} \\;\\Rightarrow\\; S = \\frac{" + tex(term(0)) + " - " + (term(n)[0] < 0 ? "(" + tex(term(n)) + ")" : tex(term(n))) + "}{1 - " + (R.q === 1 ? (R.p < 0 ? "(" + R.p + ")" : R.p) : "\\tfrac{1}{2}") + "} = " + W.frac(sNum, sDen));
+    }
+    draw();
+  });
+
+  /* 24.3 — partial sums */
+  AOPS.registerWidget("partialSums", function (body) {
+    var svg = W.stage(body, { w: 640, h: 360, label: "Partial sums of a series plotted against the number of terms" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var r = 0.5, N = 20, kind = "geo";
+    var rSl = W.slider(ctl, { label: "Ratio r", min: -1.2, max: 1.2, step: 0.05, value: r, format: function (v) { return v.toFixed(2); }, onInput: function (v) { r = v; draw(); } });
+    W.slider(ctl, { label: "Terms N", min: 1, max: 40, value: N, onInput: function (v) { N = v; draw(); } });
+    W.segmented(ctl, { title: "Series", value: kind, options: [{ value: "geo", label: "1 + r + r² + …" }, { value: "harm", label: "1 + ½ + ⅓ + …" }, { value: "ones", label: "1 + 1 + 1 + …" }], onChange: function (v) { kind = v; rSl.input.disabled = v !== "geo"; draw(); } });
+    function termAt(k) { // k = 1..N
+      if (kind === "geo") return Math.pow(r, k - 1);
+      if (kind === "harm") return 1 / k;
+      return 1;
+    }
+    function draw() {
+      W.clear(svg);
+      var S = [], s = 0, k;
+      for (k = 1; k <= N; k++) { s += termAt(k); S.push(s); }
+      var limit = (kind === "geo" && Math.abs(r) < 1) ? 1 / (1 - r) : null;
+      var lo = Math.min(0, Math.min.apply(null, S)), hi = Math.max(1, Math.max.apply(null, S));
+      if (limit !== null) { lo = Math.min(lo, limit); hi = Math.max(hi, limit); }
+      hi = Math.min(hi, 45); lo = Math.max(lo, -45);
+      var span = hi - lo, ystep = span > 24 ? 10 : span > 10 ? 5 : span > 4 ? 1 : 0.5;
+      lo = Math.floor(lo / ystep) * ystep; hi = Math.ceil(hi * 1.08 / ystep) * ystep;
+      var P = W.plane(svg, { x: [0, 41], y: [lo, hi], step: 5, ystep: ystep, pad: 34 });
+      if (limit !== null) {
+        svg.appendChild(W.s("line", { x1: P.X(0), y1: P.Y(limit), x2: P.X(41), y2: P.Y(limit), stroke: "var(--accent)", "stroke-dasharray": "7 5", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: P.X(40.5), y: P.Y(limit) - 8, "text-anchor": "end", class: "lbl", text: "a/(1 − r) = " + W.fmt(limit, 3) }));
+      }
+      var d = "";
+      S.forEach(function (v, i) {
+        var vy = Math.max(lo, Math.min(hi, v));
+        d += (i ? "L" : "M") + P.X(i + 1) + " " + P.Y(vy);
+      });
+      svg.appendChild(W.s("path", { d: d, fill: "none", stroke: "color-mix(in srgb, var(--plot-1) 50%, transparent)", "stroke-width": 1.5 }));
+      S.forEach(function (v, i) {
+        if (v < lo || v > hi) return;
+        svg.appendChild(W.s("circle", { cx: P.X(i + 1), cy: P.Y(v), r: i === N - 1 ? 6 : 4, fill: i === N - 1 ? "var(--accent)" : "var(--plot-1)" }));
+      });
+      svg.appendChild(W.s("text", { x: P.X(41), y: P.Y(lo) - 6, "text-anchor": "end", class: "lbl", text: "n" }));
+      svg.appendChild(W.s("text", { x: P.X(0) + 6, y: 20, class: "lbl", text: "partial sum S_n" }));
+      var verdict;
+      if (kind === "geo") verdict = Math.abs(r) < 1 ? "\\text{converges to } \\frac{1}{1 - " + (r < 0 ? "(" + W.fmt(r, 2) + ")" : W.fmt(r, 2)) + "} = " + W.fmt(limit, 4) : "|r| \\ge 1:\\ \\text{diverges}";
+      else if (kind === "harm") verdict = "\\text{terms} \\to 0, \\text{ but it still diverges (very slowly)}";
+      else verdict = "\\text{terms don't shrink: diverges}";
+      out.tex("S_{" + N + "} \\approx " + W.fmt(S[N - 1], 6) + " \\qquad " + verdict);
+    }
+    draw();
+  });
+
+  /* 24.4 — sigma machine */
+  AOPS.registerWidget("sigmaMachine", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Bars showing each term of a sigma sum" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var lo = 1, hi = 6, fi = 0;
+    var FS = [
+      { t: "k", f: function (k) { return [k, 1]; } },
+      { t: "k^2", f: function (k) { return [k * k, 1]; } },
+      { t: "2k - 1", f: function (k) { return [2 * k - 1, 1]; } },
+      { t: "2^k", f: function (k) { return [Math.pow(2, k), 1]; } },
+      { t: "(-1)^{k+1}k", f: function (k) { return [(k % 2 ? 1 : -1) * k, 1]; } },
+      { t: "\\frac{1}{k(k+1)}", f: function (k) { return [1, k * (k + 1)]; }, minLo: 1 }
+    ];
+    var loSl = W.slider(ctl, { label: "Lower limit", min: 0, max: 6, value: lo, onInput: function (v) { lo = v; draw(); } });
+    W.slider(ctl, { label: "Upper limit", min: 0, max: 12, value: hi, onInput: function (v) { hi = v; draw(); } });
+    W.segmented(ctl, { title: "General term f(k)", value: 0, options: [{ value: 0, label: "k" }, { value: 1, label: "k²" }, { value: 2, label: "2k−1" }, { value: 3, label: "2ᵏ" }, { value: 4, label: "(−1)ᵏ⁺¹k" }, { value: 5, label: "1/(k(k+1))" }], onChange: function (v) { fi = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var F = FS[fi], L = Math.max(lo, F.minLo || 0), H = hi;
+      if (H < L) {
+        svg.appendChild(W.s("text", { x: 320, y: 150, "text-anchor": "middle", class: "lbl", text: "upper limit below lower limit: no terms (the sum is 0)" }));
+        out.tex("\\sum_{k=" + L + "}^{" + H + "} " + F.t + " = 0 \\quad(\\text{empty sum})");
+        return;
+      }
+      var vals = [], k;
+      for (k = L; k <= H; k++) vals.push(F.f(k));
+      var nums = vals.map(function (v) { return v[0] / v[1]; });
+      var mx = Math.max.apply(null, nums.map(Math.abs).concat([1e-9]));
+      var hasNeg = nums.some(function (v) { return v < 0; });
+      var mid = hasNeg ? 160 : 250, avail = hasNeg ? 100 : 200;
+      var cw = Math.min(70, 580 / vals.length), x0 = 320 - cw * vals.length / 2;
+      svg.appendChild(W.s("line", { x1: 20, y1: mid, x2: 620, y2: mid, stroke: "var(--border-strong)" }));
+      vals.forEach(function (v, i) {
+        var val = nums[i], hgt = Math.abs(val) / mx * avail, x = x0 + i * cw + 4, w = cw - 8;
+        svg.appendChild(W.s("rect", { x: x, y: val >= 0 ? mid - hgt : mid, width: w, height: Math.max(hgt, 1), rx: 4, fill: val >= 0 ? "color-mix(in srgb, var(--plot-1) 55%, transparent)" : "color-mix(in srgb, var(--plot-3) 55%, transparent)", stroke: val >= 0 ? "var(--plot-1)" : "var(--plot-3)" }));
+        var lbl = v[1] === 1 ? String(v[0]) : v[0] + "/" + v[1];
+        svg.appendChild(W.s("text", { x: x + w / 2, y: val >= 0 ? mid - hgt - 6 : mid + hgt + 16, "text-anchor": "middle", style: "font: 600 12px var(--font-mono)", fill: "var(--ink)", text: lbl }));
+        svg.appendChild(W.s("text", { x: x + w / 2, y: hasNeg ? 290 : mid + 20, "text-anchor": "middle", class: "lbl", text: "k=" + (L + i) }));
+      });
+      // exact total
+      var tn = 0, td = 1;
+      vals.forEach(function (v) { tn = tn * v[1] + v[0] * td; td *= v[1]; var g = W.gcd(tn, td) || 1; tn /= g; td /= g; });
+      var shown = vals.slice(0, 6).map(function (v) { return v[1] === 1 ? String(v[0]) : "\\tfrac{" + v[0] + "}{" + v[1] + "}"; }).join(" + ").replace(/\+ -/g, "- ");
+      if (vals.length > 6) shown += " + \\cdots";
+      out.tex("\\sum_{k=" + L + "}^{" + H + "} " + F.t + " = " + shown + " = " + W.frac(tn, td) + "\\qquad(" + (H - L + 1) + "\\text{ terms})");
+      if (F.minLo && lo < F.minLo) svg.appendChild(W.s("text", { x: 20, y: 22, class: "lbl", text: "k = 0 would divide by zero, so this term starts at k = 1" }));
+    }
+    draw();
+  });
+
+  /* 24.5 — recursion lab */
+  AOPS.registerWidget("recursionLab", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Dot plot of a recursively defined sequence" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var x0 = 1, x1 = 1, rule = "fib", len = 8, MAX = 14;
+    var RULES = {
+      fib: { t: "a_n = a_{n-1} + a_{n-2}", f: function (p, q) { return p + q; } },
+      arith: { t: "a_n = 2a_{n-1} - a_{n-2}", f: function (p, q) { return 2 * q - p; } },
+      cyc: { t: "a_n = a_{n-1} - a_{n-2}", f: function (p, q) { return q - p; } }
+    };
+    W.slider(ctl, { label: "First term a₁", min: -5, max: 10, value: x0, onInput: function (v) { x0 = v; draw(); } });
+    W.slider(ctl, { label: "Second term a₂", min: -5, max: 10, value: x1, onInput: function (v) { x1 = v; draw(); } });
+    W.segmented(ctl, { title: "Rule", value: rule, options: [{ value: "fib", label: "add last two" }, { value: "arith", label: "2aₙ₋₁ − aₙ₋₂" }, { value: "cyc", label: "aₙ₋₁ − aₙ₋₂" }], onChange: function (v) { rule = v; draw(); } });
+    var nextBtn = W.button(ctl2, "Next term", function () { if (len < MAX) { len++; draw(); } });
+    W.button(ctl2, "Reset to 2 terms", function () { len = 2; draw(); });
+    function seq() { var s = [x0, x1]; while (s.length < len) s.push(RULES[rule].f(s[s.length - 2], s[s.length - 1])); return s; }
+    function draw() {
+      W.clear(svg);
+      var s = seq();
+      var lo = Math.min(0, Math.min.apply(null, s)), hi = Math.max(5, Math.max.apply(null, s));
+      var span = hi - lo, ystep = span > 200 ? 100 : span > 80 ? 20 : span > 30 ? 10 : span > 12 ? 5 : 1;
+      var P = W.plane(svg, { x: [0, MAX + 1], y: [Math.floor(lo / ystep) * ystep, Math.ceil(hi * 1.1 / ystep) * ystep], step: 1, ystep: ystep, pad: 34, labelEvery: 1 });
+      s.forEach(function (v, i) {
+        if (i) svg.appendChild(W.s("line", { x1: P.X(i), y1: P.Y(s[i - 1]), x2: P.X(i + 1), y2: P.Y(v), stroke: "color-mix(in srgb, var(--plot-1) 50%, transparent)", "stroke-width": 1.5 }));
+      });
+      s.forEach(function (v, i) {
+        var newest = i === s.length - 1 && i >= 2;
+        svg.appendChild(W.s("circle", { cx: P.X(i + 1), cy: P.Y(v), r: newest ? 7 : 5, fill: i < 2 ? "var(--plot-2)" : newest ? "var(--accent)" : "var(--plot-1)" }));
+      });
+      svg.appendChild(W.s("text", { x: P.X(MAX + 1), y: 20, "text-anchor": "end", class: "lbl", text: "blue = starting terms, gold = newest" }));
+      nextBtn.disabled = len >= MAX;
+      var extra = "";
+      if (rule === "fib" && s.length >= 4 && s[s.length - 2] !== 0) extra = "\\quad \\frac{a_{" + s.length + "}}{a_{" + (s.length - 1) + "}} \\approx " + W.fmt(s[s.length - 1] / s[s.length - 2], 4);
+      if (rule === "arith") extra = "\\quad d = " + (x1 - x0);
+      if (rule === "cyc") extra = "\\quad \\text{repeats every 6 terms}";
+      out.tex(RULES[rule].t + ":\\ " + s.join(",\\ ") + extra);
+    }
+    draw();
+  });
+
+  /* 24.6 — inserting means */
+  AOPS.registerWidget("meansInsert", function (body) {
+    var svg = W.stage(body, { w: 640, h: 230, label: "Number line with inserted arithmetic or geometric means between two endpoints" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var A = 2, B = 162, k = 3, mode = "geo";
+    W.slider(ctl, { label: "Start A", min: 1, max: 20, value: A, onInput: function (v) { A = v; draw(); } });
+    W.slider(ctl, { label: "End B", min: 21, max: 200, value: B, onInput: function (v) { B = v; draw(); } });
+    W.slider(ctl, { label: "Means inserted k", min: 1, max: 6, value: k, onInput: function (v) { k = v; draw(); } });
+    W.segmented(ctl, { title: "Type", value: mode, options: [{ value: "arith", label: "arithmetic" }, { value: "geo", label: "geometric" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var pts = [], i, d = (B - A) / (k + 1), r = Math.pow(B / A, 1 / (k + 1));
+      for (i = 0; i <= k + 1; i++) pts.push(mode === "arith" ? A + i * d : A * Math.pow(r, i));
+      var left = 30, right = 610, y = 60, cy = 160;
+      function X(v) { return left + v / B * (right - left); }
+      svg.appendChild(W.s("line", { x1: left, y1: y, x2: right, y2: y, stroke: "var(--border-strong)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: left, y: y - 16, "text-anchor": "middle", class: "lbl", text: "0" }));
+      svg.appendChild(W.s("text", { x: 320, y: 24, "text-anchor": "middle", class: "lbl", text: "positions on the number line" }));
+      var n = pts.length, cw = (right - left) / n;
+      function CX(j) { return left + cw * (j + 0.5); }
+      pts.forEach(function (v, j) {
+        var end = j === 0 || j === n - 1;
+        svg.appendChild(W.s("line", { x1: X(v), y1: y, x2: CX(j), y2: cy - 18, stroke: "var(--faint)", "stroke-dasharray": "3 4" }));
+        svg.appendChild(W.s("circle", { cx: X(v), cy: y, r: end ? 8 : 6, fill: end ? "var(--plot-2)" : "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        svg.appendChild(W.s("rect", { x: CX(j) - cw / 2 + 6, y: cy - 18, width: cw - 12, height: 36, rx: 8, fill: end ? "color-mix(in srgb, var(--plot-2) 30%, transparent)" : "color-mix(in srgb, var(--accent) 25%, transparent)", stroke: end ? "var(--plot-2)" : "var(--accent)" }));
+        svg.appendChild(W.s("text", { x: CX(j), y: cy + 5, "text-anchor": "middle", style: "font: 700 13px var(--font-mono)", fill: "var(--ink)", text: W.fmt(v, 2) }));
+        if (j) svg.appendChild(W.s("text", { x: CX(j) - cw / 2, y: cy + 36, "text-anchor": "middle", style: "font: 600 12px var(--font-mono)", fill: "var(--plot-3)", text: mode === "arith" ? "+" + W.fmt(d, 2) : "×" + W.fmt(r, 2) }));
+      });
+      svg.appendChild(W.s("text", { x: left, y: 222, class: "lbl", text: "A, " + k + " means, B: " + (k + 1) + " gaps between A and B" + (mode === "arith" ? " (equal sizes)" : " (each × the same factor)") }));
+      var p = pts[0], m = pts[1], q = pts[2];
+      var check = mode === "arith"
+        ? "\\tfrac{" + W.fmt(p, 2) + " + " + W.fmt(q, 2) + "}{2} = " + W.fmt(m, 2)
+        : "\\sqrt{" + W.fmt(p, 2) + "\\cdot " + W.fmt(q, 2) + "} = " + W.fmt(m, 2);
+      var head = mode === "arith" ? "d = \\frac{" + B + " - " + A + "}{" + (k + 1) + "} = " + W.fmt(d, 3) : "r = \\left(\\frac{" + B + "}{" + A + "}\\right)^{1/" + (k + 1) + "} \\approx " + W.fmt(r, 4);
+      out.tex(head + "\\qquad \\text{check: } " + check);
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

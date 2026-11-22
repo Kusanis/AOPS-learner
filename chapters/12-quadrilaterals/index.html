@@ -1,0 +1,1180 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 12: Quadrilaterals · AoPS Learner</title>
+  <meta name="description" content="Angle sums, trapezoids, parallelograms, rhombuses, rectangles and squares, and the converse theorems that identify them, with draggable explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="12" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 12 · Geometry</span>
+    <h1>Quadrilaterals</h1>
+    <p class="lede">Add one more side to a triangle and the shapes multiply: trapezoids, parallelograms, rhombuses, rectangles, squares. Each special shape is defined by one simple property, and each one quietly hands you several more. In this chapter you'll learn what every family inherits, how to find areas by cutting quadrilaterals into triangles, and how to prove which family a mystery shape belongs to.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>A diagonal cuts any quadrilateral into two triangles, so the angles always add to $360^\circ$.</li>
+      <li>Trapezoid: the median (joining the midpoints of the legs) has length $\dfrac{a+b}{2}$, and the area is median $\times$ height $= \dfrac{(a+b)h}{2}$.</li>
+      <li>Parallelogram: opposite sides and opposite angles are equal, neighbouring angles are supplementary, and the diagonals bisect each other. Area $= bh = ab\sin\theta = \tfrac12 d_1 d_2 \sin\varphi$.</li>
+      <li>Rhombus: a parallelogram with perpendicular diagonals, so the area is $\tfrac12 d_1 d_2$ and each side is $\sqrt{(d_1/2)^2 + (d_2/2)^2}$.</li>
+      <li>Rectangle: equal diagonals $\sqrt{l^2+w^2}$. Use $(l+w)^2 = l^2 + w^2 + 2lw$ to link perimeter, area and diagonal.</li>
+      <li>Drop perpendiculars to create right triangles and rectangles; that is the standard first move.</li>
+      <li>A converse needs its own proof. Diagonals that bisect each other make a parallelogram; add "perpendicular" for a rhombus, "equal" for a rectangle.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 12.1 ===================== -->
+  <section class="lesson" id="s12-1" data-title="The Fundamentals">
+    <h2><span class="sec-num">12.1</span> The Fundamentals</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Cut a paper quadrilateral of any shape, tear off its four corners and fit them together point to point. No matter how lopsided the original was, the four corners always close up into one full turn. Why should four random angles be so well behaved?</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>quadrilateral</strong> is a closed figure with four straight sides. We always name it by listing its vertices <em>in order</em> around the figure: $ABCD$ and $BCDA$ name the same quadrilateral, but $ACBD$ does not, because $A$ and $C$ are not neighbours.</p>
+      <p>A segment joining two vertices that are <em>not</em> neighbours is a <strong>diagonal</strong>. Every quadrilateral has exactly two: $AC$ and $BD$. If the diagonals are perpendicular, the quadrilateral is called <strong>orthodiagonal</strong>.</p>
+      <p>The diagonal $AC$ splits $ABCD$ into triangles $ABC$ and $ACD$. The angles of those two triangles together make up exactly the four angles of the quadrilateral, so</p>
+      <div class="rule"><p>$$\angle A + \angle B + \angle C + \angle D = 180^\circ + 180^\circ = 360^\circ.$$</p></div>
+      <p>A quadrilateral is <strong>convex</strong> if every angle is less than $180^\circ$. If one angle is a <em>reflex</em> angle (more than $180^\circ$), the quadrilateral is <strong>concave</strong>, shaped like an arrowhead. The angle sum is still $360^\circ$; just split it along the diagonal from the reflex vertex, which lies inside. The <strong>perimeter</strong> is the sum of the four sides.</p>
+      <div class="note"><p>Most contest problems use convex quadrilaterals. Assume convex unless a figure says otherwise.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="quadAngles">
+      <figcaption><strong>Explore:</strong> Drag the four corners. The angles change but always add to $360^\circ$. Switch to <em>Split into triangles</em> to see why, and try making the shape concave. The readout also names the shape when you land on a special one.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The missing angle</h3>
+        <div class="problem"><p>Three angles of a quadrilateral measure $75^\circ$, $110^\circ$ and $95^\circ$. Find the fourth angle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The known angles add to $75^\circ + 110^\circ + 95^\circ = 280^\circ$.</p></div><p class="why">Collect what we know before using the angle sum.</p></li>
+          <li><div class="do"><p>The fourth angle is $360^\circ - 280^\circ = 80^\circ$.</p></div><p class="why">All four angles of a quadrilateral add to $360^\circ$.</p></li>
+        </ol>
+        <p class="answer">$80^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Names and diagonals</h3>
+        <div class="problem"><p>Quadrilateral $PQRS$ is drawn. Which of $QRSP$, $PRQS$ and $SRQP$ are also correct names for it, and what are its diagonals?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$QRSP$ is valid: it walks around the same figure, starting at $Q$.</p></div><p class="why">Any starting vertex is fine, as long as we keep going around in order.</p></li>
+          <li><div class="do"><p>$SRQP$ is valid: it walks around in the opposite direction.</p></div><p class="why">Reversing direction still lists neighbours next to each other.</p></li>
+          <li><div class="do"><p>$PRQS$ is not valid: $P$ and $R$ are not neighbours in $PQRS$.</p></div><p class="why">Writing $PR$ first would make a diagonal into a side.</p></li>
+          <li><div class="do"><p>The diagonals join non-neighbours: $PR$ and $QS$.</p></div><p class="why">Each vertex has exactly one vertex it is not adjacent to.</p></li>
+        </ol>
+        <p class="answer">$QRSP$ and $SRQP$ are valid names; the diagonals are $PR$ and $QS$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Angles in a ratio</h3>
+        <div class="problem"><p>The angles of a quadrilateral are in the ratio $2 : 3 : 4 : 6$. Find the largest angle.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Call the angles $2x$, $3x$, $4x$ and $6x$.</p></div><p class="why">A ratio tells us the angles are multiples of one unknown.</p></li>
+          <li><div class="do"><p>$2x + 3x + 4x + 6x = 15x = 360^\circ$, so $x = 24^\circ$.</p></div><p class="why">Use the angle sum of a quadrilateral.</p></li>
+          <li><div class="do"><p>The angles are $48^\circ, 72^\circ, 96^\circ, 144^\circ$; the largest is $6x = 144^\circ$.</p></div><p class="why">Checking: $48 + 72 + 96 + 144 = 360$.</p></li>
+        </ol>
+        <p class="answer">$144^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Perimeter with an unknown</h3>
+        <div class="problem"><p>The sides of a quadrilateral are $x$, $x + 3$, $2x$ and $2x - 1$, and its perimeter is $44$. Find the longest side.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x + (x+3) + 2x + (2x-1) = 6x + 2 = 44$, so $x = 7$.</p></div><p class="why">The perimeter is the sum of all four sides.</p></li>
+          <li><div class="do"><p>The sides are $7, 10, 14, 13$.</p></div><p class="why">Substitute $x = 7$ into each expression. They add to $44$, as required.</p></li>
+        </ol>
+        <p class="answer">$14$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The arrowhead</h3>
+        <div class="problem"><p>Concave quadrilateral $ABCD$ has a reflex angle at $D$. The other three angles are $\angle A = 30^\circ$, $\angle B = 40^\circ$, $\angle C = 50^\circ$. Find the reflex angle at $D$, and the ordinary angle you see at $D$ from outside the dent.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The reflex angle is $360^\circ - (30^\circ + 40^\circ + 50^\circ) = 240^\circ$.</p></div><p class="why">The angle sum is $360^\circ$ for concave quadrilaterals too: split along diagonal $BD$, which lies inside.</p></li>
+          <li><div class="do"><p>The angle on the other side of $D$ is $360^\circ - 240^\circ = 120^\circ$.</p></div><p class="why">The two angles at a point make a full turn.</p></li>
+          <li><div class="do"><p>Notice $120^\circ = 30^\circ + 40^\circ + 50^\circ$.</p></div><p class="why">In general this outside angle at the dent is $360^\circ - (360^\circ - (A+B+C)) = A + B + C$.</p></li>
+        </ol>
+        <p class="answer">Reflex angle $240^\circ$; the angle outside the dent is $120^\circ$.</p>
+        <p class="key-idea">In an arrowhead, the angle at the dent equals the sum of the other three angles.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Angles in arithmetic progression</h3>
+        <div class="problem"><p>The angles of a quadrilateral form an arithmetic sequence, and the largest angle is twice the smallest. Find all four angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Write the angles as $a$, $a + d$, $a + 2d$, $a + 3d$.</p></div><p class="why">An arithmetic sequence adds the same amount each time.</p></li>
+          <li><div class="do"><p>Largest is twice smallest: $a + 3d = 2a$, so $a = 3d$.</p></div><p class="why">Translate the second condition into an equation.</p></li>
+          <li><div class="do"><p>Sum: $4a + 6d = 12d + 6d = 18d = 360^\circ$, so $d = 20^\circ$ and $a = 60^\circ$.</p></div><p class="why">Substitute $a = 3d$ into the angle sum.</p></li>
+        </ol>
+        <p class="answer">$60^\circ, 80^\circ, 100^\circ, 120^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Where two angle bisectors meet</h3>
+        <div class="problem"><p>In convex quadrilateral $ABCD$, $\angle C = 100^\circ$ and $\angle D = 70^\circ$. The bisectors of $\angle A$ and $\angle B$ meet at $P$. Find $\angle APB$, and find a formula for it in general.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In triangle $APB$: $\angle APB = 180^\circ - \tfrac12\angle A - \tfrac12\angle B$.</p></div><p class="why">The bisectors cut $\angle A$ and $\angle B$ in half, and those halves are two angles of triangle $APB$.</p></li>
+          <li data-think="You don't know $\angle A$ or $\angle B$ separately. What do you know about their sum?"><div class="do"><p>$\angle A + \angle B = 360^\circ - \angle C - \angle D$.</p></div><p class="why">The quadrilateral angle sum gives the sum we need without finding each angle.</p></li>
+          <li><div class="do"><p>$\angle APB = 180^\circ - \tfrac12(360^\circ - \angle C - \angle D) = \tfrac12(\angle C + \angle D)$.</p></div><p class="why">Substitute and simplify; the $180^\circ$ terms cancel.</p></li>
+          <li><div class="do"><p>Here $\angle APB = \tfrac12(100^\circ + 70^\circ) = 85^\circ$.</p></div><p class="why">Plug in the given angles.</p></li>
+        </ol>
+        <p class="answer">$\angle APB = 85^\circ$; in general $\angle APB = \tfrac12(\angle C + \angle D)$.</p>
+        <p class="key-idea">When you can't find angles one at a time, the angle sum often gives exactly the combination you need.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 12.2 ===================== -->
+  <section class="lesson" id="s12-2" data-title="Trapezoids">
+    <h2><span class="sec-num">12.2</span> Trapezoids</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A staircase handrail, a lampshade seen from the side, a slice of a pyramid: shapes with one pair of parallel sides are everywhere. Their area looks awkward because the top and bottom differ, yet there is a single "average" length that makes the area as easy as a rectangle's.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>trapezoid</strong> has one pair of parallel sides, the <strong>bases</strong> (lengths $a$ and $b$). The other two sides are the <strong>legs</strong>. The distance between the bases is the <strong>height</strong> $h$. Because the bases are parallel, the two angles along each leg are co-interior angles, so they are <em>supplementary</em>: if $AB \parallel CD$, then $\angle A + \angle D = \angle B + \angle C = 180^\circ$.</p>
+      <p>The <strong>median</strong> joins the midpoints of the two legs. It is parallel to the bases and its length is their average. Rotating a copy of the trapezoid half a turn about the midpoint of a leg makes a parallelogram with base $a + b$ and height $h$, which explains the area formula:</p>
+      <div class="rule"><p>$$\text{median} = \frac{a+b}{2}, \qquad \text{Area} = \frac{(a+b)\,h}{2} = \text{median} \times h.$$</p></div>
+      <p>If the legs are equal, the trapezoid is <strong>isosceles</strong>. Dropping altitudes from the ends of the shorter base creates two congruent right triangles, so an isosceles trapezoid has equal base angles and equal diagonals (and either fact implies it is isosceles).</p>
+      <div class="note"><p>Altitudes from the short base split the long base into the short base plus two overhangs. In an isosceles trapezoid each overhang is $\tfrac{b-a}{2}$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="trapezoidMedian">
+      <figcaption><strong>Explore:</strong> Drag $A$ to change the height, and slide $B$, $C$, $D$ along the bases. The median always equals the average of the bases. Turn on the rotated copy to see two trapezoids form a parallelogram of base $a + b$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Area from the bases</h3>
+        <div class="problem"><p>A trapezoid has bases $7$ and $13$ and height $5$. Find its median and its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Median $= \dfrac{7 + 13}{2} = 10$.</p></div><p class="why">The median is the average of the bases.</p></li>
+          <li><div class="do"><p>Area $= 10 \times 5 = 50$.</p></div><p class="why">Area is median times height, the same as $\tfrac{(a+b)h}{2}$.</p></li>
+        </ol>
+        <p class="answer">Median $10$, area $50$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Supplementary angles along a leg</h3>
+        <div class="problem"><p>In trapezoid $ABCD$ with $AB \parallel CD$, $\angle A = 65^\circ$ and $\angle C = 110^\circ$. Find $\angle B$ and $\angle D$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\angle D = 180^\circ - \angle A = 115^\circ$.</p></div><p class="why">$A$ and $D$ are the two ends of leg $AD$, which crosses the parallel bases, so they are supplementary.</p></li>
+          <li><div class="do"><p>$\angle B = 180^\circ - \angle C = 70^\circ$.</p></div><p class="why">Same reason along leg $BC$. Check: $65 + 70 + 110 + 115 = 360$.</p></li>
+        </ol>
+        <p class="answer">$\angle B = 70^\circ$, $\angle D = 115^\circ$</p>
+        <p class="book-next">Next in the book: Exercise 12-2.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Working backward from the median</h3>
+        <div class="problem"><p>A trapezoid has median $12$ and one base $9$. Find the other base. If its area is $84$, find its height.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{9 + b}{2} = 12 \Rightarrow b = 15$.</p></div><p class="why">The median is the average of the bases, so the bases add to twice the median.</p></li>
+          <li><div class="do"><p>$12h = 84 \Rightarrow h = 7$.</p></div><p class="why">Area is median times height.</p></li>
+        </ol>
+        <p class="answer">Other base $15$, height $7$.</p>
+        <p class="book-next">Next in the book: Exercise 12-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Isosceles trapezoid: find the height</h3>
+        <div class="problem"><p>An isosceles trapezoid has bases $6$ and $14$ and legs of length $5$. Find its area.</p>
+          <svg class="stage" viewBox="0 0 320 140" style="max-width:320px;display:block;margin:10px auto 0" role="img" aria-label="Isosceles trapezoid with top base 6, bottom base 14, legs 5, and two altitudes cutting off overhangs of 4">
+            <polygon points="20,120 300,120 220,40 100,40" fill="color-mix(in srgb, var(--plot-2) 22%, transparent)" stroke="var(--plot-2)" stroke-width="2"/>
+            <line x1="100" y1="40" x2="100" y2="120" stroke="var(--accent)" stroke-dasharray="5 4" stroke-width="1.6"/>
+            <line x1="220" y1="40" x2="220" y2="120" stroke="var(--accent)" stroke-dasharray="5 4" stroke-width="1.6"/>
+            <text x="160" y="32" text-anchor="middle" class="lbl">6</text>
+            <text x="160" y="136" text-anchor="middle" class="lbl">14</text>
+            <text x="50" y="76" class="lbl">5</text><text x="262" y="76" class="lbl">5</text>
+            <text x="60" y="114" text-anchor="middle" class="lbl">4</text><text x="260" y="114" text-anchor="middle" class="lbl">4</text>
+            <text x="106" y="86" class="lbl">h</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>Drop altitudes from the ends of the top base. They cut the bottom base into $4 + 6 + 4$.</p></div><p class="why">The middle piece equals the top base (it's a rectangle), and by symmetry the two overhangs share the remaining $14 - 6 = 8$ equally.</p></li>
+          <li><div class="do"><p>$h = \sqrt{5^2 - 4^2} = 3$.</p></div><p class="why">Each overhang, altitude and leg form a right triangle with hypotenuse $5$.</p></li>
+          <li><div class="do"><p>Area $= \dfrac{(6 + 14)\cdot 3}{2} = 30$.</p></div><p class="why">Now the trapezoid formula applies.</p></li>
+        </ol>
+        <p class="answer">$30$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The diagonal of the same trapezoid</h3>
+        <div class="problem"><p>For the isosceles trapezoid with bases $6$ and $14$ and legs $5$, find the length of a diagonal.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the long base be $DC$ and the top be $AB$, with $A$ above the left end. The altitude from $A$ lands $4$ units from $D$, hence $14 - 4 = 10$ units from $C$.</p></div><p class="why">The diagonal $AC$ is the hypotenuse of a right triangle whose legs are the height and this horizontal distance.</p></li>
+          <li><div class="do"><p>$AC = \sqrt{10^2 + 3^2} = \sqrt{109}$.</p></div><p class="why">Pythagorean Theorem with legs $10$ and $h = 3$.</p></li>
+        </ol>
+        <p class="answer">$\sqrt{109}$</p>
+        <p class="key-idea">Altitudes turn trapezoid questions into right-triangle questions.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Different base angles</h3>
+        <div class="problem"><p>Trapezoid $ABCD$ has $AB \parallel DC$, $AB = 4$, height $6$, $\angle D = 60^\circ$ and $\angle C = 45^\circ$. Find $DC$ and the area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Drop altitudes $AE$ and $BF$ to $DC$. Then $EF = AB = 4$.</p></div><p class="why">$ABFE$ is a rectangle, so its opposite sides are equal.</p></li>
+          <li><div class="do"><p>In $30$-$60$-$90$ triangle $AED$, the long leg is $AE = 6$, so $DE = \dfrac{6}{\sqrt3} = 2\sqrt3$.</p></div><p class="why">The side opposite $60^\circ$ is $\sqrt3$ times the side opposite $30^\circ$.</p></li>
+          <li><div class="do"><p>In $45$-$45$-$90$ triangle $BFC$, $FC = BF = 6$.</p></div><p class="why">The legs of an isosceles right triangle are equal.</p></li>
+          <li><div class="do"><p>$DC = 2\sqrt3 + 4 + 6 = 10 + 2\sqrt3$, and the area is $\dfrac{(4 + 10 + 2\sqrt3)\cdot 6}{2} = 42 + 6\sqrt3$.</p></div><p class="why">Add the three pieces of the long base, then use the area formula.</p></li>
+        </ol>
+        <p class="answer">$DC = 10 + 2\sqrt3$, area $= 42 + 6\sqrt3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>How the diagonals divide each other</h3>
+        <div class="problem"><p>In trapezoid $ABCD$, $AB \parallel CD$, $AB = 6$ and $CD = 15$. The diagonals meet at $E$, and $AC = 14$. Find $AE$ and $EC$.</p></div>
+        <ol class="steps">
+          <li data-think="Which two triangles near $E$ have parallel sides?"><div class="do"><p>$\triangle ABE \sim \triangle CDE$.</p></div><p class="why">$\angle BAE = \angle DCE$ and $\angle ABE = \angle CDE$ are alternate angles for the parallel bases, so AA similarity applies.</p></li>
+          <li><div class="do"><p>The ratio of similarity is $AB : CD = 6 : 15 = 2 : 5$, so $AE : EC = 2 : 5$.</p></div><p class="why">$AE$ and $EC$ are corresponding sides.</p></li>
+          <li><div class="do"><p>$AE = \tfrac{2}{7}\cdot 14 = 4$ and $EC = \tfrac{5}{7}\cdot 14 = 10$.</p></div><p class="why">Split $14$ in the ratio $2 : 5$.</p></li>
+        </ol>
+        <p class="answer">$AE = 4$, $EC = 10$</p>
+        <p class="key-idea">The diagonals of a trapezoid cut each other in the ratio of the bases.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Midpoints of the diagonals</h3>
+        <div class="problem"><p>A trapezoid has bases $8$ and $18$. Find the distance between the midpoints of its two diagonals.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $AB = 8$ (top) and $DC = 18$. Let $X$ be the midpoint of leg $AD$, and let $M$, $N$ be the midpoints of diagonals $AC$ and $BD$.</p></div><p class="why">Naming the points lets us use midpoint facts in triangles.</p></li>
+          <li data-think="Segment $XM$ joins midpoints of two sides of which triangle?"><div class="do"><p>In $\triangle ADC$, $XM$ joins midpoints of $AD$ and $AC$, so $XM \parallel DC$ and $XM = \tfrac12 DC = 9$.</p></div><p class="why">The segment joining midpoints of two sides of a triangle is parallel to the third side and half as long.</p></li>
+          <li><div class="do"><p>In $\triangle DAB$, $XN$ joins midpoints of $DA$ and $DB$, so $XN \parallel AB$ and $XN = \tfrac12 AB = 4$.</p></div><p class="why">Same midpoint fact in a different triangle.</p></li>
+          <li><div class="do"><p>Both $M$ and $N$ lie on the line through $X$ parallel to the bases (the median), on the same side of $X$, so $MN = 9 - 4 = 5$.</p></div><p class="why">Two segments from $X$ along the same line in the same direction differ by $MN$.</p></li>
+        </ol>
+        <p class="answer">$5$, which is $\dfrac{18 - 8}{2}$.</p>
+        <p class="key-idea">The median carries the midpoints of the diagonals, which sit $\tfrac{b-a}{2}$ apart.</p>
+        <p class="book-next">Next in the book: Problem 207.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 12.3 ===================== -->
+  <section class="lesson" id="s12-3" data-title="Parallelograms">
+    <h2><span class="sec-num">12.3</span> Parallelograms</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Push sideways on a rectangular picture frame with loose joints and it leans into a slanted shape. The sides keep their lengths and stay parallel, but the area shrinks as it leans. What exactly controls that area?</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>parallelogram</strong> has both pairs of opposite sides parallel. Draw diagonal $AC$: alternate angles give $\angle BAC = \angle DCA$ and $\angle BCA = \angle DAC$, so $\triangle ABC \cong \triangle CDA$ by ASA. That one congruence delivers a list of facts:</p>
+      <ul>
+        <li>Opposite sides are equal: $AB = CD$, $BC = DA$.</li>
+        <li>Opposite angles are equal, and neighbouring angles are supplementary: $\angle A + \angle B = 180^\circ$.</li>
+        <li>The diagonals <strong>bisect each other</strong>: they meet at their common midpoint.</li>
+      </ul>
+      <p>For area, take any side as the base $b$ and measure the perpendicular height $h$ to the opposite side. Two more formulas come from splitting along diagonals into triangles:</p>
+      <div class="rule"><p>$$[ABCD] = b\,h = (AB)(AD)\sin A = \tfrac12\, d_1 d_2 \sin\varphi,$$</p></div>
+      <p>where $\varphi$ is either angle between the diagonals (both have the same sine, since $\sin(180^\circ - \varphi) = \sin\varphi$).</p>
+      <div class="note"><p>Notation: $[ABCD]$ means the area of $ABCD$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="parallelogramArea">
+      <figcaption><strong>Explore:</strong> Drag $B$ and $D$ ($C$ follows to keep the sides parallel). Pick an area formula to see its construction. All three always agree, and the diagonals always meet at their midpoints.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>One angle gives all four</h3>
+        <div class="problem"><p>One angle of a parallelogram is $68^\circ$. Find the other three.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The opposite angle is also $68^\circ$.</p></div><p class="why">Opposite angles of a parallelogram are equal.</p></li>
+          <li><div class="do"><p>The two neighbouring angles are $180^\circ - 68^\circ = 112^\circ$.</p></div><p class="why">Neighbouring angles are co-interior angles between parallel sides.</p></li>
+        </ol>
+        <p class="answer">$68^\circ$, $112^\circ$, $112^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Two bases, two heights</h3>
+        <div class="problem"><p>A parallelogram has sides $12$ and $8$. The height to the side of length $12$ is $5$. Find the area and the height to the side of length $8$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area $= 12 \times 5 = 60$.</p></div><p class="why">Base times the height drawn to that base.</p></li>
+          <li><div class="do"><p>Using the other base: $8 \times h' = 60$, so $h' = 7.5$.</p></div><p class="why">The area doesn't depend on which side we call the base.</p></li>
+        </ol>
+        <p class="answer">Area $60$; the other height is $7.5$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Algebra with opposite angles</h3>
+        <div class="problem"><p>Two opposite angles of a parallelogram measure $(4x + 10)^\circ$ and $(7x - 35)^\circ$. Find all the angles.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4x + 10 = 7x - 35 \Rightarrow 3x = 45 \Rightarrow x = 15$.</p></div><p class="why">Opposite angles are equal.</p></li>
+          <li><div class="do"><p>Those angles are $4(15) + 10 = 70^\circ$; the other two are $180^\circ - 70^\circ = 110^\circ$.</p></div><p class="why">Neighbours are supplementary.</p></li>
+        </ol>
+        <p class="answer">$70^\circ, 110^\circ, 70^\circ, 110^\circ$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Diagonals that bisect</h3>
+        <div class="problem"><p>The diagonals of parallelogram $ABCD$ meet at $E$, with $AE = 2y + 1$, $EC = 3y - 4$ and $BE = y + 3$. Find $AC$ and $BD$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2y + 1 = 3y - 4 \Rightarrow y = 5$.</p></div><p class="why">$E$ is the midpoint of $AC$, so $AE = EC$.</p></li>
+          <li><div class="do"><p>$AC = 2 \cdot 11 = 22$; $BE = 8$ so $BD = 16$.</p></div><p class="why">Each diagonal is twice the half from $E$.</p></li>
+        </ol>
+        <p class="answer">$AC = 22$, $BD = 16$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Area from two sides and an angle</h3>
+        <div class="problem"><p>A parallelogram has sides $8$ and $10$, and one of its angles is $150^\circ$. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$[ABCD] = (8)(10)\sin 150^\circ$.</p></div><p class="why">The diagonal splits it into two congruent triangles, each with area $\tfrac12 (8)(10)\sin 150^\circ$.</p></li>
+          <li><div class="do"><p>$\sin 150^\circ = \sin 30^\circ = \tfrac12$, so the area is $40$.</p></div><p class="why">Supplementary angles have the same sine, so the $30^\circ$ angle works just as well.</p></li>
+        </ol>
+        <p class="answer">$40$</p>
+        <p class="book-next">Next in the book: Exercise 12-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Area from the diagonals</h3>
+        <div class="problem"><p>The diagonals of a parallelogram have lengths $12$ and $10$ and meet at a $30^\circ$ angle. Find the area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The diagonals cut the parallelogram into four triangles, each with two sides $6$ and $5$ (half-diagonals) meeting at $30^\circ$ or $150^\circ$.</p></div><p class="why">The diagonals bisect each other, so the half-lengths are $6$ and $5$.</p></li>
+          <li><div class="do"><p>Each triangle has area $\tfrac12(6)(5)\sin 30^\circ = 7.5$, so the total is $4 \times 7.5 = 30$.</p></div><p class="why">$\sin 150^\circ = \sin 30^\circ$, so all four triangles have the same area.</p></li>
+          <li><div class="do"><p>Check with the formula: $\tfrac12 (12)(10)\sin 30^\circ = 30$.</p></div><p class="why">This is where $\tfrac12 d_1 d_2 \sin\varphi$ comes from.</p></li>
+        </ol>
+        <p class="answer">$30$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>From the centre to a side</h3>
+        <div class="problem"><p>Parallelogram $PQRS$ has area $72$ and $PQ = 9$. Its diagonals meet at $X$. How far is $X$ from side $PQ$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The height between $PQ$ and $SR$ is $72 / 9 = 8$.</p></div><p class="why">Area is base times height.</p></li>
+          <li data-think="Where does $X$ sit between the two parallel sides?"><div class="do"><p>$X$ is the midpoint of diagonal $PR$, so it is halfway between the lines $PQ$ and $SR$: distance $4$.</p></div><p class="why">The midpoint of a segment joining two parallel lines is equidistant from them.</p></li>
+        </ol>
+        <p class="answer">$4$</p>
+        <p class="book-next">Next in the book: Exercise 12-4.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The parallelogram law</h3>
+        <div class="problem"><p>A parallelogram has sides $5$ and $7$, and one diagonal has length $8$. Find the other diagonal.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Place $A = (0, 0)$, $B = (a, 0)$, $D = (p, q)$, so $C = (a + p, q)$, with $AB = a$ and $AD^2 = p^2 + q^2$.</p></div><p class="why">Coordinates make the diagonal lengths easy to write down.</p></li>
+          <li data-think="Add $AC^2$ and $BD^2$. What happens to the cross terms?"><div class="do"><p>$AC^2 + BD^2 = (a + p)^2 + q^2 + (p - a)^2 + q^2 = 2a^2 + 2(p^2 + q^2)$.</p></div><p class="why">The $\pm 2ap$ terms cancel, leaving $2AB^2 + 2AD^2$: the sum of the squares of all four sides.</p></li>
+          <li><div class="do"><p>$8^2 + d^2 = 2(5^2) + 2(7^2) = 148$, so $d^2 = 84$ and $d = 2\sqrt{21}$.</p></div><p class="why">Apply the identity to our numbers.</p></li>
+        </ol>
+        <p class="answer">$2\sqrt{21}$</p>
+        <p class="key-idea">In a parallelogram, $d_1^2 + d_2^2$ equals the sum of the squares of the four sides.</p>
+        <p class="book-next">Next in the book: Exercise 12-14.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 12.4 ===================== -->
+  <section class="lesson" id="s12-4" data-title="Rhombuses">
+    <h2><span class="sec-num">12.4</span> Rhombuses (Rhombi?)</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A kite made from two sticks crossed at right angles, with the string pulled tight around the ends, has equal sides when the sticks cross at their middles. Its area turns out to depend only on the lengths of the two sticks, not on the sides at all.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>rhombus</strong> has four equal sides. Diagonal $BD$ splits it into two triangles that are congruent by SSS, which gives alternate angles and shows that opposite sides are parallel. So <em>every rhombus is a parallelogram</em> and inherits all the parallelogram facts.</p>
+      <p>Since the diagonals bisect each other, $\triangle ABE \cong \triangle CBE$ by SSS (where $E$ is the centre), so the two angles at $E$ along $AC$ are equal and add to $180^\circ$: the diagonals are <strong>perpendicular</strong>. They also bisect the angles of the rhombus.</p>
+      <p>The diagonals cut the rhombus into four congruent right triangles with legs $\tfrac{d_1}{2}$ and $\tfrac{d_2}{2}$. That gives the side and the area:</p>
+      <div class="rule"><p>$$s = \sqrt{\left(\tfrac{d_1}{2}\right)^2 + \left(\tfrac{d_2}{2}\right)^2}, \qquad [ABCD] = \frac{d_1 d_2}{2}.$$</p></div>
+      <div class="note"><p>A rhombus is also a parallelogram, so $s^2 \sin\theta$ and base $\times$ height work too.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="rhombusDiagonals">
+      <figcaption><strong>Explore:</strong> Drag the two orange points to set the half-diagonals. Watch the highlighted right triangle give the side length, and switch on the bounding rectangle to see that the rhombus is exactly half of a $d_1 \times d_2$ rectangle.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Area from diagonals</h3>
+        <div class="problem"><p>A rhombus has diagonals $6$ and $9$. Find its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area $= \dfrac{6 \times 9}{2} = 27$.</p></div><p class="why">The rhombus is half of the $6 \times 9$ rectangle around it.</p></li>
+        </ol>
+        <p class="answer">$27$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Side from diagonals</h3>
+        <div class="problem"><p>A rhombus has diagonals $10$ and $24$. Find its perimeter.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The half-diagonals are $5$ and $12$.</p></div><p class="why">The diagonals bisect each other.</p></li>
+          <li><div class="do"><p>Side $= \sqrt{5^2 + 12^2} = 13$, so the perimeter is $4 \times 13 = 52$.</p></div><p class="why">The diagonals are perpendicular, so the half-diagonals and a side form a right triangle.</p></li>
+        </ol>
+        <p class="answer">$52$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Equal sides, solved</h3>
+        <div class="problem"><p>Two sides of a rhombus have lengths $4x - 1$ and $x + 11$. Find the perimeter.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4x - 1 = x + 11 \Rightarrow x = 4$.</p></div><p class="why">All sides of a rhombus are equal.</p></li>
+          <li><div class="do"><p>Each side is $15$, so the perimeter is $60$.</p></div><p class="why">Four equal sides.</p></li>
+        </ol>
+        <p class="answer">$60$</p>
+        <p class="book-next">Next in the book: Exercise 12-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The missing diagonal</h3>
+        <div class="problem"><p>A rhombus has side $25$ and one diagonal $14$. Find the other diagonal and the area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Half of the known diagonal is $7$; the other half-diagonal is $\sqrt{25^2 - 7^2} = \sqrt{576} = 24$.</p></div><p class="why">Right triangle with hypotenuse $25$ (a side) and one leg $7$.</p></li>
+          <li><div class="do"><p>The other diagonal is $48$, and the area is $\dfrac{14 \times 48}{2} = 336$.</p></div><p class="why">Double the half-diagonal, then use $\tfrac12 d_1 d_2$.</p></li>
+        </ol>
+        <p class="answer">Diagonal $48$, area $336$.</p>
+        <p class="book-next">Next in the book: Exercise 12-6.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A rhombus with a $60^\circ$ angle</h3>
+        <div class="problem"><p>A rhombus has side $6$ and an angle of $60^\circ$. Find both diagonals and the area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The short diagonal cuts off a triangle with two sides $6$ and a $60^\circ$ angle between them; it is equilateral, so the short diagonal is $6$.</p></div><p class="why">An isosceles triangle with a $60^\circ$ apex angle has all angles $60^\circ$.</p></li>
+          <li><div class="do"><p>Half the long diagonal is $\sqrt{6^2 - 3^2} = 3\sqrt3$, so the long diagonal is $6\sqrt3$.</p></div><p class="why">Right triangle with hypotenuse $6$ and short leg $3$.</p></li>
+          <li><div class="do"><p>Area $= \dfrac{6 \cdot 6\sqrt3}{2} = 18\sqrt3$.</p></div><p class="why">Check: $s^2\sin 60^\circ = 36 \cdot \tfrac{\sqrt3}{2} = 18\sqrt3$.</p></li>
+        </ol>
+        <p class="answer">Diagonals $6$ and $6\sqrt3$; area $18\sqrt3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The height of a rhombus</h3>
+        <div class="problem"><p>A rhombus has diagonals $16$ and $12$. Find the distance between two opposite sides.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area $= \dfrac{16 \times 12}{2} = 96$ and side $= \sqrt{8^2 + 6^2} = 10$.</p></div><p class="why">The diagonals give the area; the half-diagonals give the side.</p></li>
+          <li><div class="do"><p>As a parallelogram, area $=$ side $\times$ height: $10h = 96$, so $h = 9.6$.</p></div><p class="why">The distance between opposite sides is the height to a side.</p></li>
+        </ol>
+        <p class="answer">$9.6$</p>
+        <p class="key-idea">Computing one area in two ways is a quick route to a hidden length.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Diagonals from perimeter and area</h3>
+        <div class="problem"><p>A rhombus has perimeter $40$ and area $96$. Find its diagonals.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the half-diagonals be $p$ and $q$. The side is $10$, so $p^2 + q^2 = 100$.</p></div><p class="why">Perimeter $40$ means side $10$, the hypotenuse of the right triangle with legs $p$, $q$.</p></li>
+          <li><div class="do"><p>Area $= \dfrac{(2p)(2q)}{2} = 2pq = 96$, so $pq = 48$.</p></div><p class="why">Write the area in terms of the half-diagonals.</p></li>
+          <li data-think="You know $p^2 + q^2$ and $pq$. Which square can you build from them?"><div class="do"><p>$(p + q)^2 = p^2 + q^2 + 2pq = 196$, so $p + q = 14$; and $(p - q)^2 = 100 - 96 = 4$, so $p - q = 2$.</p></div><p class="why">Combining the two equations into perfect squares avoids solving a quadratic directly.</p></li>
+          <li><div class="do"><p>$p = 8$ and $q = 6$, so the diagonals are $16$ and $12$.</p></div><p class="why">Add and subtract the two equations. Check: $\tfrac12(16)(12) = 96$ and $\sqrt{64 + 36} = 10$.</p></li>
+        </ol>
+        <p class="answer">$16$ and $12$</p>
+        <p class="key-idea">$(p+q)^2 = p^2 + q^2 + 2pq$ links a side (via Pythagoras) to an area.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 12.5 ===================== -->
+  <section class="lesson" id="s12-5" data-title="Rectangles and Squares">
+    <h2><span class="sec-num">12.5</span> Rectangles and Squares</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A TV screen is sold by the length of its diagonal. Two screens can share the same "size" yet have very different areas. Which shape of rectangle gives the most screen for a given diagonal?</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>rectangle</strong> has four equal angles. Since they add to $360^\circ$, each is $90^\circ$, and opposite sides are parallel, so every rectangle is a parallelogram. With length $l$ and width $w$:</p>
+      <div class="rule"><p>$$\text{Perimeter} = 2l + 2w, \qquad \text{Area} = lw, \qquad \text{diagonal} = \sqrt{l^2 + w^2}.$$</p></div>
+      <p>Both diagonals have that length (Pythagoras on either half), so a rectangle's diagonals are <em>equal</em> and bisect each other. Problems often give two of perimeter, area and diagonal; connect them with</p>
+      <div class="rule"><p>$$(l + w)^2 = l^2 + w^2 + 2lw = d^2 + 2\,(\text{Area}).$$</p></div>
+      <p>A <strong>square</strong> has equal sides and equal angles, so it is both a rectangle and a rhombus and inherits everything from both. With side $s$: area $s^2$, perimeter $4s$, diagonal $s\sqrt2$, and area $= \tfrac12 d^2$.</p>
+      <div class="note"><p>In rectangles and squares, drawing extra perpendicular lines almost always helps: everything is already lined up with right angles.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="rectangleDiagonal">
+      <figcaption><strong>Explore:</strong> Drag corner $C$ to resize the rectangle. Then choose <em>Fixed diagonal</em>: $C$ now rides on a circle, so the diagonal stays the same while the shape changes. Which shape gives the largest area?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The basic three</h3>
+        <div class="problem"><p>A rectangle is $12$ by $9$. Find its perimeter, area and diagonal.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Perimeter $= 2(12) + 2(9) = 42$; area $= 12 \times 9 = 108$.</p></div><p class="why">Direct use of the formulas.</p></li>
+          <li><div class="do"><p>Diagonal $= \sqrt{144 + 81} = \sqrt{225} = 15$.</p></div><p class="why">The diagonal is the hypotenuse of a right triangle with legs $12$ and $9$.</p></li>
+        </ol>
+        <p class="answer">Perimeter $42$, area $108$, diagonal $15$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A square from its diagonal</h3>
+        <div class="problem"><p>A square has diagonal $10$. Find its side and area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$s\sqrt2 = 10 \Rightarrow s = \dfrac{10}{\sqrt2} = 5\sqrt2$.</p></div><p class="why">The diagonal of a square is $\sqrt2$ times the side.</p></li>
+          <li><div class="do"><p>Area $= s^2 = 50$.</p></div><p class="why">Shortcut: area $= \tfrac12 d^2 = \tfrac12(100)$, because a square is a rhombus with equal diagonals.</p></li>
+        </ol>
+        <p class="answer">Side $5\sqrt2$, area $50$.</p>
+        <p class="book-next">Next in the book: Exercise 12-9.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Perimeter and diagonal give the sides</h3>
+        <div class="problem"><p>A rectangle has perimeter $34$ and diagonal $13$. Find its area and dimensions.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$l + w = 17$ and $l^2 + w^2 = 169$.</p></div><p class="why">Half the perimeter, and Pythagoras for the diagonal.</p></li>
+          <li><div class="do"><p>$2lw = (l + w)^2 - (l^2 + w^2) = 289 - 169 = 120$, so the area is $lw = 60$.</p></div><p class="why">The identity $(l + w)^2 = l^2 + w^2 + 2lw$ hands us the area directly.</p></li>
+          <li><div class="do"><p>Two numbers with sum $17$ and product $60$: $12$ and $5$.</p></div><p class="why">Check: $12^2 + 5^2 = 169$.</p></li>
+        </ol>
+        <p class="answer">Area $60$; the rectangle is $12$ by $5$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A diagonal at $30^\circ$</h3>
+        <div class="problem"><p>A diagonal of a rectangle has length $12$ and makes a $30^\circ$ angle with the longer side. Find the area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The diagonal and two sides form a $30$-$60$-$90$ triangle with hypotenuse $12$.</p></div><p class="why">The rectangle's corner is a right angle.</p></li>
+          <li><div class="do"><p>Short side $= 6$, long side $= 6\sqrt3$.</p></div><p class="why">Opposite $30^\circ$ is half the hypotenuse; opposite $60^\circ$ is $\sqrt3$ times that.</p></li>
+          <li><div class="do"><p>Area $= 6 \cdot 6\sqrt3 = 36\sqrt3$.</p></div><p class="why">Length times width.</p></li>
+        </ol>
+        <p class="answer">$36\sqrt3$</p>
+        <p class="book-next">Next in the book: Exercise 12-8.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Area and diagonal give the perimeter</h3>
+        <div class="problem"><p>A rectangle has area $24$ and diagonal $8$. Find its perimeter.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$lw = 24$ and $l^2 + w^2 = 64$.</p></div><p class="why">Translate the given facts.</p></li>
+          <li data-think="You need $l + w$, not $l$ and $w$ separately. Which identity produces $l + w$?"><div class="do"><p>$(l + w)^2 = 64 + 2(24) = 112$, so $l + w = \sqrt{112} = 4\sqrt7$.</p></div><p class="why">We never need the individual sides, which here are not nice numbers.</p></li>
+          <li><div class="do"><p>Perimeter $= 2(l + w) = 8\sqrt7$.</p></div><p class="why">The perimeter only depends on the sum.</p></li>
+        </ol>
+        <p class="answer">$8\sqrt7$</p>
+        <p class="key-idea">Aim for the combination the question asks for ($l + w$), not the pieces.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A segment across a square</h3>
+        <div class="problem"><p>Square $ABCD$ has side $12$, with $AB$ on top and $DC$ on the bottom. Point $E$ on $AB$ has $AE = 3$, and point $F$ on $CD$ has $CF = 4$. Find $EF$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Drop a perpendicular from $E$ to $DC$, meeting it at $G$. Then $EG = 12$ and $DG = AE = 3$.</p></div><p class="why">$AEGD$ is a rectangle, so the perpendicular makes a right triangle $EGF$.</p></li>
+          <li><div class="do"><p>$DF = 12 - 4 = 8$, so $GF = 8 - 3 = 5$.</p></div><p class="why">Measure both points from $D$ along the bottom side.</p></li>
+          <li><div class="do"><p>$EF = \sqrt{12^2 + 5^2} = 13$.</p></div><p class="why">Pythagoras in right triangle $EGF$.</p></li>
+        </ol>
+        <p class="answer">$13$</p>
+        <p class="book-next">Next in the book: Exercise 12-10.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A picture frame</h3>
+        <div class="problem"><p>A picture is twice as long as it is wide. A frame $3$ inches wide surrounds it, and the outside perimeter of the frame is $84$ inches. Find the area of the frame itself.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the picture be $2w$ by $w$. The outside of the frame is $(2w + 6)$ by $(w + 6)$.</p></div><p class="why">The frame adds $3$ inches on <em>each</em> side, so $6$ to each dimension.</p></li>
+          <li><div class="do"><p>$2(2w + 6) + 2(w + 6) = 6w + 24 = 84$, so $w = 10$.</p></div><p class="why">Outside perimeter.</p></li>
+          <li><div class="do"><p>Frame area $= 26 \times 16 - 20 \times 10 = 416 - 200 = 216$ square inches.</p></div><p class="why">Outer rectangle minus the picture.</p></li>
+        </ol>
+        <p class="answer">$216$ square inches</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A tilted square inside a square</h3>
+        <div class="problem"><p>Square $EFGH$ has one vertex on each side of square $ABCD$, which has side $7$. Each vertex of $EFGH$ cuts a side of $ABCD$ into pieces $3$ and $4$ (going around in the same direction). Show $EFGH$ is a square and find its area.</p>
+          <svg class="stage" viewBox="0 0 220 220" style="max-width:220px;display:block;margin:10px auto 0" role="img" aria-label="Square of side 7 with a tilted square inside, each vertex splitting a side into 3 and 4">
+            <rect x="20" y="20" width="175" height="175" fill="none" stroke="var(--plot-2)" stroke-width="2"/>
+            <polygon points="95,20 195,95 120,195 20,120" fill="color-mix(in srgb, var(--plot-1) 30%, transparent)" stroke="var(--plot-1)" stroke-width="2"/>
+            <text x="56" y="15" text-anchor="middle" class="lbl">3</text><text x="146" y="15" text-anchor="middle" class="lbl">4</text>
+            <text x="203" y="60" class="lbl">3</text><text x="203" y="150" class="lbl">4</text>
+            <text x="158" y="212" text-anchor="middle" class="lbl">3</text><text x="68" y="212" text-anchor="middle" class="lbl">4</text>
+            <text x="6" y="163" class="lbl">3</text><text x="6" y="73" class="lbl">4</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>The four corner triangles each have legs $3$ and $4$ and a right angle, so they are congruent (LL), and each hypotenuse is $\sqrt{9 + 16} = 5$.</p></div><p class="why">So all four sides of $EFGH$ equal $5$.</p></li>
+          <li data-think="Equal sides only make a rhombus. What must you check at a vertex such as $E$?"><div class="do"><p>At $E$, the two acute angles of neighbouring corner triangles are different angles of congruent triangles, so they add to $90^\circ$. The angle of $EFGH$ at $E$ is $180^\circ - 90^\circ = 90^\circ$.</p></div><p class="why">The three angles at $E$ lie along a straight side of $ABCD$.</p></li>
+          <li><div class="do"><p>Area of $EFGH$ $= 5^2 = 25$. Check: $7^2 - 4 \cdot \tfrac12 (3)(4) = 49 - 24 = 25$.</p></div><p class="why">Big square minus four triangles must agree.</p></li>
+        </ol>
+        <p class="answer">$EFGH$ is a square of area $25$.</p>
+        <p class="key-idea">Doing this with legs $a$, $b$ gives $(a + b)^2 - 2ab = c^2$: a proof of the Pythagorean Theorem.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 12.6 ===================== -->
+  <section class="lesson" id="s12-6" data-title="Hints and Problems">
+    <h2><span class="sec-num">12.6</span> Hints and Problems</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>"Every square has four equal sides." True. "Every shape with four equal sides is a square." False: a squashed rhombus is a counterexample. Flipping a statement around gives its <em>converse</em>, and the converse needs its own proof. Which converses about quadrilaterals survive?</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To show a quadrilateral belongs to a family, prove the <em>definition</em> (or a theorem you have already proved). The most useful tests look at the diagonals, meeting at $E$:</p>
+      <div class="rule">
+        <p><strong>Bisect each other</strong> $\Rightarrow$ parallelogram. &nbsp; <strong>Bisect + perpendicular</strong> $\Rightarrow$ rhombus.<br>
+        <strong>Bisect + equal</strong> $\Rightarrow$ rectangle. &nbsp; <strong>All three</strong> $\Rightarrow$ square.</p>
+      </div>
+      <p>Other parallelogram tests: both pairs of opposite sides equal; both pairs of opposite angles equal; or one pair of opposite sides both parallel <em>and</em> equal.</p>
+      <p>Be careful: perpendicular diagonals alone do <em>not</em> force a rhombus (think of a kite), and one pair of parallel sides plus one pair of equal sides does <em>not</em> force a parallelogram (think of an isosceles trapezoid). When a statement is false, a single counterexample settles it.</p>
+      <div class="note"><p>Proof toolkit: congruent triangles (SSS, SAS, ASA, HL), alternate angles for parallel lines, and the midpoint segment of a triangle (parallel to the third side, half as long).</p></div>
+    </div>
+
+    <figure class="explore" data-widget="diagonalTest">
+      <figcaption><strong>Explore:</strong> Build a quadrilateral from its diagonals. Slide $A$ and $C$ along one diagonal, drag $B$ anywhere above, and slide $D$ along the line through $B$ and $E$. The readout checks bisect / perpendicular / equal and says what the shape must be.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A counterexample: perpendicular is not enough</h3>
+        <div class="problem"><p>Is every quadrilateral with perpendicular diagonals a rhombus?</p>
+          <svg class="stage" viewBox="0 0 240 160" style="max-width:240px;display:block;margin:10px auto 0" role="img" aria-label="Kite with vertices A at left, B top, C far right, D bottom, diagonals crossing at right angles">
+            <polygon points="30,80 70,30 210,80 70,130" fill="color-mix(in srgb, var(--plot-3) 25%, transparent)" stroke="var(--plot-3)" stroke-width="2"/>
+            <line x1="30" y1="80" x2="210" y2="80" stroke="var(--muted)" stroke-dasharray="4 4"/>
+            <line x1="70" y1="30" x2="70" y2="130" stroke="var(--muted)" stroke-dasharray="4 4"/>
+            <text x="16" y="85" class="lbl">A</text><text x="66" y="22" class="lbl">B</text><text x="214" y="85" class="lbl">C</text><text x="66" y="148" class="lbl">D</text>
+          </svg>
+        </div>
+        <ol class="steps">
+          <li><div class="do"><p>Take $A = (-1, 0)$, $C = (4, 0)$, $B = (0, 2)$, $D = (0, -2)$. The diagonals lie along the axes, so they are perpendicular.</p></div><p class="why">To disprove "every", we just need one example that fails.</p></li>
+          <li><div class="do"><p>$AB = \sqrt{1 + 4} = \sqrt5$ but $BC = \sqrt{16 + 4} = 2\sqrt5$.</p></div><p class="why">The sides are not all equal, so it is not a rhombus. (It is a kite.)</p></li>
+        </ol>
+        <p class="answer">No. A kite with perpendicular diagonals need not be a rhombus.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Parallel plus equal, but not a parallelogram</h3>
+        <div class="problem"><p>A quadrilateral has one pair of parallel sides and the other pair of sides equal. Must it be a parallelogram?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>An isosceles trapezoid has bases parallel and legs equal.</p></div><p class="why">Look for a familiar shape meeting both conditions.</p></li>
+          <li><div class="do"><p>Its legs are not parallel (they lean toward each other), so it is not a parallelogram.</p></div><p class="why">For example, bases $6$ and $14$ with legs $5$, as in §12.2.</p></li>
+        </ol>
+        <p class="answer">No; an isosceles trapezoid is a counterexample.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Diagonals that bisect each other</h3>
+        <div class="problem"><p>Prove that if the diagonals of $ABCD$ bisect each other at $E$, then $ABCD$ is a parallelogram.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$AE = EC$, $BE = ED$, and $\angle AEB = \angle CED$ (vertical angles). So $\triangle AEB \cong \triangle CED$ by SAS.</p></div><p class="why">Two triangles across from each other at $E$ share all the given equalities.</p></li>
+          <li><div class="do"><p>Hence $\angle EAB = \angle ECD$, i.e. $\angle CAB = \angle ACD$.</p></div><p class="why">Corresponding parts of congruent triangles.</p></li>
+          <li><div class="do"><p>These are alternate angles for lines $AB$ and $CD$ cut by $AC$, so $AB \parallel CD$. In the same way, $\triangle AED \cong \triangle CEB$ gives $AD \parallel BC$.</p></div><p class="why">Equal alternate angles force parallel lines; with both pairs parallel, $ABCD$ is a parallelogram.</p></li>
+        </ol>
+        <p class="answer">Both pairs of opposite sides are parallel, so $ABCD$ is a parallelogram.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>One pair both parallel and equal</h3>
+        <div class="problem"><p>In quadrilateral $ABCD$, $AB \parallel CD$ and $AB = CD$. Prove $ABCD$ is a parallelogram.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Draw diagonal $AC$. Then $\angle BAC = \angle DCA$.</p></div><p class="why">Alternate angles, because $AB \parallel CD$.</p></li>
+          <li><div class="do"><p>$\triangle BAC \cong \triangle DCA$ by SAS: $AB = CD$, the angles above, and the shared side $AC$.</p></div><p class="why">The diagonal is common to both triangles.</p></li>
+          <li><div class="do"><p>So $\angle BCA = \angle DAC$, which are alternate angles for $BC$ and $AD$; hence $BC \parallel AD$.</p></div><p class="why">Now both pairs of opposite sides are parallel.</p></li>
+        </ol>
+        <p class="answer">$ABCD$ is a parallelogram.</p>
+        <p class="book-next">Next in the book: Exercise 12-11.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A parallelogram with perpendicular diagonals</h3>
+        <div class="problem"><p>Prove that a parallelogram whose diagonals are perpendicular is a rhombus.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let the diagonals meet at $E$. In a parallelogram they bisect each other, so $AE = EC$.</p></div><p class="why">This is the parallelogram fact we already proved.</p></li>
+          <li><div class="do"><p>$\triangle AEB \cong \triangle CEB$ by SAS: $AE = CE$, right angles at $E$, and shared $BE$.</p></div><p class="why">Perpendicular diagonals give the right angles.</p></li>
+          <li><div class="do"><p>So $AB = CB$. Opposite sides of a parallelogram are equal, so $AB = BC = CD = DA$.</p></div><p class="why">One pair of neighbouring sides equal is enough once opposite sides match.</p></li>
+        </ol>
+        <p class="answer">All four sides are equal, so it is a rhombus.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The midpoint quadrilateral</h3>
+        <div class="problem"><p>A quadrilateral has diagonals of lengths $10$ and $14$. Find the perimeter of the quadrilateral formed by joining the midpoints of its sides in order.</p></div>
+        <ol class="steps">
+          <li data-think="Each side of the midpoint quadrilateral joins midpoints of two sides of one triangle. Which triangle?"><div class="do"><p>The midpoints of $AB$ and $BC$ are joined by a segment parallel to $AC$ and half as long: $\tfrac12 AC$.</p></div><p class="why">Midpoint segment in triangle $ABC$.</p></li>
+          <li><div class="do"><p>Likewise the midpoints of $CD$ and $DA$ give $\tfrac12 AC$; the other two sides are each $\tfrac12 BD$.</p></div><p class="why">Use triangles $CDA$, $BCD$ and $DAB$ in the same way.</p></li>
+          <li><div class="do"><p>Perimeter $= 2 \cdot \tfrac12(10) + 2 \cdot \tfrac12(14) = 24$.</p></div><p class="why">The perimeter equals the sum of the diagonals. (Opposite sides are parallel and equal, so it's always a parallelogram.)</p></li>
+        </ol>
+        <p class="answer">$24$</p>
+        <p class="book-next">Next in the book: Problem 209.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A median, via a parallelogram</h3>
+        <div class="problem"><p>Triangle $ABC$ has $AB = 4$, $BC = 6$ and $AC = 8$. Find the length of median $BM$, where $M$ is the midpoint of $AC$.</p></div>
+        <ol class="steps">
+          <li data-think="Can you complete the triangle into a parallelogram so that $BM$ becomes half of a diagonal?"><div class="do"><p>Extend $BM$ past $M$ to $P$ with $MP = BM$. Then $ABCP$ has diagonals $AC$ and $BP$ bisecting each other at $M$, so it is a parallelogram.</p></div><p class="why">Doubling the median creates a parallelogram with sides $4$ and $6$.</p></li>
+          <li><div class="do"><p>Parallelogram law: $AC^2 + BP^2 = 2(4^2) + 2(6^2) = 104$.</p></div><p class="why">The sum of the squares of the diagonals equals the sum of the squares of the four sides.</p></li>
+          <li><div class="do"><p>$64 + BP^2 = 104 \Rightarrow BP^2 = 40$, so $BP = 2\sqrt{10}$ and $BM = \sqrt{10}$.</p></div><p class="why">$BM$ is half of $BP$.</p></li>
+        </ol>
+        <p class="answer">$BM = \sqrt{10}$</p>
+        <p class="key-idea">Doubling a median turns a triangle into a parallelogram.</p>
+        <p class="book-next">Next in the book: Exercise 12-15.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-12">
+    <h2 id="further-12">Further reading in the book</h2>
+    <ul>
+      <li><strong>§12.1 The Fundamentals</strong>: definitions of convex and concave quadrilaterals, diagonals, and the $360^\circ$ angle sum.</li>
+      <li><strong>§12.2 Trapezoids</strong>: the median and area derivations, Example 12-1 and Exercises 12-1, 12-2.</li>
+      <li><strong>§12.3 Parallelograms</strong>: Example 12-2 and Exercises 12-3, 12-4.</li>
+      <li><strong>§12.4 Rhombuses</strong>: Example 12-3 and Exercises 12-5, 12-6.</li>
+      <li><strong>§12.5 Rectangles and Squares</strong>: Examples 12-4, 12-5 and Exercises 12-7 to 12-10.</li>
+      <li><strong>§12.6 Hints and Problems</strong>: Examples 12-6 to 12-8 and Exercises 12-11 to 12-15.</li>
+      <li><strong>Problems to Solve for Chapter 12</strong>: Problems 197–217; the proofs about orthodiagonal quadrilaterals (197, 203, 211, 212, 216) are especially worth trying.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 12 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* ---- small geometry helpers (svg coordinates, y down) ---- */
+  function snap(v, s) { return Math.round(v / s) * s; }
+  function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+  function sub(p, q) { return { x: p.x - q.x, y: p.y - q.y }; }
+  function add(p, q) { return { x: p.x + q.x, y: p.y + q.y }; }
+  function len(v) { return Math.hypot(v.x, v.y); }
+  function dist(p, q) { return Math.hypot(p.x - q.x, p.y - q.y); }
+  function cross(a, b) { return a.x * b.y - a.y * b.x; }
+  function dot(a, b) { return a.x * b.x + a.y * b.y; }
+  function mid(p, q) { return { x: (p.x + q.x) / 2, y: (p.y + q.y) / 2 }; }
+  function pts(P) { return P.map(function (p) { return p.x.toFixed(1) + "," + p.y.toFixed(1); }).join(" "); }
+  function signedArea(P) { var s = 0; for (var i = 0; i < P.length; i++) s += cross(P[i], P[(i + 1) % P.length]); return s / 2; }
+  function angleBetween(u, w) { var l = len(u) * len(w); if (!l) return 0; return Math.acos(clamp(dot(u, w) / l, -1, 1)) * 180 / Math.PI; }
+  function interiorAngles(P) {
+    var n = P.length, o = signedArea(P) >= 0 ? 1 : -1;
+    return P.map(function (V, i) {
+      var A = P[(i + n - 1) % n], B = P[(i + 1) % n];
+      var a = angleBetween(sub(A, V), sub(B, V));
+      return cross(sub(V, A), sub(B, V)) * o < 0 ? 360 - a : a;
+    });
+  }
+  /* wedge from ray V->P1 to ray V->P2 covering `deg` degrees */
+  function wedge(V, P1, P2, deg, r) {
+    var a1 = Math.atan2(P1.y - V.y, P1.x - V.x), a2 = Math.atan2(P2.y - V.y, P2.x - V.x);
+    var d = (a2 - a1) % (2 * Math.PI); if (d < 0) d += 2 * Math.PI;
+    var rad = deg * Math.PI / 180;
+    var sweep = Math.abs(d - rad) <= Math.abs(2 * Math.PI - d - rad) ? 1 : 0;
+    var m = sweep ? a1 + rad / 2 : a1 - rad / 2;
+    var S = { x: V.x + r * Math.cos(a1), y: V.y + r * Math.sin(a1) }, E = { x: V.x + r * Math.cos(a2), y: V.y + r * Math.sin(a2) };
+    return { d: "M" + V.x + " " + V.y + "L" + S.x.toFixed(1) + " " + S.y.toFixed(1) + "A" + r + " " + r + " 0 " + (rad > Math.PI ? 1 : 0) + " " + sweep + " " + E.x.toFixed(1) + " " + E.y.toFixed(1) + "Z", mid: m };
+  }
+  function rightMark(V, P1, P2, s) {
+    var u = sub(P1, V), w = sub(P2, V), lu = len(u), lw = len(w);
+    if (!lu || !lw) return "";
+    u = { x: u.x / lu * s, y: u.y / lu * s }; w = { x: w.x / lw * s, y: w.y / lw * s };
+    return "M" + (V.x + u.x) + " " + (V.y + u.y) + "L" + (V.x + u.x + w.x) + " " + (V.y + u.y + w.y) + "L" + (V.x + w.x) + " " + (V.y + w.y);
+  }
+  function crosses(p1, p2, p3, p4) {
+    var d1 = cross(sub(p4, p3), sub(p1, p3)), d2 = cross(sub(p4, p3), sub(p2, p3));
+    var d3 = cross(sub(p2, p1), sub(p3, p1)), d4 = cross(sub(p2, p1), sub(p4, p1));
+    return d1 * d2 < 0 && d3 * d4 < 0;
+  }
+  function txt(svg, x, y, t, attrs) {
+    var a = { x: x, y: y, "text-anchor": "middle", style: "font: 600 14px var(--font-mono)", text: t };
+    if (attrs) Object.keys(attrs).forEach(function (k) { a[k] = attrs[k]; });
+    var e = W.s("text", a); svg.appendChild(e); return e;
+  }
+  function labelOut(svg, V, centre, t, color) {
+    var v = sub(V, centre), l = len(v) || 1;
+    txt(svg, V.x + v.x / l * 24, V.y + v.y / l * 24 + 5, t, { fill: color || "var(--ink)", style: "font: 700 15px var(--font-body)" });
+  }
+  function ticks(svg, P, Q, n, color) {
+    var m = mid(P, Q), v = sub(Q, P), l = len(v); if (!l) return;
+    var u = { x: v.x / l, y: v.y / l }, nrm = { x: -u.y * 7, y: u.x * 7 };
+    for (var k = 0; k < n; k++) {
+      var o = (k - (n - 1) / 2) * 5, c = { x: m.x + u.x * o, y: m.y + u.y * o };
+      svg.appendChild(W.s("line", { x1: c.x - nrm.x, y1: c.y - nrm.y, x2: c.x + nrm.x, y2: c.y + nrm.y, stroke: color || "var(--ink)", "stroke-width": 2 }));
+    }
+  }
+  var deg = "°";
+
+  /* 12.1 — drag a quadrilateral; angle sum, concave, classification */
+  AOPS.registerWidget("quadAngles", function (body) {
+    var svg = W.stage(body, { w: 640, h: 400, label: "Quadrilateral ABCD with draggable corners and its four angles" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var mode = "angles";
+    W.segmented(ctl, { title: "Show", value: mode, options: [{ value: "angles", label: "Angles" }, { value: "split", label: "Split into triangles" }, { value: "mid", label: "Midpoint quadrilateral" }], onChange: function (v) { mode = v; draw(); } });
+    var P = [{ x: 160, y: 100 }, { x: 460, y: 80 }, { x: 540, y: 320 }, { x: 120, y: 300 }];
+    var names = ["A", "B", "C", "D"], cols = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)"];
+    var layer = W.s("g"); svg.appendChild(layer);
+    var hs = P.map(function (p, i) {
+      return W.handle(svg, { x: p.x, y: p.y, label: "Vertex " + names[i] + "; arrow keys move it", keyStep: 20,
+        onMove: function (x, y) { P[i] = { x: clamp(snap(x, 20), 30, 610), y: clamp(snap(y, 20), 30, 370) }; draw(); return [P[i].x, P[i].y]; },
+        valueText: function () { return names[i] + " at " + P[i].x / 20 + ", " + (20 - P[i].y / 20); } });
+    });
+    function classify(simple, ang) {
+      if (!simple) return "sides cross, so this is not a simple quadrilateral";
+      var reflex = ang.findIndex(function (a) { return a > 180.0001; });
+      var A = P[0], B = P[1], C = P[2], D = P[3];
+      var ab = sub(B, A), bc = sub(C, B), cd = sub(D, C), da = sub(A, D);
+      var p1 = cross(ab, cd) === 0, p2 = cross(bc, da) === 0;
+      var s = [ab, bc, cd, da].map(function (v) { return dot(v, v); });
+      var allEq = s[0] === s[1] && s[1] === s[2] && s[2] === s[3];
+      var right = dot(ab, bc) === 0;
+      var kite = (s[0] === s[1] && s[2] === s[3]) || (s[1] === s[2] && s[3] === s[0]);
+      if (reflex >= 0) return "concave (reflex angle at " + names[reflex] + ")" + (kite ? ": an arrowhead with two pairs of equal neighbouring sides" : "");
+      if (p1 && p2) return allEq && right ? "a square" : allEq ? "a rhombus" : right ? "a rectangle" : "a parallelogram";
+      if (p1 || p2) {
+        var legsEq = p1 ? s[1] === s[3] : s[0] === s[2];
+        return legsEq ? "an isosceles trapezoid" : "a trapezoid";
+      }
+      if (kite) return "a kite (two pairs of equal neighbouring sides)";
+      return "convex, with no special name";
+    }
+    function draw() {
+      W.clear(layer);
+      var simple = !crosses(P[0], P[1], P[2], P[3]) && !crosses(P[1], P[2], P[3], P[0]);
+      var ang = interiorAngles(P);
+      var c = { x: (P[0].x + P[1].x + P[2].x + P[3].x) / 4, y: (P[0].y + P[1].y + P[2].y + P[3].y) / 4 };
+      layer.appendChild(W.s("polygon", { points: pts(P), fill: mode === "split" ? "none" : "color-mix(in srgb, var(--plot-2) 14%, transparent)", stroke: "var(--ink)", "stroke-width": 2.5, "stroke-linejoin": "round" }));
+      var k = 0;
+      if (mode === "split" && simple) {
+        var r = ang.findIndex(function (a) { return a > 180; });
+        k = r >= 0 ? r : 0;
+        var T1 = [P[k], P[(k + 1) % 4], P[(k + 2) % 4]], T2 = [P[k], P[(k + 2) % 4], P[(k + 3) % 4]];
+        layer.insertBefore(W.s("polygon", { points: pts(T1), fill: "color-mix(in srgb, var(--plot-1) 28%, transparent)" }), layer.firstChild);
+        layer.insertBefore(W.s("polygon", { points: pts(T2), fill: "color-mix(in srgb, var(--plot-3) 28%, transparent)" }), layer.firstChild);
+        layer.appendChild(W.s("line", { x1: P[k].x, y1: P[k].y, x2: P[(k + 2) % 4].x, y2: P[(k + 2) % 4].y, stroke: "var(--accent)", "stroke-width": 2, "stroke-dasharray": "7 5" }));
+      }
+      if (mode === "mid") {
+        var M = P.map(function (p, i) { return mid(p, P[(i + 1) % 4]); });
+        layer.appendChild(W.s("line", { x1: P[0].x, y1: P[0].y, x2: P[2].x, y2: P[2].y, stroke: "var(--plot-5)", "stroke-width": 1.5, "stroke-dasharray": "6 5" }));
+        layer.appendChild(W.s("line", { x1: P[1].x, y1: P[1].y, x2: P[3].x, y2: P[3].y, stroke: "var(--plot-4)", "stroke-width": 1.5, "stroke-dasharray": "6 5" }));
+        layer.appendChild(W.s("polygon", { points: pts(M), fill: "color-mix(in srgb, var(--accent) 22%, transparent)", stroke: "var(--accent)", "stroke-width": 2.5 }));
+        M.forEach(function (m) { layer.appendChild(W.s("circle", { cx: m.x, cy: m.y, r: 5, fill: "var(--accent)" })); });
+      }
+      if (mode !== "mid" && simple) {
+        P.forEach(function (V, i) {
+          var A = P[(i + 3) % 4], B = P[(i + 1) % 4];
+          if (Math.abs(ang[i] - 90) < 1e-6) {
+            layer.appendChild(W.s("path", { d: rightMark(V, A, B, 16), fill: "none", stroke: cols[i], "stroke-width": 2.5 }));
+            var wq = wedge(V, A, B, ang[i], 36);
+            txt(layer, V.x + 44 * Math.cos(wq.mid), V.y + 44 * Math.sin(wq.mid) + 5, "90" + deg, { fill: cols[i] });
+            return;
+          }
+          var rr = Math.min(34, dist(V, A) / 2.2, dist(V, B) / 2.2);
+          var w = wedge(V, A, B, ang[i], rr);
+          layer.appendChild(W.s("path", { d: w.d, fill: "color-mix(in srgb, " + cols[i] + " 40%, transparent)", stroke: cols[i], "stroke-width": 2 }));
+          var lr = rr + 24;
+          txt(layer, V.x + lr * Math.cos(w.mid), V.y + lr * Math.sin(w.mid) + 5, W.fmt(ang[i], 1) + deg, { fill: cols[i] });
+        });
+      }
+      P.forEach(function (V, i) { labelOut(layer, V, c, names[i]); });
+      var desc = classify(simple, ang);
+      var html;
+      if (!simple) html = "<p>The sides cross. Drag a corner back so the four sides form a closed figure without crossing.</p>";
+      else if (mode === "mid") {
+        var d1 = dist(P[0], P[2]) / 20, d2 = dist(P[1], P[3]) / 20;
+        html = "<p>The midpoints always form a <strong>parallelogram</strong>. Its sides are half the diagonals: $\\tfrac12 AC \\approx " + W.fmt(d1 / 2, 2) + "$ and $\\tfrac12 BD \\approx " + W.fmt(d2 / 2, 2) + "$, and each is parallel to a diagonal.</p>";
+      } else {
+        html = "<p>$\\angle A + \\angle B + \\angle C + \\angle D = " + ang.map(function (a) { return W.fmt(a, 1) + "^\\circ"; }).join(" + ") + " = " + W.fmt(ang.reduce(function (s, a) { return s + a; }, 0), 1) + "^\\circ$</p>";
+        if (mode === "split") html += "<p>Diagonal $" + names[k] + names[(k + 2) % 4] + "$ makes two triangles, each with angles adding to $180^\\circ$: $180^\\circ + 180^\\circ = 360^\\circ$.</p>";
+      }
+      if (simple) html += "<p>Shape: " + desc + ".</p>";
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* 12.2 — trapezoid median and rotated copy */
+  AOPS.registerWidget("trapezoidMedian", function (body) {
+    var U = 24, YB = 330, X0 = 24, X1 = 312;
+    var svg = W.stage(body, { w: 640, h: 380, label: "Trapezoid ABCD with its median and an optional rotated copy" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var copy = false;
+    W.segmented(ctl, { title: "Rotated copy", value: "off", options: [{ value: "off", label: "Off" }, { value: "on", label: "On" }], onChange: function (v) { copy = v === "on"; draw(); } });
+    var A = { x: 96, y: 138 }, B = { x: 216, y: 138 }, C = { x: 312, y: YB }, D = { x: 24, y: YB };
+    var layer = W.s("g"); svg.appendChild(layer);
+    var hB, hA;
+    hA = W.handle(svg, { x: A.x, y: A.y, label: "Vertex A: moves the top base and the height", keyStep: 12,
+      onMove: function (x, y) { A.x = clamp(snap(x, 12), X0, B.x - U); A.y = clamp(snap(y, 12), YB - 10 * U, YB - U); B.y = A.y; if (hB) hB.set(B.x, B.y, true); draw(); return [A.x, A.y]; } });
+    hB = W.handle(svg, { x: B.x, y: B.y, label: "Vertex B: slides along the top base", keyStep: 12,
+      onMove: function (x) { B.x = clamp(snap(x, 12), A.x + U, X1); draw(); return [B.x, B.y]; } });
+    W.handle(svg, { x: C.x, y: C.y, label: "Vertex C: slides along the bottom base", keyStep: 12,
+      onMove: function (x) { C.x = clamp(snap(x, 12), D.x + U, X1); draw(); return [C.x, YB]; } });
+    W.handle(svg, { x: D.x, y: D.y, label: "Vertex D: slides along the bottom base", keyStep: 12,
+      onMove: function (x) { D.x = clamp(snap(x, 12), X0, C.x - U); draw(); return [D.x, YB]; } });
+    function draw() {
+      W.clear(layer);
+      var a = (B.x - A.x) / U, b = (C.x - D.x) / U, h = (YB - A.y) / U;
+      var X = mid(A, D), Y = mid(B, C);
+      if (copy) {
+        var M = mid(B, C), A2 = sub(add(M, M), A), D2 = sub(add(M, M), D);
+        layer.appendChild(W.s("polygon", { points: pts([A2, C, B, D2]), fill: "color-mix(in srgb, var(--plot-3) 24%, transparent)", stroke: "var(--plot-3)", "stroke-width": 2, "stroke-dasharray": "6 4" }));
+        layer.appendChild(W.s("polygon", { points: pts([D, A2, D2, A]), fill: "none", stroke: "var(--accent)", "stroke-width": 2 }));
+        txt(layer, (D.x + A2.x) / 2, YB + 38, "a + b = " + W.fmt(a + b, 1), { fill: "var(--accent)" });
+        layer.appendChild(W.s("circle", { cx: M.x, cy: M.y, r: 4, fill: "var(--plot-3)" }));
+      }
+      layer.appendChild(W.s("polygon", { points: pts([A, B, C, D]), fill: "color-mix(in srgb, var(--plot-2) 22%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      layer.appendChild(W.s("line", { x1: A.x, y1: A.y, x2: A.x, y2: YB, stroke: "var(--muted)", "stroke-dasharray": "5 4", "stroke-width": 1.5 }));
+      layer.appendChild(W.s("path", { d: rightMark({ x: A.x, y: YB }, A, { x: A.x + 10, y: YB }, 10), fill: "none", stroke: "var(--muted)" }));
+      txt(layer, A.x - 14, A.y + (YB - A.y) * 0.75 + 5, "h", { fill: "var(--muted)" });
+      layer.appendChild(W.s("line", { x1: X.x, y1: X.y, x2: Y.x, y2: Y.y, stroke: "var(--plot-1)", "stroke-width": 3 }));
+      [X, Y].forEach(function (p) { layer.appendChild(W.s("circle", { cx: p.x, cy: p.y, r: 5, fill: "var(--plot-1)" })); });
+      ticks(layer, A, X, 1, "var(--plot-2)"); ticks(layer, X, D, 1, "var(--plot-2)");
+      ticks(layer, B, Y, 2, "var(--plot-2)"); ticks(layer, Y, C, 2, "var(--plot-2)");
+      txt(layer, (A.x + B.x) / 2, A.y - 14, "a = " + W.fmt(a, 1));
+      txt(layer, (D.x + C.x) / 2, YB + 20, "b = " + W.fmt(b, 1));
+      txt(layer, (X.x + Y.x) / 2, X.y - 9, W.fmt((a + b) / 2, 2), { fill: "var(--plot-1)" });
+      [["A", A, -1], ["B", B, -1], ["C", C, 1], ["D", D, 1]].forEach(function (t) { txt(layer, t[1].x, t[1].y + (t[2] < 0 ? -30 : 44), t[0], { style: "font: 700 15px var(--font-body)" }); });
+      var off1 = A.x - D.x, off2 = C.x - B.x;
+      var kind = Math.abs(a - b) < 1e-9 ? "Both pairs of sides are parallel: this is a parallelogram (a special trapezoid here)." : off1 === off2 ? "The legs are equal: an <strong>isosceles</strong> trapezoid." : "";
+      var html = "<p>Median $= \\dfrac{a + b}{2} = \\dfrac{" + W.fmt(a, 1) + " + " + W.fmt(b, 1) + "}{2} = " + W.fmt((a + b) / 2, 2) + "$, height $h = " + W.fmt(h, 1) + "$, area $= " + W.fmt((a + b) / 2, 2) + " \\times " + W.fmt(h, 1) + " = " + W.fmt((a + b) * h / 2, 2) + "$.</p>";
+      if (copy) html += "<p>Two copies make a parallelogram with base $a + b = " + W.fmt(a + b, 1) + "$ and height $" + W.fmt(h, 1) + "$, so $2[ABCD] = " + W.fmt((a + b) * h, 2) + "$.</p>";
+      if (kind) html += "<p>" + kind + "</p>";
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* 12.3 — parallelogram: three area formulas */
+  AOPS.registerWidget("parallelogramArea", function (body) {
+    var U = 40;
+    var svg = W.stage(body, { w: 640, h: 380, label: "Parallelogram ABCD with draggable B and D; area shown three ways" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var mode = "bh";
+    W.segmented(ctl, { title: "Area as", value: mode, options: [{ value: "bh", label: "base × height" }, { value: "sin", label: "ab sin A" }, { value: "diag", label: "½ d₁d₂ sin φ" }], onChange: function (v) { mode = v; draw(); } });
+    var A = { x: 140, y: 310 }, B = { x: 420, y: 310 }, D = { x: 220, y: 150 };
+    var layer = W.s("g"); svg.appendChild(layer);
+    function inside(p) { return p.x >= 20 && p.x <= 620 && p.y >= 20 && p.y <= 360; }
+    function mover(pt, other) {
+      return function (x, y) {
+        var n = { x: snap(x, 20), y: snap(y, 20) };
+        var Cn = sub(add(n, other), A);
+        if (inside(n) && inside(Cn) && Math.abs(cross(sub(n, A), sub(other, A))) > 0) { pt.x = n.x; pt.y = n.y; }
+        draw(); return [pt.x, pt.y];
+      };
+    }
+    W.handle(svg, { x: B.x, y: B.y, label: "Vertex B; arrow keys move it", keyStep: 20, onMove: mover(B, D) });
+    W.handle(svg, { x: D.x, y: D.y, label: "Vertex D; arrow keys move it", keyStep: 20, onMove: mover(D, B) });
+    function draw() {
+      W.clear(layer);
+      var C = sub(add(B, D), A), E = mid(A, C);
+      var ab = sub(B, A), ad = sub(D, A);
+      var area = Math.abs(cross(ab, ad)) / (U * U);
+      var AB = len(ab) / U, AD = len(ad) / U, d1 = dist(A, C) / U, d2 = dist(B, D) / U;
+      var angA = angleBetween(ab, ad), angB = 180 - angA;
+      var phi = angleBetween(sub(A, E), sub(B, E));
+      var cen = E;
+      layer.appendChild(W.s("polygon", { points: pts([A, B, C, D]), fill: "color-mix(in srgb, var(--plot-2) 20%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      var hiDiag = mode === "diag";
+      layer.appendChild(W.s("line", { x1: A.x, y1: A.y, x2: C.x, y2: C.y, stroke: hiDiag ? "var(--plot-5)" : "var(--faint)", "stroke-width": hiDiag ? 2.5 : 1.5 }));
+      layer.appendChild(W.s("line", { x1: B.x, y1: B.y, x2: D.x, y2: D.y, stroke: hiDiag ? "var(--plot-4)" : "var(--faint)", "stroke-width": hiDiag ? 2.5 : 1.5 }));
+      ticks(layer, A, E, 1, "var(--plot-5)"); ticks(layer, E, C, 1, "var(--plot-5)");
+      ticks(layer, B, E, 2, "var(--plot-4)"); ticks(layer, E, D, 2, "var(--plot-4)");
+      layer.appendChild(W.s("circle", { cx: E.x, cy: E.y, r: 4, fill: "var(--ink)" }));
+      txt(layer, E.x + 14, E.y - 10, "E", { style: "font: 700 14px var(--font-body)" });
+      if (mode === "bh") {
+        var t = dot(ad, ab) / dot(ab, ab), F = add(A, { x: ab.x * t, y: ab.y * t });
+        layer.appendChild(W.s("line", { x1: A.x - ab.x * 0.15, y1: A.y - ab.y * 0.15, x2: B.x + ab.x * 0.15, y2: B.y + ab.y * 0.15, stroke: "var(--faint)", "stroke-dasharray": "3 5" }));
+        layer.appendChild(W.s("line", { x1: D.x, y1: D.y, x2: F.x, y2: F.y, stroke: "var(--accent)", "stroke-width": 2.5, "stroke-dasharray": "7 4" }));
+        layer.appendChild(W.s("path", { d: rightMark(F, D, B.x !== F.x || B.y !== F.y ? B : A, 11), fill: "none", stroke: "var(--accent)", "stroke-width": 2 }));
+        txt(layer, (D.x + F.x) / 2 + 16, (D.y + F.y) / 2, "h", { fill: "var(--accent)" });
+      }
+      if (mode === "sin") {
+        var w = wedge(A, B, D, angA, 34);
+        layer.appendChild(W.s("path", { d: w.d, fill: "color-mix(in srgb, var(--accent) 35%, transparent)", stroke: "var(--accent)", "stroke-width": 2 }));
+        txt(layer, A.x + 60 * Math.cos(w.mid), A.y + 60 * Math.sin(w.mid) + 5, W.fmt(angA, 1) + deg, { fill: "var(--accent)" });
+      }
+      if (mode === "diag") {
+        var w2 = wedge(E, A, B, phi, 26);
+        layer.appendChild(W.s("path", { d: w2.d, fill: "color-mix(in srgb, var(--accent) 35%, transparent)", stroke: "var(--accent)", "stroke-width": 2 }));
+        txt(layer, E.x + 46 * Math.cos(w2.mid), E.y + 46 * Math.sin(w2.mid) + 5, "φ", { fill: "var(--accent)" });
+      }
+      [["A", A], ["B", B], ["C", C], ["D", D]].forEach(function (q) { labelOut(layer, q[1], cen, q[0]); });
+      var f;
+      if (mode === "bh") f = "[ABCD] = AB \\cdot h = " + W.fmt(AB, 2) + " \\times " + W.fmt(area / AB, 2) + " = " + W.fmt(area, 2);
+      else if (mode === "sin") f = "[ABCD] = AB \\cdot AD \\cdot \\sin A = " + W.fmt(AB, 2) + " \\times " + W.fmt(AD, 2) + " \\times \\sin " + W.fmt(angA, 1) + "^\\circ = " + W.fmt(area, 2);
+      else f = "[ABCD] = \\tfrac12 \\cdot AC \\cdot BD \\cdot \\sin\\varphi = \\tfrac12 \\times " + W.fmt(d1, 2) + " \\times " + W.fmt(d2, 2) + " \\times \\sin " + W.fmt(phi, 1) + "^\\circ = " + W.fmt(area, 2);
+      out.set("<p>$" + f + "$</p><p>$\\angle A = " + W.fmt(angA, 1) + "^\\circ$ and $\\angle B = " + W.fmt(angB, 1) + "^\\circ$ are supplementary; $AE = EC$ and $BE = ED$ because the diagonals bisect each other.</p>");
+    }
+    draw();
+  });
+
+  /* 12.4 — rhombus from its half-diagonals */
+  AOPS.registerWidget("rhombusDiagonals", function (body) {
+    var U = 20, O = { x: 320, y: 210 };
+    var svg = W.stage(body, { w: 640, h: 410, label: "Rhombus built from perpendicular diagonals; drag the half-diagonal endpoints" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var rect = false;
+    W.segmented(ctl, { title: "Show", value: "tri", options: [{ value: "tri", label: "Right triangles" }, { value: "rect", label: "Bounding rectangle" }], onChange: function (v) { rect = v === "rect"; draw(); } });
+    var p = 6, q = 8;
+    var layer = W.s("g"); svg.appendChild(layer);
+    W.handle(svg, { x: O.x + p * U, y: O.y, label: "End of the horizontal diagonal; left and right arrows", keyStep: U,
+      onMove: function (x) { p = clamp(Math.round((x - O.x) / U), 1, 14); draw(); return [O.x + p * U, O.y]; }, valueText: function () { return "half-diagonal " + p; } });
+    W.handle(svg, { x: O.x, y: O.y - q * U, label: "End of the vertical diagonal; up and down arrows", keyStep: U,
+      onMove: function (x, y) { q = clamp(Math.round((O.y - y) / U), 1, 9); draw(); return [O.x, O.y - q * U]; }, valueText: function () { return "half-diagonal " + q; } });
+    function draw() {
+      W.clear(layer);
+      var R = { x: O.x + p * U, y: O.y }, T = { x: O.x, y: O.y - q * U }, L = { x: O.x - p * U, y: O.y }, Bt = { x: O.x, y: O.y + q * U };
+      if (rect) {
+        var corners = [[L, T, { x: L.x, y: T.y }], [T, R, { x: R.x, y: T.y }], [R, Bt, { x: R.x, y: Bt.y }], [Bt, L, { x: L.x, y: Bt.y }]];
+        layer.appendChild(W.s("rect", { x: L.x, y: T.y, width: 2 * p * U, height: 2 * q * U, fill: "none", stroke: "var(--muted)", "stroke-width": 1.5, "stroke-dasharray": "6 4" }));
+        corners.forEach(function (c) { layer.appendChild(W.s("polygon", { points: pts(c), fill: "color-mix(in srgb, var(--plot-3) 22%, transparent)", stroke: "var(--plot-3)", "stroke-width": 1 })); });
+      }
+      layer.appendChild(W.s("polygon", { points: pts([R, T, L, Bt]), fill: "color-mix(in srgb, var(--plot-2) 22%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      if (!rect) layer.appendChild(W.s("polygon", { points: pts([O, R, T]), fill: "color-mix(in srgb, var(--plot-1) 40%, transparent)", stroke: "var(--plot-1)", "stroke-width": 2 }));
+      layer.appendChild(W.s("line", { x1: L.x, y1: L.y, x2: R.x, y2: R.y, stroke: "var(--plot-5)", "stroke-width": 2 }));
+      layer.appendChild(W.s("line", { x1: T.x, y1: T.y, x2: Bt.x, y2: Bt.y, stroke: "var(--plot-4)", "stroke-width": 2 }));
+      layer.appendChild(W.s("path", { d: rightMark(O, R, T, 12), fill: "none", stroke: "var(--ink)", "stroke-width": 2 }));
+      var s = Math.hypot(p, q);
+      txt(layer, O.x + p * U / 2, O.y + 20, String(p), { fill: "var(--plot-5)" });
+      txt(layer, O.x - 14, O.y - q * U / 2 + 5, String(q), { fill: "var(--plot-4)" });
+      var mR = mid(R, T), nrm = { x: q, y: -p }, nl = Math.hypot(nrm.x, nrm.y);
+      if (!rect) txt(layer, mR.x + nrm.x / nl * 26, mR.y + nrm.y / nl * 26 + 5, "s ≈ " + W.fmt(s, 2), { fill: "var(--plot-1)" });
+      var angR = 2 * Math.atan(q / p) * 180 / Math.PI;
+      var html = "<p>$d_1 = " + 2 * p + "$, $d_2 = " + 2 * q + "$. Side $s = \\sqrt{" + p + "^2 + " + q + "^2} = " + (Number.isInteger(s) ? s : "\\sqrt{" + (p * p + q * q) + "} \\approx " + W.fmt(s, 3)) + "$.</p>";
+      html += "<p>Area $= \\dfrac{d_1 d_2}{2} = \\dfrac{" + 2 * p + " \\times " + 2 * q + "}{2} = " + 2 * p * q + "$" + (rect ? ", half of the " + 2 * p + " × " + 2 * q + " rectangle: each shaded corner triangle matches one quarter of the rhombus." : ".") + "</p>";
+      html += "<p>Angles: $" + W.fmt(angR, 1) + "^\\circ$ and $" + W.fmt(180 - angR, 1) + "^\\circ$." + (p === q ? " Equal diagonals: this rhombus is a <strong>square</strong>." : "") + "</p>";
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* 12.5 — rectangle with diagonal; fixed-diagonal mode */
+  AOPS.registerWidget("rectangleDiagonal", function (body) {
+    var U = 28, A = { x: 60, y: 350 };
+    var svg = W.stage(body, { w: 640, h: 380, label: "Rectangle with a draggable corner C, its diagonals and dimensions" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var fixed = false, d = 13;
+    var C = { x: A.x + 12 * U, y: A.y - 5 * U };
+    var layer = W.s("g"); svg.insertBefore(layer, svg.firstChild);
+    var h = W.handle(svg, { x: C.x, y: C.y, label: "Corner C; arrow keys move it", keyStep: U,
+      onMove: function (x, y) {
+        if (!fixed) { C.x = A.x + clamp(snap(x - A.x, U), U, 20 * U); C.y = A.y - clamp(snap(A.y - y, U), U, 11 * U); }
+        else {
+          var t = Math.atan2(A.y - y, x - A.x), tmax = Math.min(Math.PI / 2 - 0.05, Math.asin(Math.min(1, (A.y - 20) / (d * U))));
+          t = clamp(t, 0.05, tmax);
+          C.x = A.x + d * U * Math.cos(t); C.y = A.y - d * U * Math.sin(t);
+        }
+        draw(); return [C.x, C.y];
+      } });
+    W.segmented(ctl, { title: "Mode", value: "free", options: [{ value: "free", label: "Free corner" }, { value: "fixed", label: "Fixed diagonal" }], onChange: function (v) {
+      fixed = v === "fixed";
+      if (fixed) { d = Math.min(dist(A, C) / U, 19.5); var t = Math.atan2(A.y - C.y, C.x - A.x); C.x = A.x + d * U * Math.cos(t); C.y = A.y - d * U * Math.sin(t); }
+      else { C.x = A.x + clamp(snap(C.x - A.x, U), U, 20 * U); C.y = A.y - clamp(snap(A.y - C.y, U), U, 11 * U); }
+      h.set(C.x, C.y, true); draw();
+    } });
+    function draw() {
+      W.clear(layer);
+      var l = (C.x - A.x) / U, w = (A.y - C.y) / U, dd = Math.hypot(l, w);
+      var B = { x: C.x, y: A.y }, D = { x: A.x, y: C.y };
+      if (fixed) {
+        var r = d * U;
+        layer.appendChild(W.s("path", { d: "M" + (A.x + r) + " " + A.y + "A" + r + " " + r + " 0 0 0 " + A.x + " " + (A.y - r), fill: "none", stroke: "var(--faint)", "stroke-dasharray": "5 5", "stroke-width": 1.5 }));
+      }
+      var square = Math.abs(l - w) < (fixed ? 0.08 : 1e-9);
+      layer.appendChild(W.s("rect", { x: A.x, y: C.y, width: C.x - A.x, height: A.y - C.y, fill: square ? "color-mix(in srgb, var(--plot-4) 28%, transparent)" : "color-mix(in srgb, var(--plot-2) 20%, transparent)", stroke: square ? "var(--plot-4)" : "var(--plot-2)", "stroke-width": 2.5 }));
+      layer.appendChild(W.s("line", { x1: A.x, y1: A.y, x2: C.x, y2: C.y, stroke: "var(--accent)", "stroke-width": 2.5 }));
+      layer.appendChild(W.s("line", { x1: B.x, y1: B.y, x2: D.x, y2: D.y, stroke: "var(--accent)", "stroke-width": 1.5, "stroke-dasharray": "6 4" }));
+      txt(layer, (A.x + C.x) / 2, A.y + 22, "l = " + W.fmt(l, 2));
+      txt(layer, A.x - 8, (A.y + C.y) / 2 + 5, "w = " + W.fmt(w, 2), { "text-anchor": "end" });
+      var m = { x: A.x + (C.x - A.x) * 0.28, y: A.y + (C.y - A.y) * 0.28 };
+      txt(layer, m.x - 8, m.y - 10, "d = " + W.fmt(dd, 2), { fill: "var(--accent)", "text-anchor": "end" });
+      [["A", A, -14, 18], ["B", B, 14, 18], ["C", C, 16, -8], ["D", D, -14, -8]].forEach(function (q) { txt(layer, q[1].x + q[2], q[1].y + q[3], q[0], { style: "font: 700 15px var(--font-body)" }); });
+      var P = 2 * (l + w), Ar = l * w;
+      var html = "<p>Perimeter $= 2(" + W.fmt(l, 2) + " + " + W.fmt(w, 2) + ") = " + W.fmt(P, 2) + "$, area $= " + W.fmt(Ar, 2) + "$, diagonal $= \\sqrt{l^2 + w^2} = " + W.fmt(dd, 2) + "$.</p>";
+      html += "<p>$(l + w)^2 = " + W.fmt((l + w) * (l + w), 2) + "$ and $d^2 + 2lw = " + W.fmt(dd * dd, 2) + " + " + W.fmt(2 * Ar, 2) + " = " + W.fmt(dd * dd + 2 * Ar, 2) + "$.</p>";
+      if (fixed) html += "<p>With the diagonal fixed at $" + W.fmt(d, 2) + "$, the largest possible area is $\\tfrac12 d^2 = " + W.fmt(d * d / 2, 2) + "$, reached by the square." + (square ? " <strong>You've found it.</strong>" : "") + "</p>";
+      else if (square) html += "<p>Length equals width: a <strong>square</strong>, with diagonal $s\\sqrt2$.</p>";
+      out.set(html);
+    }
+    draw();
+  });
+
+  /* 12.6 — build a quadrilateral from its diagonals */
+  AOPS.registerWidget("diagonalTest", function (body) {
+    var U = 20, E = { x: 320, y: 210 };
+    var svg = W.stage(body, { w: 640, h: 410, label: "Quadrilateral built from two diagonals meeting at E" });
+    var out = W.readout(body);
+    var A = { x: 200, y: E.y }, C = { x: 520, y: E.y }, B = { x: 260, y: 90 }, t = 100;
+    var layer = W.s("g"); svg.appendChild(layer);
+    var hD;
+    function dirD() { var v = sub(E, B), l = len(v); return { x: v.x / l, y: v.y / l }; }
+    function Dpt() { var u = dirD(); return { x: E.x + u.x * t, y: E.y + u.y * t }; }
+    W.handle(svg, { x: A.x, y: A.y, label: "Vertex A on the first diagonal; left and right arrows", keyStep: U,
+      onMove: function (x) { A.x = clamp(snap(x, U), 40, E.x - U); draw(); return [A.x, E.y]; } });
+    W.handle(svg, { x: C.x, y: C.y, label: "Vertex C on the first diagonal; left and right arrows", keyStep: U,
+      onMove: function (x) { C.x = clamp(snap(x, U), E.x + U, 600); draw(); return [C.x, E.y]; } });
+    W.handle(svg, { x: B.x, y: B.y, label: "Vertex B, anywhere above the first diagonal", keyStep: U,
+      onMove: function (x, y) { B.x = clamp(snap(x, U), 60, 580); B.y = clamp(snap(y, U), 30, E.y - 2 * U); var D = Dpt(); if (hD) hD.set(D.x, D.y, true); draw(); return [B.x, B.y]; } });
+    var D0 = Dpt();
+    hD = W.handle(svg, { x: D0.x, y: D0.y, label: "Vertex D, slides along the line through B and E", keyStep: 10,
+      onMove: function (x, y) {
+        var u = dirD(), eb = dist(E, B);
+        var tt = clamp(dot(sub({ x: x, y: y }, E), u), 20, 190);
+        // keep the point on screen
+        while (tt > 20 && (E.y + u.y * tt > 400 || E.x + u.x * tt < 10 || E.x + u.x * tt > 630)) tt -= 5;
+        t = Math.abs(tt - eb) < 8 && eb <= 190 ? eb : snap(tt, 10);
+        draw(); var D = Dpt(); return [D.x, D.y];
+      } });
+    function draw() {
+      W.clear(layer);
+      var D = Dpt();
+      var AE = (E.x - A.x) / U, EC = (C.x - E.x) / U, BE = dist(B, E) / U, ED = t / U;
+      var AC = AE + EC, BD = BE + ED;
+      var eps = 1e-6;
+      var bis = Math.abs(AE - EC) < eps && Math.abs(BE - ED) < eps;
+      var perp = Math.abs(B.x - E.x) < eps;
+      var eq = Math.abs(AC - BD) < 1e-6;
+      var tr1 = Math.abs(AE * ED - BE * EC) < 1e-6, tr2 = Math.abs(AE * BE - ED * EC) < 1e-6;
+      var name, why;
+      if (bis && perp && eq) { name = "square"; why = "The diagonals bisect each other, are perpendicular, and are equal."; }
+      else if (bis && perp) { name = "rhombus"; why = "The diagonals bisect each other and are perpendicular."; }
+      else if (bis && eq) { name = "rectangle"; why = "The diagonals bisect each other and are equal."; }
+      else if (bis) { name = "parallelogram"; why = "The diagonals bisect each other."; }
+      else if (perp && (Math.abs(AE - EC) < eps || Math.abs(BE - ED) < eps)) { name = "kite"; why = "One diagonal is the perpendicular bisector of the other, so two pairs of neighbouring sides are equal."; }
+      else if ((tr1 || tr2) && eq) { name = "isosceles trapezoid"; why = "The diagonals cut each other in the same ratio (so one pair of sides is parallel) and are equal."; }
+      else if (tr1 || tr2) { name = "trapezoid"; why = "The diagonals cut each other in the same ratio, so one pair of opposite sides is parallel."; }
+      else if (perp) { name = "orthodiagonal quadrilateral"; why = "Perpendicular diagonals alone don't make a rhombus, or even a kite."; }
+      else { name = "general quadrilateral"; why = "None of the special diagonal properties hold."; }
+      layer.appendChild(W.s("polygon", { points: pts([A, B, C, D]), fill: "color-mix(in srgb, var(--plot-2) 18%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+      layer.appendChild(W.s("line", { x1: A.x, y1: A.y, x2: C.x, y2: C.y, stroke: "var(--plot-5)", "stroke-width": 2.5 }));
+      layer.appendChild(W.s("line", { x1: B.x, y1: B.y, x2: D.x, y2: D.y, stroke: "var(--plot-4)", "stroke-width": 2.5 }));
+      if (Math.abs(AE - EC) < eps) { ticks(layer, A, E, 1, "var(--plot-5)"); ticks(layer, E, C, 1, "var(--plot-5)"); }
+      if (Math.abs(BE - ED) < eps) { ticks(layer, B, E, 2, "var(--plot-4)"); ticks(layer, E, D, 2, "var(--plot-4)"); }
+      if (perp) layer.appendChild(W.s("path", { d: rightMark(E, C, B, 12), fill: "none", stroke: "var(--ink)", "stroke-width": 2 }));
+      layer.appendChild(W.s("circle", { cx: E.x, cy: E.y, r: 4, fill: "var(--ink)" }));
+      txt(layer, E.x + 14, E.y + 20, "E", { style: "font: 700 14px var(--font-body)" });
+      [["A", A, -18, 5], ["C", C, 18, 5]].forEach(function (q) { txt(layer, q[1].x + q[2], q[1].y + q[3], q[0], { style: "font: 700 15px var(--font-body)" }); });
+      labelOut(layer, B, E, "B"); labelOut(layer, D, E, "D");
+      function yn(b) { return b ? "✓" : "✗"; }
+      out.set("<p>$AE = " + W.fmt(AE, 2) + ",\\ EC = " + W.fmt(EC, 2) + ",\\ BE = " + W.fmt(BE, 2) + ",\\ ED = " + W.fmt(ED, 2) + "$</p>" +
+        "<p>" + yn(bis) + " bisect each other &nbsp; " + yn(perp) + " perpendicular &nbsp; " + yn(eq) + " equal ($AC = " + W.fmt(AC, 2) + "$, $BD = " + W.fmt(BD, 2) + "$)</p>" +
+        "<p><strong>" + name.charAt(0).toUpperCase() + name.slice(1) + ".</strong> " + why + "</p>");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

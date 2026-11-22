@@ -1,0 +1,1245 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 5: Using the Integers · AoPS Learner</title>
+  <meta name="description" content="Divisibility, number bases, last digits, modular arithmetic, divisibility tricks, primes, GCF and LCM, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="5" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 5 · Algebra &amp; Number</span>
+    <h1>Using the Integers</h1>
+    <p class="lede">The whole numbers look simple, but they hide a lot of structure. In this chapter you'll learn what it means for one number to divide another, write numbers in other bases, predict last digits of enormous powers, compute with remainders, spot divisibility at a glance, break numbers into primes, and find what two numbers share.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>$m \mid n$ means $n = km$ for some integer $k$. Divisors come in pairs $d$ and $n/d$. If $d \mid a$ and $d \mid b$, then $d \mid a \pm b$.</li>
+      <li>In base $b$, the digits $d_k \ldots d_1 d_0$ stand for $d_k b^k + \cdots + d_1 b + d_0$. To convert into base $b$, divide by $b$ again and again and read the remainders from the bottom up.</li>
+      <li>The last digit of a sum or product depends only on the last digits. Last digits of powers repeat in cycles of length 1, 2 or 4.</li>
+      <li>$a \equiv b \pmod m$ means $m \mid a - b$, or equivalently that $a$ and $b$ leave the same remainder. You may add, subtract, multiply and raise to powers, reducing at any time, but you may not simply divide.</li>
+      <li>Because $10 \equiv 1 \pmod 9$ and $10 \equiv -1 \pmod{11}$, digit sums test for $3$ and $9$, and alternating digit sums test for $11$. Last digits test for $2, 4, 5, 8, 10$.</li>
+      <li>Every integer greater than $1$ factors into primes in exactly one way. To test whether $N$ is prime, try primes only up to $\sqrt N$.</li>
+      <li>GCF: take the smaller power of each shared prime. LCM: take the larger power of every prime. And $\gcd(a,b)\cdot\operatorname{lcm}(a,b) = ab$.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 5.1 ===================== -->
+  <section class="lesson" id="s5-1" data-title="Divisibility">
+    <h2><span class="sec-num">5.1</span> Divisibility</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>You have 24 chairs to arrange in a rectangle with equal rows. You can make 1 row of 24, 2 rows of 12, 3 of 8, 4 of 6, and so on. With 23 chairs you're stuck: the only rectangle is one long line. That difference between 24 and 23 is what this section is about.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>An integer $n$ is <strong>divisible</strong> by an integer $m$ if $n$ is a whole-number multiple of $m$, that is, $n = km$ for some integer $k$. We then call $m$ a <strong>divisor</strong> (or factor) of $n$ and write $m \mid n$, read "$m$ divides $n$". If $m$ does not divide $n$ we write $m \nmid n$. So $6 \mid 24$ but $5 \nmid 24$.</p>
+      <p>Divisors come in <em>pairs</em>: if $d \mid n$ then $n/d$ divides $n$ too. For $24$ the pairs are $1 \cdot 24$, $2 \cdot 12$, $3 \cdot 8$, $4 \cdot 6$: exactly the chair rectangles. A number greater than $1$ whose only positive divisors are $1$ and itself is <strong>prime</strong>; a number greater than $1$ with other divisors is <strong>composite</strong>.</p>
+      <div class="rule"><p>$$m \mid n \iff n = km \text{ for some integer } k. \qquad \text{If } d \mid a \text{ and } d \mid b, \text{ then } d \mid a + b \text{ and } d \mid a - b.$$</p></div>
+      <div class="note"><p>The number $1$ is <em>neither</em> prime nor composite. Also, every integer divides $0$ (since $0 = 0 \cdot m$), but $0$ divides nothing except $0$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="divisorArcs">
+      <figcaption><strong>Explore:</strong> Slide $n$. Every divisor lights up, and each arc joins a divisor $d$ to its partner $n/d$. Notice that a prime has a single arc, and that a perfect square has one divisor paired with itself.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>List divisors in pairs</h3>
+        <div class="problem"><p>List all positive divisors of $36$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Test $1, 2, 3, \ldots$ and record each partner: $1 \cdot 36$, $2 \cdot 18$, $3 \cdot 12$, $4 \cdot 9$, $6 \cdot 6$.</p></div><p class="why">Each time a small number divides $36$, the quotient is a divisor too, so we find two at once.</p></li>
+          <li><div class="do"><p>Stop at $6$: the next candidate, $7$, already has $7 \cdot 7 = 49 > 36$.</p></div><p class="why">Past $\sqrt{36} = 6$, any divisor would be the partner of one we already found.</p></li>
+          <li><div class="do"><p>Divisors: $1, 2, 3, 4, 6, 9, 12, 18, 36$.</p></div><p class="why">Write them in order. The $6$ is paired with itself, so it's listed once.</p></li>
+        </ol>
+        <p class="answer">$1, 2, 3, 4, 6, 9, 12, 18, 36$ (nine divisors)</p>
+        <p class="book-next">Next in the book: Exercise 5-1.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Prime, composite, or neither?</h3>
+        <div class="problem"><p>Classify each of $1$, $2$, $15$, $17$ and $27$ as prime, composite, or neither.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$1$ is neither.</p></div><p class="why">By definition primes and composites are greater than $1$.</p></li>
+          <li><div class="do"><p>$2$ and $17$ are prime.</p></div><p class="why">Their only positive divisors are $1$ and themselves. Note that $2$ is the only even prime.</p></li>
+          <li><div class="do"><p>$15 = 3 \cdot 5$ and $27 = 3 \cdot 9$ are composite.</p></div><p class="why">Each has a divisor other than $1$ and itself.</p></li>
+        </ol>
+        <p class="answer">Prime: $2, 17$. Composite: $15, 27$. Neither: $1$.</p>
+        <p class="book-next">Next in the book: Exercises 5-2 and 5-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Reading the notation</h3>
+        <div class="problem"><p>True or false: $4 \mid 20$, $20 \mid 4$, $13 \mid 0$, $0 \mid 13$, $-7 \mid 21$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4 \mid 20$ is true since $20 = 5 \cdot 4$; $20 \mid 4$ is false since $4/20$ is not an integer.</p></div><p class="why">The divisor goes on the <em>left</em> of the bar. Order matters.</p></li>
+          <li><div class="do"><p>$13 \mid 0$ is true because $0 = 0 \cdot 13$.</p></div><p class="why">Zero is a multiple (the zeroth multiple) of every integer.</p></li>
+          <li><div class="do"><p>$0 \mid 13$ is false: no integer $k$ gives $13 = k \cdot 0$.</p></div><p class="why">Every multiple of $0$ is $0$.</p></li>
+          <li><div class="do"><p>$-7 \mid 21$ is true since $21 = (-3)(-7)$.</p></div><p class="why">The definition allows negative integers too.</p></li>
+        </ol>
+        <p class="answer">True, false, true, false, true.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Split a number into friendly parts</h3>
+        <div class="problem"><p>Without long division, decide whether $7 \mid 1435$ and whether $7 \mid 2109$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$1435 = 1400 + 35$, and $7 \mid 1400$ and $7 \mid 35$. So $7 \mid 1435$.</p></div><p class="why">If $d$ divides both pieces of a sum, it divides the sum.</p></li>
+          <li data-think="If $7$ divides $2100$ but not $9$, can it divide $2100 + 9$?"><div class="do"><p>$2109 = 2100 + 9$. Here $7 \mid 2100$ but $7 \nmid 9$.</p></div><p class="why">If $7$ divided $2109$, it would also divide the difference $2109 - 2100 = 9$, which it doesn't.</p></li>
+          <li><div class="do"><p>So $7 \nmid 2109$. (Its remainder is $2$, the remainder of $9$.)</p></div><p class="why">Splitting off a known multiple leaves a small number that decides the question.</p></li>
+        </ol>
+        <p class="answer">$7 \mid 1435$, but $7 \nmid 2109$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>When is a fraction a whole number?</h3>
+        <div class="problem"><p>Find all positive integers $n$ for which $\dfrac{n + 6}{n}$ is an integer.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{n+6}{n} = 1 + \dfrac{6}{n}$.</p></div><p class="why">Splitting the fraction isolates the part that might fail to be whole.</p></li>
+          <li><div class="do"><p>This is an integer exactly when $n \mid 6$.</p></div><p class="why">$1$ is already an integer, so we need $6/n$ to be one.</p></li>
+          <li><div class="do"><p>$n \in \{1, 2, 3, 6\}$.</p></div><p class="why">These are the positive divisors of $6$.</p></li>
+        </ol>
+        <p class="answer">$n = 1, 2, 3, 6$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Who has an odd number of divisors?</h3>
+        <div class="problem"><p>How many integers from $1$ to $50$ have an odd number of positive divisors?</p></div>
+        <ol class="steps">
+          <li data-think="Divisors come in pairs $d$ and $n/d$. When could a pair fail to have two different members?"><div class="do"><p>Pair each divisor $d$ with $n/d$. The pair has two different members unless $d = n/d$, that is, $d^2 = n$.</p></div><p class="why">Pairs contribute an even count; only an unpaired divisor can make the total odd.</p></li>
+          <li><div class="do"><p>So $n$ has an odd number of divisors exactly when $n$ is a perfect square.</p></div><p class="why">Then $\sqrt n$ is the one divisor paired with itself.</p></li>
+          <li><div class="do"><p>The squares up to $50$ are $1, 4, 9, 16, 25, 36, 49$.</p></div><p class="why">$7^2 = 49 \le 50 &lt; 64 = 8^2$.</p></li>
+        </ol>
+        <p class="answer">$7$</p>
+        <p class="key-idea">Pairing divisors shows: odd number of divisors $\iff$ perfect square.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A shifted fraction</h3>
+        <div class="problem"><p>For how many positive integers $n$ is $\dfrac{n + 15}{n + 3}$ an integer?</p></div>
+        <ol class="steps">
+          <li data-think="Can you rewrite $n + 15$ as a multiple of $n+3$ plus something constant?"><div class="do"><p>$n + 15 = (n + 3) + 12$, so $\dfrac{n+15}{n+3} = 1 + \dfrac{12}{n+3}$.</p></div><p class="why">Pulling out a copy of the denominator leaves a constant on top.</p></li>
+          <li><div class="do"><p>We need $(n+3) \mid 12$ with $n + 3 \ge 4$.</p></div><p class="why">Since $n \ge 1$, the denominator is at least $4$.</p></li>
+          <li><div class="do"><p>Divisors of $12$ that are at least $4$: $4, 6, 12$. So $n = 1, 3, 9$.</p></div><p class="why">Subtract $3$ from each. Check $n = 9$: $\dfrac{24}{12} = 2$.</p></li>
+        </ol>
+        <p class="answer">$3$ values ($n = 1, 3, 9$)</p>
+        <p class="key-idea">Rewrite the numerator as (multiple of the denominator) + constant; then the denominator must divide the constant.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The locker hallway</h3>
+        <div class="problem"><p>A hallway has $50$ closed lockers numbered $1$ to $50$. Student $1$ toggles every locker, student $2$ toggles every 2nd locker, student $3$ every 3rd, and so on through student $50$. ("Toggle" means open it if closed, close it if open.) How many lockers end up open?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Locker $n$ is toggled by student $k$ exactly when $k \mid n$.</p></div><p class="why">Student $k$ touches lockers $k, 2k, 3k, \ldots$, the multiples of $k$.</p></li>
+          <li><div class="do"><p>So locker $n$ is toggled once per divisor of $n$, and ends open exactly when $n$ has an odd number of divisors.</p></div><p class="why">It starts closed; an odd number of toggles leaves it open.</p></li>
+          <li><div class="do"><p>By the previous example, those are the perfect squares $1, 4, 9, \ldots, 49$.</p></div><p class="why">A story problem turned into a question about divisors.</p></li>
+        </ol>
+        <p class="answer">$7$ lockers (numbers $1, 4, 9, 16, 25, 36, 49$)</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 5.2 ===================== -->
+  <section class="lesson" id="s5-2" data-title="Number Bases">
+    <h2><span class="sec-num">5.2</span> Number Bases</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A car's odometer rolls from $0999$ to $1000$: the ones wheel wraps to $0$ and pushes the next wheel along, which wraps and pushes the next, and so on. Nothing about that mechanism needs ten symbols per wheel. Give each wheel only the symbols $0$ to $7$ and you have a perfectly good counter in base $8$.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Our usual numbers are written in <strong>base 10</strong>: each place is worth ten times the place to its right. So $4072 = 4 \cdot 10^3 + 0 \cdot 10^2 + 7 \cdot 10 + 2$. In <strong>base $b$</strong> we use the digits $0, 1, \ldots, b-1$ and the places are worth $1, b, b^2, b^3, \ldots$ We mark the base with a subscript:</p>
+      <div class="rule"><p>$$(d_k d_{k-1} \ldots d_1 d_0)_b = d_k b^k + d_{k-1} b^{k-1} + \cdots + d_1 b + d_0, \qquad 0 \le d_i \le b - 1.$$</p></div>
+      <p><em>From base $b$ to base 10:</em> expand by place value. <em>From base 10 to base $b$:</em> either peel off the largest power of $b$ that fits, again and again, or divide repeatedly by $b$; the remainders are the digits, read from last to first.</p>
+      <p>For bases above ten we need extra digits: base 16 (<em>hexadecimal</em>) uses $A = 10, B = 11, \ldots, F = 15$. Base 2 (<em>binary</em>) uses only $0$ and $1$. Addition with carrying works in any base; you carry whenever a column reaches $b$.</p>
+    </div>
+
+    <figure class="explore" data-widget="baseBlocks">
+      <figcaption><strong>Explore:</strong> Choose a number and a base. Each column shows its place value, its digit, and what it contributes. Press $+1$ to watch carrying ripple to the left, and $\times b$ to see that multiplying by the base just appends a $0$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Base 5 to base 10</h3>
+        <div class="problem"><p>Write $243_5$ in base $10$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The places are worth $25, 5, 1$: $243_5 = 2 \cdot 25 + 4 \cdot 5 + 3 \cdot 1$.</p></div><p class="why">In base $5$ the places are $5^2, 5^1, 5^0$.</p></li>
+          <li><div class="do"><p>$50 + 20 + 3 = 73$.</p></div><p class="why">Add the contributions.</p></li>
+        </ol>
+        <p class="answer">$73$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Read a binary number</h3>
+        <div class="problem"><p>Write $1011011_2$ in base $10$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Label the places from the right: $1, 2, 4, 8, 16, 32, 64$. The digits $1$ sit in places $64, 16, 8, 2, 1$.</p></div><p class="why">In binary each digit is either "use this power of $2$" or "don't".</p></li>
+          <li><div class="do"><p>$64 + 16 + 8 + 2 + 1 = 91$.</p></div><p class="why">Only the places holding a $1$ contribute.</p></li>
+        </ol>
+        <p class="answer">$91$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Peel off powers</h3>
+        <div class="problem"><p>Write $100$ in base $3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Powers of $3$: $1, 3, 9, 27, 81, 243$. The largest that fits is $81$, once: $100 - 81 = 19$.</p></div><p class="why">$243 > 100$, so the number has five base-3 digits, led by the $81$s place.</p></li>
+          <li><div class="do"><p>$27$s: $0$ (too big). $9$s: $2$, leaving $19 - 18 = 1$.</p></div><p class="why">Each place takes as many copies as fit, at most $b - 1 = 2$.</p></li>
+          <li><div class="do"><p>$3$s: $0$. $1$s: $1$. Reading the digits: $1, 0, 2, 0, 1$.</p></div><p class="why">Don't skip the zeros; they hold the places.</p></li>
+          <li><div class="do"><p>Check: $81 + 2 \cdot 9 + 1 = 100$. ✓</p></div><p class="why">Converting back catches slips.</p></li>
+        </ol>
+        <p class="answer">$10201_3$</p>
+        <p class="book-next">Next in the book: Exercises 5-4 and 5-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Repeated division</h3>
+        <div class="problem"><p>Write $200$ in base $6$ using repeated division.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$200 = 33 \cdot 6 + 2$. $33 = 5 \cdot 6 + 3$. $5 = 0 \cdot 6 + 5$.</p></div><p class="why">Each remainder is the next digit, starting from the ones place.</p></li>
+          <li><div class="do"><p>Read the remainders bottom to top: $532_6$.</p></div><p class="why">The first remainder is the ones digit, so it goes on the right.</p></li>
+          <li><div class="do"><p>Check: $5 \cdot 36 + 3 \cdot 6 + 2 = 180 + 18 + 2 = 200$. ✓</p></div><p class="why">Why it works: $200 = (5 \cdot 6 + 3)\cdot 6 + 2 = 5 \cdot 6^2 + 3 \cdot 6 + 2$.</p></li>
+        </ol>
+        <p class="answer">$532_6$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Hexadecimal both ways</h3>
+        <div class="problem"><p>Write $2AF_{16}$ in base 10, and write $250$ in base 16.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2AF_{16} = 2 \cdot 256 + 10 \cdot 16 + 15 = 512 + 160 + 15 = 687$.</p></div><p class="why">$A = 10$, $F = 15$, and the places are $16^2 = 256$, $16$, $1$.</p></li>
+          <li><div class="do"><p>$250 = 15 \cdot 16 + 10$.</p></div><p class="why">One division by $16$ is enough, since the quotient $15$ is already less than $16$.</p></li>
+          <li><div class="do"><p>Digits $15 \to F$ and $10 \to A$: $250 = FA_{16}$.</p></div><p class="why">Every digit must be a single symbol, so two-digit values become letters.</p></li>
+        </ol>
+        <p class="answer">$2AF_{16} = 687$ and $250 = FA_{16}$.</p>
+        <p class="book-next">Next in the book: Exercises 5-6 to 5-8.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Add in base 7</h3>
+        <div class="problem"><p>Compute $356_7 + 254_7$ without converting to base 10.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Ones: $6 + 4 = 10 = 1 \cdot 7 + 3$. Write $3$, carry $1$.</p></div><p class="why">Carry whenever a column reaches $7$, not $10$.</p></li>
+          <li><div class="do"><p>Sevens: $5 + 5 + 1 = 11 = 1 \cdot 7 + 4$. Write $4$, carry $1$.</p></div><p class="why">Include the carry from the previous column.</p></li>
+          <li><div class="do"><p>Forty-nines: $3 + 2 + 1 = 6$. Write $6$. Result: $643_7$.</p></div><p class="why">$6 &lt; 7$, so nothing more to carry.</p></li>
+          <li><div class="do"><p>Check: $188 + 137 = 325$ and $643_7 = 294 + 28 + 3 = 325$. ✓</p></div><p class="why">$356_7 = 147 + 35 + 6$ and $254_7 = 98 + 35 + 4$.</p></li>
+        </ol>
+        <p class="answer">$643_7$</p>
+        <p class="book-next">Compare with the book's Example 5-3, which adds in binary.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Find the base</h3>
+        <div class="problem"><p>In some base $b$, the number $52_b$ equals $37$. Find $b$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$52_b = 5b + 2$, so $5b + 2 = 37$.</p></div><p class="why">Place value works the same way in an unknown base.</p></li>
+          <li><div class="do"><p>$5b = 35$, so $b = 7$.</p></div><p class="why">A linear equation.</p></li>
+          <li><div class="do"><p>Check the digits: $5$ and $2$ are both less than $7$. ✓</p></div><p class="why">A digit must be smaller than the base, so always confirm the base is big enough.</p></li>
+        </ol>
+        <p class="answer">$b = 7$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>An unknown base with three digits</h3>
+        <div class="problem"><p>Find the base $b$ for which $253_b = 136$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2b^2 + 5b + 3 = 136$, so $2b^2 + 5b - 133 = 0$.</p></div><p class="why">Three digits give a quadratic in $b$.</p></li>
+          <li data-think="$b$ must be a whole number larger than every digit. Which small values are worth testing?"><div class="do"><p>Try $b = 6$: $72 + 30 + 3 = 105$. Try $b = 7$: $98 + 35 + 3 = 136$. ✓</p></div><p class="why">$b > 5$ because $5$ is a digit, and the left side grows with $b$, so testing upward works. (Chapter 6 solves such equations directly.)</p></li>
+          <li><div class="do"><p>Since $2b^2 + 5b + 3$ keeps increasing for larger $b$, $b = 7$ is the only answer.</p></div><p class="why">An increasing expression can hit $136$ only once.</p></li>
+        </ol>
+        <p class="answer">$b = 7$</p>
+        <p class="key-idea">An unknown base turns place value into a polynomial equation in $b$.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 5.3 ===================== -->
+  <section class="lesson" id="s5-3" data-title="The Last Digit">
+    <h2><span class="sec-num">5.3</span> The Last Digit</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>$7^{100}$ has $85$ digits. Nobody wants to compute it. Yet you can know its last digit in a few seconds, because when you multiply, the last digit of the answer only ever depends on the last digits of what you multiplied.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Write any integer as $10q + u$, where $u$ is its units digit. When you add or multiply two such numbers, every term involving $10q$ is a multiple of $10$ and cannot affect the units digit. So:</p>
+      <div class="rule"><p>The last digit of a sum or product equals the last digit of the sum or product of the last digits.</p></div>
+      <p>For powers this means the last digits repeat. The last digits of $3^1, 3^2, 3^3, 3^4, 3^5, \ldots$ are $3, 9, 7, 1, 3, \ldots$: once a $1$ appears, the cycle restarts. Every digit has a cycle of length $1$, $2$ or $4$, so to find the last digit of $a^n$, find where $n$ falls in the cycle by looking at its remainder.</p>
+      <p>Only the units digit of the base matters: $23^{n}$ ends the same way as $3^{n}$. The same idea works in any base, and in Section 5.4 it grows into modular arithmetic.</p>
+    </div>
+
+    <figure class="explore" data-widget="lastDigitCycle">
+      <figcaption><strong>Explore:</strong> Pick a base $a$ and an exponent $n$. The ring shows the repeating cycle of last digits, and the highlighted node is where $a^n$ lands. Try bases ending in $0, 1, 5, 6$ (cycle length 1), in $4, 9$ (length 2), and the rest (length 4).</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Last digit of a product</h3>
+        <div class="problem"><p>What is the units digit of $47 \times 83$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply the units digits: $7 \times 3 = 21$.</p></div><p class="why">The tens and higher digits only produce multiples of $10$.</p></li>
+          <li><div class="do"><p>The units digit is $1$. (Indeed $47 \times 83 = 3901$.)</p></div><p class="why">Take the last digit of that small product.</p></li>
+        </ol>
+        <p class="answer">$1$</p>
+        <p class="book-next">Next in the book: Exercise 5-9.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Last digit of a sum</h3>
+        <div class="problem"><p>What is the units digit of $1234 + 5678 + 999$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4 + 8 + 9 = 21$, so the units digit is $1$.</p></div><p class="why">Same principle for sums: only the units digits matter.</p></li>
+        </ol>
+        <p class="answer">$1$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A cycle of four</h3>
+        <div class="problem"><p>Find the units digit of $3^{20}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Last digits of $3^1, 3^2, 3^3, 3^4$: $3, 9, 7, 1$. Then $3^5$ ends in $1 \cdot 3 = 3$ and the cycle repeats.</p></div><p class="why">Each step multiplies the previous last digit by $3$ and keeps only the last digit.</p></li>
+          <li><div class="do"><p>$20$ is a multiple of $4$, so $3^{20}$ sits at the end of a cycle, like $3^4$.</p></div><p class="why">$3^{20} = (3^4)^5$, and $3^4$ ends in $1$.</p></li>
+        </ol>
+        <p class="answer">$1$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Use the remainder</h3>
+        <div class="problem"><p>Find the units digit of $7^{35}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Cycle for $7$: $7, 9, 3, 1$ (length $4$).</p></div><p class="why">$7 \cdot 7 = 49$, $9 \cdot 7 = 63$, $3 \cdot 7 = 21$, $1 \cdot 7 = 7$.</p></li>
+          <li><div class="do"><p>$35 = 4 \cdot 8 + 3$, so $7^{35} = (7^4)^8 \cdot 7^3$.</p></div><p class="why">Full cycles contribute a last digit of $1$; only the leftover $3$ steps matter.</p></li>
+          <li><div class="do"><p>The 3rd entry of the cycle is $3$.</p></div><p class="why">$7^3 = 343$ ends in $3$.</p></li>
+        </ol>
+        <p class="answer">$3$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Last digits of fourth powers</h3>
+        <div class="problem"><p>Which digits can be the units digit of $n^4$ for an integer $n$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Only the last digit of $n$ matters, so test $0$ through $9$: their fourth powers end in $0, 1, 6, 1, 6, 5, 6, 1, 6, 1$.</p></div><p class="why">For example $2^4 = 16$, $3^4 = 81$, $7^4 = 2401$.</p></li>
+          <li><div class="do"><p>Possible units digits: $0, 1, 5, 6$.</p></div><p class="why">Ten cases cover every integer at once.</p></li>
+        </ol>
+        <p class="answer">$0, 1, 5, 6$ only</p>
+        <p class="key-idea">Only ten cases ever matter for a units-digit question.</p>
+        <p class="book-next">Next in the book: Exercise 5-10 asks the same question for squares.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two powers added</h3>
+        <div class="problem"><p>Find the units digit of $13^{41} + 22^{30}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$13^{41}$ ends like $3^{41}$. Since $41 = 4 \cdot 10 + 1$, it's the 1st entry of $3, 9, 7, 1$: units digit $3$.</p></div><p class="why">Ignore the tens digit of the base.</p></li>
+          <li><div class="do"><p>$22^{30}$ ends like $2^{30}$. Cycle $2, 4, 8, 6$; $30 = 4 \cdot 7 + 2$, so the 2nd entry: $4$.</p></div><p class="why">Same method, different cycle.</p></li>
+          <li><div class="do"><p>$3 + 4 = 7$.</p></div><p class="why">Add the last digits.</p></li>
+        </ol>
+        <p class="answer">$7$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A sum of factorials</h3>
+        <div class="problem"><p>Find the units digit of $1! + 2! + 3! + \cdots + 50!$.</p></div>
+        <ol class="steps">
+          <li data-think="What do $5!, 6!, 7!, \ldots$ all have as a factor?"><div class="do"><p>For $k \ge 5$, $k!$ contains both $2$ and $5$ as factors, so it ends in $0$.</p></div><p class="why">$2 \cdot 5 = 10$ divides every factorial from $5!$ on.</p></li>
+          <li><div class="do"><p>$1 + 2 + 6 + 24 = 33$, which ends in $3$.</p></div><p class="why">Only the first four terms can affect the units digit.</p></li>
+        </ol>
+        <p class="answer">$3$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The last two digits</h3>
+        <div class="problem"><p>Find the last two digits of $7^{2026}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The last two digits of a product depend only on the last two digits of the factors.</p></div><p class="why">Write each number as $100q + r$; the $100q$ parts contribute only multiples of $100$.</p></li>
+          <li data-think="Compute $7^2$ and $7^4$. Does anything special happen?"><div class="do"><p>$7^2 = 49$, and $7^4 = 49^2 = 2401$, which ends in $01$.</p></div><p class="why">Ending in $01$ is the two-digit version of ending in $1$: the cycle restarts.</p></li>
+          <li><div class="do"><p>$2026 = 4 \cdot 506 + 2$, so $7^{2026} = (7^4)^{506}\cdot 7^2$ ends like $01 \cdot 49$.</p></div><p class="why">A number ending in $01$ times one ending in $49$ ends in $49$.</p></li>
+        </ol>
+        <p class="answer">$49$</p>
+        <p class="key-idea">Find a power that ends in $1$ (or $01$); then the exponent only matters through its remainder.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 5.4 ===================== -->
+  <section class="lesson" id="s5-4" data-title="Modular Arithmetic">
+    <h2><span class="sec-num">5.4</span> Modular Arithmetic</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>It's 9 o'clock. What time will it be in 100 hours? You don't count all 100: the clock forgets every complete trip of 12 hours. $100 = 8 \cdot 12 + 4$, so it's the same as 4 hours later: 1 o'clock. Arithmetic that forgets multiples of a fixed number is called modular arithmetic.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Fix a positive integer $m$, the <strong>modulus</strong>. Two integers are <strong>congruent mod $m$</strong> if they leave the same remainder when divided by $m$, or equivalently if their difference is a multiple of $m$:</p>
+      <div class="rule"><p>$$a \equiv b \pmod m \iff m \mid (a - b).$$</p></div>
+      <p>So $17 \equiv 2 \pmod 5$, and also $17 \equiv -3 \pmod 5$: negative representatives are allowed and often handy. Finding the smallest nonnegative number congruent to $a$ is called "reducing" $a$ mod $m$; it's just the remainder. (It's also the last digit of $a$ written in base $m$.)</p>
+      <p>Congruences can be added, subtracted, multiplied and raised to positive integer powers. If $a \equiv b$ and $c \equiv d \pmod m$, then</p>
+      <div class="rule"><p>$$a + c \equiv b + d, \qquad a - c \equiv b - d, \qquad ac \equiv bd, \qquad a^k \equiv b^k \pmod m.$$</p></div>
+      <p>In practice: <em>reduce first, then compute</em>. The numbers stay small.</p>
+      <div class="note"><p><strong>Division is not allowed in general.</strong> $10 \equiv 20 \pmod{10}$, but dividing both sides by $10$ gives $1 \equiv 2$, which is false.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="clockMod">
+      <figcaption><strong>Explore:</strong> A clock with $m$ positions. Slide $n$ (try negatives too) and watch it land on its remainder. The list on the right shows the whole family of numbers that land on the same spot, each $m$ apart.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="modTable">
+      <figcaption><strong>Explore:</strong> The addition or multiplication table mod $m$. Click any cell to see the computation. In the $\times$ table, the highlighted diagonal holds the squares: for $m = 8$ only $0, 1, 4$ appear, and for $m = 4$ only $0, 1$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Reduce, including a negative</h3>
+        <div class="problem"><p>Reduce $47$ mod $6$ and $-8$ mod $5$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$47 = 7 \cdot 6 + 5$, so $47 \equiv 5 \pmod 6$.</p></div><p class="why">The reduced value is the remainder.</p></li>
+          <li><div class="do"><p>$-8 = (-2)\cdot 5 + 2$, so $-8 \equiv 2 \pmod 5$.</p></div><p class="why">Choose the multiple just <em>below</em> $-8$ so the remainder is between $0$ and $4$. Check: $-8 - 2 = -10$ is a multiple of $5$.</p></li>
+        </ol>
+        <p class="answer">$47 \equiv 5 \pmod 6$ and $-8 \equiv 2 \pmod 5$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Test a congruence</h3>
+        <div class="problem"><p>Is $83 \equiv 23 \pmod{12}$? Is $83 \equiv 23 \pmod{7}$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$83 - 23 = 60$.</p></div><p class="why">Congruence is about the difference.</p></li>
+          <li><div class="do"><p>$12 \mid 60$, so yes mod $12$. But $7 \nmid 60$, so no mod $7$.</p></div><p class="why">$60 = 5 \cdot 12$, while $60 = 8 \cdot 7 + 4$.</p></li>
+        </ol>
+        <p class="answer">Yes mod $12$; no mod $7$.</p>
+        <p class="book-next">Next in the book: Exercises 5-11 and 5-12.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Counting members of a class</h3>
+        <div class="problem"><p>How many integers from $1$ to $200$ are congruent to $4$ mod $7$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Such numbers have the form $7k + 4$. The smallest is $4$ ($k = 0$).</p></div><p class="why">Every member of the class is $4$ more than a multiple of $7$.</p></li>
+          <li><div class="do"><p>Largest: $200 = 7 \cdot 28 + 4$, so $200$ itself works ($k = 28$).</p></div><p class="why">Reduce the upper bound to see where the class ends.</p></li>
+          <li><div class="do"><p>$k$ runs over $0, 1, \ldots, 28$: that's $29$ values.</p></div><p class="why">Counting from $0$ to $28$ inclusive gives $28 + 1$.</p></li>
+        </ol>
+        <p class="answer">$29$</p>
+        <p class="book-next">Next in the book: Exercises 5-13 and 5-14.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Reduce before multiplying</h3>
+        <div class="problem"><p>Find the remainder when $1234 \times 5678$ is divided by $7$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$1234 = 7 \cdot 176 + 2$, so $1234 \equiv 2$. $5678 = 7 \cdot 811 + 1$, so $5678 \equiv 1$.</p></div><p class="why">Reduce each factor first; the numbers become tiny.</p></li>
+          <li><div class="do"><p>$1234 \times 5678 \equiv 2 \times 1 = 2 \pmod 7$.</p></div><p class="why">Multiplication respects congruence.</p></li>
+        </ol>
+        <p class="answer">$2$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A huge power mod 7</h3>
+        <div class="problem"><p>Find the remainder when $2^{100}$ is divided by $7$.</p></div>
+        <ol class="steps">
+          <li data-think="Look for a small power of $2$ that is congruent to $1$ mod $7$."><div class="do"><p>$2^3 = 8 \equiv 1 \pmod 7$.</p></div><p class="why">A power congruent to $1$ makes the rest collapse.</p></li>
+          <li><div class="do"><p>$2^{100} = (2^3)^{33}\cdot 2 \equiv 1^{33}\cdot 2 = 2 \pmod 7$.</p></div><p class="why">$100 = 3 \cdot 33 + 1$, and we may raise congruences to powers.</p></li>
+        </ol>
+        <p class="answer">$2$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Algebra with congruences</h3>
+        <div class="problem"><p>When $n$ is divided by $5$ the remainder is $3$. What is the remainder when $4n + 7$ is divided by $5$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$n \equiv 3 \pmod 5$, so $4n + 7 \equiv 4 \cdot 3 + 7 = 19 \pmod 5$.</p></div><p class="why">Substitute any number in the class; the answer can't depend on which.</p></li>
+          <li><div class="do"><p>$19 \equiv 4 \pmod 5$.</p></div><p class="why">Reduce at the end. Check with $n = 8$: $4 \cdot 8 + 7 = 39 \equiv 4$. ✓</p></li>
+        </ol>
+        <p class="answer">$4$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Why you can't just divide</h3>
+        <div class="problem"><p>Find all $x$ in $\{0, 1, \ldots, 8\}$ with $6x \equiv 6 \pmod 9$.</p></div>
+        <ol class="steps">
+          <li data-think="Dividing both sides by $6$ suggests $x \equiv 1$. Is that the whole story?"><div class="do"><p>Test each value: $6x$ for $x = 0, \ldots, 8$ is $0, 6, 12, 18, 24, 30, 36, 42, 48$, which reduce to $0, 6, 3, 0, 6, 3, 0, 6, 3$.</p></div><p class="why">With only nine cases, checking them all is safest.</p></li>
+          <li><div class="do"><p>$6x \equiv 6$ for $x = 1, 4, 7$.</p></div><p class="why">"Dividing by $6$" would have found only $x = 1$.</p></li>
+          <li><div class="do"><p>The reason: $6x \equiv 6$ means $9 \mid 6(x-1)$, which only needs $3 \mid x - 1$, since $6$ already supplies one factor of $3$.</p></div><p class="why">Because $6$ and $9$ share a factor, cancelling the $6$ loses information.</p></li>
+        </ol>
+        <p class="answer">$x = 1, 4, 7$</p>
+        <p class="key-idea">Never cancel a factor in a congruence without checking; it can lose solutions or create false statements.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Not a sum of two squares</h3>
+        <div class="problem"><p>Show that $2023$ cannot be written as $a^2 + b^2$ for integers $a, b$.</p></div>
+        <ol class="steps">
+          <li data-think="Which remainders can a perfect square leave when divided by $4$?"><div class="do"><p>Mod $4$, every integer is $\equiv 0, 1, 2$ or $3$, and the squares are $0, 1, 4, 9 \equiv 0, 1, 0, 1$.</p></div><p class="why">Squaring respects congruence, so four cases cover all integers.</p></li>
+          <li><div class="do"><p>So $a^2 + b^2 \equiv 0 + 0,\ 0 + 1$ or $1 + 1$, that is, $0, 1$ or $2 \pmod 4$.</p></div><p class="why">Add the possible remainders in every combination.</p></li>
+          <li><div class="do"><p>$2023 = 4 \cdot 505 + 3 \equiv 3 \pmod 4$, which is not on the list.</p></div><p class="why">A sum of two squares can never be $3$ mod $4$.</p></li>
+        </ol>
+        <p class="answer">Impossible, since $2023 \equiv 3 \pmod 4$ while $a^2 + b^2 \not\equiv 3 \pmod 4$.</p>
+        <p class="key-idea">To prove something is impossible, find a modulus where the two sides can never match.</p>
+        <p class="book-next">Next in the book: Exercises 5-15 and 5-16.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Use $-1$ as a stepping stone</h3>
+        <div class="problem"><p>Find the remainder when $5^{100}$ is divided by $13$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$5^2 = 25 = 26 - 1 \equiv -1 \pmod{13}$.</p></div><p class="why">Being $1$ less than a multiple of $13$ is as useful as being $1$ more.</p></li>
+          <li><div class="do"><p>$5^{100} = (5^2)^{50} \equiv (-1)^{50} = 1 \pmod{13}$.</p></div><p class="why">An even power of $-1$ is $1$.</p></li>
+        </ol>
+        <p class="answer">$1$</p>
+        <p class="key-idea">Aim for a power that is $\equiv \pm 1$; negative representatives often shorten the work.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 5.5 ===================== -->
+  <section class="lesson" id="s5-5" data-title="Tricks">
+    <h2><span class="sec-num">5.5</span> Tricks</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Is $8{,}675{,}309$ divisible by $3$? You could do long division, or you could add its digits: $8 + 6 + 7 + 5 + 3 + 0 + 9 = 38$, and $38$ isn't a multiple of $3$, so neither is the big number. That shortcut isn't magic; it's modular arithmetic in disguise.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A number $N$ is divisible by $d$ exactly when $N \equiv 0 \pmod d$. Each divisibility trick comes from knowing what $10$ (and its powers) are mod $d$.</p>
+      <p><em>Last-digit tests.</em> Since $10 \equiv 0 \pmod 2$ and $\pmod 5$, a number is congruent to its last digit mod $2$, $5$ and $10$. Since $100 \equiv 0 \pmod 4$, a number is congruent to its last <em>two</em> digits mod $4$; since $1000 \equiv 0 \pmod 8$, to its last <em>three</em> digits mod $8$.</p>
+      <p><em>Digit sums.</em> Since $10 \equiv 1 \pmod 9$, every power of $10$ is $\equiv 1$, so</p>
+      <div class="rule"><p>$$N \equiv (\text{sum of its digits}) \pmod 9 \text{ and } \pmod 3.$$</p></div>
+      <p><em>Alternating sums.</em> Since $10 \equiv -1 \pmod{11}$, powers of $10$ alternate $1, -1, 1, \ldots$, so $N$ is congruent mod $11$ to its digits added with alternating signs, starting with $+$ on the units digit.</p>
+      <p><em>Composite divisors.</em> To test $12$, test $4$ and $3$; to test $36$, test $4$ and $9$. Use factors that share no common factor.</p>
+    </div>
+
+    <figure class="explore" data-widget="divTester">
+      <figcaption><strong>Explore:</strong> Pick a number and a divisor. The tiles show which digits the rule uses (gold) and how, and the readout compares the shortcut with the true remainder. Try $11$ on numbers like $1716$ and $918082$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Tests by 4 and 8</h3>
+        <div class="problem"><p>Is $7452$ divisible by $4$? By $8$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Last two digits: $52 = 4 \cdot 13$, so $4 \mid 7452$.</p></div><p class="why">$7400$ is a multiple of $100$, hence of $4$; only $52$ matters.</p></li>
+          <li><div class="do"><p>Last three digits: $452 = 8 \cdot 56 + 4$, so $8 \nmid 7452$.</p></div><p class="why">$7000$ is a multiple of $1000$, hence of $8$; only $452$ matters.</p></li>
+        </ol>
+        <p class="answer">Divisible by $4$, not by $8$.</p>
+        <p class="book-next">Next in the book: Exercises 5-17 to 5-19.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Digit sum for 3 and 9</h3>
+        <div class="problem"><p>Is $48{,}213$ divisible by $3$? By $9$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$4 + 8 + 2 + 1 + 3 = 18$.</p></div><p class="why">The number is congruent to its digit sum mod $9$ (and mod $3$).</p></li>
+          <li><div class="do"><p>$18$ is a multiple of both $3$ and $9$, so $48{,}213$ is too.</p></div><p class="why">Indeed $48{,}213 = 9 \cdot 5357$.</p></li>
+        </ol>
+        <p class="answer">Divisible by both $3$ and $9$.</p>
+        <p class="book-next">Next in the book: Exercises 5-20 to 5-22.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The remainder, not just yes or no</h3>
+        <div class="problem"><p>Find the remainder when $8{,}675{,}309$ is divided by $9$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Digit sum: $8 + 6 + 7 + 5 + 3 + 0 + 9 = 38$.</p></div><p class="why">The rule gives a congruence, so it finds remainders too.</p></li>
+          <li><div class="do"><p>Repeat: $3 + 8 = 11$, and $1 + 1 = 2$.</p></div><p class="why">$38$ is itself congruent to its digit sum, so we can keep going.</p></li>
+        </ol>
+        <p class="answer">$2$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Alternating sum for 11</h3>
+        <div class="problem"><p>Is $918{,}082$ divisible by $11$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>From the units digit leftward, alternate signs: $2 - 8 + 0 - 8 + 1 - 9 = -22$.</p></div><p class="why">$10 \equiv -1 \pmod{11}$, so the digit in the $10^k$ place gets sign $(-1)^k$.</p></li>
+          <li><div class="do"><p>$-22 = -2 \cdot 11$, so yes.</p></div><p class="why">A negative multiple of $11$ (or $0$) counts. Indeed $918{,}082 = 11 \cdot 83{,}462$.</p></li>
+        </ol>
+        <p class="answer">Yes</p>
+        <p class="book-next">Next in the book: Exercises 5-23 and 5-24.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Combine two tests</h3>
+        <div class="problem"><p>Is $5412$ divisible by $12$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>By $4$: $12 = 4 \cdot 3$ ✓. By $3$: $5 + 4 + 1 + 2 = 12$ ✓.</p></div><p class="why">$12 = 4 \cdot 3$ with $4$ and $3$ sharing no factor, so passing both tests is enough.</p></li>
+          <li><div class="do"><p>So $12 \mid 5412$. (Indeed $5412 = 12 \cdot 451$.)</p></div><p class="why">Don't use $2$ and $6$ instead: they share a factor, and $18$ passes both tests without being a multiple of $12$.</p></li>
+        </ol>
+        <p class="answer">Yes</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Find the missing digit</h3>
+        <div class="problem"><p>The four-digit number $47d2$ is divisible by $36$. Find the digit $d$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$36 = 4 \cdot 9$, so we need both $4 \mid 47d2$ and $9 \mid 47d2$.</p></div><p class="why">Split into factors with no common factor.</p></li>
+          <li><div class="do"><p>For $9$: $4 + 7 + d + 2 = 13 + d$ must be a multiple of $9$, so $d = 5$.</p></div><p class="why">$d$ is a digit, so $13 + d$ lies between $13$ and $22$; the only multiple of $9$ there is $18$.</p></li>
+          <li><div class="do"><p>For $4$: the last two digits are $52$, and $4 \mid 52$. ✓</p></div><p class="why">Always confirm the other condition. $4752 = 36 \cdot 132$.</p></li>
+        </ol>
+        <p class="answer">$d = 5$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Every palindrome of length four</h3>
+        <div class="problem"><p>Show that every four-digit number of the form $abba$ (such as $3773$) is divisible by $11$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Alternating sum from the right: $a - b + b - a = 0$.</p></div><p class="why">The digits from the right are $a, b, b, a$ with signs $+, -, +, -$.</p></li>
+          <li><div class="do"><p>$0$ is divisible by $11$, so $11 \mid abba$.</p></div><p class="why">For instance $3773 = 11 \cdot 343$.</p></li>
+        </ol>
+        <p class="answer">The alternating digit sum is always $0$, so $11$ divides $abba$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A multiple made of 8s and 0s</h3>
+        <div class="problem"><p>Find the smallest positive multiple of $15$ whose digits are all $8$s and $0$s.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Divisible by $5$ means the last digit is $0$ or $5$; with only $8$s and $0$s it must end in $0$.</p></div><p class="why">$15 = 3 \cdot 5$; handle each factor.</p></li>
+          <li data-think="If the number has $k$ eights, what is its digit sum?"><div class="do"><p>Divisible by $3$: the digit sum is $8k$ for $k$ eights, and $3 \mid 8k$ requires $3 \mid k$.</p></div><p class="why">$8$ and $3$ share no factor, so the $3$ must come from $k$.</p></li>
+          <li><div class="do"><p>Fewest digits: three $8$s and a final $0$, giving $8880$.</p></div><p class="why">Any valid number has at least $4$ digits, and among those $8880$ is the only one.</p></li>
+        </ol>
+        <p class="answer">$8880$ (which is $15 \cdot 592$)</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Build your own rule: 99</h3>
+        <div class="problem"><p>Find the remainder when $123{,}456{,}789$ is divided by $99$.</p></div>
+        <ol class="steps">
+          <li data-think="What is $100$ congruent to mod $99$?"><div class="do"><p>$100 \equiv 1 \pmod{99}$, so every power of $100$ is $\equiv 1$.</p></div><p class="why">This is the digit-sum idea, but using two-digit blocks, since $100$ is the "base" here.</p></li>
+          <li><div class="do"><p>Split into pairs from the right: $1 \mid 23 \mid 45 \mid 67 \mid 89$. Sum: $1 + 23 + 45 + 67 + 89 = 225$.</p></div><p class="why">$123456789 = 1 \cdot 100^4 + 23 \cdot 100^3 + 45 \cdot 100^2 + 67 \cdot 100 + 89$.</p></li>
+          <li><div class="do"><p>Repeat: $225 \to 2 + 25 = 27$.</p></div><p class="why">$27 &lt; 99$, so that's the remainder.</p></li>
+        </ol>
+        <p class="answer">$27$</p>
+        <p class="key-idea">Every divisibility rule comes from what $10$, $100$ or $1000$ is congruent to.</p>
+        <p class="book-next">Next in the book: Example 5-8.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 5.6 ===================== -->
+  <section class="lesson" id="s5-6" data-title="Primes">
+    <h2><span class="sec-num">5.6</span> Primes</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Chemists describe every substance by the elements it's made of. Number theorists do the same with primes: $360$ is "three 2s, two 3s and a 5", and that description is unique. Primes are the atoms of multiplication.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Every integer greater than $1$ can be written as a product of primes, and apart from the order of the factors there is only one way to do it. This is the <strong>prime factorization</strong>; we usually group equal primes with exponents, as in $360 = 2^3 \cdot 3^2 \cdot 5$.</p>
+      <p>To factor a number, divide out small primes one at a time, using the tricks from Section 5.5 to spot $2, 3, 5, 11$ quickly. Always keep dividing the <em>quotient</em>.</p>
+      <div class="rule"><p>If $N > 1$ has no prime divisor $p$ with $p \le \sqrt N$, then $N$ is prime.</p></div>
+      <p>The reason: if $N = ab$ with both $a, b > \sqrt N$, then $ab > N$, a contradiction. So a composite number always has a factor no bigger than its square root.</p>
+      <p><strong>There are infinitely many primes.</strong> Suppose there were only finitely many, $p_1, p_2, \ldots, p_n$. The number $p_1 p_2 \cdots p_n + 1$ leaves remainder $1$ when divided by every $p_i$, yet it must have some prime factor. That factor is a prime not on the list, a contradiction.</p>
+    </div>
+
+    <figure class="explore" data-widget="sieve">
+      <figcaption><strong>Explore:</strong> The sieve of Eratosthenes. Each press crosses out the multiples of the next prime, starting from its square. Watch the readout: once the next prime is bigger than $\sqrt N$, nothing new gets crossed out, so every survivor is prime.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A first factorization</h3>
+        <div class="problem"><p>Find the prime factorization of $360$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$360 = 10 \cdot 36 = (2 \cdot 5)(2^2 \cdot 3^2)$.</p></div><p class="why">Any convenient split works; uniqueness guarantees the same final answer.</p></li>
+          <li><div class="do"><p>Collect: $2^3 \cdot 3^2 \cdot 5$.</p></div><p class="why">Group equal primes with exponents.</p></li>
+        </ol>
+        <p class="answer">$2^3 \cdot 3^2 \cdot 5$</p>
+        <p class="book-next">Next in the book: Exercises 5-25 and 5-26.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Primes in a range</h3>
+        <div class="problem"><p>List the primes between $30$ and $50$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Skip evens and multiples of $5$: candidates $31, 33, 37, 39, 41, 43, 47, 49$.</p></div><p class="why">Remove the easy composites first.</p></li>
+          <li><div class="do"><p>Remove $33 = 3 \cdot 11$, $39 = 3 \cdot 13$, $49 = 7^2$.</p></div><p class="why">Since $\sqrt{50} &lt; 8$, testing $3$ and $7$ is all that's left.</p></li>
+        </ol>
+        <p class="answer">$31, 37, 41, 43, 47$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Prime or not: 221</h3>
+        <div class="problem"><p>Is $221$ prime?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$14^2 = 196$ and $15^2 = 225$, so $\sqrt{221} &lt; 15$. Test primes up to $13$.</p></div><p class="why">A composite $221$ must have a prime factor at most $\sqrt{221}$.</p></li>
+          <li><div class="do"><p>$2, 3, 5$ fail (odd; digit sum $5$; last digit $1$). $221 = 7 \cdot 31 + 4$, and alternating sum $1 - 2 + 2 = 1$, so $7$ and $11$ fail.</p></div><p class="why">Use the tricks wherever possible.</p></li>
+          <li><div class="do"><p>$221 = 13 \cdot 17$.</p></div><p class="why">Found a factor, so $221$ is composite.</p></li>
+        </ol>
+        <p class="answer">No: $221 = 13 \cdot 17$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Prime or not: 197</h3>
+        <div class="problem"><p>Is $197$ prime?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$14^2 = 196 &lt; 197 &lt; 225 = 15^2$, so test primes up to $13$.</p></div><p class="why">Only $2, 3, 5, 7, 11, 13$ need checking.</p></li>
+          <li><div class="do"><p>Odd; digit sum $17$; ends in $7$; $197 = 7 \cdot 28 + 1$; alternating sum $7 - 9 + 1 = -1$; $197 = 13 \cdot 15 + 2$.</p></div><p class="why">None of the six primes divides $197$.</p></li>
+          <li><div class="do"><p>So $197$ is prime.</p></div><p class="why">No prime factor up to $\sqrt{197}$ means no factor at all.</p></li>
+        </ol>
+        <p class="answer">Yes, $197$ is prime.</p>
+        <p class="book-next">Next in the book: Example 5-10 and Exercise 5-27.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Factor a larger number with the tricks</h3>
+        <div class="problem"><p>Find the prime factorization of $13{,}860$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Ends in $0$: $13860 = 10 \cdot 1386 = 2 \cdot 5 \cdot 1386$. Even again: $1386 = 2 \cdot 693$.</p></div><p class="why">Strip off $2$s and $5$s first.</p></li>
+          <li><div class="do"><p>$693$: digit sum $18$, so $9 \mid 693$ and $693 = 9 \cdot 77$.</p></div><p class="why">The digit-sum test spots factors of $3$ and $9$.</p></li>
+          <li><div class="do"><p>$77 = 7 \cdot 11$. Altogether $13860 = 2^2 \cdot 3^2 \cdot 5 \cdot 7 \cdot 11$.</p></div><p class="why">Check: $4 \cdot 9 \cdot 5 \cdot 7 \cdot 11 = 13860$. ✓</p></li>
+        </ol>
+        <p class="answer">$2^2 \cdot 3^2 \cdot 5 \cdot 7 \cdot 11$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Count divisors from the factorization</h3>
+        <div class="problem"><p>How many positive divisors does $360$ have?</p></div>
+        <ol class="steps">
+          <li data-think="A divisor of $2^3 \cdot 3^2 \cdot 5$ can only use these primes. How many choices are there for the power of $2$?"><div class="do"><p>Every divisor has the form $2^a 3^b 5^c$ with $0 \le a \le 3$, $0 \le b \le 2$, $0 \le c \le 1$.</p></div><p class="why">By uniqueness of factorization, a divisor can't contain any other prime or a higher power.</p></li>
+          <li><div class="do"><p>Choices: $4 \cdot 3 \cdot 2 = 24$.</p></div><p class="why">Each exponent is chosen independently.</p></li>
+        </ol>
+        <p class="answer">$24$</p>
+        <p class="key-idea">If $N = p^a q^b r^c \cdots$, then $N$ has $(a+1)(b+1)(c+1)\cdots$ divisors.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Euclid's number is not always prime</h3>
+        <div class="problem"><p>Compute $P = 2 \cdot 3 \cdot 5 \cdot 7 \cdot 11 \cdot 13 + 1$. Is it prime? How does this fit the proof that there are infinitely many primes?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2 \cdot 3 \cdot 5 \cdot 7 \cdot 11 \cdot 13 = 30030$, so $P = 30031$.</p></div><p class="why">Multiply step by step: $210 \cdot 143 = 30030$.</p></li>
+          <li><div class="do"><p>$30031 = 59 \cdot 509$, so $P$ is composite.</p></div><p class="why">Trial division finds it eventually; it's not prime.</p></li>
+          <li data-think="Does the proof really claim that $P$ is prime?"><div class="do"><p>But $59$ and $509$ are primes not in the list $2, 3, 5, 7, 11, 13$.</p></div><p class="why">The proof only needs <em>some</em> prime factor of $P$ to be new, and every prime factor of $P$ is new, because each listed prime leaves remainder $1$.</p></li>
+        </ol>
+        <p class="answer">$P = 30031 = 59 \cdot 509$ is composite, but its prime factors are new primes, exactly as the proof needs.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A prime triple</h3>
+        <div class="problem"><p>Find all primes $p$ such that $p$, $p + 10$ and $p + 20$ are all prime.</p></div>
+        <ol class="steps">
+          <li data-think="Look at the three numbers mod $3$."><div class="do"><p>Mod $3$: $10 \equiv 1$ and $20 \equiv 2$, so the three numbers are $\equiv p,\ p + 1,\ p + 2$.</p></div><p class="why">Three consecutive residues mod $3$ cover $0, 1, 2$, so one of the numbers is divisible by $3$.</p></li>
+          <li><div class="do"><p>A prime divisible by $3$ must be $3$ itself. Since $p + 10$ and $p + 20$ exceed $3$, we need $p = 3$.</p></div><p class="why">The only way to survive is for the multiple of $3$ to be $3$.</p></li>
+          <li><div class="do"><p>Check: $3, 13, 23$ are all prime. ✓</p></div><p class="why">The argument shows nothing else can work; the check shows $p = 3$ does.</p></li>
+        </ol>
+        <p class="answer">$p = 3$ only</p>
+        <p class="key-idea">Modular arithmetic can force a factor, ruling out primes all at once.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 5.7 ===================== -->
+  <section class="lesson" id="s5-7" data-title="Common and Uncommon Factors">
+    <h2><span class="sec-num">5.7</span> Common and Uncommon Factors</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>One light blinks every 12 seconds and another every 18 seconds. They just blinked together. When will they next blink together? And what is the largest square tile that exactly fills a 12-by-18 floor? The first question asks for what the two numbers have in common as multiples; the second for what they share as factors.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>greatest common factor</strong> (GCF, or gcd) of $a$ and $b$ is the largest integer dividing both; it's written $(a, b)$ or $\gcd(a,b)$. The <strong>least common multiple</strong> (LCM) is the smallest positive integer that both divide; it's written $[a, b]$ or $\operatorname{lcm}(a,b)$. If $(a, b) = 1$, then $a$ and $b$ are <strong>relatively prime</strong>.</p>
+      <p>Prime factorizations make both easy. For $84 = 2^2 \cdot 3 \cdot 7$ and $112 = 2^4 \cdot 7$:</p>
+      <div class="rule"><p>GCF: the <em>smaller</em> power of each shared prime, $2^2 \cdot 7 = 28$. LCM: the <em>larger</em> power of every prime present, $2^4 \cdot 3 \cdot 7 = 336$.</p></div>
+      <p>Since each prime's two exponents split into "the smaller" (in the GCF) and "the larger" (in the LCM),</p>
+      <div class="rule"><p>$$\gcd(a, b)\cdot \operatorname{lcm}(a,b) = ab.$$</p></div>
+      <p>The least common denominator for adding fractions is just an LCM. And any common factor of $a$ and $b$ also divides $a - b$, which helps when the numbers are close together.</p>
+    </div>
+
+    <figure class="explore" data-widget="primeVenn">
+      <figcaption><strong>Explore:</strong> The prime factors of $a$ and $b$ sorted into a Venn diagram. The overlap multiplies to the GCF; everything together multiplies to the LCM. Check that GCF $\times$ LCM always equals $a \times b$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Start small</h3>
+        <div class="problem"><p>Find $\gcd(18, 24)$ and $\operatorname{lcm}(18, 24)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$18 = 2 \cdot 3^2$ and $24 = 2^3 \cdot 3$.</p></div><p class="why">Factor first.</p></li>
+          <li><div class="do"><p>GCF $= 2 \cdot 3 = 6$; LCM $= 2^3 \cdot 3^2 = 72$.</p></div><p class="why">Smaller powers for the GCF, larger powers for the LCM. Check: $6 \cdot 72 = 432 = 18 \cdot 24$. ✓</p></li>
+        </ol>
+        <p class="answer">GCF $6$, LCM $72$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Relatively prime?</h3>
+        <div class="problem"><p>Are $35$ and $72$ relatively prime?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$35 = 5 \cdot 7$ and $72 = 2^3 \cdot 3^2$.</p></div><p class="why">Compare the primes.</p></li>
+          <li><div class="do"><p>No prime in common, so $\gcd(35, 72) = 1$.</p></div><p class="why">Neither number needs to be prime for them to be relatively prime.</p></li>
+        </ol>
+        <p class="answer">Yes</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>GCF and LCM from factorizations</h3>
+        <div class="problem"><p>Find $(84, 126)$ and $[84, 126]$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$84 = 2^2 \cdot 3 \cdot 7$ and $126 = 2 \cdot 3^2 \cdot 7$.</p></div><p class="why">Line up the primes $2, 3, 7$.</p></li>
+          <li><div class="do"><p>GCF: $2^1 \cdot 3^1 \cdot 7 = 42$.</p></div><p class="why">For each prime, the smaller exponent.</p></li>
+          <li><div class="do"><p>LCM: $2^2 \cdot 3^2 \cdot 7 = 252$.</p></div><p class="why">For each prime, the larger exponent. Check: $42 \cdot 252 = 10584 = 84 \cdot 126$. ✓</p></li>
+        </ol>
+        <p class="answer">$(84, 126) = 42$ and $[84, 126] = 252$.</p>
+        <p class="book-next">Next in the book: Exercises 5-28 and 5-30.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>The least common denominator</h3>
+        <div class="problem"><p>Compute $\dfrac{5}{12} + \dfrac{7}{18}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\operatorname{lcm}(12, 18) = 2^2 \cdot 3^2 = 36$.</p></div><p class="why">The smallest common denominator is the LCM.</p></li>
+          <li><div class="do"><p>$\dfrac{5}{12} = \dfrac{15}{36}$ and $\dfrac{7}{18} = \dfrac{14}{36}$, so the sum is $\dfrac{29}{36}$.</p></div><p class="why">Multiply top and bottom by $3$ and by $2$ respectively.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{29}{36}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Gears meeting again</h3>
+        <div class="problem"><p>Two meshing gears have $18$ and $30$ teeth. A marked tooth on each is touching. How many turns does each gear make before those two marks touch again?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The marks meet again after a number of teeth passes that is a multiple of both $18$ and $30$; the first time is $\operatorname{lcm}(18, 30)$.</p></div><p class="why">The small gear's mark returns every $18$ teeth, the big gear's every $30$.</p></li>
+          <li><div class="do"><p>$18 = 2 \cdot 3^2$, $30 = 2 \cdot 3 \cdot 5$, so the LCM is $2 \cdot 3^2 \cdot 5 = 90$.</p></div><p class="why">Larger powers of each prime.</p></li>
+          <li><div class="do"><p>Small gear: $90 / 18 = 5$ turns. Big gear: $90/30 = 3$ turns.</p></div><p class="why">Convert teeth passed into turns.</p></li>
+        </ol>
+        <p class="answer">$5$ turns of the small gear and $3$ turns of the large gear.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Use GCF × LCM = product</h3>
+        <div class="problem"><p>Two positive integers have GCF $6$ and LCM $180$. One of them is $36$. Find the other.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$36 \cdot x = 6 \cdot 180 = 1080$.</p></div><p class="why">The product of the numbers equals GCF times LCM.</p></li>
+          <li><div class="do"><p>$x = 30$. Check: $\gcd(36, 30) = 6$ and $\operatorname{lcm}(36, 30) = 180$. ✓</p></div><p class="why">Always verify both conditions.</p></li>
+        </ol>
+        <p class="answer">$30$</p>
+        <p class="book-next">Next in the book: Exercises 5-31 and 5-32.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Close numbers: use the difference</h3>
+        <div class="problem"><p>Find $\gcd(391, 323)$.</p></div>
+        <ol class="steps">
+          <li data-think="Any common factor of $391$ and $323$ must also divide what simpler number?"><div class="do"><p>Any common divisor also divides $391 - 323 = 68 = 2^2 \cdot 17$.</p></div><p class="why">If $d \mid a$ and $d \mid b$ then $d \mid a - b$.</p></li>
+          <li><div class="do"><p>Both numbers are odd, so the only candidates are $1$ and $17$. Test $17$: $323 = 17 \cdot 19$ and $391 = 17 \cdot 23$.</p></div><p class="why">The difference turned a hard search into one test.</p></li>
+        </ol>
+        <p class="answer">$17$</p>
+        <p class="key-idea">$\gcd(a, b) = \gcd(b, a - b)$: subtracting shrinks the problem without changing the answer.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>One short of every multiple</h3>
+        <div class="problem"><p>Find the smallest positive integer that leaves remainder $2$ when divided by $3$, remainder $3$ when divided by $4$, remainder $4$ when divided by $5$, and remainder $5$ when divided by $6$.</p></div>
+        <ol class="steps">
+          <li data-think="In every case the remainder is one less than the divisor. What does that say about $n + 1$?"><div class="do"><p>Each remainder is one less than the divisor, so $n + 1$ is divisible by $3, 4, 5$ and $6$.</p></div><p class="why">$n \equiv -1$ modulo each divisor.</p></li>
+          <li><div class="do"><p>The smallest positive such $n + 1$ is $\operatorname{lcm}(3, 4, 5, 6) = 2^2 \cdot 3 \cdot 5 = 60$.</p></div><p class="why">$6$ adds no new prime power beyond $4$ and $3$.</p></li>
+          <li><div class="do"><p>$n = 59$. Check: $59 = 3 \cdot 19 + 2 = 4 \cdot 14 + 3 = 5 \cdot 11 + 4 = 6 \cdot 9 + 5$. ✓</p></div><p class="why">Confirm every condition.</p></li>
+        </ol>
+        <p class="answer">$59$</p>
+        <p class="book-next">Next in the book: Problems 91 and 96 use the same idea.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Count pairs with a given GCF and LCM</h3>
+        <div class="problem"><p>How many ordered pairs of positive integers $(a, b)$ have $\gcd(a,b) = 6$ and $\operatorname{lcm}(a,b) = 60$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Write $a = 6x$, $b = 6y$ with $\gcd(x, y) = 1$.</p></div><p class="why">Both are multiples of $6$; dividing out the GCF leaves relatively prime parts.</p></li>
+          <li><div class="do"><p>Then $ab = 36xy = 6 \cdot 60 = 360$, so $xy = 10$.</p></div><p class="why">Use GCF $\times$ LCM $=$ product.</p></li>
+          <li><div class="do"><p>Relatively prime pairs with product $10$: $(1, 10), (2, 5), (5, 2), (10, 1)$.</p></div><p class="why">Each of the primes $2$ and $5$ goes entirely to $x$ or entirely to $y$, giving $2 \cdot 2 = 4$ choices.</p></li>
+          <li><div class="do"><p>So $(a, b) = (6, 60), (12, 30), (30, 12), (60, 6)$.</p></div><p class="why">Check one: $\gcd(12, 30) = 6$, $\operatorname{lcm}(12, 30) = 60$. ✓</p></li>
+        </ol>
+        <p class="answer">$4$ ordered pairs</p>
+        <p class="key-idea">Factor out the GCF: what remains must be relatively prime.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-5">
+    <h2 id="further-5">Further reading in the book</h2>
+    <ul>
+      <li><strong>§5.1 Divisibility</strong>: Exercises 5-1 to 5-3.</li>
+      <li><strong>§5.2 Number Bases</strong>: Examples 5-1 to 5-3 and Exercises 5-4 to 5-8.</li>
+      <li><strong>§5.3 The Last Digit</strong>: Example 5-4 and Exercises 5-9, 5-10.</li>
+      <li><strong>§5.4 Modular Arithmetic</strong>: Examples 5-5 to 5-7 and Exercises 5-11 to 5-16.</li>
+      <li><strong>§5.5 Tricks</strong>: Example 5-8 and Exercises 5-17 to 5-24.</li>
+      <li><strong>§5.6 Primes</strong>: Examples 5-9, 5-10 and Exercises 5-25 to 5-27.</li>
+      <li><strong>§5.7 Common and Uncommon Factors</strong>: Examples 5-11 to 5-13 and Exercises 5-28 to 5-33.</li>
+      <li><strong>Problems to Solve for Chapter 5</strong>: Problems 87–109. The early ones use GCF, last digits and remainders; the bases problems come in the middle; the last few ask for proofs.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 5 explorers ---------- */
+(function () {
+  "use strict";
+  var DIG = "0123456789ABCDEFGHIJ";
+  function mod(a, m) { return ((a % m) + m) % m; }
+
+  /* 5.1 — divisor arcs */
+  AOPS.registerWidget("divisorArcs", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Number line from 1 to n with divisors joined to their partners by arcs" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 24;
+    W.slider(ctl, { label: "n", min: 1, max: 60, value: n, onInput: function (v) { n = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var L = 30, R = 610, base = 220;
+      function X(k) { return n === 1 ? (L + R) / 2 : L + (k - 1) / (n - 1) * (R - L); }
+      svg.appendChild(W.s("line", { x1: L, y1: base, x2: R, y2: base, stroke: "var(--border-strong)", "stroke-width": 2 }));
+      var divs = [];
+      for (var k = 1; k <= n; k++) if (n % k === 0) divs.push(k);
+      for (k = 1; k <= n; k++) {
+        if (n % k) svg.appendChild(W.s("line", { x1: X(k), y1: base - 4, x2: X(k), y2: base + 4, stroke: "var(--faint)" }));
+      }
+      divs.forEach(function (d) {
+        var e = n / d;
+        if (d > e) return;
+        var c = d === e ? "var(--accent-2)" : "var(--plot-1)";
+        if (d === e) {
+          svg.appendChild(W.s("circle", { cx: X(d), cy: base - 22, r: 18, fill: "none", stroke: c, "stroke-width": 2.5 }));
+        } else {
+          var x1 = X(d), x2 = X(e), hgt = Math.min(185, (x2 - x1) / 2 + 12);
+          svg.appendChild(W.s("path", { d: "M" + x1 + " " + base + " C" + x1 + " " + (base - hgt * 1.33) + " " + x2 + " " + (base - hgt * 1.33) + " " + x2 + " " + base, fill: "none", stroke: c, "stroke-width": 2.5 }));
+        }
+      });
+      divs.forEach(function (d, i) {
+        svg.appendChild(W.s("circle", { cx: X(d), cy: base, r: 6, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: X(d), y: base + 24 + (i % 2) * 16, "text-anchor": "middle", style: "font: 700 13px var(--font-mono); fill: var(--ink)", text: String(d) }));
+      });
+      svg.appendChild(W.s("text", { x: L, y: 290, class: "lbl", text: "tick marks: 1 to " + n + "  ·  dots: divisors  ·  arcs: d with n/d" }));
+      var pairs = divs.filter(function (d) { return d <= n / d; }).map(function (d) { return d + "\\cdot" + (n / d); });
+      var kind = n === 1 ? "\\text{neither prime nor composite}" : divs.length === 2 ? "\\text{prime}" : "\\text{composite}";
+      out.tex("\\begin{gathered}\\text{Divisors of } " + n + ": " + divs.join(",\\ ") + "\\quad(" + divs.length + "\\text{ divisors, } " + kind + ")\\\\ " + n + " = " + pairs.join(" = ") + "\\end{gathered}");
+    }
+    draw();
+  });
+
+  /* 5.2 — base blocks */
+  AOPS.registerWidget("baseBlocks", function (body) {
+    var svg = W.stage(body, { w: 640, h: 250, label: "Place value columns of a number written in a chosen base" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var n = 216, b = 4, sl;
+    sl = W.slider(ctl, { label: "Number (base 10)", min: 0, max: 999, value: n, onInput: function (v) { n = v; draw(); } });
+    W.segmented(ctl, { title: "Base", value: b, options: [2, 3, 4, 5, 7, 8, 12, 16].map(function (k) { return { value: k, label: String(k) }; }), onChange: function (v) { b = v; draw(); } });
+    W.button(ctl2, "+1", function () { if (n < 999) sl.set(n + 1); });
+    W.button(ctl2, "× base", function () { if (n * b <= 999) sl.set(n * b); });
+    function digits(v) { var d = []; if (v === 0) return [0]; while (v > 0) { d.push(v % b); v = Math.floor(v / b); } return d; }
+    function draw() {
+      W.clear(svg);
+      var d = digits(n), k = d.length, colW = Math.min(110, 600 / Math.max(k, 1)), x0 = 320 + colW * k / 2;
+      for (var i = 0; i < k; i++) {
+        var x = x0 - (i + 1) * colW, pv = Math.pow(b, i);
+        svg.appendChild(W.s("rect", { x: x + 4, y: 50, width: colW - 8, height: 110, rx: 10, fill: d[i] ? "color-mix(in srgb, var(--plot-1) 20%, transparent)" : "var(--surface-2)", stroke: d[i] ? "var(--plot-1)" : "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: x + colW / 2, y: 24, "text-anchor": "middle", class: "lbl", text: b + "^" + i }));
+        svg.appendChild(W.s("text", { x: x + colW / 2, y: 42, "text-anchor": "middle", class: "lbl", text: "= " + pv }));
+        svg.appendChild(W.s("text", { x: x + colW / 2, y: 122, "text-anchor": "middle", style: "font: 700 " + (colW > 50 ? 44 : 30) + "px var(--font-mono); fill: var(--ink)", text: DIG[d[i]] }));
+        svg.appendChild(W.s("text", { x: x + colW / 2, y: 190, "text-anchor": "middle", class: "lbl", text: d[i] * pv }));
+      }
+      svg.appendChild(W.s("text", { x: 320, y: 228, "text-anchor": "middle", class: "lbl", text: "top: place value  ·  middle: digit (0 to " + (b - 1) + ")  ·  bottom: digit × place value" }));
+      var terms = [];
+      for (i = k - 1; i >= 0; i--) if (d[i]) terms.push(d[i] + "\\cdot " + b + (i ? "^{" + i + "}" : "^0"));
+      var s = d.slice().reverse().map(function (x) { return DIG[x]; }).join("");
+      out.tex(n + " = " + (terms.length ? terms.join(" + ") : "0") + " = " + s + "_{" + b + "}");
+    }
+    draw();
+  });
+
+  /* 5.3 — last digit cycle */
+  AOPS.registerWidget("lastDigitCycle", function (body) {
+    var svg = W.stage(body, { w: 640, h: 300, label: "Cycle of last digits of powers of a" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 7, n = 42;
+    W.slider(ctl, { label: "Base a", min: 2, max: 19, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "Exponent n", min: 1, max: 60, value: n, onInput: function (v) { n = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var u = a % 10, cyc = [u], d = (u * u) % 10;
+      while (d !== u) { cyc.push(d); d = (d * u) % 10; }
+      var L = cyc.length, pos = (n - 1) % L;
+      var cx = 160, cy = 150, R = L === 1 ? 0 : 85;
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: Math.max(R, 30), fill: "none", stroke: "var(--border-strong)", "stroke-dasharray": "4 6" }));
+      cyc.forEach(function (dg, i) {
+        var t = -Math.PI / 2 + 2 * Math.PI * i / L, x = cx + R * Math.cos(t), y = cy + R * Math.sin(t), on = i === pos;
+        svg.appendChild(W.s("circle", { cx: x, cy: y, r: 26, fill: on ? "var(--accent)" : "var(--surface-2)", stroke: on ? "var(--accent)" : "var(--border-strong)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: x, y: y + 8, "text-anchor": "middle", style: "font: 700 22px var(--font-mono); fill: " + (on ? "var(--accent-ink)" : "var(--ink)"), text: String(dg) }));
+        svg.appendChild(W.s("text", { x: x, y: y + (Math.sin(t) >= -0.1 ? 46 : -34), "text-anchor": "middle", class: "lbl", text: "n ≡ " + ((i + 1) % L) + (L > 1 ? " (mod " + L + ")" : "") }));
+      });
+      svg.appendChild(W.s("text", { x: 14, y: 24, class: "lbl", text: "cycle length " + L }));
+      // strip of first 16 powers
+      var sx = 330, sy = 60;
+      svg.appendChild(W.s("text", { x: sx, y: sy - 24, class: "lbl", text: "last digit of " + a + "^k for k = 1 … 16" }));
+      for (var k = 1; k <= 16; k++) {
+        var col = (k - 1) % 4, row = Math.floor((k - 1) / 4);
+        var x = sx + col * 70, y = sy + row * 52, dig = cyc[(k - 1) % L], hit = k === n || (n > 16 && (k - 1) % L === pos && k > 16 - L);
+        svg.appendChild(W.s("rect", { x: x, y: y - 6, width: 62, height: 42, rx: 8, fill: hit ? "color-mix(in srgb, var(--accent) 30%, transparent)" : "var(--surface-2)", stroke: (k - 1) % L === pos ? "var(--accent)" : "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: x + 6, y: y + 8, class: "lbl", text: "k=" + k }));
+        svg.appendChild(W.s("text", { x: x + 44, y: y + 28, "text-anchor": "middle", style: "font: 700 18px var(--font-mono); fill: var(--ink)", text: String(dig) }));
+      }
+      var r = n % L;
+      out.tex(n + " = " + L + "\\cdot" + Math.floor(n / L) + " + " + r + "\\ \\Rightarrow\\ " + a + "^{" + n + "} \\text{ ends like the entry for } n \\equiv " + r + "\\pmod{" + L + "}: \\ \\textbf{" + cyc[pos] + "}");
+    }
+    draw();
+  });
+
+  /* 5.4 — clock */
+  AOPS.registerWidget("clockMod", function (body) {
+    var svg = W.stage(body, { w: 640, h: 320, label: "Clock with m positions showing the remainder of n" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var m = 5, n = 17;
+    W.slider(ctl, { label: "Modulus m", min: 2, max: 12, value: m, onInput: function (v) { m = v; draw(); } });
+    W.slider(ctl, { label: "n", min: -30, max: 60, value: n, onInput: function (v) { n = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var cx = 165, cy = 160, R = 115, r = mod(n, m);
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "var(--surface-2)", stroke: "var(--border-strong)", "stroke-width": 2 }));
+      for (var i = 0; i < m; i++) {
+        var t = -Math.PI / 2 + 2 * Math.PI * i / m, x = cx + R * Math.cos(t), y = cy + R * Math.sin(t), on = i === r;
+        svg.appendChild(W.s("circle", { cx: x, cy: y, r: 19, fill: on ? "var(--accent)" : "var(--surface-solid)", stroke: on ? "var(--accent)" : "var(--border-strong)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: x, y: y + 6, "text-anchor": "middle", style: "font: 700 16px var(--font-mono); fill: " + (on ? "var(--accent-ink)" : "var(--ink)"), text: String(i) }));
+      }
+      var tr = -Math.PI / 2 + 2 * Math.PI * r / m;
+      svg.appendChild(W.s("line", { x1: cx, y1: cy, x2: cx + (R - 26) * Math.cos(tr), y2: cy + (R - 26) * Math.sin(tr), stroke: "var(--accent)", "stroke-width": 4, "stroke-linecap": "round" }));
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 6, fill: "var(--accent)" }));
+      var q = Math.floor(n / m);
+      svg.appendChild(W.s("text", { x: cx, y: 310, "text-anchor": "middle", class: "lbl", text: Math.abs(q) + " full trip" + (Math.abs(q) === 1 ? "" : "s") + (q < 0 ? " backward" : "") }));
+      // family
+      var fx = 340;
+      svg.appendChild(W.s("text", { x: fx, y: 36, class: "lbl", text: "numbers ≡ " + r + " (mod " + m + "):" }));
+      var list = [];
+      for (var k = -3; k <= 4; k++) list.push(r + k * m);
+      list.forEach(function (v, j) {
+        var y = 64 + j * 30, isN = v === n;
+        svg.appendChild(W.s("rect", { x: fx, y: y - 18, width: 120, height: 26, rx: 6, fill: isN ? "color-mix(in srgb, var(--accent) 30%, transparent)" : "transparent", stroke: isN ? "var(--accent)" : "none" }));
+        svg.appendChild(W.s("text", { x: fx + 10, y: y, style: "font: 600 15px var(--font-mono); fill: var(--ink)", text: String(v) }));
+        svg.appendChild(W.s("text", { x: fx + 130, y: y, class: "lbl", text: "= " + m + "·(" + ((v - r) / m) + ") + " + r }));
+      });
+      if (list.indexOf(n) < 0) svg.appendChild(W.s("text", { x: fx, y: 310, class: "lbl", text: "n = " + n + " is further along the same list" }));
+      out.tex("\\begin{gathered}" + n + " = " + m + "\\cdot(" + q + ") + " + r + "\\\\ " + n + " \\equiv " + r + (r ? " \\equiv " + (r - m) : "") + " \\pmod{" + m + "}\\end{gathered}");
+    }
+    draw();
+  });
+
+  /* 5.4 — table */
+  AOPS.registerWidget("modTable", function (body) {
+    var svg = W.stage(body, { w: 640, h: 440, label: "Addition or multiplication table modulo m" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var m = 8, op = "x", sel = [3, 5];
+    W.slider(ctl, { label: "Modulus m", min: 2, max: 12, value: m, onInput: function (v) { m = v; sel = [Math.min(sel[0], m - 1), Math.min(sel[1], m - 1)]; draw(); } });
+    W.segmented(ctl, { title: "Operation", value: op, options: [{ value: "x", label: "×" }, { value: "+", label: "+" }], onChange: function (v) { op = v; draw(); } });
+    function f(i, j) { return op === "x" ? (i * j) % m : (i + j) % m; }
+    function draw() {
+      W.clear(svg);
+      var size = 400 / (m + 1), ox = 20, oy = 20, fs = Math.max(12, Math.min(20, size * 0.5));
+      svg.appendChild(W.s("text", { x: ox + size / 2, y: oy + size / 2 + fs / 3, "text-anchor": "middle", style: "font: 700 " + fs + "px var(--font-mono); fill: var(--accent)", text: op === "x" ? "×" : "+" }));
+      for (var i = 0; i < m; i++) {
+        svg.appendChild(W.s("text", { x: ox + (i + 1.5) * size, y: oy + size / 2 + fs / 3, "text-anchor": "middle", style: "font: 700 " + fs + "px var(--font-mono); fill: var(--muted)", text: String(i) }));
+        svg.appendChild(W.s("text", { x: ox + size / 2, y: oy + (i + 1.5) * size + fs / 3, "text-anchor": "middle", style: "font: 700 " + fs + "px var(--font-mono); fill: var(--muted)", text: String(i) }));
+      }
+      for (i = 0; i < m; i++) for (var j = 0; j < m; j++) (function (i, j) {
+        var v = f(i, j), isSel = i === sel[0] && j === sel[1], diag = op === "x" && i === j;
+        var g = W.s("g", { style: "cursor:pointer" });
+        g.appendChild(W.s("rect", { x: ox + (j + 1) * size + 1, y: oy + (i + 1) * size + 1, width: size - 2, height: size - 2, rx: 3,
+          fill: isSel ? "var(--accent)" : diag ? "color-mix(in srgb, var(--accent-2) 40%, transparent)" : v === 0 ? "color-mix(in srgb, var(--plot-3) 18%, transparent)" : "var(--surface-2)",
+          stroke: diag ? "var(--accent-2)" : "var(--border-strong)" }));
+        g.appendChild(W.s("text", { x: ox + (j + 1.5) * size, y: oy + (i + 1.5) * size + fs / 3, "text-anchor": "middle", style: "font: 600 " + fs + "px var(--font-mono); fill: " + (isSel ? "var(--accent-ink)" : "var(--ink)"), text: String(v) }));
+        g.addEventListener("click", function () { sel = [i, j]; draw(); });
+        svg.appendChild(g);
+      })(i, j);
+      var lx = 450;
+      if (op === "x") {
+        var sq = [];
+        for (i = 0; i < m; i++) if (sq.indexOf((i * i) % m) < 0) sq.push((i * i) % m);
+        sq.sort(function (a, b) { return a - b; });
+        svg.appendChild(W.s("text", { x: lx, y: 60, class: "lbl", text: "diagonal = squares" }));
+        svg.appendChild(W.s("text", { x: lx, y: 84, class: "lbl", text: "squares mod " + m + ":" }));
+        svg.appendChild(W.s("text", { x: lx, y: 112, style: "font: 700 16px var(--font-mono); fill: var(--accent-2)", text: sq.join(", ") }));
+      } else {
+        svg.appendChild(W.s("text", { x: lx, y: 60, class: "lbl", text: "every row is a shift" }));
+        svg.appendChild(W.s("text", { x: lx, y: 84, class: "lbl", text: "of 0, 1, …, " + (m - 1) }));
+      }
+      svg.appendChild(W.s("text", { x: lx, y: 160, class: "lbl", text: "tinted cells: result 0" }));
+      svg.appendChild(W.s("text", { x: lx, y: 184, class: "lbl", text: "click any cell" }));
+      var a = sel[0], b = sel[1], raw = op === "x" ? a * b : a + b;
+      out.tex(a + (op === "x" ? " \\times " : " + ") + b + " = " + raw + " = " + m + "\\cdot" + Math.floor(raw / m) + " + " + (raw % m) + " \\equiv " + (raw % m) + " \\pmod{" + m + "}");
+    }
+    draw();
+  });
+
+  /* 5.5 — divisibility tester */
+  AOPS.registerWidget("divTester", function (body) {
+    var svg = W.stage(body, { w: 640, h: 220, label: "Digits of a number with the digits used by a divisibility rule highlighted" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var n = 48213, d = 9, sl;
+    sl = W.slider(ctl, { label: "Number", min: 100, max: 999999, value: n, onInput: function (v) { n = v; draw(); } });
+    W.segmented(ctl, { title: "Divisor", value: d, options: [2, 3, 4, 5, 8, 9, 10, 11].map(function (k) { return { value: k, label: String(k) }; }), onChange: function (v) { d = v; draw(); } });
+    W.button(ctl2, "−1", function () { if (n > 100) sl.set(n - 1); });
+    W.button(ctl2, "+1", function () { if (n < 999999) sl.set(n + 1); });
+    W.button(ctl2, "Random", function () { sl.set(100 + Math.floor(Math.random() * 999900)); });
+    [1716, 918082, 7452, 3773].forEach(function (v) { W.button(ctl2, String(v), function () { sl.set(v); }); });
+    function draw() {
+      W.clear(svg);
+      var s = String(n), k = s.length, w = 70, x0 = 320 - k * w / 2;
+      var used = d === 4 ? 2 : d === 8 ? 3 : (d === 2 || d === 5 || d === 10) ? 1 : k;
+      var sum = 0, parts = [];
+      for (var i = 0; i < k; i++) {
+        var dig = +s[i], fromRight = k - 1 - i, inUse = fromRight < used;
+        var sign = d === 11 ? (fromRight % 2 ? -1 : 1) : 1;
+        var fill = !inUse ? "var(--surface-2)" : d === 11 ? (sign > 0 ? "color-mix(in srgb, var(--plot-1) 35%, transparent)" : "color-mix(in srgb, var(--plot-2) 35%, transparent)") : "color-mix(in srgb, var(--accent) 35%, transparent)";
+        svg.appendChild(W.s("rect", { x: x0 + i * w + 5, y: 40, width: w - 10, height: 76, rx: 10, fill: fill, stroke: inUse ? "var(--accent)" : "var(--border-strong)", opacity: inUse ? 1 : 0.6 }));
+        svg.appendChild(W.s("text", { x: x0 + i * w + w / 2, y: 92, "text-anchor": "middle", style: "font: 700 36px var(--font-mono); fill: var(--ink)", text: s[i] }));
+        if (d === 3 || d === 9 || d === 11) {
+          svg.appendChild(W.s("text", { x: x0 + i * w + w / 2, y: 140, "text-anchor": "middle", style: "font: 700 16px var(--font-mono); fill: var(--muted)", text: (sign > 0 ? "+" : "−") + dig }));
+          sum += sign * dig; parts.push((sign > 0 ? (parts.length ? "+" : "") : "-") + dig);
+        }
+        svg.appendChild(W.s("text", { x: x0 + i * w + w / 2, y: 30, "text-anchor": "middle", class: "lbl", text: "10^" + fromRight }));
+      }
+      var why = { 2: "10 ≡ 0 (mod 2): only the last digit matters", 5: "10 ≡ 0 (mod 5): only the last digit matters", 10: "10 ≡ 0 (mod 10): only the last digit matters",
+        4: "100 ≡ 0 (mod 4): only the last two digits matter", 8: "1000 ≡ 0 (mod 8): only the last three digits matter",
+        3: "10 ≡ 1 (mod 3): every digit counts once", 9: "10 ≡ 1 (mod 9): every digit counts once", 11: "10 ≡ −1 (mod 11): signs alternate from the right" }[d];
+      svg.appendChild(W.s("text", { x: 320, y: 196, "text-anchor": "middle", class: "lbl", text: why }));
+      var rem = n % d, t;
+      if (d === 3 || d === 9 || d === 11) {
+        t = n + " \\equiv " + parts.join("") + " = " + sum + " \\equiv " + mod(sum, d) + " \\pmod{" + d + "}";
+      } else {
+        var tail = n % Math.pow(10, used);
+        t = n + " \\equiv " + tail + " \\equiv " + (tail % d) + " \\pmod{" + d + "}";
+      }
+      t += "\\qquad " + (rem === 0 ? d + " \\mid " + n : d + " \\nmid " + n + "\\ (\\text{remainder } " + rem + ")");
+      out.tex(t);
+    }
+    draw();
+  });
+
+  /* 5.6 — sieve */
+  AOPS.registerWidget("sieve", function (body) {
+    var svg = W.stage(body, { w: 640, h: 400, label: "Sieve of Eratosthenes grid" });
+    var ctl = W.controls(body);
+    var ctl2 = W.controls(body);
+    var out = W.readout(body);
+    var N = 100, crossedBy = {}, done = [], sl;
+    var colors = ["var(--plot-1)", "var(--plot-2)", "var(--plot-3)", "var(--plot-4)", "var(--plot-5)", "var(--accent-2)"];
+    sl = W.slider(ctl, { label: "Grid size N", min: 30, max: 200, step: 10, value: N, onInput: function (v) { N = v; reset(); } });
+    W.button(ctl2, "Cross out next prime's multiples", step, "btn-primary");
+    W.button(ctl2, "Reset", reset);
+    function nextPrime() {
+      for (var k = 2; k <= N; k++) if (!crossedBy[k] && done.indexOf(k) < 0) return k;
+      return null;
+    }
+    var msg = "";
+    function step() {
+      var p = nextPrime();
+      if (!p) return;
+      if (p * p > N) {
+        msg = "\\text{Next prime } " + p + " > \\sqrt{" + N + "} \\approx " + W.fmt(Math.sqrt(N), 2) + "\\text{, so } " + p + "^2 = " + p * p + " > " + N + "\\text{: nothing left to cross. All survivors are prime!}";
+        for (var k = 2; k <= N; k++) if (!crossedBy[k] && done.indexOf(k) < 0) done.push(k);
+      } else {
+        var c = 0;
+        for (var m = p * p; m <= N; m += p) if (!crossedBy[m]) { crossedBy[m] = p; c++; }
+        done.push(p);
+        msg = p + "\\text{ is prime. Crossed out } " + c + "\\text{ new multiples, starting at } " + p + "^2 = " + (p * p) + ".";
+      }
+      draw();
+    }
+    function reset() { crossedBy = {}; done = []; msg = "\\text{Press the button to begin with } 2."; draw(); }
+    function draw() {
+      W.clear(svg);
+      var cols = N <= 100 ? 10 : 20, rows = Math.ceil(N / cols), cw = 600 / cols, ch = Math.min(36, 380 / rows);
+      var ox = 20, oy = 10;
+      var primesSoFar = 0;
+      for (var k = 1; k <= N; k++) {
+        var i = (k - 1) % cols, j = Math.floor((k - 1) / cols), x = ox + i * cw, y = oy + j * ch;
+        var by = crossedBy[k], isP = done.indexOf(k) >= 0;
+        if (isP) primesSoFar++;
+        var pi = by ? [2, 3, 5, 7, 11, 13].indexOf(by) : -1;
+        svg.appendChild(W.s("rect", { x: x + 2, y: y + 2, width: cw - 4, height: ch - 4, rx: 5,
+          fill: isP ? "var(--accent)" : by ? "color-mix(in srgb, " + colors[pi < 0 ? 5 : pi] + " 22%, transparent)" : k === 1 ? "transparent" : "var(--surface-2)",
+          stroke: isP ? "var(--accent)" : "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: x + cw / 2, y: y + ch / 2 + 5, "text-anchor": "middle", style: "font: " + (isP ? 700 : 400) + " " + (cols === 10 ? 15 : 12) + "px var(--font-mono); fill: " + (isP ? "var(--accent-ink)" : by ? "var(--faint)" : "var(--ink)"), text: String(k) }));
+        if (by) svg.appendChild(W.s("line", { x1: x + 6, y1: y + ch - 6, x2: x + cw - 6, y2: y + 6, stroke: colors[pi < 0 ? 5 : pi], "stroke-width": 2 }));
+      }
+      out.tex(msg + "\\quad(\\text{primes found: } " + primesSoFar + ")");
+    }
+    reset();
+  });
+
+  /* 5.7 — prime Venn */
+  AOPS.registerWidget("primeVenn", function (body) {
+    var svg = W.stage(body, { w: 640, h: 340, label: "Venn diagram of prime factors of a and b" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 84, b = 112;
+    W.slider(ctl, { label: "a", min: 2, max: 200, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b", min: 2, max: 200, value: b, onInput: function (v) { b = v; draw(); } });
+    function counts(n) { var c = {}; W.primeFactors(n).forEach(function (p) { c[p] = (c[p] || 0) + 1; }); return c; }
+    function chips(list, cx, cols, color) {
+      var rows = Math.ceil(list.length / cols);
+      list.forEach(function (p, i) {
+        var r = Math.floor(i / cols), c = i % cols, inRow = Math.min(cols, list.length - r * cols);
+        var x = cx + (c - (inRow - 1) / 2) * 38, y = 170 + (r - (rows - 1) / 2) * 38;
+        svg.appendChild(W.s("circle", { cx: x, cy: y, r: 17, fill: color, stroke: "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: x, y: y + 5, "text-anchor": "middle", style: "font: 700 " + (p > 99 ? 11 : 14) + "px var(--font-mono); fill: var(--ink)", text: String(p) }));
+      });
+    }
+    function draw() {
+      W.clear(svg);
+      svg.appendChild(W.s("circle", { cx: 245, cy: 170, r: 140, fill: "color-mix(in srgb, var(--plot-1) 14%, transparent)", stroke: "var(--plot-1)", "stroke-width": 2 }));
+      svg.appendChild(W.s("circle", { cx: 395, cy: 170, r: 140, fill: "color-mix(in srgb, var(--plot-2) 14%, transparent)", stroke: "var(--plot-2)", "stroke-width": 2 }));
+      svg.appendChild(W.s("text", { x: 150, y: 26, style: "font: 700 15px var(--font-mono); fill: var(--ink)", text: "a = " + a }));
+      svg.appendChild(W.s("text", { x: 430, y: 26, style: "font: 700 15px var(--font-mono); fill: var(--ink)", text: "b = " + b }));
+      var ca = counts(a), cb = counts(b), onlyA = [], onlyB = [], both = [];
+      var ps = Object.keys(ca).concat(Object.keys(cb)).map(Number).filter(function (p, i, arr) { return arr.indexOf(p) === i; }).sort(function (x, y) { return x - y; });
+      ps.forEach(function (p) {
+        var x = ca[p] || 0, y = cb[p] || 0, m = Math.min(x, y), k;
+        for (k = 0; k < m; k++) both.push(p);
+        for (k = m; k < x; k++) onlyA.push(p);
+        for (k = m; k < y; k++) onlyB.push(p);
+      });
+      chips(onlyA, 175, 3, "var(--surface-solid)");
+      chips(both, 320, 2, "color-mix(in srgb, var(--accent) 45%, var(--surface-solid))");
+      chips(onlyB, 465, 3, "var(--surface-solid)");
+      svg.appendChild(W.s("text", { x: 320, y: 330, "text-anchor": "middle", class: "lbl", text: "overlap → GCF   ·   everything → LCM" }));
+      var g = W.gcd(a, b), l = a * b / g;
+      function prod(list) { return list.length ? list.join("\\cdot ") : "1"; }
+      out.tex("\\begin{gathered}\\gcd = " + prod(both) + " = " + g + ",\\quad \\operatorname{lcm} = " + prod(onlyA.concat(both, onlyB).sort(function (x, y) { return x - y; })) + " = " + l + "\\\\ " + g + "\\cdot" + l + " = " + (g * l) + " = " + a + "\\cdot" + b + (g === 1 ? "\\quad(\\text{relatively prime})" : "") + "\\end{gathered}");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>

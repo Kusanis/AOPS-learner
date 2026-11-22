@@ -157,7 +157,7 @@
     opts = opts || {};
     var a = opts.from == null ? P.x[0] : opts.from, b = opts.to == null ? P.x[1] : opts.to;
     var n = opts.samples || 400, d = "", pen = false;
-    var ylo = P.y[0] - (P.y[1] - P.y[0]) * 2, yhi = P.y[1] + (P.y[1] - P.y[0]) * 2;
+    var m = opts.margin == null ? 0.04 : opts.margin, ylo = P.y[0] - (P.y[1] - P.y[0]) * m, yhi = P.y[1] + (P.y[1] - P.y[0]) * m;
     for (var i = 0; i <= n; i++) {
       var x = a + (b - a) * i / n, y = f(x);
       if (!isFinite(y) || y < ylo || y > yhi) { pen = false; continue; }
