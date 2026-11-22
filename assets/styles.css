@@ -660,3 +660,15 @@ ol.steps > li .why::before { content: "Why: "; font-weight: 700; color: var(--ac
   ol.steps > li[hidden], .example [hidden] { display: block !important; }
   body { background: #fff; color: #000; }
 }
+
+/* ---------- Tables & math overflow containment ---------- */
+.readout, .katex-display, .problem, ol.steps > li > .do { position: relative; }
+.chapter-main table { border-collapse: collapse; margin: 12px 0; font-size: 0.95rem; max-width: 100%; display: block; overflow-x: auto; }
+.chapter-main th, .chapter-main td { border: 1px solid var(--border); padding: 6px 10px; text-align: center; }
+.chapter-main th { background: var(--surface-2); font-weight: 700; }
+
+/* Keep the constellation readable on phones: it scrolls sideways inside its frame. */
+@media (max-width: 720px) {
+  .sky-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  .sky svg { width: 780px; max-width: none; }
+}

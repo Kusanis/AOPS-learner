@@ -1,0 +1,1200 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 19: Shifts, Turns, Flips, Stretches, and Squeezes · AoPS Learner</title>
+  <meta name="description" content="Translations, rotations, reflections, stretches and dilations, what each one preserves, and how to prove it, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="19" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 19 · Geometry</span>
+    <h1>Shifts, Turns, Flips, Stretches, and Squeezes</h1>
+    <p class="lede">A transformation is a rule that moves every point of the plane somewhere new. Slide a shape, spin it, flip it in a mirror, scale it, or stretch it like cellophane. In this chapter you'll describe each move with coordinates, learn what each one keeps the same, and use those unchanging features to solve problems and write proofs.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>Translation $a$ right and $b$ up: $(x, y) \to (x + a,\ y + b)$.</li>
+      <li>Rotations about the origin: $90^\circ$ counterclockwise $(x,y) \to (-y, x)$; $180^\circ$ $(x,y)\to(-x,-y)$; $90^\circ$ clockwise $(x,y) \to (y,-x)$. About another center, subtract the center, rotate, add it back.</li>
+      <li>Reflections: over the $x$-axis $(x,-y)$; $y$-axis $(-x,y)$; $y = x$ $(y,x)$; through a point $(p,q)$: $(2p - x,\ 2q - y)$. The mirror is the perpendicular bisector of each point and its image.</li>
+      <li>Stretch (distortion) by $k$ in one direction multiplies every area by $k$; it keeps lines and ratios along a line, but not angles.</li>
+      <li>Dilation with center $O$ and ratio $k$: $OA' = k \cdot OA$ on ray $OA$. Lengths scale by $k$, areas by $k^2$, angles stay the same.</li>
+      <li>Translations, rotations and reflections preserve distance, angle and area; reflections reverse orientation.</li>
+      <li>Two reflections make a rotation (crossing mirrors, twice the angle) or a translation (parallel mirrors, twice the gap).</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 19.1 ===================== -->
+  <section class="lesson" id="s19-1" data-title="Translation">
+    <h2><span class="sec-num">19.1</span> Translation</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Slide a cup across a table without twisting it. Every point of the cup, handle, rim and all, moves the same distance in the same direction. That single arrow, "this far, this way," describes the whole move.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>transformation</strong> moves each point $P$ to a point $P'$, its <strong>image</strong>; we say the transformation <em>maps</em> $P$ to $P'$. A <strong>translation</strong> slides every point by the same amount in the same direction, with no turning and no resizing, so a figure and its image are congruent and point the same way.</p>
+      <p>In coordinates, sliding $a$ units right and $b$ units up adds $a$ to every $x$-coordinate and $b$ to every $y$-coordinate (negative $a$ or $b$ means left or down):</p>
+      <div class="rule"><p>$$(x, y) \longrightarrow (x + a,\ y + b)$$</p></div>
+      <p>Every segment from a point to its image is the same arrow, $\langle a, b\rangle$. Doing one translation after another just adds the arrows.</p>
+    </div>
+
+    <figure class="explore" data-widget="translateExplorer">
+      <figcaption><strong>Explore:</strong> Use the sliders, or drag the gold point $A'$, to choose the translation. Watch all three arrows: they always have the same length and direction.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Writing a translation rule</h3>
+        <div class="problem"><p>Write the rule for the translation $4$ units right and $2$ units down, and find the image of $(-1, 5)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Right $4$ adds $4$ to $x$; down $2$ subtracts $2$ from $y$: $(x, y) \to (x + 4,\ y - 2)$.</p></div><p class="why">Horizontal moves change only $x$; vertical moves change only $y$.</p></li>
+          <li><div class="do"><p>$(-1, 5) \to (-1 + 4,\ 5 - 2) = (3, 3)$.</p></div><p class="why">Apply the rule.</p></li>
+        </ol>
+        <p class="answer">$(x, y) \to (x + 4, y - 2)$; the image is $(3, 3)$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Finding the translation</h3>
+        <div class="problem"><p>A translation maps $(-2, 7)$ to $(3, 1)$. What is its rule?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Change in $x$: $3 - (-2) = 5$. Change in $y$: $1 - 7 = -6$.</p></div><p class="why">Subtract the original from the image.</p></li>
+          <li><div class="do"><p>Rule: $(x, y) \to (x + 5,\ y - 6)$.</p></div><p class="why">One point and its image determine a translation completely.</p></li>
+        </ol>
+        <p class="answer">$(x, y) \to (x + 5, y - 6)$</p>
+        <p class="book-next">Next in the book: Exercise 19-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Translating a triangle</h3>
+        <div class="problem"><p>Triangle $ABC$ has $A(0,0)$, $B(4,0)$, $C(1,3)$. Find its image under $(x,y) \to (x - 2, y + 5)$ and check that side $AB$ keeps its length.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$A' = (-2, 5)$, $B' = (2, 5)$, $C' = (-1, 8)$.</p></div><p class="why">Apply the rule to each vertex; the image triangle is the triangle on the images.</p></li>
+          <li><div class="do"><p>$AB = 4$ and $A'B' = 2 - (-2) = 4$.</p></div><p class="why">Both segments are horizontal, so their lengths are differences of $x$-coordinates.</p></li>
+        </ol>
+        <p class="answer">$A'(-2,5)$, $B'(2,5)$, $C'(-1,8)$; $A'B' = AB = 4$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>One slide after another</h3>
+        <div class="problem"><p>Apply $(x,y) \to (x+3, y-1)$ and then $(x,y) \to (x-5, y+4)$. What single translation does the same thing? Does the order matter?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>After the first: $(x+3, y-1)$. After the second: $(x + 3 - 5,\ y - 1 + 4) = (x - 2,\ y + 3)$.</p></div><p class="why">Feed the output of the first rule into the second.</p></li>
+          <li><div class="do"><p>In the other order: $(x - 5 + 3,\ y + 4 - 1) = (x - 2, y + 3)$, the same.</p></div><p class="why">Adding numbers doesn't depend on order.</p></li>
+        </ol>
+        <p class="answer">$(x, y) \to (x - 2, y + 3)$, in either order.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Sliding a parabola</h3>
+        <div class="problem"><p>The parabola $y = x^2$ is translated $3$ units right and $2$ units up. Find the equation of the image.</p></div>
+        <ol class="steps">
+          <li data-think="If $(X, Y)$ is on the image, which point of the original did it come from?"><div class="do"><p>A point $(X, Y)$ is on the image exactly when $(X - 3,\ Y - 2)$ is on the original.</p></div><p class="why">Undo the translation to get back to the original curve.</p></li>
+          <li><div class="do"><p>So $Y - 2 = (X - 3)^2$, that is, $y = (x - 3)^2 + 2$.</p></div><p class="why">Substitute into $y = x^2$.</p></li>
+          <li><div class="do"><p>Check: the vertex moved from $(0,0)$ to $(3, 2)$. ✓</p></div><p class="why">The lowest point should slide like every other point.</p></li>
+        </ol>
+        <p class="answer">$y = (x - 3)^2 + 2$</p>
+        <p class="key-idea">To translate a graph $a$ right and $b$ up, replace $x$ with $x - a$ and $y$ with $y - b$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Completing a parallelogram</h3>
+        <div class="problem"><p>$A(1, 2)$, $B(4, 3)$ and $C(6, 7)$ are three vertices of parallelogram $ABCD$. Find $D$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>In parallelogram $ABCD$, side $AD$ is side $BC$ slid over: the translation taking $B$ to $A$ takes $C$ to $D$.</p></div><p class="why">Opposite sides are parallel and equal, so one is a translation of the other.</p></li>
+          <li><div class="do"><p>$B \to A$ is $(x, y) \to (x - 3,\ y - 1)$, so $D = (6 - 3,\ 7 - 1) = (3, 6)$.</p></div><p class="why">Apply the same translation to $C$.</p></li>
+          <li><div class="do"><p>Check: $\overrightarrow{AD} = \langle 2, 4\rangle = \overrightarrow{BC}$. ✓</p></div><p class="why">Both arrows match.</p></li>
+        </ol>
+        <p class="answer">$D = (3, 6)$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Where to build the bridge</h3>
+        <div class="problem"><p>Town $A$ is at $(0, 4)$ and town $B$ is at $(8, -6)$. A river runs between the lines $y = 0$ and $y = -2$, and a bridge must cross it straight up and down. Where should the bridge go to make the trip from $A$ to $B$ as short as possible, and how long is the trip?</p></div>
+        <ol class="steps">
+          <li data-think="The bridge always adds $2$. What if you could make the river disappear?"><div class="do"><p>The bridge length $2$ is fixed. Translate $B$ up by $2$ to $B'(8, -4)$: the walk from the bridge's bottom to $B$ is a translated copy of a walk from the bridge's top to $B'$.</p></div><p class="why">Translation preserves length, so we can "close up" the river.</p></li>
+          <li><div class="do"><p>Now we need the shortest path from $A$ to $B'$ touching the bank $y = 0$: a straight line. The line from $(0,4)$ to $(8,-4)$ has slope $-1$ and crosses $y = 0$ at $x = 4$.</p></div><p class="why">The shortest path between two points is a segment.</p></li>
+          <li><div class="do"><p>Build the bridge from $(4, 0)$ to $(4, -2)$. Trip length $= AB' + 2 = \sqrt{8^2 + 8^2} + 2 = 8\sqrt2 + 2$.</p></div><p class="why">Check: $A$ to $(4,0)$ is $4\sqrt2$, and $(4,-2)$ to $B$ is $4\sqrt2$.</p></li>
+        </ol>
+        <p class="answer">Bridge at $x = 4$; trip length $8\sqrt2 + 2 \approx 13.3$.</p>
+        <p class="key-idea">Translating part of a path can turn a bent path into a straight one.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 19.2 ===================== -->
+  <section class="lesson" id="s19-2" data-title="Rotation">
+    <h2><span class="sec-num">19.2</span> Rotation</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Pin a sheet of paper to a board with one thumbtack and spin it. The tack doesn't move at all, and every other point travels around a circle centered at the tack, all turning through the same angle.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>rotation</strong> has a fixed <strong>center</strong> $O$, an <strong>angle</strong> $\theta$ and a direction (counterclockwise unless stated otherwise). It maps each point $P$ to the point $P'$ with $OP' = OP$ and $\angle POP' = \theta$. Rotations keep lengths and angles, so figures map to congruent figures.</p>
+      <div class="rule"><p>$$90^\circ \text{ ccw: } (x,y) \to (-y,\ x) \qquad 90^\circ \text{ cw: } (x,y) \to (y,\ -x)$$ $$180^\circ: (x,y) \to (-x,\ -y)$$</p></div>
+      <p>These rules are for the origin as center. For any other center $(p, q)$: subtract the center, rotate, then add the center back.</p>
+      <p>A figure has <strong>rotational symmetry</strong> if some rotation (other than a full turn) maps it onto itself. A regular $n$-gon is mapped to itself by rotations about its center through multiples of $\tfrac{360^\circ}{n}$.</p>
+    </div>
+
+    <figure class="explore" data-widget="rotateExplorer">
+      <figcaption><strong>Explore:</strong> Drag the center $O$ and change the angle. Each vertex slides along a dashed circle around $O$; compare $OA$ with $OA'$. Put $O$ at the origin and try $90^\circ$ and $180^\circ$ to see the coordinate rules.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="polygonSpin">
+      <figcaption><strong>Explore:</strong> Spin a regular polygon about its center. For which angles does it land exactly on its own outline?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>A quarter turn</h3>
+        <div class="problem"><p>Rotate $(3, 1)$ by $90^\circ$ counterclockwise about the origin.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Use $(x, y) \to (-y, x)$: $(3, 1) \to (-1, 3)$.</p></div><p class="why">A quarter turn counterclockwise sends the positive $x$-axis to the positive $y$-axis and the positive $y$-axis to the negative $x$-axis.</p></li>
+          <li><div class="do"><p>Check: both points are $\sqrt{10}$ from the origin, and $(3,1)\cdot(-1,3) = -3 + 3 = 0$, so the angle is $90^\circ$.</p></div><p class="why">Same distance from the center and a right angle at the center.</p></li>
+        </ol>
+        <p class="answer">$(-1, 3)$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A half turn</h3>
+        <div class="problem"><p>Rotate $(4, -2)$ by $180^\circ$ about the origin.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x, y) \to (-x, -y)$ gives $(-4, 2)$.</p></div><p class="why">A half turn sends each point straight through the center to the other side.</p></li>
+        </ol>
+        <p class="answer">$(-4, 2)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Clockwise</h3>
+        <div class="problem"><p>Rotate $(2, 5)$ by $90^\circ$ clockwise about the origin.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$90^\circ$ clockwise is the same as $270^\circ$ counterclockwise: apply $(x,y)\to(-y,x)$ three times, or use $(x, y) \to (y, -x)$ directly.</p></div><p class="why">Three quarter turns one way equal one quarter turn the other way.</p></li>
+          <li><div class="do"><p>$(2, 5) \to (5, -2)$.</p></div><p class="why">Apply the rule.</p></li>
+        </ol>
+        <p class="answer">$(5, -2)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A center that isn't the origin</h3>
+        <div class="problem"><p>Rotate $P(5, 2)$ by $90^\circ$ counterclockwise about $C(2, 1)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Position of $P$ relative to $C$: $(5 - 2,\ 2 - 1) = (3, 1)$.</p></div><p class="why">Move the problem so the center is at the origin.</p></li>
+          <li><div class="do"><p>Rotate: $(3, 1) \to (-1, 3)$.</p></div><p class="why">Now the origin rule applies.</p></li>
+          <li><div class="do"><p>Add $C$ back: $(-1 + 2,\ 3 + 1) = (1, 4)$.</p></div><p class="why">Move everything back.</p></li>
+        </ol>
+        <p class="answer">$(1, 4)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Symmetry of an octagon</h3>
+        <div class="problem"><p>How many rotations about its center with angle from $0^\circ$ up to (but not including) $360^\circ$ map a regular octagon onto itself? What is the smallest positive one?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The rotation must carry one vertex to some vertex; there are $8$ choices, and each choice fixes the rotation.</p></div><p class="why">Once one vertex lands, the rest follow in order.</p></li>
+          <li><div class="do"><p>The center angles between neighbouring vertices are $\tfrac{360^\circ}{8} = 45^\circ$, so the angles are $0^\circ, 45^\circ, 90^\circ, \dots, 315^\circ$.</p></div><p class="why">Lines from the center to the vertices cut $360^\circ$ into $8$ equal parts.</p></li>
+        </ol>
+        <p class="answer">$8$ rotations; the smallest positive is $45^\circ$.</p>
+        <p class="book-next">Next in the book: Exercise 19-4.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Building an equilateral triangle</h3>
+        <div class="problem"><p>$A = (0, 0)$ and $B = (4, 0)$. Find a point $C$ above the $x$-axis so that triangle $ABC$ is equilateral.</p></div>
+        <ol class="steps">
+          <li data-think="Which rotation about $A$ carries $B$ to $C$?"><div class="do"><p>In an equilateral triangle, $AC = AB$ and $\angle BAC = 60^\circ$. So $C$ is the image of $B$ under a $60^\circ$ counterclockwise rotation about $A$.</p></div><p class="why">That is exactly the definition of a rotation.</p></li>
+          <li><div class="do"><p>$B$ is $4$ units from $A$ at angle $0^\circ$, so $C$ is $4$ units from $A$ at angle $60^\circ$: $C = (4\cos 60^\circ,\ 4\sin 60^\circ) = (2,\ 2\sqrt3)$.</p></div><p class="why">Equivalently, the $30$-$60$-$90$ triangle with hypotenuse $4$ has legs $2$ and $2\sqrt3$.</p></li>
+        </ol>
+        <p class="answer">$C = (2, 2\sqrt3)$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Finding the center of rotation</h3>
+        <div class="problem"><p>A rotation maps $A(2,0)$ to $A'(5,3)$ and $B(4,0)$ to $B'(5,5)$. Find its center and angle.</p></div>
+        <ol class="steps">
+          <li data-think="The center is the same distance from $A$ and $A'$. Where are all such points?"><div class="do"><p>The center $O$ has $OA = OA'$, so it lies on the perpendicular bisector of $AA'$. Midpoint $(3.5, 1.5)$, direction $\langle 3, 3\rangle$: the bisector is $x + y = 5$.</p></div><p class="why">Points equidistant from two points form the perpendicular bisector.</p></li>
+          <li><div class="do"><p>Likewise for $BB'$: midpoint $(4.5, 2.5)$, direction $\langle 1, 5\rangle$: the bisector is $x + 5y = 4.5 + 12.5 = 17$.</p></div><p class="why">The line through the midpoint perpendicular to $\langle 1,5\rangle$.</p></li>
+          <li><div class="do"><p>Solve: $x = 5 - y$, so $5 + 4y = 17$, $y = 3$, $x = 2$. Center $O(2, 3)$.</p></div><p class="why">The center lies on both bisectors.</p></li>
+          <li><div class="do"><p>Relative to $O$: $A \to (0, -3)$ and $A' \to (3, 0)$. Since $(x,y)\to(-y,x)$ sends $(0,-3)$ to $(3,0)$, the angle is $90^\circ$ counterclockwise. Check $B$: $(2,-3) \to (3, 2)$, giving $(5,5)$. ✓</p></div><p class="why">Confirm with the second point.</p></li>
+        </ol>
+        <p class="answer">Center $(2, 3)$, angle $90^\circ$ counterclockwise.</p>
+        <p class="key-idea">The center of a rotation lies on the perpendicular bisector of every segment from a point to its image.</p>
+        <p class="book-next">Next in the book: Exercise 19-3.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 19.3 ===================== -->
+  <section class="lesson" id="s19-3" data-title="Reflection">
+    <h2><span class="sec-num">19.3</span> Reflection</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Fold a sheet of paper with a fresh ink blot on one half and press. The blot prints a perfect mirror image on the other half: every dot lands just as far from the crease, straight across it.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>reflection</strong> in a line $\ell$ (the mirror) maps each point $P$ to the point $P'$ so that $\ell$ is the <strong>perpendicular bisector</strong> of $PP'$: $P'$ is as far behind the mirror as $P$ is in front, straight across. Points on $\ell$ stay put. Reflections keep lengths and angles but reverse <em>orientation</em>: a clockwise-labeled triangle becomes counterclockwise.</p>
+      <div class="rule"><p>$$x\text{-axis: } (x, y)\to(x, -y) \qquad y\text{-axis: } (x,y)\to(-x, y)$$ $$y = x: (x,y)\to(y, x)$$</p></div>
+      <p>A <strong>reflection through a point</strong> $O$ sends $P$ to the point $P'$ with $O$ the midpoint of $PP'$. Through the point $(p, q)$, the rule is $(x, y) \to$ $(2p - x,\ 2q - y)$. It is the same as a $180^\circ$ rotation about $O$.</p>
+      <p>If a reflection maps a figure onto itself, the mirror is a <strong>line of symmetry</strong>; if a point reflection does, $O$ is a <strong>point of symmetry</strong>.</p>
+    </div>
+
+    <figure class="explore" data-widget="reflectExplorer">
+      <figcaption><strong>Explore:</strong> Pick a mirror or drag its two handles. Each dotted segment from a vertex to its image crosses the mirror at a right angle and is cut in half by it. Switch to <em>point</em> to reflect through a single point.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Over the axes</h3>
+        <div class="problem"><p>Reflect $(3, -2)$ over the $x$-axis and over the $y$-axis.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Over the $x$-axis: $(3, 2)$.</p></div><p class="why">The mirror is horizontal, so only the up-down coordinate flips sign.</p></li>
+          <li><div class="do"><p>Over the $y$-axis: $(-3, -2)$.</p></div><p class="why">A vertical mirror flips the left-right coordinate.</p></li>
+        </ol>
+        <p class="answer">$(3, 2)$ and $(-3, -2)$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Over the line $y = x$</h3>
+        <div class="problem"><p>Reflect $(-1, 4)$ over the line $y = x$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x, y) \to (y, x)$: $(-1, 4) \to (4, -1)$.</p></div><p class="why">The midpoint $(1.5, 1.5)$ is on $y = x$, and the segment has slope $-1$, perpendicular to the mirror.</p></li>
+        </ol>
+        <p class="answer">$(4, -1)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Reflecting through a point</h3>
+        <div class="problem"><p>Reflect $P(5, 1)$ through the point $O(2, 3)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>From $P$ to $O$ is $\langle -3, 2\rangle$. Go the same again from $O$: $P' = (2 - 3,\ 3 + 2) = (-1, 5)$.</p></div><p class="why">$O$ must be the midpoint of $PP'$.</p></li>
+          <li><div class="do"><p>Check with the formula: $(2\cdot2 - 5,\ 2\cdot3 - 1) = (-1, 5)$. ✓</p></div><p class="why">$P' = 2O - P$ says the same thing.</p></li>
+        </ol>
+        <p class="answer">$(-1, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A vertical mirror off the axis</h3>
+        <div class="problem"><p>Reflect $(7, 2)$ over the line $x = 3$. Then give a rule for this reflection.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(7, 2)$ is $4$ units right of the mirror, so its image is $4$ units left: $(-1, 2)$.</p></div><p class="why">Equal distances on opposite sides, straight across.</p></li>
+          <li><div class="do"><p>In general, the mirror $x = 3$ is the midpoint of $x$ and $x'$: $\tfrac{x + x'}{2} = 3$, so $(x, y) \to (6 - x,\ y)$.</p></div><p class="why">The $y$-coordinate doesn't change for a vertical mirror.</p></li>
+        </ol>
+        <p class="answer">$(-1, 2)$; rule $(x, y) \to (6 - x, y)$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Counting lines of symmetry</h3>
+        <div class="problem"><p>How many lines of symmetry do these have: a regular pentagon, a non-square rectangle, a square, and the capital letter H?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Regular pentagon: $5$, one through each vertex and the midpoint of the opposite side.</p></div><p class="why">A regular $n$-gon has $n$ lines of symmetry.</p></li>
+          <li><div class="do"><p>Rectangle: $2$ (the lines joining midpoints of opposite sides). The diagonals are <em>not</em> mirror lines unless it is a square.</p></div><p class="why">Folding along a diagonal of a long rectangle doesn't match the corners.</p></li>
+          <li><div class="do"><p>Square: $4$ (two midlines and two diagonals). Letter H: $2$ (vertical and horizontal).</p></div><p class="why">Test each candidate fold.</p></li>
+        </ol>
+        <p class="answer">$5$, $2$, $4$, $2$</p>
+        <p class="book-next">Next in the book: Exercises 19-5 to 19-7.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A slanted mirror</h3>
+        <div class="problem"><p>Reflect $P(4, 1)$ over the line $y = x + 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The mirror has slope $1$, so $PP'$ has slope $-1$: $P' = (4 - t,\ 1 + t)$ for some $t$.</p></div><p class="why">The segment to the image is perpendicular to the mirror.</p></li>
+          <li data-think="What must be true of the midpoint of $PP'$?"><div class="do"><p>The midpoint $\left(4 - \tfrac t2,\ 1 + \tfrac t2\right)$ lies on $y = x + 1$: $1 + \tfrac t2 = 5 - \tfrac t2$, so $t = 4$.</p></div><p class="why">The mirror bisects $PP'$.</p></li>
+          <li><div class="do"><p>$P' = (0, 5)$. Check: midpoint $(2, 3)$ is on the line. ✓</p></div><p class="why">Always verify both conditions.</p></li>
+        </ol>
+        <p class="answer">$(0, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Reflecting a line</h3>
+        <div class="problem"><p>Find the equation of the reflection of the line $y = 2x + 1$ over the line $y = x$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>A point $(X, Y)$ is on the image exactly when its mirror image $(Y, X)$ is on the original: $X = 2Y + 1$.</p></div><p class="why">Reflection over $y = x$ undoes itself, so swap the coordinates.</p></li>
+          <li><div class="do"><p>Solve for $Y$: $y = \dfrac{x - 1}{2}$.</p></div><p class="why">Rewrite in slope-intercept form.</p></li>
+        </ol>
+        <p class="answer">$y = \dfrac{x-1}{2}$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The shortest bounce</h3>
+        <div class="problem"><p>A point must travel from $A(1, 3)$ to the $x$-axis and then to $B(7, 5)$. Find the shortest possible total distance and the point where it touches the axis.</p></div>
+        <ol class="steps">
+          <li data-think="For any point $P$ on the axis, how does $PA$ compare with $PA'$, where $A'$ is the mirror image of $A$?"><div class="do"><p>Reflect $A$ over the axis to $A'(1, -3)$. For any $P$ on the axis, $PA = PA'$, so $PA + PB = PA' + PB$.</p></div><p class="why">The axis is the perpendicular bisector of $AA'$.</p></li>
+          <li><div class="do"><p>$PA' + PB$ is smallest when $P$ is on segment $A'B$: the minimum is $A'B = \sqrt{6^2 + 8^2} = 10$.</p></div><p class="why">A straight segment is the shortest path from $A'$ to $B$.</p></li>
+          <li><div class="do"><p>Segment $A'B$ rises $8$ over a run of $6$; it climbs the $3$ units to the axis after a run of $\tfrac{3}{8}\cdot 6 = \tfrac94$. So $P = \left(\tfrac{13}{4}, 0\right)$.</p></div><p class="why">Check: $PA = 3.75$, $PB = 6.25$, total $10$. ✓</p></li>
+        </ol>
+        <p class="answer">Shortest distance $10$, touching at $\left(\tfrac{13}{4}, 0\right)$.</p>
+        <p class="key-idea">Reflecting one endpoint turns a bounce path into a straight line (light reflects the same way).</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 19.4 ===================== -->
+  <section class="lesson" id="s19-4" data-title="Distortion">
+    <h2><span class="sec-num">19.4</span> Distortion</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Draw a circle on a sheet of stretchy plastic and pull the sides. The circle becomes an oval, a right angle in a drawn triangle may no longer be right, yet straight lines stay straight and the picture keeps the same up-and-down size.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>distortion</strong> (stretch or squeeze) multiplies distances in one direction by a factor $k$ while leaving the perpendicular direction alone. Stretching horizontally and vertically:</p>
+      <div class="rule"><p>$$\text{horizontal: } (x, y) \to (kx,\ y) \qquad\qquad \text{vertical: } (x, y) \to (x,\ ky)$$</p></div>
+      <p>With $k > 1$ it is a stretch; with $0 &lt; k &lt; 1$ a squeeze. Lines go to lines, but <strong>angles are not preserved</strong>, so a figure is generally not similar to its image. An isosceles triangle can be stretched into an equilateral one, and a circle stretches into an <strong>ellipse</strong>.</p>
+      <div class="rule"><p>A stretch by factor $k$ multiplies every area by $k$.</p></div>
+      <div class="note"><p>Why? Slice a figure into thin strips along the stretch direction. Each strip gets $k$ times as long and keeps its width, so its area is multiplied by $k$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="stretchExplorer">
+      <figcaption><strong>Explore:</strong> Stretch horizontally and vertically. Watch the triangle's angles change while the area just multiplies by the stretch factors. Can you make the triangle equilateral?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Stretching a square</h3>
+        <div class="problem"><p>The square with corners $(0,0)$, $(2,0)$, $(2,2)$, $(0,2)$ is stretched horizontally by factor $3$. Describe the image and its area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x, y) \to (3x, y)$ gives corners $(0,0)$, $(6,0)$, $(6,2)$, $(0,2)$: a $6 \times 2$ rectangle.</p></div><p class="why">Only the $x$-coordinates triple.</p></li>
+          <li><div class="do"><p>Area $12 = 3 \times 4$.</p></div><p class="why">The area is multiplied by the stretch factor.</p></li>
+        </ol>
+        <p class="answer">A $6 \times 2$ rectangle, area $12$.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A squeeze</h3>
+        <div class="problem"><p>Where does $(4, 6)$ go under a vertical squeeze by factor $\tfrac12$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x, y) \to \left(x, \tfrac12 y\right)$: $(4, 6) \to (4, 3)$.</p></div><p class="why">Vertical distances from the $x$-axis are halved.</p></li>
+        </ol>
+        <p class="answer">$(4, 3)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A circle becomes an ellipse</h3>
+        <div class="problem"><p>The circle of radius $2$ centered at the origin is stretched horizontally by factor $3$. Find the width, height and area of the resulting ellipse.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The circle spans $-2$ to $2$ both ways. After the stretch it spans $-6$ to $6$ horizontally and still $-2$ to $2$ vertically: width $12$, height $4$.</p></div><p class="why">Only horizontal distances triple.</p></li>
+          <li><div class="do"><p>Area $= 3 \cdot \pi \cdot 2^2 = 12\pi$.</p></div><p class="why">Area is multiplied by the stretch factor.</p></li>
+        </ol>
+        <p class="answer">Width $12$, height $4$, area $12\pi$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Isosceles to equilateral</h3>
+        <div class="problem"><p>The triangle with vertices $(-1, 0)$, $(1, 0)$ and $(0, 1)$ is stretched vertically by factor $k$. For what $k$ is the image equilateral?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The base $(-1,0)$ to $(1,0)$ doesn't move: its length is $2$. The apex goes to $(0, k)$.</p></div><p class="why">Points on the $x$-axis are fixed by a vertical stretch.</p></li>
+          <li><div class="do"><p>An equilateral triangle with side $2$ has height $\sqrt3$, so $k = \sqrt3$.</p></div><p class="why">Height of an equilateral triangle is $\tfrac{\sqrt3}{2}$ times the side.</p></li>
+        </ol>
+        <p class="answer">$k = \sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Which angles change?</h3>
+        <div class="problem"><p>The right isosceles triangle $(0,0)$, $(2,0)$, $(0,2)$ is stretched horizontally by factor $2$. Find the angles of the image.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Image: $(0,0)$, $(4,0)$, $(0,2)$.</p></div><p class="why">Double every $x$-coordinate.</p></li>
+          <li><div class="do"><p>The angle at the origin is still $90^\circ$: its sides lie along the axes, and the axes stay perpendicular.</p></div><p class="why">Horizontal lines stay horizontal and vertical lines stay vertical.</p></li>
+          <li><div class="do"><p>At $(4,0)$: $\tan\theta = \tfrac24$, so $\theta \approx 26.6^\circ$; the third angle is $\approx 63.4^\circ$. The $45^\circ$ angles are gone.</p></div><p class="why">The legs are now $4$ and $2$ instead of $2$ and $2$.</p></li>
+        </ol>
+        <p class="answer">$90^\circ$, $\approx 26.6^\circ$, $\approx 63.4^\circ$.</p>
+        <p class="key-idea">Distortions keep lines straight but change most angles.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Ratios of areas survive</h3>
+        <div class="problem"><p>A triangle of area $5$ sits inside a rectangle of area $20$. The picture is stretched by factor $4$. What fraction of the new rectangle does the new triangle cover?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>New areas: triangle $20$, rectangle $80$.</p></div><p class="why">Every area is multiplied by $4$.</p></li>
+          <li><div class="do"><p>Fraction $= \tfrac{20}{80} = \tfrac14$, the same as $\tfrac{5}{20}$ before.</p></div><p class="why">The common factor $k$ cancels.</p></li>
+        </ol>
+        <p class="answer">$\tfrac14$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The area of an ellipse</h3>
+        <div class="problem"><p>Find the area enclosed by the ellipse $\dfrac{x^2}{25} + \dfrac{y^2}{9} = 1$.</p></div>
+        <ol class="steps">
+          <li data-think="Which simple curve does $\left(\tfrac x5\right)^2 + \left(\tfrac y3\right)^2 = 1$ look like?"><div class="do"><p>$(X, Y)$ is on the ellipse exactly when $\left(\tfrac X5, \tfrac Y3\right)$ is on the unit circle $x^2 + y^2 = 1$.</p></div><p class="why">Rewrite the equation as $\left(\tfrac x5\right)^2 + \left(\tfrac y3\right)^2 = 1$.</p></li>
+          <li><div class="do"><p>So the ellipse is the unit circle stretched horizontally by $5$ and vertically by $3$.</p></div><p class="why">Undoing the stretches gives back the circle.</p></li>
+          <li><div class="do"><p>Area $= \pi \cdot 1^2 \cdot 5 \cdot 3 = 15\pi$.</p></div><p class="why">Each stretch multiplies the area by its factor.</p></li>
+        </ol>
+        <p class="answer">$15\pi$</p>
+        <p class="key-idea">An ellipse with half-axes $a$ and $b$ has area $\pi ab$.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 19.5 ===================== -->
+  <section class="lesson" id="s19-5" data-title="Dilation">
+    <h2><span class="sec-num">19.5</span> Dilation</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Shine a flashlight at a cardboard cut-out in front of a wall. The shadow is the same shape, only bigger, and every point of the shadow sits on the light ray through the matching point of the cut-out. Move the cut-out closer to the light and the shadow grows.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>dilation</strong> with <strong>center</strong> $O$ and <strong>ratio</strong> (scale factor) $k > 0$ maps each point $A$ to the point $A'$ on ray $OA$ with</p>
+      <div class="rule"><p>$$OA' = k \cdot OA.$$</p></div>
+      <p>With center at the origin, $(x, y) \to (kx, ky)$. With center $(p, q)$:</p><p>$$(x, y) \to \big(p + k(x - p),\ q + k(y - q)\big)$$</p>
+      <p>A figure and its image are <strong>similar</strong> and point the same way: every length is multiplied by $k$, every angle is unchanged, every segment is parallel to its image, and every area is multiplied by $k^2$. Conversely, two similar figures pointing the same way (but not congruent) are always related by a dilation; the lines through corresponding points all meet at its center.</p>
+    </div>
+
+    <figure class="explore" data-widget="dilateExplorer">
+      <figcaption><strong>Explore:</strong> Drag the center $O$ and change $k$. Each vertex rides along its ray from $O$. Compare the side lengths and areas in the readout.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Dilating from the origin</h3>
+        <div class="problem"><p>Find the image of $(3, -2)$ under the dilation with center the origin and ratio $4$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x, y) \to (4x, 4y)$: $(12, -8)$.</p></div><p class="why">The point moves along the ray from the origin to $4$ times its distance.</p></li>
+        </ol>
+        <p class="answer">$(12, -8)$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Scaling a square</h3>
+        <div class="problem"><p>A square with side $3$ is dilated by ratio $2.5$. Find the new side and area.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Side $3 \times 2.5 = 7.5$.</p></div><p class="why">Lengths scale by $k$.</p></li>
+          <li><div class="do"><p>Area $7.5^2 = 56.25 = 9 \times 2.5^2$.</p></div><p class="why">Areas scale by $k^2$.</p></li>
+        </ol>
+        <p class="answer">Side $7.5$, area $56.25$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A center away from the origin</h3>
+        <div class="problem"><p>Dilate $P(3, 3)$ with center $O(1, 2)$ and ratio $3$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\overrightarrow{OP} = \langle 2, 1\rangle$; tripled: $\langle 6, 3\rangle$.</p></div><p class="why">$P'$ is on ray $OP$ at $3$ times the distance.</p></li>
+          <li><div class="do"><p>$P' = (1 + 6,\ 2 + 3) = (7, 5)$.</p></div><p class="why">Start from the center and follow the scaled arrow.</p></li>
+        </ol>
+        <p class="answer">$(7, 5)$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Find the center and ratio</h3>
+        <div class="problem"><p>Triangle $A(1,1)$, $B(3,1)$, $C(1,4)$ is dilated to $A'(-1,-1)$, $B'(5,-1)$, $C'(-1,8)$. Find the ratio and center.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$AB = 2$ and $A'B' = 6$, so $k = 3$.</p></div><p class="why">Every length is multiplied by $k$.</p></li>
+          <li><div class="do"><p>$A' = O + 3(A - O)$ gives $2O = 3A - A' = (4, 4)$, so $O = (2, 2)$.</p></div><p class="why">Solve the dilation formula for the center.</p></li>
+          <li><div class="do"><p>Check $B$: $(2,2) + 3\langle 1, -1\rangle = (5, -1)$ ✓. Check $C$: $(2,2) + 3\langle -1, 2\rangle = (-1, 8)$ ✓.</p></div><p class="why">The same center and ratio must work for every vertex.</p></li>
+        </ol>
+        <p class="answer">Ratio $3$, center $(2, 2)$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A frame between two squares</h3>
+        <div class="problem"><p>A square of side $6$ is dilated about its center with ratio $\tfrac13$. Find the area of the frame between the squares and the distance from an outer corner to the nearest inner corner.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Inner side $2$, inner area $4$; frame area $36 - 4 = 32$.</p></div><p class="why">Area scales by $\left(\tfrac13\right)^2 = \tfrac19$.</p></li>
+          <li><div class="do"><p>Corner $A$ is $3\sqrt2$ from the center $O$ (half a diagonal). Its image $A'$ is on $OA$ at distance $\tfrac13 \cdot 3\sqrt2 = \sqrt2$.</p></div><p class="why">A dilation moves points along rays from the center.</p></li>
+          <li><div class="do"><p>$AA' = 3\sqrt2 - \sqrt2 = 2\sqrt2$.</p></div><p class="why">$O$, $A'$, $A$ are collinear in that order.</p></li>
+        </ol>
+        <p class="answer">Frame area $32$; distance $2\sqrt2$.</p>
+        <p class="book-next">Next in the book: Examples 19-6 and 19-7.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Enlarging a photo</h3>
+        <div class="problem"><p>A $4 \times 6$ photo is enlarged (without distortion) so that its area becomes $54$. What are the new dimensions?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area ratio $\tfrac{54}{24} = \tfrac94 = k^2$, so $k = \tfrac32$.</p></div><p class="why">Areas scale by the square of the ratio.</p></li>
+          <li><div class="do"><p>New size: $6 \times 9$.</p></div><p class="why">Multiply both dimensions by $\tfrac32$.</p></li>
+        </ol>
+        <p class="answer">$6 \times 9$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The center between two circles</h3>
+        <div class="problem"><p>Circle $\omega_1$ has center $(0,0)$ and radius $2$; circle $\omega_2$ has center $(9,0)$ and radius $1$. Find the center of the dilation with positive ratio that maps $\omega_1$ to $\omega_2$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The ratio is $\tfrac{1}{2}$ (radius $2 \to$ radius $1$), and the dilation maps center to center.</p></div><p class="why">A dilation maps a circle to a circle, center to center, radius times $k$.</p></li>
+          <li data-think="Where must the center $P$ lie relative to the two circle centers?"><div class="do"><p>$P$ is on line $O_1O_2$ (the $x$-axis), with $O_2 = P + \tfrac12(O_1 - P)$. So $(9, 0) = \tfrac12 P$ and $P = (18, 0)$.</p></div><p class="why">$O_2$ is on ray $PO_1$ at half the distance.</p></li>
+          <li><div class="do"><p>Check: $P$ is $18$ from $O_1$ and $9$ from $O_2$, ratio $\tfrac12$. ✓</p></div><p class="why">Both distances along the same ray.</p></li>
+        </ol>
+        <p class="answer">$(18, 0)$</p>
+        <p class="key-idea">The two common outer tangent lines of the circles pass through this center, since a dilation maps tangent lines to tangent lines.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 19.6 ===================== -->
+  <section class="lesson" id="s19-6" data-title="The More Things Change...">
+    <h2><span class="sec-num">19.6</span> The More Things Change...</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A map of your town is not your town, but some things about it are trustworthy: if three shops are on one straight street, they're on one straight line on the map. Knowing exactly which facts a transformation keeps is what makes transformations useful.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>Every transformation in this chapter sends lines to lines, so <strong>collinear points stay collinear</strong>, and midpoints go to midpoints. Beyond that, they differ:</p>
+      <div style="overflow-x:auto;position:relative"><table style="border-collapse:collapse;margin:10px 0;font-size:0.95em">
+        <thead><tr><th style="text-align:left;padding:4px 12px 4px 0;border-bottom:1px solid var(--border-strong)">Keeps…</th><th style="text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--border-strong)">Translate</th><th style="text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--border-strong)">Rotate</th><th style="text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--border-strong)">Reflect</th><th style="text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--border-strong)">Dilate</th><th style="text-align:left;padding:4px 10px 4px 0;border-bottom:1px solid var(--border-strong)">Stretch</th></tr></thead>
+        <tbody>
+          <tr><td style="padding:3px 12px 3px 0">lengths</td><td>✓</td><td>✓</td><td>✓</td><td>×$k$</td><td>✗</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">angles (shape)</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✗</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">area</td><td>✓</td><td>✓</td><td>✓</td><td>×$k^2$</td><td>×$k$</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">orientation</td><td>✓</td><td>✓</td><td>✗</td><td>✓</td><td>✓</td></tr>
+          <tr><td style="padding:3px 12px 3px 0">collinearity, midpoints</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td><td>✓</td></tr>
+        </tbody>
+      </table></div>
+      <p>Even when area changes, ratios of areas are kept: if every area is multiplied by the same factor, fractions of the whole don't change. That lets you solve a hard problem about a stretched figure by solving an easy one about the original.</p>
+    </div>
+
+    <figure class="explore" data-widget="invariantsExplorer">
+      <figcaption><strong>Explore:</strong> Choose a transformation and change its amount. The table checks live which properties of the triangle survive. Which property is the only one a reflection breaks?</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Which keep area?</h3>
+        <div class="problem"><p>A figure has area $6$. What is the area of its image under: a translation; a $70^\circ$ rotation; a reflection; a dilation with ratio $3$; a stretch by factor $3$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Translation, rotation, reflection: $6$ each.</p></div><p class="why">These are rigid motions: the image is congruent.</p></li>
+          <li><div class="do"><p>Dilation by $3$: $6 \cdot 9 = 54$. Stretch by $3$: $6 \cdot 3 = 18$.</p></div><p class="why">Dilations scale area by $k^2$, stretches by $k$.</p></li>
+        </ol>
+        <p class="answer">$6, 6, 6, 54, 18$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A chain of transformations</h3>
+        <div class="problem"><p>A triangle of area $10$ is dilated by ratio $3$, then reflected, then translated. What is its final area?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>After the dilation: $10 \cdot 3^2 = 90$.</p></div><p class="why">Area scales by $k^2$.</p></li>
+          <li><div class="do"><p>Reflection and translation keep area: still $90$.</p></div><p class="why">Rigid motions don't change size.</p></li>
+        </ol>
+        <p class="answer">$90$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two flips make a turn</h3>
+        <div class="problem"><p>Reflect over the $x$-axis, then over the $y$-axis. What single transformation is this? Explain using orientation.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x, y) \to (x, -y) \to (-x, -y)$.</p></div><p class="why">Apply the rules in order.</p></li>
+          <li><div class="do"><p>That is the $180^\circ$ rotation about the origin.</p></div><p class="why">Compare with the half-turn rule.</p></li>
+          <li><div class="do"><p>This fits orientation: each reflection reverses it, so two reflections restore it, as a rotation should.</p></div><p class="why">Orientation acts like a sign: reversed twice is back to normal.</p></li>
+        </ol>
+        <p class="answer">The $180^\circ$ rotation about the origin.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Dilate, then stretch</h3>
+        <div class="problem"><p>A square of area $5$ is dilated by ratio $2$ and then stretched horizontally by factor $3$. Find the final area. Is the image a square?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Area: $5 \cdot 2^2 \cdot 3 = 60$.</p></div><p class="why">Multiply the area factors.</p></li>
+          <li><div class="do"><p>The dilation keeps it a square; the stretch makes it $3$ times as wide as it is tall, so the image is a non-square rectangle.</p></div><p class="why">Only the stretch changes shape.</p></li>
+        </ol>
+        <p class="answer">Area $60$; a rectangle, not a square.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Centroids survive a stretch</h3>
+        <div class="problem"><p>Triangle $(0,0)$, $(6,0)$, $(0,3)$ is stretched horizontally by factor $2$. Show that the centroid of the image is the image of the centroid.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Original centroid: $\left(\tfrac{0+6+0}{3}, \tfrac{0+0+3}{3}\right) = (2, 1)$. Its image: $(4, 1)$.</p></div><p class="why">The centroid averages the vertices.</p></li>
+          <li><div class="do"><p>Image triangle: $(0,0)$, $(12,0)$, $(0,3)$, with centroid $(4, 1)$. ✓</p></div><p class="why">Same point either way.</p></li>
+          <li><div class="do"><p>Reason: a stretch keeps midpoints, so medians map to medians, and their meeting point maps to their meeting point.</p></div><p class="why">The centroid is built only from midpoints and lines, which stretches keep.</p></li>
+        </ol>
+        <p class="answer">Both give $(4, 1)$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The image of a circle under a stretch</h3>
+        <div class="problem"><p>Find the equation of the image of the circle $x^2 + y^2 = 4$ under $(x, y) \to (x, 2y)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(X, Y)$ is on the image exactly when $\left(X, \tfrac{Y}{2}\right)$ is on the circle.</p></div><p class="why">Undo the stretch.</p></li>
+          <li><div class="do"><p>$X^2 + \tfrac{Y^2}{4} = 4$, that is, $\dfrac{x^2}{4} + \dfrac{y^2}{16} = 1$.</p></div><p class="why">Substitute, then divide by $4$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{x^2}{4} + \dfrac{y^2}{16} = 1$, an ellipse $4$ wide and $8$ tall.</p>
+        <p class="book-next">Next in the book: Example 19-8 and Exercise 19-8.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The biggest triangle in an ellipse</h3>
+        <div class="problem"><p>Granted that the largest triangle inside a circle of radius $1$ is equilateral, with area $\tfrac{3\sqrt3}{4}$, find the largest area of a triangle inside the ellipse $\dfrac{x^2}{16} + y^2 = 1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The ellipse is the unit circle stretched horizontally by $4$.</p></div><p class="why">$(X, Y)$ is on it exactly when $\left(\tfrac X4, Y\right)$ is on the unit circle.</p></li>
+          <li data-think="Does the stretch change which triangle is largest?"><div class="do"><p>Triangles inside the ellipse correspond exactly to triangles inside the circle, and every area is multiplied by $4$. So the largest in the ellipse is the image of the largest in the circle.</p></div><p class="why">Multiplying all areas by the same positive number doesn't change which is biggest.</p></li>
+          <li><div class="do"><p>Largest area $= 4 \cdot \tfrac{3\sqrt3}{4} = 3\sqrt3$.</p></div><p class="why">Apply the area factor.</p></li>
+        </ol>
+        <p class="answer">$3\sqrt3$</p>
+        <p class="key-idea">Transform a hard figure into an easy one, solve there, and transform back.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 19.7 ===================== -->
+  <section class="lesson" id="s19-7" data-title="Transformation Proofs">
+    <h2><span class="sec-num">19.7</span> Transformation Proofs</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Stand between two mirrors that meet at a corner and you'll see yourself turned around, not flipped. Two reflections have combined into a rotation. It looks obvious, but "it looks obvious" is not a proof. This section is about proving the properties we've been using.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>To prove a transformation property, use what you know for certain: the <em>definition</em> of the transformation, and either <strong>coordinates</strong> or <strong>congruent triangles</strong>.</p>
+      <ul>
+        <li><strong>Coordinates:</strong> write the rule, apply it to general points $(x_1, y_1)$ and $(x_2, y_2)$, and compute (for example, with the distance formula).</li>
+        <li><strong>Congruent triangles:</strong> if a rotation keeps distances, then triangle $ABC$ and its image are congruent by SSS, so all corresponding angles match.</li>
+        <li><strong>Both directions:</strong> to show the image of figure $X$ is figure $Y$, show every image point is on $Y$ <em>and</em> every point of $Y$ is an image point.</li>
+      </ul>
+      <div class="rule"><p>Reflect in two lines meeting at angle $\theta$: the result is a rotation by $2\theta$ about the crossing point. Reflect in two parallel lines a distance $d$ apart: a translation by $2d$.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="twoMirrors">
+      <figcaption><strong>Explore:</strong> The blue F is reflected in mirror 1, then that image is reflected in mirror 2. Change the angle between the mirrors (or switch to parallel mirrors) and compare the final gold F with the original.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Translations keep midpoints</h3>
+        <div class="problem"><p>Prove that a translation maps the midpoint of a segment $PQ$ to the midpoint of the image segment $P'Q'$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $P = (x_1, y_1)$, $Q = (x_2, y_2)$ and the translation be $(x,y) \to (x+a, y+b)$. The midpoint $M = \left(\tfrac{x_1+x_2}{2}, \tfrac{y_1+y_2}{2}\right)$ maps to $\left(\tfrac{x_1+x_2}{2} + a,\ \tfrac{y_1+y_2}{2} + b\right)$.</p></div><p class="why">Apply the rule to $M$.</p></li>
+          <li><div class="do"><p>The midpoint of $P'(x_1+a, y_1+b)$ and $Q'(x_2+a, y_2+b)$ is $\left(\tfrac{x_1+x_2+2a}{2}, \tfrac{y_1+y_2+2b}{2}\right)$, the same point.</p></div><p class="why">Compute the other side and compare.</p></li>
+        </ol>
+        <p class="answer">Both equal $\left(\tfrac{x_1+x_2}{2}+a,\ \tfrac{y_1+y_2}{2}+b\right)$, so $M' $ is the midpoint of $P'Q'$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Translations keep distances</h3>
+        <div class="problem"><p>Prove that a translation preserves the distance between any two points.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>With $P$, $Q$ and the translation as before, $P'Q'^2 = \big((x_2+a) - (x_1+a)\big)^2 + \big((y_2+b)-(y_1+b)\big)^2$.</p></div><p class="why">Distance formula on the images.</p></li>
+          <li><div class="do"><p>The $a$'s and $b$'s cancel: $P'Q'^2 = (x_2-x_1)^2 + (y_2-y_1)^2 = PQ^2$.</p></div><p class="why">Only differences of coordinates matter, and a translation doesn't change them.</p></li>
+        </ol>
+        <p class="answer">$P'Q' = PQ$ for all $P$, $Q$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A quarter turn keeps distances</h3>
+        <div class="problem"><p>Prove that the rotation $(x, y) \to (-y, x)$ preserves distances.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$P'(-y_1, x_1)$ and $Q'(-y_2, x_2)$: $P'Q'^2 = (-y_2 + y_1)^2 + (x_2 - x_1)^2$.</p></div><p class="why">Distance formula on the images.</p></li>
+          <li><div class="do"><p>That is $(x_2 - x_1)^2 + (y_2 - y_1)^2 = PQ^2$.</p></div><p class="why">The same two squares, in the other order; $(-u)^2 = u^2$.</p></li>
+        </ol>
+        <p class="answer">$P'Q' = PQ$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Two parallel mirrors</h3>
+        <div class="problem"><p>Prove that reflecting in $x = 0$ and then in $x = d$ is the translation $(x, y) \to (x + 2d, y)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reflection in $x = 0$: $(x, y) \to (-x, y)$.</p></div><p class="why">The $y$-axis rule.</p></li>
+          <li><div class="do"><p>Reflection in $x = d$: $(x, y) \to (2d - x, y)$, since $d$ is the average of $x$ and its image.</p></div><p class="why">As with the mirror $x = 3$ in Section 19.3.</p></li>
+          <li><div class="do"><p>Combined: $(x, y) \to (-x, y) \to \big(2d - (-x),\ y\big) = (x + 2d,\ y)$.</p></div><p class="why">Feed the first output into the second rule.</p></li>
+        </ol>
+        <p class="answer">The translation by $2d$, perpendicular to the mirrors.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two crossing mirrors</h3>
+        <div class="problem"><p>Show that reflecting in the $x$-axis and then in the line $y = x$ is a rotation by twice the $45^\circ$ angle between the mirrors.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(x, y) \to (x, -y) \to (-y, x)$.</p></div><p class="why">Over the $x$-axis, then swap coordinates.</p></li>
+          <li><div class="do"><p>$(x, y) \to (-y, x)$ is the $90^\circ$ counterclockwise rotation about the origin, and $90^\circ = 2 \cdot 45^\circ$.</p></div><p class="why">Recognize the quarter-turn rule.</p></li>
+        </ol>
+        <p class="answer">A $90^\circ$ rotation about the origin, where the mirrors cross.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Rotations keep angles</h3>
+        <div class="problem"><p>Given that rotations preserve distances, prove that they preserve angles: if $A$, $B$, $C$ map to $A'$, $B'$, $C'$, then $\angle ABC = \angle A'B'C'$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$A'B' = AB$, $B'C' = BC$ and $A'C' = AC$.</p></div><p class="why">Each is a distance between two points and their images.</p></li>
+          <li><div class="do"><p>So $\triangle A'B'C' \cong \triangle ABC$ by SSS.</p></div><p class="why">Three pairs of equal sides.</p></li>
+          <li><div class="do"><p>Corresponding angles of congruent triangles are equal: $\angle A'B'C' = \angle ABC$.</p></div><p class="why">That is the conclusion.</p></li>
+        </ol>
+        <p class="answer">Proved: preserving distances forces preserving angles.</p>
+        <p class="key-idea">Any transformation that keeps all distances also keeps all angles, by SSS.</p>
+        <p class="book-next">Next in the book: Examples 19-9 and 19-10, then Exercise 19-9.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Dilations make parallel lines</h3>
+        <div class="problem"><p>Prove that the dilation $(x, y) \to (kx, ky)$ with $k > 0$ maps the line $ax + by = c$ onto the line $ax + by = kc$, which is parallel to it (or the same line, if $c = 0$).</p></div>
+        <ol class="steps">
+          <li data-think="There are two things to show. What are they?"><div class="do"><p>Every image point is on the new line: if $ax + by = c$, then the image $(kx, ky)$ satisfies $a(kx) + b(ky) = k(ax + by) = kc$.</p></div><p class="why">Direction one: image points lie on the claimed line.</p></li>
+          <li><div class="do"><p>Every point of the new line is an image: if $aX + bY = kc$, then $\left(\tfrac Xk, \tfrac Yk\right)$ satisfies $a\tfrac Xk + b\tfrac Yk = c$, so it is on the original line, and it maps to $(X, Y)$.</p></div><p class="why">Direction two: nothing on the new line is missed. Dividing by $k$ is allowed since $k > 0$.</p></li>
+          <li><div class="do"><p>The lines $ax + by = c$ and $ax + by = kc$ have the same coefficients $a, b$, so they have the same slope (or are both vertical): they are parallel.</p></div><p class="why">The slope depends only on $a$ and $b$.</p></li>
+        </ol>
+        <p class="answer">The image is exactly the line $ax + by = kc$, parallel to the original.</p>
+        <p class="key-idea">To identify an image, prove both inclusions: image $\subseteq$ target and target $\subseteq$ image.</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve (Problems 329–342).</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-19">
+    <h2 id="further-19">Further reading in the book</h2>
+    <ul>
+      <li><strong>§19.1 Translation</strong>: Example 19-1; Exercises 19-1 and 19-2.</li>
+      <li><strong>§19.2 Rotation</strong>: Examples 19-2 and 19-3; Exercises 19-3 and 19-4.</li>
+      <li><strong>§19.3 Reflection</strong>: Examples 19-4 and 19-5; Exercises 19-5 to 19-7.</li>
+      <li><strong>§19.4 Distortion</strong>: stretching isosceles triangles and circles, and why angles aren't preserved.</li>
+      <li><strong>§19.5 Dilation</strong>: homothetic figures; Examples 19-6 and 19-7.</li>
+      <li><strong>§19.6 The More Things Change...</strong>: what each transformation preserves; Example 19-8 and Exercise 19-8.</li>
+      <li><strong>§19.7 Transformation Proofs</strong>: Examples 19-9 and 19-10; Exercise 19-9; then Problems to Solve for Chapter 19 (Problems 329–342).</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 19 explorers ---------- */
+(function () {
+  "use strict";
+
+  var D2R = Math.PI / 180;
+  function mix(c, p) { return "color-mix(in srgb, " + c + " " + p + "%, transparent)"; }
+  function num(x, d) { return W.fmt(x, d == null ? 2 : d); }
+  function pt(p) { return "(" + num(p[0]) + ", " + num(p[1]) + ")"; }
+  function signed(v) { return v === 0 ? "" : (v > 0 ? " + " + num(v) : " - " + num(-v)); }
+  var F_SHAPE = [[0, 0], [0, 3], [2, 3], [2, 2.4], [0.7, 2.4], [0.7, 1.8], [1.6, 1.8], [1.6, 1.2], [0.7, 1.2], [0.7, 0]];
+
+  var clipN = 0;
+  /* coordinate stage: grid drawn once, dynamic drawing goes in layer g */
+  function board(body, label, o) {
+    o = o || {};
+    var svg = W.stage(body, { w: 640, h: 480, label: label });
+    var P = W.plane(svg, { x: o.x || [-8, 8], y: o.y || [-6, 6], step: 1, labelEvery: 2, pad: 24 });
+    var id = "ch19clip" + (++clipN);
+    svg.appendChild(W.s("defs", null, W.s("clipPath", { id: id }, W.s("rect", { x: 20, y: 20, width: 600, height: 440 }))));
+    var g = W.s("g", { "clip-path": "url(#" + id + ")" });
+    svg.appendChild(g);
+    P.sx = P.X(1) - P.X(0); P.sy = P.Y(0) - P.Y(1);
+    return { svg: svg, P: P, g: g };
+  }
+  function ptsAttr(P, pts) { return pts.map(function (p) { return P.X(p[0]).toFixed(1) + "," + P.Y(p[1]).toFixed(1); }).join(" "); }
+  function poly(P, pts, col, o) {
+    o = o || {};
+    return W.s("polygon", { points: ptsAttr(P, pts), fill: o.fill || mix(col, o.alpha == null ? 30 : o.alpha), stroke: col, "stroke-width": o.sw || 2, "stroke-dasharray": o.dash, "stroke-linejoin": "round" });
+  }
+  function seg(P, a, b, col, o) {
+    o = o || {};
+    return W.s("line", { x1: P.X(a[0]), y1: P.Y(a[1]), x2: P.X(b[0]), y2: P.Y(b[1]), stroke: col, "stroke-width": o.sw || 1.5, "stroke-dasharray": o.dash, "stroke-linecap": "round" });
+  }
+  function arrow(P, a, b, col, o) {
+    o = o || {};
+    var x1 = P.X(a[0]), y1 = P.Y(a[1]), x2 = P.X(b[0]), y2 = P.Y(b[1]), L = Math.hypot(x2 - x1, y2 - y1);
+    var g = W.s("g");
+    if (L < 2) return g;
+    var ux = (x2 - x1) / L, uy = (y2 - y1) / L, hs = 10;
+    g.appendChild(W.s("line", { x1: x1, y1: y1, x2: x2 - ux * hs * 0.8, y2: y2 - uy * hs * 0.8, stroke: col, "stroke-width": o.sw || 2, "stroke-dasharray": o.dash }));
+    g.appendChild(W.s("polygon", { points: [x2, y2, x2 - ux * hs - uy * hs * 0.5, y2 - uy * hs + ux * hs * 0.5, x2 - ux * hs + uy * hs * 0.5, y2 - uy * hs - ux * hs * 0.5].map(function (v) { return v.toFixed(1); }).join(" "), fill: col }));
+    return g;
+  }
+  function label(P, p, text, col, dx, dy) {
+    return W.s("text", { x: P.X(p[0]) + (dx || 0), y: P.Y(p[1]) + (dy || 0), "text-anchor": "middle",
+      style: "fill:" + (col || "var(--ink)") + ";font:700 14px var(--font-body);paint-order:stroke;stroke:var(--surface-solid);stroke-width:3px;stroke-linejoin:round", text: text });
+  }
+  function dot(P, p, col, r) { return W.s("circle", { cx: P.X(p[0]), cy: P.Y(p[1]), r: r || 4, fill: col || "var(--ink)" }); }
+  /* label placed outward from a polygon's centroid */
+  function vlabels(g, P, pts, names, col) {
+    var cx = 0, cy = 0;
+    pts.forEach(function (p) { cx += p[0]; cy += p[1]; });
+    cx /= pts.length; cy /= pts.length;
+    pts.forEach(function (p, i) {
+      var dx = p[0] - cx, dy = p[1] - cy, L = Math.hypot(dx, dy) || 1;
+      g.appendChild(label(P, p, names[i], col, dx / L * 15, -dy / L * 15 + 5));
+    });
+  }
+  function area(pts) { var s = 0; for (var i = 0; i < pts.length; i++) { var p = pts[i], q = pts[(i + 1) % pts.length]; s += p[0] * q[1] - q[0] * p[1]; } return s / 2; }
+  function dist(a, b) { return Math.hypot(a[0] - b[0], a[1] - b[1]); }
+  function angleAt(a, b, c) { var u = [a[0] - b[0], a[1] - b[1]], v = [c[0] - b[0], c[1] - b[1]]; return Math.acos(Math.max(-1, Math.min(1, (u[0] * v[0] + u[1] * v[1]) / (Math.hypot(u[0], u[1]) * Math.hypot(v[0], v[1]))))) / D2R; }
+  function rotAbout(p, o, deg) { var t = deg * D2R, c = Math.cos(t), s = Math.sin(t), x = p[0] - o[0], y = p[1] - o[1]; return [o[0] + c * x - s * y, o[1] + s * x + c * y]; }
+  function reflLine(p, a, b) {
+    var ux = b[0] - a[0], uy = b[1] - a[1], L = Math.hypot(ux, uy); ux /= L; uy /= L;
+    var t = (p[0] - a[0]) * ux + (p[1] - a[1]) * uy, fx = a[0] + t * ux, fy = a[1] + t * uy;
+    return [2 * fx - p[0], 2 * fy - p[1]];
+  }
+  function clean(v) { return Math.abs(v - Math.round(v)) < 1e-9 ? Math.round(v) : v; }
+  function snap(P, px, py, lo, hi) {
+    var x = Math.round(P.ix(px)), y = Math.round(P.iy(py));
+    x = Math.max(lo[0], Math.min(hi[0], x)); y = Math.max(lo[1], Math.min(hi[1], y));
+    return [x, y];
+  }
+
+  /* ===== 19.1 — translation ===== */
+  AOPS.registerWidget("translateExplorer", function (body) {
+    var B = board(body, "A triangle and its translated image with arrows from each vertex"), P = B.P, g = B.g;
+    var tri = [[-6, -3], [-3, -3], [-5, 0]], a = 7, b = 4;
+    var ctl = W.controls(body);
+    var sa = W.slider(ctl, { label: "Right a", min: -2, max: 10, value: a, onInput: function (v) { a = v; draw(); } });
+    var sb = W.slider(ctl, { label: "Up b", min: -3, max: 6, value: b, onInput: function (v) { b = v; draw(); } });
+    var out = W.readout(body);
+    var h = W.handle(B.svg, { x: P.X(tri[0][0] + a), y: P.Y(tri[0][1] + b), label: "Image point A prime; arrow keys change the translation", keyStep: P.sx,
+      onMove: function (px, py) {
+        var q = snap(P, px, py, [tri[0][0] - 2, tri[0][1] - 3], [tri[0][0] + 10, tri[0][1] + 6]);
+        a = q[0] - tri[0][0]; b = q[1] - tri[0][1];
+        sa.input.value = a; sb.input.value = b; sa.set(a); sb.set(b);
+        return [P.X(q[0]), P.Y(q[1])];
+      },
+      valueText: function () { return "a = " + a + ", b = " + b; } });
+    function draw() {
+      W.clear(g);
+      var img = tri.map(function (p) { return [p[0] + a, p[1] + b]; });
+      g.appendChild(poly(P, tri, "var(--plot-2)"));
+      g.appendChild(poly(P, img, "var(--accent)"));
+      tri.forEach(function (p, i) { g.appendChild(arrow(P, p, img[i], "var(--plot-4)", { dash: "6 4" })); });
+      vlabels(g, P, tri, ["A", "B", "C"], "var(--plot-2)");
+      vlabels(g, P, img, ["A′", "B′", "C′"], "var(--accent)");
+      h.set(P.X(img[0][0]), P.Y(img[0][1]), true);
+      out.set("<p>Rule: $(x, y) \\to (x" + signed(a) + ",\\ y" + signed(b) + ")$. Every arrow is $\\langle " + a + ", " + b + "\\rangle$, length $\\sqrt{" + (a * a + b * b) + "} \\approx " + num(Math.hypot(a, b)) + "$.</p>" +
+        "<p>$A" + pt(tri[0]) + " \\to A'" + pt(img[0]) + "$, &nbsp; $B" + pt(tri[1]) + " \\to B'" + pt(img[1]) + "$, &nbsp; $C" + pt(tri[2]) + " \\to C'" + pt(img[2]) + "$</p>");
+    }
+    draw();
+  });
+
+  /* ===== 19.2 — rotation about a point ===== */
+  AOPS.registerWidget("rotateExplorer", function (body) {
+    var B = board(body, "A letter F rotated about a draggable center"), P = B.P, g = B.g;
+    var shape = F_SHAPE.map(function (p) { return [p[0] + 1, p[1] + 0.5]; }), O = [0, 0], th = 90;
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Angle θ (counterclockwise)", min: -180, max: 180, step: 15, value: th, format: function (v) { return v + "°"; }, onInput: function (v) { th = v; draw(); } });
+    W.button(ctl, "Center to origin", function () { O = [0, 0]; h.set(P.X(0), P.Y(0), true); draw(); });
+    var out = W.readout(body);
+    var h = W.handle(B.svg, { x: P.X(0), y: P.Y(0), label: "Center of rotation O; arrow keys move it", keyStep: P.sx, color: "var(--plot-5)",
+      onMove: function (px, py) { O = snap(P, px, py, [-4, -4], [4, 4]); draw(); return [P.X(O[0]), P.Y(O[1])]; },
+      valueText: function () { return "O = (" + O[0] + ", " + O[1] + ")"; } });
+    function draw() {
+      W.clear(g);
+      var img = shape.map(function (p) { return rotAbout(p, O, th); });
+      var A = shape[2], A2 = img[2], r = dist(A, O);
+      g.appendChild(W.s("ellipse", { cx: P.X(O[0]), cy: P.Y(O[1]), rx: r * P.sx, ry: r * P.sy, fill: "none", stroke: "var(--muted)", "stroke-dasharray": "4 6", "stroke-width": 1.2 }));
+      g.appendChild(poly(P, shape, "var(--plot-2)"));
+      g.appendChild(poly(P, img, "var(--accent)"));
+      g.appendChild(seg(P, O, A, "var(--plot-2)", { sw: 2 }));
+      g.appendChild(seg(P, O, A2, "var(--accent)", { sw: 2 }));
+      if (th !== 0) {
+        var rr = Math.min(1.2, r * 0.45), a0 = Math.atan2(A[1] - O[1], A[0] - O[0]), a1 = a0 + th * D2R;
+        var s0 = [O[0] + rr * Math.cos(a0), O[1] + rr * Math.sin(a0)], s1 = [O[0] + rr * Math.cos(a1), O[1] + rr * Math.sin(a1)];
+        g.appendChild(W.s("path", { d: "M" + P.X(s0[0]) + " " + P.Y(s0[1]) + " A " + rr * P.sx + " " + rr * P.sy + " 0 " + (Math.abs(th) > 180 ? 1 : 0) + " " + (th > 0 ? 0 : 1) + " " + P.X(s1[0]) + " " + P.Y(s1[1]), fill: "none", stroke: "var(--plot-5)", "stroke-width": 2.5 }));
+      }
+      g.appendChild(dot(P, A, "var(--plot-2)", 5)); g.appendChild(label(P, A, "A", "var(--plot-2)", 12, -6));
+      g.appendChild(dot(P, A2, "var(--accent)", 5)); g.appendChild(label(P, A2, "A′", "var(--accent)", 14, -6));
+      g.appendChild(label(P, O, "O", "var(--plot-5)", -14, 20));
+      var A2c = [clean(Math.round(A2[0] * 1000) / 1000), clean(Math.round(A2[1] * 1000) / 1000)];
+      var rule = "";
+      if (O[0] === 0 && O[1] === 0) {
+        if (th === 90) rule = "(x, y) \\to (-y,\\ x)"; else if (th === -90) rule = "(x, y) \\to (y,\\ -x)"; else if (Math.abs(th) === 180) rule = "(x, y) \\to (-x,\\ -y)"; else if (th === 0) rule = "(x,y) \\to (x,y)";
+      }
+      out.set("<p>Rotate " + Math.abs(th) + "° " + (th >= 0 ? "counterclockwise" : "clockwise") + " about $O(" + O[0] + ", " + O[1] + ")$: $A(" + A[0] + ", " + A[1] + ") \\to A'" + pt(A2c) + "$.</p>" +
+        "<p>$OA = OA' \\approx " + num(r) + "$ and $\\angle AOA' = " + Math.abs(th) + "^\\circ$." + (rule ? " Rule about the origin: $" + rule + "$." : "") + "</p>");
+    }
+    draw();
+  });
+
+  /* ===== 19.2 — rotational symmetry ===== */
+  AOPS.registerWidget("polygonSpin", function (body) {
+    var svg = W.stage(body, { w: 640, h: 360, label: "A regular polygon spinning about its center over its own outline" });
+    var n = 5, ang = 30;
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Sides n", min: 3, max: 10, value: n, onInput: function (v) { n = v; draw(); } });
+    var sAng = W.slider(ctl, { label: "Turn", min: 0, max: 360, step: 1, value: ang, format: function (v) { return v + "°"; }, onInput: function (v) { ang = v; draw(); } });
+    W.button(ctl, "Next symmetry", function () {
+      var step = 360 / n, k = Math.floor(ang / step + 1e-6) + 1;
+      var target = Math.round(k * step * 100) / 100;
+      if (target > 360) target = 0;
+      sAng.input.value = target; ang = target; sAng.set(target);
+    });
+    var out = W.readout(body);
+    function draw() {
+      W.clear(svg);
+      var cx = 320, cy = 180, R = 140, step = 360 / n;
+      var k = Math.round(ang / step), match = Math.abs(ang - k * step) < 1.2;
+      var shown = match ? k * step : ang;
+      function vert(i, extra) { var t = (90 + 360 * i / n + extra) * D2R; return [cx + R * Math.cos(t), cy - R * Math.sin(t)]; }
+      var ghost = [], spun = [];
+      for (var i = 0; i < n; i++) { ghost.push(vert(i, 0)); spun.push(vert(i, shown)); }
+      svg.appendChild(W.s("polygon", { points: ghost.map(function (p) { return p.join(","); }).join(" "), fill: "none", stroke: "var(--muted)", "stroke-width": 2, "stroke-dasharray": "6 6" }));
+      ghost.forEach(function (p, i) { svg.appendChild(W.s("text", { x: cx + (p[0] - cx) * 1.15, y: cy + (p[1] - cy) * 1.15 + 5, "text-anchor": "middle", class: "lbl", text: String(i + 1) })); });
+      svg.appendChild(W.s("polygon", { points: spun.map(function (p) { return p.join(","); }).join(" "), fill: match ? mix("var(--plot-4)", 40) : mix("var(--accent)", 30), stroke: match ? "var(--plot-4)" : "var(--accent)", "stroke-width": 2.5 }));
+      svg.appendChild(W.s("line", { x1: cx, y1: cy, x2: spun[0][0], y2: spun[0][1], stroke: "var(--plot-5)", "stroke-width": 2 }));
+      svg.appendChild(W.s("circle", { cx: spun[0][0], cy: spun[0][1], r: 7, fill: "var(--plot-5)" }));
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: 4, fill: "var(--ink)" }));
+      var list = [];
+      for (var j = 0; j < n; j++) list.push(num(j * step, 2) + "^\\circ");
+      var to = ((k % n) + n) % n + 1;
+      out.set("<p>" + (match ? "<strong>Lands on itself!</strong> Vertex 1 (red dot) now sits where vertex " + to + " was." : "Turned " + ang + "°: not a symmetry, the outline doesn't match.") + "</p>" +
+        "<p>Symmetry angles for $n = " + n + "$: multiples of $\\tfrac{360^\\circ}{" + n + "}" + (360 % n === 0 ? " = " + 360 / n + "^\\circ" : " \\approx " + num(step) + "^\\circ") + "$, that is $" + list.join(",\\ ") + "$.</p>");
+    }
+    draw();
+  });
+
+  /* ===== 19.3 — reflection ===== */
+  AOPS.registerWidget("reflectExplorer", function (body) {
+    var B = board(body, "A triangle reflected in a movable mirror line or through a point"), P = B.P, g = B.g;
+    var tri = [[-6, 1], [-2, 2], [-4, 4]], mode = "line", A = [0, -4], Q = [0, 4];
+    var mirrorG = W.s("g", { "clip-path": g.getAttribute("clip-path") });
+    B.svg.insertBefore(mirrorG, g);
+    var lo = [-7, -5], hi = [7, 5];
+    var hA = W.handle(B.svg, { x: P.X(A[0]), y: P.Y(A[1]), label: "Mirror point one; arrow keys move it", keyStep: P.sx, color: "var(--plot-3)",
+      onMove: function (px, py) { var q = snap(P, px, py, lo, hi); if (mode === "line" && q[0] === Q[0] && q[1] === Q[1]) q = A.slice(); A = q; draw(); return [P.X(A[0]), P.Y(A[1])]; },
+      valueText: function () { return "(" + A[0] + ", " + A[1] + ")"; } });
+    var hQ = W.handle(B.svg, { x: P.X(Q[0]), y: P.Y(Q[1]), label: "Mirror point two; arrow keys move it", keyStep: P.sx, color: "var(--plot-3)",
+      onMove: function (px, py) { var q = snap(P, px, py, lo, hi); if (q[0] === A[0] && q[1] === A[1]) q = Q.slice(); Q = q; draw(); return [P.X(Q[0]), P.Y(Q[1])]; },
+      valueText: function () { return "(" + Q[0] + ", " + Q[1] + ")"; } });
+    var ctl = W.controls(body);
+    W.segmented(ctl, { title: "Reflect in", value: "line", options: [{ value: "line", label: "a line" }, { value: "point", label: "a point" }], onChange: function (m) {
+      mode = m;
+      [hQ.el, hQ.el.previousSibling].forEach(function (e) { e.style.display = m === "point" ? "none" : ""; });
+      if (m === "point") { A = [0, 1]; hA.set(P.X(0), P.Y(1), true); }
+      draw();
+    } });
+    W.segmented(ctl, { title: "Preset mirror", value: "y", options: [{ value: "x", label: "x-axis" }, { value: "y", label: "y-axis" }, { value: "d", label: "y = x" }, { value: "e", label: "y = −x" }, { value: "v", label: "x = −1" }], onChange: function (k) {
+      var pr = { x: [[-4, 0], [4, 0]], y: [[0, -4], [0, 4]], d: [[-3, -3], [3, 3]], e: [[-3, 3], [3, -3]], v: [[-1, -4], [-1, 4]] }[k];
+      A = pr[0]; Q = pr[1]; hA.set(P.X(A[0]), P.Y(A[1]), true); hQ.set(P.X(Q[0]), P.Y(Q[1]), true);
+      if (mode !== "line") { mode = "line"; [hQ.el, hQ.el.previousSibling].forEach(function (e) { e.style.display = ""; }); ctl.querySelector(".seg button").click(); }
+      draw();
+    } });
+    var out = W.readout(body);
+    function draw() {
+      W.clear(g); W.clear(mirrorG);
+      var img;
+      if (mode === "line") {
+        var dx = Q[0] - A[0], dy = Q[1] - A[1], L = Math.hypot(dx, dy), ux = dx / L, uy = dy / L;
+        mirrorG.appendChild(seg(P, [A[0] - 40 * ux, A[1] - 40 * uy], [A[0] + 40 * ux, A[1] + 40 * uy], "var(--plot-3)", { sw: 3 }));
+        img = tri.map(function (p) { return reflLine(p, A, Q); });
+        tri.forEach(function (p, i) {
+          var m = [(p[0] + img[i][0]) / 2, (p[1] + img[i][1]) / 2];
+          g.appendChild(seg(P, p, img[i], "var(--plot-4)", { dash: "2 5", sw: 1.8 }));
+          var s = 0.3, px = -uy, py = ux;
+          var dir = (p[0] - m[0]) * px + (p[1] - m[1]) * py >= 0 ? 1 : -1;
+          if (dist(p, m) > 0.4) g.appendChild(W.s("polyline", { points: ptsAttr(P, [[m[0] + ux * s, m[1] + uy * s], [m[0] + ux * s + dir * px * s, m[1] + uy * s + dir * py * s], [m[0] + dir * px * s, m[1] + dir * py * s]]), fill: "none", stroke: "var(--plot-4)", "stroke-width": 1.5 }));
+        });
+      } else {
+        img = tri.map(function (p) { return [2 * A[0] - p[0], 2 * A[1] - p[1]]; });
+        tri.forEach(function (p, i) { g.appendChild(seg(P, p, img[i], "var(--plot-4)", { dash: "2 5", sw: 1.8 })); });
+      }
+      g.appendChild(poly(P, tri, "var(--plot-2)"));
+      g.appendChild(poly(P, img, "var(--accent)"));
+      vlabels(g, P, tri, ["A", "B", "C"], "var(--plot-2)");
+      vlabels(g, P, img, ["A′", "B′", "C′"], "var(--accent)");
+      var rule = "";
+      if (mode === "point") rule = "(x, y) \\to (" + (2 * A[0]) + " - x,\\ " + (2 * A[1]) + " - y)";
+      else {
+        var same = function (u, w) { return Math.abs((Q[0] - A[0]) * (w[1] - A[1]) - (Q[1] - A[1]) * (w[0] - A[0])) < 1e-9 && Math.abs((Q[0] - A[0]) * (u[1] - A[1]) - (Q[1] - A[1]) * (u[0] - A[0])) < 1e-9; };
+        if (same([0, 0], [1, 0])) rule = "(x, y) \\to (x,\\ -y)";
+        else if (same([0, 0], [0, 1])) rule = "(x, y) \\to (-x,\\ y)";
+        else if (same([0, 0], [1, 1])) rule = "(x, y) \\to (y,\\ x)";
+        else if (same([0, 0], [1, -1])) rule = "(x, y) \\to (-y,\\ -x)";
+        else if (A[0] === Q[0]) rule = "(x, y) \\to (" + (2 * A[0]) + " - x,\\ y)";
+        else if (A[1] === Q[1]) rule = "(x, y) \\to (x,\\ " + (2 * A[1]) + " - y)";
+      }
+      var ai = img.map(function (p) { return [clean(Math.round(p[0] * 100) / 100), clean(Math.round(p[1] * 100) / 100)]; });
+      var o1 = area(tri) > 0 ? "counterclockwise" : "clockwise", o2 = area(img) > 0 ? "counterclockwise" : "clockwise";
+      out.set("<p>" + (rule ? "Rule: $" + rule + "$. &nbsp;" : "") + "$A" + pt(tri[0]) + " \\to A'" + pt(ai[0]) + "$</p>" +
+        "<p>$A, B, C$ run " + o1 + "; $A', B', C'$ run " + o2 + (o1 === o2 ? " (a point reflection is a $180^\\circ$ turn, so orientation is kept)." : ": a line reflection reverses orientation.") + "</p>");
+    }
+    draw();
+  });
+
+  /* ===== 19.4 — stretches ===== */
+  AOPS.registerWidget("stretchExplorer", function (body) {
+    var B = board(body, "A triangle or circle stretched horizontally and vertically"), P = B.P, g = B.g;
+    var kx = 1, ky = 1.5, shape = "tri";
+    var tri = [[-2, -1], [2, -1], [0, 1]];
+    var ctl = W.controls(body);
+    var sx = W.slider(ctl, { label: "Horizontal factor", min: 0.25, max: 3, step: 0.01, value: kx, onInput: function (v) { kx = v; draw(); } });
+    var sy = W.slider(ctl, { label: "Vertical factor", min: 0.25, max: 3, step: 0.01, value: ky, onInput: function (v) { ky = v; draw(); } });
+    var ctl2 = W.controls(body);
+    W.segmented(ctl2, { title: "Shape", value: shape, options: [{ value: "tri", label: "triangle" }, { value: "circ", label: "circle" }], onChange: function (s) { shape = s; draw(); } });
+    W.button(ctl2, "Make it equilateral", function () { sx.set(1); sy.set(1.73); });
+    W.button(ctl2, "Reset", function () { sx.set(1); sy.set(1); });
+    var out = W.readout(body);
+    function f(p) { return [kx * p[0], ky * p[1]]; }
+    function draw() {
+      W.clear(g);
+      var html;
+      if (shape === "tri") {
+        var img = tri.map(f);
+        g.appendChild(poly(P, tri, "var(--muted)", { alpha: 0, dash: "5 5", sw: 1.5 }));
+        g.appendChild(poly(P, img, "var(--accent)"));
+        var angs = [angleAt(img[2], img[0], img[1]), angleAt(img[0], img[1], img[2]), angleAt(img[1], img[2], img[0])];
+        vlabels(g, P, img, ["A", "B", "C"], "var(--accent)");
+        var eq = angs.every(function (x) { return Math.abs(x - 60) < 0.1; });
+        html = "<p>Angles: $\\angle A \\approx " + num(angs[0], 1) + "^\\circ$, $\\angle B \\approx " + num(angs[1], 1) + "^\\circ$, $\\angle C \\approx " + num(angs[2], 1) + "^\\circ$" + (eq ? " &mdash; <strong>equilateral</strong> (vertical ÷ horizontal $\\approx \\sqrt3$)" : "") + ". The original had $45^\\circ, 45^\\circ, 90^\\circ$.</p>" +
+          "<p>Area: $4 \\times " + num(kx) + " \\times " + num(ky) + " \\approx " + num(4 * kx * ky) + "$ (it was $4$).</p>";
+      } else {
+        g.appendChild(W.s("ellipse", { cx: P.X(0), cy: P.Y(0), rx: 2 * P.sx, ry: 2 * P.sy, fill: "none", stroke: "var(--muted)", "stroke-dasharray": "5 5", "stroke-width": 1.5 }));
+        g.appendChild(W.s("ellipse", { cx: P.X(0), cy: P.Y(0), rx: 2 * kx * P.sx, ry: 2 * ky * P.sy, fill: mix("var(--accent)", 30), stroke: "var(--accent)", "stroke-width": 2 }));
+        html = "<p>The circle of radius $2$ becomes " + (Math.abs(kx - ky) < 1e-9 ? "a circle of radius $" + num(2 * kx) + "$ (equal factors make a dilation)" : "an ellipse $" + num(4 * kx) + "$ wide and $" + num(4 * ky) + "$ tall") + ".</p>" +
+          "<p>Area: $4\\pi \\times " + num(kx) + " \\times " + num(ky) + " \\approx " + num(4 * Math.PI * kx * ky) + "$ (it was $4\\pi \\approx 12.57$).</p>";
+      }
+      out.set("<p>Rule: $(x, y) \\to (" + num(kx) + "x,\\ " + num(ky) + "y)$</p>" + html);
+    }
+    draw();
+  });
+
+  /* ===== 19.5 — dilation ===== */
+  AOPS.registerWidget("dilateExplorer", function (body) {
+    var B = board(body, "A quadrilateral dilated from a draggable center"), P = B.P, g = B.g;
+    var quad = [[-4, -2], [-2, -2], [-1, 0], [-4, 0]], O = [-6, -4], k = 2;
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Ratio k", min: 0.25, max: 3, step: 0.25, value: k, onInput: function (v) { k = v; draw(); } });
+    var out = W.readout(body);
+    var h = W.handle(B.svg, { x: P.X(O[0]), y: P.Y(O[1]), label: "Center of dilation O; arrow keys move it", keyStep: P.sx, color: "var(--plot-5)",
+      onMove: function (px, py) { O = snap(P, px, py, [-7, -5], [2, 2]); draw(); return [P.X(O[0]), P.Y(O[1])]; },
+      valueText: function () { return "O = (" + O[0] + ", " + O[1] + ")"; } });
+    function draw() {
+      W.clear(g);
+      var img = quad.map(function (p) { return [O[0] + k * (p[0] - O[0]), O[1] + k * (p[1] - O[1])]; });
+      quad.forEach(function (p, i) {
+        var far = k >= 1 ? img[i] : p, dx = far[0] - O[0], dy = far[1] - O[1];
+        g.appendChild(seg(P, O, [O[0] + dx * 1.15, O[1] + dy * 1.15], "var(--muted)", { dash: "3 5", sw: 1.2 }));
+      });
+      g.appendChild(poly(P, quad, "var(--plot-2)"));
+      g.appendChild(poly(P, img, "var(--accent)"));
+      vlabels(g, P, quad, ["A", "B", "C", "D"], "var(--plot-2)");
+      vlabels(g, P, img, ["A′", "B′", "C′", "D′"], "var(--accent)");
+      g.appendChild(label(P, O, "O", "var(--plot-5)", -14, 20));
+      var a1 = Math.abs(area(quad)), a2 = Math.abs(area(img));
+      out.set("<p>$OA = " + num(dist(O, quad[0])) + "$, $OA' = " + num(dist(O, img[0])) + "$, ratio $" + num(k) + "$. &nbsp; $AB = " + num(dist(quad[0], quad[1])) + "$, $A'B' = " + num(dist(img[0], img[1])) + "$.</p>" +
+        "<p>Area $" + num(a1) + " \\to " + num(a2) + "$: multiplied by $k^2 = " + num(k * k, 4) + "$. Angles and directions of sides are unchanged.</p>");
+    }
+    draw();
+  });
+
+  /* ===== 19.6 — what is preserved ===== */
+  AOPS.registerWidget("invariantsExplorer", function (body) {
+    var B = board(body, "A triangle with a circle under a chosen transformation, and a table of preserved properties"), P = B.P, g = B.g;
+    var tri = [[-2, -1], [2, -1], [-1, 2]], kind = "rotate", u = 0.3;
+    var ctr = [(tri[0][0] + tri[1][0] + tri[2][0]) / 3, (tri[0][1] + tri[1][1] + tri[2][1]) / 3];
+    var ctl = W.controls(body);
+    W.slider(ctl, { label: "Amount", min: 0, max: 100, value: u * 100, format: function (v) { return v + "%"; }, onInput: function (v) { u = v / 100; draw(); } });
+    W.segmented(ctl, { title: "Transformation", value: kind, options: [{ value: "translate", label: "translate" }, { value: "rotate", label: "rotate" }, { value: "reflect", label: "reflect" }, { value: "dilate", label: "dilate" }, { value: "stretch", label: "stretch" }], onChange: function (k) { kind = k; draw(); } });
+    var out = W.readout(body);
+    function map() {
+      if (kind === "translate") return { f: function (p) { return [p[0] + 5 * u, p[1] + 3 * u]; }, d: "translate by $\\langle " + num(5 * u) + ", " + num(3 * u) + "\\rangle$" };
+      if (kind === "rotate") return { f: function (p) { return rotAbout(p, [0, 0], 360 * u); }, d: "rotate " + num(360 * u, 1) + "° about the origin" };
+      if (kind === "reflect") { var t = 180 * u * D2R, a = [0, 0], b = [Math.cos(t), Math.sin(t)]; return { f: function (p) { return reflLine(p, a, b); }, d: "reflect in the line through the origin at " + num(180 * u, 1) + "°", line: b }; }
+      if (kind === "dilate") { var k = 0.5 + 1.5 * u; return { f: function (p) { return [k * p[0], k * p[1]]; }, d: "dilate by $k = " + num(k) + "$ from the origin" }; }
+      var s = 0.5 + 2 * u; return { f: function (p) { return [s * p[0], p[1]]; }, d: "stretch horizontally by $" + num(s) + "$" };
+    }
+    function circlePts(c, r) { var o = []; for (var i = 0; i < 48; i++) { var t = 2 * Math.PI * i / 48; o.push([c[0] + r * Math.cos(t), c[1] + r * Math.sin(t)]); } return o; }
+    function draw() {
+      W.clear(g);
+      var m = map(), img = tri.map(m.f), circ = circlePts(ctr, 0.7), cimg = circ.map(m.f);
+      var M = [(tri[0][0] + tri[1][0]) / 2, (tri[0][1] + tri[1][1]) / 2], Mi = m.f(M);
+      if (m.line) g.appendChild(seg(P, [-12 * m.line[0], -12 * m.line[1]], [12 * m.line[0], 12 * m.line[1]], "var(--plot-3)", { sw: 2.5 }));
+      g.appendChild(poly(P, tri, "var(--plot-2)", { alpha: 18 }));
+      g.appendChild(poly(P, circ, "var(--plot-2)", { alpha: 0, sw: 1.5 }));
+      g.appendChild(poly(P, img, "var(--accent)", { alpha: 28 }));
+      g.appendChild(poly(P, cimg, "var(--accent)", { alpha: 0, sw: 1.5 }));
+      g.appendChild(dot(P, M, "var(--plot-2)", 4)); g.appendChild(dot(P, Mi, "var(--accent)", 4));
+      vlabels(g, P, tri, ["A", "B", "C"], "var(--plot-2)");
+      vlabels(g, P, img, ["A′", "B′", "C′"], "var(--accent)");
+      var L0 = [dist(tri[0], tri[1]), dist(tri[1], tri[2]), dist(tri[2], tri[0])], L1 = [dist(img[0], img[1]), dist(img[1], img[2]), dist(img[2], img[0])];
+      var G0 = [angleAt(tri[2], tri[0], tri[1]), angleAt(tri[0], tri[1], tri[2])], G1 = [angleAt(img[2], img[0], img[1]), angleAt(img[0], img[1], img[2])];
+      var a0 = area(tri), a1 = area(img);
+      var Mmid = [(img[0][0] + img[1][0]) / 2, (img[0][1] + img[1][1]) / 2];
+      var rs = cimg.map(function (p) { return dist(p, m.f(ctr)); }), round = Math.max.apply(null, rs) - Math.min.apply(null, rs) < 1e-6;
+      function eq(x, y) { return Math.abs(x - y) < 1e-6; }
+      var rows = [
+        ["Lengths", L0.every(function (x, i) { return eq(x, L1[i]); }), "AB: " + num(L0[0]) + " → " + num(L1[0])],
+        ["Angles", G0.every(function (x, i) { return eq(x, G1[i]); }), "∠A: " + num(G0[0], 1) + "° → " + num(G1[0], 1) + "°"],
+        ["Area", eq(Math.abs(a0), Math.abs(a1)), num(Math.abs(a0)) + " → " + num(Math.abs(a1))],
+        ["Orientation", (a0 > 0) === (a1 > 0), (a0 > 0 ? "counterclockwise" : "clockwise") + " → " + (a1 > 0 ? "counterclockwise" : "clockwise")],
+        ["Midpoint of AB", eq(Mi[0], Mmid[0]) && eq(Mi[1], Mmid[1]), "image of M is the midpoint of A′B′"],
+        ["Circle stays a circle", round, round ? "still round" : "now an ellipse"]
+      ];
+      var td = "padding:3px 10px 3px 0;vertical-align:top";
+      out.set("<p>Now: " + m.d + ".</p><table style=\"border-collapse:collapse;font-size:0.95em\">" + rows.map(function (r) {
+        return "<tr><td style=\"" + td + "\">" + r[0] + "</td><td style=\"" + td + ";font-weight:700;color:" + (r[1] ? "var(--plot-4)" : "var(--plot-5)") + "\">" + (r[1] ? "kept" : "changed") + "</td><td style=\"" + td + ";color:var(--muted)\">" + r[2] + "</td></tr>";
+      }).join("") + "</table>");
+    }
+    draw();
+  });
+
+  /* ===== 19.7 — two reflections ===== */
+  AOPS.registerWidget("twoMirrors", function (body) {
+    var B = board(body, "A letter F reflected in two mirrors in turn"), P = B.P, g = B.g;
+    var mode = "cross", th = 40, d = 2;
+    var ctl = W.controls(body);
+    var sl = W.slider(ctl, { label: "Angle between mirrors θ", min: 0, max: 90, step: 5, value: th, format: function (v) { return mode === "cross" ? v + "°" : num(v / 20, 2); }, onInput: function (v) { if (mode === "cross") th = v; else d = v / 20; draw(); } });
+    W.segmented(ctl, { title: "Mirrors", value: mode, options: [{ value: "cross", label: "crossing" }, { value: "par", label: "parallel" }], onChange: function (m) {
+      mode = m;
+      sl.input.parentNode.querySelector("label span").textContent = m === "cross" ? "Angle between mirrors θ" : "Gap between mirrors d";
+      sl.set(m === "cross" ? th : d * 20);
+    } });
+    var out = W.readout(body);
+    function draw() {
+      W.clear(g);
+      var F0, F1, F2, A0, A2;
+      if (mode === "cross") {
+        F0 = F_SHAPE.map(function (p) { return [p[0] * 0.9 + 2.2, p[1] * 0.9 + 0.3]; });
+        var m2 = [Math.cos(th * D2R), Math.sin(th * D2R)];
+        F1 = F0.map(function (p) { return reflLine(p, [0, 0], [1, 0]); });
+        F2 = F1.map(function (p) { return reflLine(p, [0, 0], m2); });
+        g.appendChild(seg(P, [-12, 0], [12, 0], "var(--plot-3)", { sw: 3 }));
+        g.appendChild(seg(P, [-12 * m2[0], -12 * m2[1]], [12 * m2[0], 12 * m2[1]], "var(--plot-5)", { sw: 3 }));
+        g.appendChild(label(P, [7, 0], "mirror 1", "var(--plot-3)", 0, -10));
+        g.appendChild(label(P, [5.6 * m2[0], 5.6 * m2[1]], "mirror 2", "var(--plot-5)", 34, 0));
+        A0 = F0[2]; A2 = F2[2];
+        var r = Math.hypot(A0[0], A0[1]), a0 = Math.atan2(A0[1], A0[0]), sweep = 2 * th;
+        if (sweep > 0) {
+          var e = [r * Math.cos(a0 + sweep * D2R), r * Math.sin(a0 + sweep * D2R)];
+          g.appendChild(W.s("path", { d: "M" + P.X(A0[0]) + " " + P.Y(A0[1]) + " A " + r * P.sx + " " + r * P.sy + " 0 " + (sweep > 180 ? 1 : 0) + " 0 " + P.X(e[0]) + " " + P.Y(e[1]), fill: "none", stroke: "var(--plot-4)", "stroke-width": 2, "stroke-dasharray": "6 5" }));
+        }
+        g.appendChild(dot(P, [0, 0], "var(--ink)", 4));
+      } else {
+        F0 = F_SHAPE.map(function (p) { return [p[0] - 5, p[1] - 1.5]; });
+        F1 = F0.map(function (p) { return [-p[0], p[1]]; });
+        F2 = F1.map(function (p) { return [2 * d - p[0], p[1]]; });
+        g.appendChild(seg(P, [0, -7], [0, 7], "var(--plot-3)", { sw: 3 }));
+        g.appendChild(seg(P, [d, -7], [d, 7], "var(--plot-5)", { sw: 3 }));
+        g.appendChild(label(P, [0, -5.2], "mirror 1", "var(--plot-3)", -36, 0));
+        g.appendChild(label(P, [d, -5.2], "mirror 2", "var(--plot-5)", 36, 0));
+        A0 = F0[2]; A2 = F2[2];
+        if (d > 0) g.appendChild(arrow(P, [A0[0], A0[1] + 0.6], [A2[0], A2[1] + 0.6], "var(--plot-4)", { dash: "6 4" }));
+      }
+      g.appendChild(poly(P, F0, "var(--plot-2)", { alpha: 30 }));
+      g.appendChild(poly(P, F1, "var(--muted)", { alpha: 10, dash: "4 4", sw: 1.5 }));
+      g.appendChild(poly(P, F2, "var(--accent)", { alpha: 35 }));
+      g.appendChild(label(P, F0[1], "F", "var(--plot-2)", -10, -6));
+      g.appendChild(label(P, F1[1], "F′", "var(--muted)", 12, -6));
+      g.appendChild(label(P, F2[1], "F″", "var(--accent)", 12, -6));
+      if (mode === "cross") out.set("<p>Mirror 1, then mirror 2, at angle $\\theta = " + th + "^\\circ$: the gold F is the blue F <strong>rotated by $2\\theta = " + 2 * th + "^\\circ$</strong> about the crossing point." + (th === 0 ? " (The mirrors coincide, so the second flip undoes the first.)" : th === 90 ? " Perpendicular mirrors give a half turn." : "") + " The dashed F after one reflection is backwards; the second reflection turns it right-way round again.</p>");
+      else out.set("<p>Parallel mirrors $d = " + num(d) + "$ apart: the gold F is the blue F <strong>translated by $2d = " + num(2 * d) + "$</strong>, perpendicular to the mirrors.</p>");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
