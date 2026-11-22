@@ -1,0 +1,753 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 8: What Numbers Really Are · AoPS Learner</title>
+  <meta name="description" content="Integers, rationals and their decimals, comparing fractions, lowest terms, proofs of irrationality, and why the complex numbers complete the number system, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="8" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 8 · Algebra &amp; Number</span>
+    <h1>What Numbers Really Are</h1>
+    <p class="lede">You have used numbers for years, but could you say exactly what a rational number is, or prove that some number is <em>not</em> one? This chapter builds the number system one layer at a time: integers, then fractions and their decimals, then the irrationals that fractions can't reach, and finally the complex numbers, where every polynomial has its roots.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>A rational number is $\frac{p}{q}$ with integers $p, q$ and $q > 0$. Every integer is rational ($n = \frac{n}{1}$).</li>
+      <li>Fraction to decimal: long division. The decimal terminates exactly when the reduced denominator has no prime factors other than $2$ and $5$; otherwise it repeats.</li>
+      <li>Repeating decimal to fraction: multiply by $10^k$ ($k$ = length of the repeating block) and subtract to cancel the endless tail.</li>
+      <li>Compare $\frac ab$ and $\frac cd$ (positive denominators) by comparing $ad$ and $bc$: put a "?" between them and clear denominators.</li>
+      <li>Lowest terms: numerator and denominator share no common factor. Assuming a fraction is in lowest terms and finding a common factor is the classic irrationality proof.</li>
+      <li>Rational $\pm$ irrational is irrational; a rational multiple (nonzero) of an irrational is irrational.</li>
+      <li>Fundamental Theorem of Algebra: a polynomial of degree $n \ge 1$ has a complex root, so it factors into $n$ linear factors over $\mathbb{C}$. Real polynomials have non-real roots in conjugate pairs.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 8.1 ===================== -->
+  <section class="lesson" id="s8-1" data-title="Integers and Rationals">
+    <h2><span class="sec-num">8.1</span> Integers and Rationals</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Type $1 \div 7$ into a calculator: $0.142857142\ldots$ The six digits $142857$ repeat forever. Try $1 \div 8$ and the decimal simply stops at $0.125$. Why do some fractions stop while others cycle, and why is the cycle for sevenths exactly six digits long? The answer is hiding in the remainders of long division.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>The <strong>natural numbers</strong> $1, 2, 3, \ldots$ count things. Adding $0$ and the negatives gives the <strong>integers</strong> $\ldots, -2, -1, 0, 1, 2, \ldots$. Watch the wording in problems: <em>positive</em> integers start at $1$, while <em>nonnegative</em> integers include $0$.</p>
+      <p>A <strong>rational number</strong> is a ratio $\frac{p}{q}$ of integers with $q > 0$; $p$ is the numerator and $q$ the denominator. Every integer is rational, since $n = \frac{n}{1}$.</p>
+      <p>Long division turns any fraction into a decimal. At each step the remainder is one of $0, 1, \ldots, q-1$. If a remainder is $0$, the decimal <strong>terminates</strong>. If not, some remainder must eventually come back, and from then on the digits <strong>repeat</strong>. The repeating block can be at most $q - 1$ digits long.</p>
+      <div class="rule"><p>In lowest terms, $\dfrac{p}{q}$ terminates $\iff$ $q = 2^a 5^b$ for some $a, b \ge 0$.</p></div>
+      <p>Going backwards, a terminating decimal is a fraction over a power of ten, such as $0.375 = \frac{375}{1000}$. For a repeating decimal, shift by the length of the block and subtract:</p>
+      <div class="rule"><p>$$x = 0.\overline{27} \;\Rightarrow\; 100x = 27.\overline{27} \;\Rightarrow\; 99x = 27 \;\Rightarrow\; x = \tfrac{27}{99} = \tfrac{3}{11}.$$</p></div>
+      <p>To decide which of two fractions is larger, write $\frac ab \;?\; \frac cd$ with the unknown symbol in the middle. Multiplying both sides by the positive numbers $b$ and $d$ doesn't change the symbol, so it is the same as the one in $ad \;?\; bc$.</p>
+    </div>
+
+    <figure class="explore" data-widget="remainderClock">
+      <figcaption><strong>Explore:</strong> The circle shows every possible remainder when dividing by $q$. Long division hops from remainder to remainder. If it lands on $0$, the decimal stops; if it revisits a remainder, it is trapped in a loop and the digits repeat. Use <em>Step</em> to follow the division one digit at a time.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="fractionCompare">
+      <figcaption><strong>Explore:</strong> Set two fractions. The number line shows which is larger, and the readout shows the cross-multiplication test giving the same verdict without any decimals.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Sorting numbers into sets</h3>
+        <div class="problem"><p>For each of $-3$, $0$, $\dfrac{12}{4}$, $2.5$ and $-\dfrac{4}{6}$, decide whether it is a positive integer, a nonnegative integer, an integer, and a rational number.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{12}{4} = 3$: positive integer, nonnegative integer, integer, rational.</p></div><p class="why">Simplify first. What matters is the number, not how it's written.</p></li>
+          <li><div class="do"><p>$0$: nonnegative integer, integer, rational, but <em>not</em> positive.</p></div><p class="why">Zero is neither positive nor negative, which is why "nonnegative" and "positive" differ.</p></li>
+          <li><div class="do"><p>$-3$: integer and rational only.</p></div><p class="why">Negative, so neither positive nor nonnegative.</p></li>
+          <li><div class="do"><p>$2.5 = \dfrac52$ and $-\dfrac46 = -\dfrac23$: rational, not integers.</p></div><p class="why">Each is a ratio of integers with positive denominator, but neither is a whole number.</p></li>
+        </ol>
+        <p class="answer">Only $\frac{12}{4} = 3$ is a positive integer; $0$ and $3$ are nonnegative integers; $-3, 0, 3$ are integers; all five are rational.</p>
+        <p class="book-next">Next in the book: Exercise 8-1.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>A terminating decimal as a fraction</h3>
+        <div class="problem"><p>Write $0.375$ as a fraction in lowest terms.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$0.375 = \dfrac{375}{1000}$.</p></div><p class="why">Three digits after the point means a denominator of $10^3$.</p></li>
+          <li><div class="do"><p>$\dfrac{375}{1000} = \dfrac{3 \cdot 125}{8 \cdot 125} = \dfrac38$.</p></div><p class="why">Divide top and bottom by their greatest common factor, $125$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{3}{8}$</p>
+        <p class="book-next">Next in the book: Example 8-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Long division that starts repeating late</h3>
+        <div class="problem"><p>Write $\dfrac{5}{12}$ as a decimal.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$50 \div 12 = 4$ remainder $2$. Digit: $4$.</p></div><p class="why">Bring down a zero after $5$ and divide.</p></li>
+          <li><div class="do"><p>$20 \div 12 = 1$ remainder $8$. Digit: $1$.</p></div><p class="why">Each new remainder, times ten, is the next thing to divide.</p></li>
+          <li><div class="do"><p>$80 \div 12 = 6$ remainder $8$. Digit: $6$.</p></div><p class="why">The remainder $8$ has appeared before, so the same step will repeat forever.</p></li>
+          <li><div class="do"><p>$\dfrac{5}{12} = 0.41666\ldots = 0.41\overline{6}$.</p></div><p class="why">Only the $6$ repeats; the $4$ and $1$ come before the loop.</p></li>
+        </ol>
+        <p class="answer">$0.41\overline{6}$</p>
+        <p class="book-next">Next in the book: Example 8-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A pure repeating decimal</h3>
+        <div class="problem"><p>Write $0.\overline{36}$ as a fraction in lowest terms.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $x = 0.363636\ldots$. Then $100x = 36.363636\ldots$</p></div><p class="why">The block has length $2$, so multiplying by $10^2$ lines the tails up exactly.</p></li>
+          <li><div class="do"><p>Subtract: $100x - x = 36$, so $99x = 36$.</p></div><p class="why">The infinite tails are identical and cancel completely.</p></li>
+          <li><div class="do"><p>$x = \dfrac{36}{99} = \dfrac{4}{11}$.</p></div><p class="why">Divide top and bottom by $9$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{4}{11}$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A decimal with a delay before it repeats</h3>
+        <div class="problem"><p>Write $2.1\overline{45} = 2.1454545\ldots$ as a fraction in lowest terms.</p></div>
+        <ol class="steps">
+          <li data-think="If you multiply by 100 right away, do the tails line up?"><div class="do"><p>Let $x = 2.1454545\ldots$. Then $10x = 21.454545\ldots$ and $1000x = 2145.454545\ldots$</p></div><p class="why">First shift the non-repeating digit past the point ($\times 10$); then shift one more full block ($\times 1000$).</p></li>
+          <li><div class="do"><p>$1000x - 10x = 2145 - 21 = 2124$, so $990x = 2124$.</p></div><p class="why">Both numbers end in the same tail $.4545\ldots$, so it cancels.</p></li>
+          <li><div class="do"><p>$x = \dfrac{2124}{990} = \dfrac{118}{55}$.</p></div><p class="why">$\gcd(2124, 990) = 18$. Check: $118 \div 55 = 2.14545\ldots$ ✓</p></li>
+        </ol>
+        <p class="answer">$\dfrac{118}{55}$</p>
+        <p class="book-next">Next in the book: Example 8-2 and Exercise 8-3.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Which fractions terminate?</h3>
+        <div class="problem"><p>Without dividing, decide which of $\dfrac{7}{40}$, $\dfrac{3}{14}$, $\dfrac{21}{56}$ and $\dfrac{11}{75}$ have terminating decimals.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Reduce each fraction: $\dfrac{7}{40}$, $\dfrac{3}{14}$, $\dfrac{21}{56} = \dfrac{3}{8}$, $\dfrac{11}{75}$.</p></div><p class="why">The rule applies to the denominator in <em>lowest terms</em>; a common factor could hide or create a bad prime.</p></li>
+          <li><div class="do"><p>$40 = 2^3 \cdot 5$ ✓, $14 = 2 \cdot 7$ ✗, $8 = 2^3$ ✓, $75 = 3 \cdot 5^2$ ✗.</p></div><p class="why">A fraction over $2^a5^b$ can be rewritten over a power of $10$; any other prime prevents that.</p></li>
+          <li><div class="do"><p>Indeed $\dfrac{7}{40} = 0.175$ and $\dfrac38 = 0.375$.</p></div><p class="why">For example, $\frac{7}{40} = \frac{7 \cdot 25}{40 \cdot 25} = \frac{175}{1000}$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{7}{40}$ and $\dfrac{21}{56}$ terminate; $\dfrac{3}{14}$ and $\dfrac{11}{75}$ repeat.</p>
+        <p class="book-next">Next in the book: Exercise 8-2.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Compare two close fractions</h3>
+        <div class="problem"><p>Which is larger, $\dfrac{13}{29}$ or $\dfrac{22}{49}$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Write $\dfrac{13}{29} \;?\; \dfrac{22}{49}$ and multiply both sides by $29 \cdot 49$: $13 \cdot 49 \;?\; 22 \cdot 29$.</p></div><p class="why">Multiplying by a positive number keeps the direction of any inequality.</p></li>
+          <li><div class="do"><p>$637 \;?\; 638$, so the symbol is $&lt;$.</p></div><p class="why">The integers are easy to compare.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{22}{49}$ is larger (just barely).</p>
+        <p class="book-next">Next in the book: Exercises 8-4 and 8-5.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Is 0.999... really 1?</h3>
+        <div class="problem"><p>Find the fraction equal to $0.\overline{9}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $x = 0.999\ldots$. Then $10x = 9.999\ldots$</p></div><p class="why">The repeating block has length $1$.</p></li>
+          <li><div class="do"><p>$10x - x = 9$, so $9x = 9$ and $x = 1$.</p></div><p class="why">The same subtraction trick as before; nothing special happens just because the digit is $9$.</p></li>
+          <li><div class="do"><p>Another view: $\tfrac13 = 0.\overline{3}$, and tripling gives $1 = 0.\overline{9}$.</p></div><p class="why">Two different decimals can name the same number; $0.\overline{9}$ and $1$ have no gap between them.</p></li>
+        </ol>
+        <p class="answer">$0.\overline{9} = 1$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Adding one to the top and bottom</h3>
+        <div class="problem"><p>If $a$ and $b$ are positive integers with $a &lt; b$, which is larger: $\dfrac{a}{b}$ or $\dfrac{a+1}{b+1}$?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{a}{b} \;?\; \dfrac{a+1}{b+1}$ becomes $a(b+1) \;?\; b(a+1)$.</p></div><p class="why">Clear the positive denominators $b$ and $b + 1$.</p></li>
+          <li><div class="do"><p>$ab + a \;?\; ab + b$, so $a \;?\; b$.</p></div><p class="why">Subtract $ab$ from both sides; the symbol doesn't change.</p></li>
+          <li data-think="What do we already know about $a$ and $b$?"><div class="do"><p>We know $a &lt; b$, so the symbol is $&lt;$ and $\dfrac{a}{b} &lt; \dfrac{a+1}{b+1}$.</p></div><p class="why">Working backwards from a known fact reveals the original symbol. Example: $\frac23 &lt; \frac34$.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{a+1}{b+1}$ is larger.</p>
+        <p class="key-idea">Put a "?" between two quantities, simplify, and read off the symbol at the end.</p>
+        <p class="book-next">Next in the book: Example 8-4 and Exercise 8-6.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>How long can the cycle be?</h3>
+        <div class="problem"><p>Find the repeating block of $\dfrac{1}{13}$ and explain why no fraction with denominator $13$ can have a block longer than $12$ digits.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Remainders: $1 \to 10 \to 9 \to 12 \to 3 \to 4 \to 1$. Digits: $10 \div 13 = 0$, $100 \div 13 = 7$, $90 \div 13 = 6$, $120 \div 13 = 9$, $30 \div 13 = 2$, $40 \div 13 = 3$.</p></div><p class="why">Each step multiplies the remainder by $10$ and divides by $13$; the remainder $1$ returns after six steps.</p></li>
+          <li><div class="do"><p>So $\dfrac{1}{13} = 0.\overline{076923}$, a block of $6$ digits.</p></div><p class="why">Once a remainder repeats, every later step repeats too.</p></li>
+          <li data-think="How many different nonzero remainders are possible when you divide by 13?"><div class="do"><p>For a repeating decimal, the remainders are all from $\{1, 2, \ldots, 12\}$. Within $12$ steps one must repeat, so the block has at most $12$ digits.</p></div><p class="why">There are only $12$ possible nonzero remainders, so after at most $12$ steps the division must return to one it has already seen.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{1}{13} = 0.\overline{076923}$; a block for denominator $13$ has at most $12$ digits.</p>
+        <p class="key-idea">Finitely many remainders force every rational decimal to stop or repeat.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 8.2 ===================== -->
+  <section class="lesson" id="s8-2" data-title="Lowest Terms and Irrationals">
+    <h2><span class="sec-num">8.2</span> Lowest Terms and Irrationals</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>$\frac{7}{5} = 1.4$, $\frac{17}{12} \approx 1.4167$, $\frac{41}{29} \approx 1.41379$, $\frac{99}{70} \approx 1.414286$. These fractions squeeze ever closer to $\sqrt2 \approx 1.414214$. Is there some fraction, perhaps with a huge denominator, that hits $\sqrt2$ exactly? Over two thousand years ago, a short argument about lowest terms answered no.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A fraction $\frac pq$ is in <strong>lowest terms</strong> when $p$ and $q$ have no common factor greater than $1$. Every rational can be reduced to lowest terms by dividing out $\gcd(p, q)$, and that form is unique.</p>
+      <p>That simple fact powers <strong>proof by contradiction</strong>. To show $\sqrt2$ is not rational:</p>
+      <ol>
+        <li>Suppose $\sqrt2 = \frac pq$ in lowest terms. Then $p^2 = 2q^2$, so $p^2$ is even, and therefore $p$ is even (an odd number squared is odd).</li>
+        <li>Write $p = 2r$. Then $4r^2 = 2q^2$, so $q^2 = 2r^2$ and $q$ is even too.</li>
+        <li>Now $p$ and $q$ share the factor $2$, contradicting lowest terms. So no such fraction exists.</li>
+      </ol>
+      <p>Numbers that are not rational are <strong>irrational</strong>. Their decimals never terminate and never repeat. Rationals and irrationals together form the <strong>real numbers</strong>. Some irrationals, like $\sqrt2$, are roots of integer polynomials ($x^2 - 2 = 0$); others, like $\pi$ and $e$, are not, and are called <strong>transcendental</strong>.</p>
+      <div class="note"><p>Useful facts: if $r$ is rational and $x$ irrational, then $r + x$ and $rx$ (for $r \ne 0$) are irrational, because otherwise you could solve for $x$ as a rational. But two irrationals can add or multiply to a rational: $\sqrt2 \cdot \sqrt2 = 2$.</p></div>
+      <p>Irrationals can be approached by rationals as closely as we like, for example $1, 1.4, 1.41, 1.414, \ldots$ for $\sqrt2$, and that is how they are built rigorously from the rationals.</p>
+    </div>
+
+    <figure class="explore" data-widget="latticeRay">
+      <figcaption><strong>Explore:</strong> A fraction $\frac pq$ is the ray from the origin through the dot $(q, p)$. Every dot on that ray names the same number, and the <em>first</em> dot is the fraction in lowest terms. Switch to the $\sqrt2$ ray: it passes between dots forever, never hitting one exactly.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="sqrtTwoSteps">
+      <figcaption><strong>Explore:</strong> Start from $\frac11$ and repeatedly replace $\frac pq$ by $\frac{p+2q}{p+q}$. Watch the zoomed number line and the table: the fractions close in on $\sqrt2$, but $p^2 - 2q^2$ is never $0$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Reduce to lowest terms</h3>
+        <div class="problem"><p>Write $\dfrac{84}{126}$ in lowest terms.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$84 = 2^2 \cdot 3 \cdot 7$ and $126 = 2 \cdot 3^2 \cdot 7$, so $\gcd(84, 126) = 2 \cdot 3 \cdot 7 = 42$.</p></div><p class="why">The gcd takes each shared prime to the smaller power.</p></li>
+          <li><div class="do"><p>$\dfrac{84}{126} = \dfrac{84 \div 42}{126 \div 42} = \dfrac23$.</p></div><p class="why">Dividing by the gcd removes every common factor in one step.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{2}{3}$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Rational or not?</h3>
+        <div class="problem"><p>Which of $\sqrt{49}$, $\sqrt{\tfrac{9}{16}}$, $\sqrt{0.04}$, $0.\overline{3}$ and $\sqrt{50}$ are rational?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\sqrt{49} = 7$, $\sqrt{\tfrac9{16}} = \tfrac34$, $\sqrt{0.04} = 0.2$, $0.\overline3 = \tfrac13$.</p></div><p class="why">Each simplifies to a ratio of integers.</p></li>
+          <li><div class="do"><p>$\sqrt{50} = 5\sqrt2$, which is irrational.</p></div><p class="why">A nonzero rational times the irrational $\sqrt2$ is irrational.</p></li>
+        </ol>
+        <p class="answer">All except $\sqrt{50}$ are rational.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Prove that the square root of 3 is irrational</h3>
+        <div class="problem"><p>Prove that $\sqrt3$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $\sqrt3 = \dfrac pq$ in lowest terms. Then $p^2 = 3q^2$.</p></div><p class="why">Square both sides and clear the denominator.</p></li>
+          <li data-think="If $3$ divides $p^2$, must $3$ divide $p$?"><div class="do"><p>$3$ divides $p^2$, so $3$ divides $p$. Write $p = 3r$.</p></div><p class="why">$3$ is prime: if it divides a product $p \cdot p$, it divides one of the factors.</p></li>
+          <li><div class="do"><p>$9r^2 = 3q^2$, so $q^2 = 3r^2$, and $3$ divides $q$ as well.</p></div><p class="why">The same reasoning applied to $q$.</p></li>
+          <li><div class="do"><p>Then $3$ divides both $p$ and $q$, contradicting lowest terms. So $\sqrt3$ is irrational.</p></div><p class="why">The assumption led to something impossible, so it was false.</p></li>
+        </ol>
+        <p class="answer">$\sqrt3$ is irrational.</p>
+        <p class="book-next">Next in the book: Exercise 8-7.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A decimal that never settles</h3>
+        <div class="problem"><p>Is $0.101001000100001\ldots$ (one more $0$ before each new $1$) rational?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Every rational has a decimal that terminates or eventually repeats a fixed block.</p></div><p class="why">That's the remainder argument from Section 8.1.</p></li>
+          <li data-think="If it repeated a block of length $k$, what would the long runs of zeros do?"><div class="do"><p>This decimal doesn't terminate (it has infinitely many $1$s). If it repeated a block of length $k$, it could never contain a run of more than $k$ zeros in a row, but its runs of zeros grow without bound.</p></div><p class="why">A repeating block of length $k$ that contains a $1$ puts a $1$ in every stretch of $k$ digits.</p></li>
+          <li><div class="do"><p>So the decimal neither terminates nor repeats, and the number is irrational.</p></div><p class="why">It isn't any fraction.</p></li>
+        </ol>
+        <p class="answer">No; it is irrational.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Rational plus irrational</h3>
+        <div class="problem"><p>Prove that $1 + \sqrt2$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $1 + \sqrt2 = r$ for some rational $r$.</p></div><p class="why">Assume the opposite and look for a contradiction.</p></li>
+          <li><div class="do"><p>Then $\sqrt2 = r - 1$, which is rational.</p></div><p class="why">The difference of two rationals is rational: $\frac ab - 1 = \frac{a-b}{b}$.</p></li>
+          <li><div class="do"><p>But $\sqrt2$ is irrational, so $1 + \sqrt2$ is irrational.</p></div><p class="why">Contradiction with the proof given in the Concept above.</p></li>
+        </ol>
+        <p class="answer">$1 + \sqrt2$ is irrational.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Reduce before you decide</h3>
+        <div class="problem"><p>Are $\sqrt{\tfrac{18}{50}}$ and $\sqrt{\tfrac{12}{27}}$ rational?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{18}{50} = \dfrac{9}{25}$, so $\sqrt{\tfrac{18}{50}} = \dfrac35$.</p></div><p class="why">Neither $18$ nor $50$ is a perfect square, yet the fraction is the square of $\frac35$, because they share the factor $2$.</p></li>
+          <li><div class="do"><p>$\dfrac{12}{27} = \dfrac{4}{9}$, so $\sqrt{\tfrac{12}{27}} = \dfrac23$.</p></div><p class="why">Here the common factor is $3$.</p></li>
+          <li><div class="do"><p>Both are rational.</p></div><p class="why">In lowest terms, a fraction has a rational square root exactly when its numerator and denominator are both perfect squares.</p></li>
+        </ol>
+        <p class="answer">Yes: $\dfrac35$ and $\dfrac23$.</p>
+        <p class="book-next">Next in the book: Exercises 8-8 and 8-9.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>The square root of 6</h3>
+        <div class="problem"><p>Prove that $\sqrt6$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $\sqrt6 = \dfrac pq$ in lowest terms, so $p^2 = 6q^2$. Then $p^2$ is even, so $p$ is even; write $p = 2r$.</p></div><p class="why">Same opening as for $\sqrt2$: $6q^2$ is even.</p></li>
+          <li data-think="After substituting $p = 2r$, what can you say about $q$?"><div class="do"><p>$4r^2 = 6q^2$, so $2r^2 = 3q^2$. The left side is even, so $3q^2$ is even, which forces $q$ to be even.</p></div><p class="why">$3$ is odd, so $3q^2$ is even only if $q^2$ is even.</p></li>
+          <li><div class="do"><p>Both $p$ and $q$ are even, contradicting lowest terms.</p></div><p class="why">The factor $2$ is shared.</p></li>
+        </ol>
+        <p class="answer">$\sqrt6$ is irrational.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Two irrationals can make a rational</h3>
+        <div class="problem"><p>Find two irrational numbers whose sum is rational, and two whose product is rational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\sqrt2$ and $3 - \sqrt2$ are both irrational, and their sum is $3$.</p></div><p class="why">$3 - \sqrt2$ is irrational by the rational-plus-irrational argument.</p></li>
+          <li><div class="do"><p>$\sqrt2$ and $\sqrt8 = 2\sqrt2$ are irrational, and their product is $\sqrt{16} = 4$.</p></div><p class="why">Products of square roots can become perfect squares.</p></li>
+        </ol>
+        <p class="answer">For example $\sqrt2 + (3 - \sqrt2) = 3$ and $\sqrt2 \cdot \sqrt8 = 4$.</p>
+        <p class="key-idea">Rational with irrational stays irrational, but irrational with irrational can go either way.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>An irrational logarithm</h3>
+        <div class="problem"><p>Prove that $\log_2 3$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\log_2 3 > 0$, since $3 > 1$. Suppose $\log_2 3 = \dfrac pq$ with positive integers $p, q$.</p></div><p class="why">A positive rational can be written with a positive numerator and denominator.</p></li>
+          <li><div class="do"><p>Then $2^{p/q} = 3$, so $2^p = 3^q$.</p></div><p class="why">Translate the log to an exponent and raise both sides to the power $q$.</p></li>
+          <li data-think="Compare the parity of the two sides."><div class="do"><p>$2^p$ is even (since $p \ge 1$) but $3^q$ is odd. They can't be equal.</p></div><p class="why">A parity contradiction, with no need for lowest terms at all.</p></li>
+        </ol>
+        <p class="answer">$\log_2 3$ is irrational.</p>
+        <p class="key-idea">Turn the assumed fraction into an equation between integers, then look for something impossible.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A sum of two square roots</h3>
+        <div class="problem"><p>Prove that $\sqrt2 + \sqrt3$ is irrational.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Suppose $\sqrt2 + \sqrt3 = r$, rational. Square: $2 + 2\sqrt6 + 3 = r^2$.</p></div><p class="why">Squaring merges the two roots into a single one.</p></li>
+          <li><div class="do"><p>So $\sqrt6 = \dfrac{r^2 - 5}{2}$, which would be rational.</p></div><p class="why">Rationals are closed under squaring, subtracting and dividing by $2$.</p></li>
+          <li><div class="do"><p>But $\sqrt6$ is irrational (shown above). Contradiction, so $\sqrt2 + \sqrt3$ is irrational.</p></div><p class="why">Reduce a new claim to one already proved.</p></li>
+        </ol>
+        <p class="answer">$\sqrt2 + \sqrt3$ is irrational.</p>
+        <p class="book-next">Next in the book: Exercise 8-10.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 8.3 ===================== -->
+  <section class="lesson" id="s8-3" data-title="Complex and Beyond">
+    <h2><span class="sec-num">8.3</span> Complex and Beyond</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Every time the number system was extended, it was to solve an equation the old numbers couldn't: $x + 5 = 2$ needs negatives, $3x = 2$ needs fractions, $x^2 = 2$ needs irrationals, and $x^2 = -1$ needs $i$. Will $x^5 + x + 1 = 0$ force yet another kind of number? Remarkably, no. With the complex numbers the story ends.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>complex number</strong> is $a + bi$ with $a, b$ real and $i^2 = -1$ (Chapter 2). The real numbers are the complex numbers with $b = 0$. So the layers nest:</p>
+      <div class="rule"><p>$$\text{natural numbers} \subset \text{integers} \subset \text{rationals} \subset \text{reals} \subset \text{complex numbers}.$$</p></div>
+      <p>Over the reals, $x^2 + 1$ has no roots. Over the complex numbers it has two, $\pm i$. The key theorem says this always works:</p>
+      <div class="rule"><p><strong>Fundamental Theorem of Algebra.</strong> Every polynomial of degree $n \ge 1$ with real or complex coefficients has at least one complex root.</p></div>
+      <p>If $a$ is a root of $f(z)$, then $f(z) = (z - a)g(z)$ with $g$ of degree $n - 1$. Apply the theorem to $g$ and repeat: $f$ splits into exactly $n$ linear factors. Some roots may repeat, as in $(z-1)^3$, so we say a degree-$n$ polynomial has $n$ roots <em>counted with multiplicity</em>.</p>
+      <div class="note"><p>If the coefficients are real, non-real roots come in <strong>conjugate pairs</strong> $a \pm bi$, and each pair multiplies to a real quadratic $(x-a)^2 + b^2$. That's why a real cubic always has at least one real root.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="quadRoots">
+      <figcaption><strong>Explore:</strong> Change $b$ and $c$ in $x^2 + bx + c$. While the parabola crosses the axis, both roots sit on the real line of the complex plane. Raise $c$ until the parabola lifts off: the roots meet, then split apart vertically as a conjugate pair $p \pm qi$. They never disappear.</figcaption>
+    </figure>
+
+    <figure class="explore" data-widget="unityRoots">
+      <figcaption><strong>Explore:</strong> The equation $z^n = 1$ has degree $n$, so it has $n$ complex roots, spaced evenly around the unit circle. Count how few of them are real.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>The smallest set each number belongs to</h3>
+        <div class="problem"><p>Name the smallest of natural numbers, integers, rationals, reals and complex numbers that contains each of $7$, $-2$, $\tfrac34$, $\sqrt2$, $\pi$, $\sqrt{-4}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$7$: natural numbers. $-2$: integers. $\tfrac34$: rationals.</p></div><p class="why">Each one is in that set but not in the one before it.</p></li>
+          <li><div class="do"><p>$\sqrt2$ and $\pi$: reals (both irrational).</p></div><p class="why">Neither can be written as a fraction.</p></li>
+          <li><div class="do"><p>$\sqrt{-4} = 2i$: complex numbers.</p></div><p class="why">No real number squares to $-4$.</p></li>
+        </ol>
+        <p class="answer">$7$: natural; $-2$: integer; $\tfrac34$: rational; $\sqrt2, \pi$: real; $\sqrt{-4} = 2i$: complex.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>No real roots, two complex ones</h3>
+        <div class="problem"><p>Solve $x^2 + 9 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 = -9$.</p></div><p class="why">Isolate the square. No real number works, since real squares are $\ge 0$.</p></li>
+          <li><div class="do"><p>$x = \pm\sqrt{-9} = \pm 3i$. Check: $(3i)^2 = 9i^2 = -9$. ✓</p></div><p class="why">Over the complex numbers, the degree-$2$ equation has its $2$ roots.</p></li>
+        </ol>
+        <p class="answer">$x = 3i$ or $x = -3i$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A conjugate pair from the quadratic formula</h3>
+        <div class="problem"><p>Solve $x^2 - 4x + 13 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Complete the square: $(x - 2)^2 + 9 = 0$, so $(x-2)^2 = -9$.</p></div><p class="why">$x^2 - 4x + 4 = (x-2)^2$, and $13 = 4 + 9$.</p></li>
+          <li><div class="do"><p>$x - 2 = \pm 3i$, so $x = 2 \pm 3i$.</p></div><p class="why">Take both square roots of $-9$.</p></li>
+          <li><div class="do"><p>Check with Vieta: sum $= 4$ ✓, product $= 4 + 9 = 13$ ✓.</p></div><p class="why">$(2+3i)(2-3i) = 4 - 9i^2 = 13$.</p></li>
+        </ol>
+        <p class="answer">$x = 2 \pm 3i$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Counting roots with multiplicity</h3>
+        <div class="problem"><p>How many roots does $(x-1)^2(x+2)$ have? How many different roots?</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Expanded, the polynomial has degree $2 + 1 = 3$.</p></div><p class="why">Degrees add when polynomials multiply.</p></li>
+          <li><div class="do"><p>The roots are $1, 1, -2$: three roots counted with multiplicity.</p></div><p class="why">The factor $(x-1)$ appears twice, so the root $1$ counts twice.</p></li>
+          <li><div class="do"><p>Only two are different: $1$ and $-2$.</p></div><p class="why">This is why the theorem is stated as "at least one root" and then factored repeatedly, rather than "$n$ different roots."</p></li>
+        </ol>
+        <p class="answer">$3$ roots with multiplicity; $2$ different roots.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>All three cube roots of 8</h3>
+        <div class="problem"><p>Find all complex solutions of $x^3 = 8$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^3 - 8 = (x - 2)(x^2 + 2x + 4) = 0$.</p></div><p class="why">Difference of cubes from Chapter 7.</p></li>
+          <li><div class="do"><p>$x = 2$, or $x^2 + 2x + 4 = 0$, giving $x = \dfrac{-2 \pm \sqrt{4 - 16}}{2} = -1 \pm i\sqrt3$.</p></div><p class="why">The quadratic formula with discriminant $-12$, and $\sqrt{-12} = 2i\sqrt3$.</p></li>
+        </ol>
+        <p class="answer">$x = 2$, $x = -1 + i\sqrt3$, $x = -1 - i\sqrt3$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Factoring depends on your numbers</h3>
+        <div class="problem"><p>Factor $x^4 - 16$ completely over the integers, and then over the complex numbers.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^4 - 16 = (x^2 - 4)(x^2 + 4) = (x-2)(x+2)(x^2+4)$.</p></div><p class="why">Difference of squares twice. Over the integers (and the reals) $x^2 + 4$ is stuck.</p></li>
+          <li><div class="do"><p>Over $\mathbb{C}$: $x^2 + 4 = (x - 2i)(x + 2i)$.</p></div><p class="why">$x^2 + 4 = x^2 - (2i)^2$ is a difference of squares once $i$ is allowed.</p></li>
+          <li><div class="do"><p>$x^4 - 16 = (x-2)(x+2)(x-2i)(x+2i)$.</p></div><p class="why">Four linear factors for a degree-$4$ polynomial, as the theorem promises.</p></li>
+        </ol>
+        <p class="answer">Integers: $(x-2)(x+2)(x^2+4)$. Complex: $(x-2)(x+2)(x-2i)(x+2i)$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Build a polynomial from a complex root</h3>
+        <div class="problem"><p>Find a quadratic with integer coefficients that has $1 + i$ as a root.</p></div>
+        <ol class="steps">
+          <li data-think="If the coefficients are real, what other root must there be?"><div class="do"><p>Its conjugate $1 - i$ must also be a root.</p></div><p class="why">Real polynomials have non-real roots in conjugate pairs.</p></li>
+          <li><div class="do"><p>$\big(x - (1+i)\big)\big(x - (1-i)\big) = (x-1)^2 - i^2 = (x-1)^2 + 1$.</p></div><p class="why">Group as $\big((x-1) - i\big)\big((x-1) + i\big)$, a difference of squares.</p></li>
+          <li><div class="do"><p>$= x^2 - 2x + 2$.</p></div><p class="why">Expand. Vieta check: sum $2$, product $(1+i)(1-i) = 2$. ✓</p></li>
+        </ol>
+        <p class="answer">$x^2 - 2x + 2$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A cubic from one complex root</h3>
+        <div class="problem"><p>The cubic $x^3 + ax^2 + bx + 10$ has real coefficients $a$, $b$, and $2 - i$ is a root. Find $a$, $b$ and the other roots.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$2 + i$ is also a root, and $\big(x - (2-i)\big)\big(x - (2+i)\big) = (x-2)^2 + 1 = x^2 - 4x + 5$.</p></div><p class="why">Conjugate pairs give a real quadratic factor.</p></li>
+          <li data-think="What must the third factor look like, and what does the constant term tell you?"><div class="do"><p>So $x^3 + ax^2 + bx + 10 = (x^2 - 4x + 5)(x + c)$. Constant terms: $5c = 10$, so $c = 2$.</p></div><p class="why">The leading coefficient is $1$, so the remaining factor is $x + c$.</p></li>
+          <li><div class="do"><p>$(x^2 - 4x + 5)(x + 2) = x^3 - 2x^2 - 3x + 10$, so $a = -2$, $b = -3$.</p></div><p class="why">Expand: $x^2$ terms $2 - 4 = -2$; $x$ terms $5 - 8 = -3$.</p></li>
+          <li><div class="do"><p>The roots are $2 - i$, $2 + i$ and $-2$.</p></div><p class="why">The third root comes from $x + 2 = 0$; a real cubic must have a real root.</p></li>
+        </ol>
+        <p class="answer">$a = -2$, $b = -3$; the other roots are $2 + i$ and $-2$.</p>
+        <p class="key-idea">For real polynomials, one complex root hands you a second one for free.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>The cube roots of 1</h3>
+        <div class="problem"><p>Find all solutions of $z^3 = 1$, check one non-real solution directly, and find the sum of all three.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$z^3 - 1 = (z-1)(z^2 + z + 1)$, so $z = 1$ or $z = \dfrac{-1 \pm i\sqrt3}{2}$.</p></div><p class="why">Difference of cubes, then the quadratic formula with discriminant $1 - 4 = -3$.</p></li>
+          <li><div class="do"><p>Let $\omega = \dfrac{-1 + i\sqrt3}{2}$. Then $\omega^2 = \dfrac{1 - 2i\sqrt3 - 3}{4} = \dfrac{-1 - i\sqrt3}{2}$.</p></div><p class="why">Square carefully: $(i\sqrt3)^2 = -3$. Notice $\omega^2$ is the other non-real root.</p></li>
+          <li><div class="do"><p>$\omega^3 = \omega \cdot \omega^2 = \dfrac{(-1)^2 - (i\sqrt3)^2}{4} = \dfrac{1 + 3}{4} = 1$. ✓</p></div><p class="why">The product is a difference of squares.</p></li>
+          <li><div class="do"><p>Sum: $1 + \dfrac{-1 + i\sqrt3}{2} + \dfrac{-1 - i\sqrt3}{2} = 1 - 1 = 0$.</p></div><p class="why">The imaginary parts cancel. Vieta agrees: $z^3 + 0z^2 + 0z - 1$ has root sum $0$.</p></li>
+        </ol>
+        <p class="answer">$z = 1, \dfrac{-1 \pm i\sqrt3}{2}$; their sum is $0$.</p>
+        <p class="key-idea">$z^n = 1$ has exactly $n$ roots, evenly spaced on the unit circle, and they sum to $0$ for $n \ge 2$.</p>
+        <p class="book-next">Next in the book: Exercise 8-11, then the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-8">
+    <h2 id="further-8">Further reading in the book</h2>
+    <ul>
+      <li><strong>§8.1 Integers and Rationals</strong>: Examples 8-1 to 8-4 and Exercises 8-1 to 8-6.</li>
+      <li><strong>§8.2 Lowest Terms and Irrationals</strong>: the proof that $\sqrt2$ is irrational and Exercises 8-7 to 8-10.</li>
+      <li><strong>§8.3 Complex and Beyond</strong>: the Fundamental Theorem of Algebra and Exercise 8-11.</li>
+      <li><strong>Problems to Solve for Chapter 8</strong>: Problems 162–166, mostly converting repeating decimals and deciding what is rational.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 8 explorers ---------- */
+(function () {
+  "use strict";
+
+  /* 8.1 — remainder clock for long division */
+  AOPS.registerWidget("remainderClock", function (body) {
+    var svg = W.stage(body, { w: 640, h: 380, label: "Circle of possible remainders with the path taken by long division" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var p = 1, q = 7, shown = Infinity;
+    W.slider(ctl, { label: "Numerator p", min: 1, max: 40, value: p, onInput: function (v) { p = v; shown = Infinity; draw(); } });
+    W.slider(ctl, { label: "Denominator q", min: 2, max: 30, value: q, onInput: function (v) { q = v; shown = Infinity; draw(); } });
+    W.button(ctl, "Step", function () { var e = expand(); shown = (shown >= e.steps.length) ? 1 : shown + 1; draw(); });
+    W.button(ctl, "Show all", function () { shown = Infinity; draw(); });
+    function expand() {
+      var ip = Math.floor(p / q), r = p % q, seen = {}, steps = [];
+      while (r !== 0 && !(r in seen)) {
+        seen[r] = steps.length;
+        var d = Math.floor(10 * r / q), nr = (10 * r) % q;
+        steps.push({ r: r, d: d, nr: nr });
+        r = nr;
+      }
+      return { ip: ip, steps: steps, term: r === 0, start: r === 0 ? -1 : seen[r] };
+    }
+    function draw() {
+      W.clear(svg);
+      var e = expand(), n = Math.min(shown, e.steps.length);
+      var cx = 190, cy = 196, R = 140;
+      function pos(k, rr) { var a = -Math.PI / 2 + 2 * Math.PI * k / q; return [cx + (rr || R) * Math.cos(a), cy + (rr || R) * Math.sin(a)]; }
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "none", stroke: "var(--border-strong)", "stroke-dasharray": "3 6" }));
+      var visited = {};
+      for (var i = 0; i < n; i++) { visited[e.steps[i].r] = true; visited[e.steps[i].nr] = true; }
+      for (var k = 0; k < q; k++) {
+        var c = pos(k), lp = pos(k, R + 20);
+        var isZero = k === 0;
+        svg.appendChild(W.s("circle", { cx: c[0], cy: c[1], r: visited[k] ? 7 : 4,
+          fill: isZero ? "var(--plot-4)" : visited[k] ? "var(--accent)" : "var(--faint)" }));
+        if (q <= 20 || k % 2 === 0 || visited[k]) svg.appendChild(W.s("text", { x: lp[0], y: lp[1] + 4, "text-anchor": "middle", class: "lbl", text: String(k) }));
+      }
+      for (i = 0; i < n; i++) {
+        var a = pos(e.steps[i].r), b = pos(e.steps[i].nr);
+        var inCycle = !e.term && i >= e.start;
+        svg.appendChild(W.s("line", { x1: a[0], y1: a[1], x2: b[0], y2: b[1], stroke: inCycle ? "var(--accent)" : "var(--plot-2)", "stroke-width": 2.5, opacity: 0.85 }));
+      }
+      svg.appendChild(W.s("text", { x: 20, y: 24, class: "lbl", text: "remainders mod " + q + "  (green = 0)" }));
+      // division table
+      var tx = 380, ty = 40;
+      svg.appendChild(W.s("text", { x: tx, y: ty, class: "lbl", text: "step: 10 × remainder ÷ " + q }));
+      var maxRows = 11;
+      for (i = 0; i < Math.min(n, maxRows); i++) {
+        var st = e.steps[i], cyc = !e.term && i >= e.start;
+        svg.appendChild(W.s("text", { x: tx, y: ty + 26 + i * 25, style: "font: 13px var(--font-mono); fill: " + (cyc ? "var(--accent)" : "var(--ink)"),
+          text: (10 * st.r) + " ÷ " + q + " = " + st.d + "  r " + st.nr }));
+      }
+      if (n > maxRows) svg.appendChild(W.s("text", { x: tx, y: ty + 26 + maxRows * 25, class: "lbl", text: "… " + (n - maxRows) + " more steps" }));
+      // decimal string
+      var digits = e.steps.slice(0, n).map(function (s) { return s.d; }).join("");
+      var done = n >= e.steps.length, t;
+      var g = W.gcd(p, q), qq = q / g, rest = qq;
+      while (rest % 2 === 0) rest /= 2;
+      while (rest % 5 === 0) rest /= 5;
+      if (!done) t = "\\frac{" + p + "}{" + q + "} = " + e.ip + "." + digits + "\\ldots";
+      else if (e.term) t = "\\frac{" + p + "}{" + q + "} = " + e.ip + (digits ? "." + digits : "") + "\\quad\\text{(terminates)}";
+      else t = "\\frac{" + p + "}{" + q + "} = " + e.ip + "." + digits.slice(0, e.start) + "\\overline{" + digits.slice(e.start) + "}\\quad\\text{(block of " + (digits.length - e.start) + ")}";
+      out.set("<p>$" + t + "$</p><p>In lowest terms the denominator is $" + qq + (W.primeFactors(qq).length > 1 ? " = " + W.primeFactors(qq).join("\\cdot") : "") + "$: " +
+        (rest === 1 ? "only 2s and 5s, so the decimal terminates.</p>" : "it has a prime other than 2 or 5, so the decimal repeats.</p>"));
+    }
+    draw();
+  });
+
+  /* 8.1 — compare fractions on a number line */
+  AOPS.registerWidget("fractionCompare", function (body) {
+    var svg = W.stage(body, { w: 640, h: 170, label: "Number line comparing two fractions" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var a = 7, b = 12, c = 11, d = 19;
+    W.slider(ctl, { label: "a (first numerator)", min: 1, max: 30, value: a, onInput: function (v) { a = v; draw(); } });
+    W.slider(ctl, { label: "b (first denominator)", min: 1, max: 80, value: b, onInput: function (v) { b = v; draw(); } });
+    W.slider(ctl, { label: "c (second numerator)", min: 1, max: 30, value: c, onInput: function (v) { c = v; draw(); } });
+    W.slider(ctl, { label: "d (second denominator)", min: 1, max: 80, value: d, onInput: function (v) { d = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var v1 = a / b, v2 = c / d;
+      var lo = Math.min(v1, v2), hi = Math.max(v1, v2), span = Math.max(hi - lo, 0.002);
+      var L = Math.max(0, lo - span * 1.2), H = hi + span * 1.2;
+      function X(v) { return 40 + (v - L) / (H - L) * 560; }
+      var y = 92;
+      svg.appendChild(W.s("line", { x1: 30, y1: y, x2: 610, y2: y, stroke: "var(--border-strong)", "stroke-width": 2 }));
+      for (var i = 0; i <= 4; i++) {
+        var v = L + (H - L) * i / 4;
+        svg.appendChild(W.s("line", { x1: X(v), y1: y - 6, x2: X(v), y2: y + 6, stroke: "var(--muted)" }));
+        svg.appendChild(W.s("text", { x: X(v), y: y + 24, "text-anchor": "middle", class: "lbl", text: W.fmt(v, 4) }));
+      }
+      [[v1, a + "/" + b, "var(--plot-1)", -1], [v2, c + "/" + d, "var(--plot-2)", 1]].forEach(function (o) {
+        svg.appendChild(W.s("circle", { cx: X(o[0]), cy: y, r: 8, fill: o[2], stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        svg.appendChild(W.s("text", { x: X(o[0]), y: o[3] < 0 ? y - 22 : y + 52, "text-anchor": "middle", style: "font: 700 15px var(--font-mono); fill: " + o[2], text: o[1] }));
+      });
+      svg.appendChild(W.s("text", { x: 20, y: 22, class: "lbl", text: "zoomed number line" }));
+      var L1 = a * d, R1 = b * c, sym = L1 < R1 ? "<" : L1 > R1 ? ">" : "=";
+      out.tex("\\frac{" + a + "}{" + b + "} \\;?\\; \\frac{" + c + "}{" + d + "} \\iff " + a + "\\cdot" + d + " \\;?\\; " + b + "\\cdot" + c + " \\iff " + L1 + " " + sym + " " + R1 + " \\;\\Rightarrow\\; \\frac{" + a + "}{" + b + "} " + sym + " \\frac{" + c + "}{" + d + "}");
+    }
+    draw();
+  });
+
+  /* 8.2 — lattice ray: lowest terms and the sqrt 2 ray */
+  AOPS.registerWidget("latticeRay", function (body) {
+    var svg = W.stage(body, { w: 640, h: 400, label: "Lattice of integer points with a ray from the origin" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var p = 6, q = 9, mode = "frac";
+    var cell = 30, ox = 50, oy = 370, NX = 18, NY = 11;
+    function X(x) { return ox + x * cell; }
+    function Y(y) { return oy - y * cell; }
+    W.slider(ctl, { label: "Numerator p", min: 1, max: 11, value: p, onInput: function (v) { p = v; draw(); } });
+    W.slider(ctl, { label: "Denominator q", min: 1, max: 18, value: q, onInput: function (v) { q = v; draw(); } });
+    W.segmented(ctl, { title: "Ray", value: mode, options: [{ value: "frac", label: "p/q" }, { value: "root", label: "√2" }], onChange: function (v) { mode = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      for (var x = 0; x <= NX; x++) {
+        if (x % 3 === 0) svg.appendChild(W.s("text", { x: X(x), y: oy + 22, "text-anchor": "middle", class: "lbl", text: String(x) }));
+        for (var y = 0; y <= NY; y++) svg.appendChild(W.s("circle", { cx: X(x), cy: Y(y), r: 2.5, fill: "var(--faint)" }));
+      }
+      for (y = 3; y <= NY; y += 3) svg.appendChild(W.s("text", { x: ox - 14, y: Y(y) + 4, "text-anchor": "end", class: "lbl", text: String(y) }));
+      svg.appendChild(W.s("text", { x: X(NX) - 4, y: oy - 8, "text-anchor": "end", class: "lbl", text: "q →" }));
+      svg.appendChild(W.s("text", { x: ox + 8, y: Y(NY) - 6, class: "lbl", text: "p ↑" }));
+      if (mode === "frac") {
+        var m = p / q, ex = Math.min(NX, NY / m);
+        svg.appendChild(W.s("line", { x1: X(0), y1: Y(0), x2: X(ex), y2: Y(ex * m), stroke: "var(--plot-2)", "stroke-width": 2.5 }));
+        var g = W.gcd(p, q), bp = p / g, bq = q / g, hits = [];
+        for (var k = 1; k * bq <= NX && k * bp <= NY; k++) hits.push([k * bq, k * bp]);
+        hits.forEach(function (h, i) {
+          svg.appendChild(W.s("circle", { cx: X(h[0]), cy: Y(h[1]), r: i === 0 ? 9 : 6, fill: i === 0 ? "var(--accent)" : "var(--plot-2)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        });
+        svg.appendChild(W.s("circle", { cx: X(q), cy: Y(p), r: 12, fill: "none", stroke: "var(--ink)", "stroke-width": 1.5, "stroke-dasharray": "3 3" }));
+        svg.appendChild(W.s("text", { x: X(bq) + 14, y: Y(bp) + 22, style: "font: 700 14px var(--font-mono); fill: var(--accent)", text: bp + "/" + bq }));
+        out.tex("\\frac{" + p + "}{" + q + "}" + (g > 1 ? " = \\frac{" + p + "\\div " + g + "}{" + q + "\\div " + g + "} = \\frac{" + bp + "}{" + bq + "}\\ \\text{in lowest terms}" : "\\ \\text{is already in lowest terms}") + "\\quad(" + hits.length + "\\text{ dot" + (hits.length > 1 ? "s" : "") + " on this ray in view})");
+      } else {
+        var r2 = Math.SQRT2, ex2 = NY / r2;
+        svg.appendChild(W.s("line", { x1: X(0), y1: Y(0), x2: X(ex2), y2: Y(NY), stroke: "var(--plot-5)", "stroke-width": 2.5 }));
+        var rows = [];
+        for (var qq = 1; qq * r2 <= NY + 0.5; qq++) {
+          var pp = Math.round(qq * r2);
+          if (pp > NY) break;
+          var miss = pp - qq * r2;
+          svg.appendChild(W.s("circle", { cx: X(qq), cy: Y(pp), r: 6, fill: Math.abs(miss) < 0.15 ? "var(--accent)" : "var(--plot-2)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+          rows.push("\\tfrac{" + pp + "}{" + qq + "}");
+        }
+        svg.appendChild(W.s("text", { x: X(ex2) + 10, y: Y(NY) + 14, style: "font: 700 14px var(--font-mono); fill: var(--plot-5)", text: "slope √2" }));
+        var mq = p / q, exq = Math.min(NX, NY / mq);
+        svg.appendChild(W.s("line", { x1: X(0), y1: Y(0), x2: X(exq), y2: Y(exq * mq), stroke: "var(--plot-2)", "stroke-width": 1.5, "stroke-dasharray": "5 5" }));
+        out.set("<p>Closest dots: $" + rows.join(",\\ ") + "$ (gold: very close), but none lies on the $\\sqrt2$ ray.</p><p>Your dashed ray: $\\tfrac{" + p + "}{" + q + "} \\approx " + W.fmt(p / q, 5) + "$, which is " + (p / q > Math.SQRT2 ? "above" : "below") + " $\\sqrt2 \\approx 1.41421$. Try $\\tfrac{7}{5}$.</p>");
+      }
+    }
+    draw();
+  });
+
+  /* 8.2 — rational approximations to sqrt 2 */
+  AOPS.registerWidget("sqrtTwoSteps", function (body) {
+    var svg = W.stage(body, { w: 640, h: 200, label: "Zoomed number line around the square root of 2 with successive fractions" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var list = [[1, 1]];
+    W.button(ctl, "Next fraction", function () { if (list.length < 9) { var l = list[list.length - 1]; list.push([l[0] + 2 * l[1], l[0] + l[1]]); } draw(); });
+    W.button(ctl, "Reset", function () { list = [[1, 1]]; draw(); });
+    function draw() {
+      W.clear(svg);
+      var last = list[list.length - 1], err = Math.abs(last[0] / last[1] - Math.SQRT2);
+      var half = Math.max(err * 2.5, 1e-7);
+      if (list.length === 1) half = 0.5;
+      var L = Math.SQRT2 - half, H = Math.SQRT2 + half;
+      function X(v) { return 40 + (v - L) / (H - L) * 560; }
+      var y = 110;
+      svg.appendChild(W.s("line", { x1: 30, y1: y, x2: 610, y2: y, stroke: "var(--border-strong)", "stroke-width": 2 }));
+      svg.appendChild(W.s("line", { x1: X(Math.SQRT2), y1: y - 40, x2: X(Math.SQRT2), y2: y + 40, stroke: "var(--plot-5)", "stroke-width": 2, "stroke-dasharray": "5 4" }));
+      svg.appendChild(W.s("text", { x: X(Math.SQRT2), y: y + 58, "text-anchor": "middle", style: "font: 700 14px var(--font-mono); fill: var(--plot-5)", text: "√2 ≈ 1.41421356" }));
+      list.forEach(function (f, i) {
+        var v = f[0] / f[1];
+        if (v < L || v > H) return;
+        var isLast = i === list.length - 1;
+        svg.appendChild(W.s("circle", { cx: X(v), cy: y, r: isLast ? 9 : 6, fill: isLast ? "var(--accent)" : "var(--plot-2)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        if (isLast) svg.appendChild(W.s("text", { x: X(v), y: y - 22, "text-anchor": "middle", style: "font: 700 15px var(--font-mono); fill: var(--accent)", text: f[0] + "/" + f[1] }));
+      });
+      svg.appendChild(W.s("text", { x: 20, y: 24, class: "lbl", text: "window width ≈ " + W.fmt(2 * half, 8) + (list.length > 1 ? "  (zooms in each step)" : "") }));
+      var rows = list.map(function (f) {
+        var v = f[0] / f[1], d = f[0] * f[0] - 2 * f[1] * f[1];
+        return "<tr><td>$\\frac{" + f[0] + "}{" + f[1] + "}$</td><td>" + v.toFixed(8) + "</td><td>" + (v > Math.SQRT2 ? "above" : "below") + "</td><td>$" + f[0] + "^2 - 2\\cdot" + f[1] + "^2 = " + d + "$</td></tr>";
+      }).join("");
+      out.set("<table style=\"width:100%;border-collapse:collapse;font-size:.92rem\"><tr><th style=\"text-align:left\">fraction</th><th style=\"text-align:left\">decimal</th><th style=\"text-align:left\">vs √2</th><th style=\"text-align:left\">$p^2 - 2q^2$</th></tr>" + rows + "</table>");
+    }
+    draw();
+  });
+
+  /* 8.3 — quadratic roots in the complex plane */
+  AOPS.registerWidget("quadRoots", function (body) {
+    var svg = W.stage(body, { w: 640, h: 320, label: "Left: parabola y equals x squared plus b x plus c. Right: its two roots in the complex plane" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var b = -2, c = -3;
+    W.slider(ctl, { label: "b", min: -6, max: 6, step: 0.5, value: b, format: function (v) { return v.toFixed(1); }, onInput: function (v) { b = v; draw(); } });
+    W.slider(ctl, { label: "c", min: -6, max: 10, step: 0.5, value: c, format: function (v) { return v.toFixed(1); }, onInput: function (v) { c = v; draw(); } });
+    var left = W.s("svg", { x: 0, y: 0, width: 320, height: 320, viewBox: "0 0 320 320" });
+    var right = W.s("svg", { x: 320, y: 0, width: 320, height: 320, viewBox: "0 0 320 320" });
+    svg.appendChild(left); svg.appendChild(right);
+    left._w = right._w = 320; left._h = right._h = 320;
+    function draw() {
+      W.clear(left); W.clear(right);
+      var P = W.plane(left, { x: [-6, 6], y: [-8, 10], step: 1, ystep: 2, pad: 22, labelEvery: 2 });
+      left.appendChild(W.s("path", { d: W.fnPath(P, function (t) { return t * t + b * t + c; }), fill: "none", stroke: "var(--plot-2)", "stroke-width": 3 }));
+      left.appendChild(W.s("text", { x: 30, y: 16, class: "lbl", text: "y = x² + bx + c" }));
+      var Q = W.plane(right, { x: [-6, 6], y: [-6, 6], step: 1, pad: 22, labelEvery: 2 });
+      right.appendChild(W.s("text", { x: 30, y: 16, class: "lbl", text: "complex plane (Re, Im)" }));
+      var D = b * b - 4 * c, roots;
+      if (D >= 0) roots = [[(-b - Math.sqrt(D)) / 2, 0], [(-b + Math.sqrt(D)) / 2, 0]];
+      else roots = [[-b / 2, Math.sqrt(-D) / 2], [-b / 2, -Math.sqrt(-D) / 2]];
+      roots.forEach(function (r) {
+        if (D >= 0) left.appendChild(W.s("circle", { cx: P.X(r[0]), cy: P.Y(0), r: 6, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+        right.appendChild(W.s("circle", { cx: Q.X(Math.max(-6, Math.min(6, r[0]))), cy: Q.Y(Math.max(-6, Math.min(6, r[1]))), r: 7, fill: "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      });
+      svg.appendChild(W.s("line", { x1: 320, y1: 10, x2: 320, y2: 310, stroke: "var(--border-strong)" }));
+      var rt;
+      if (D > 0) rt = "x = " + W.fmt(roots[0][0], 3) + ",\\ " + W.fmt(roots[1][0], 3) + "\\quad\\text{(two real roots)}";
+      else if (D === 0) rt = "x = " + W.fmt(-b / 2, 3) + "\\ \\text{(a double root)}";
+      else rt = "x = " + W.fmt(-b / 2, 3) + " \\pm " + W.fmt(Math.sqrt(-D) / 2, 3) + "i\\quad\\text{(conjugate pair)}";
+      out.tex("b^2 - 4c = " + W.fmt(D, 2) + ",\\qquad " + rt);
+    }
+    draw();
+  });
+
+  /* 8.3 — roots of z^n = 1 */
+  AOPS.registerWidget("unityRoots", function (body) {
+    var svg = W.stage(body, { w: 640, h: 320, label: "Unit circle with the n solutions of z to the n equals 1" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 6;
+    W.slider(ctl, { label: "Degree n", min: 1, max: 12, value: n, onInput: function (v) { n = v; draw(); } });
+    function draw() {
+      W.clear(svg);
+      var cx = 200, cy = 160, R = 120;
+      svg.appendChild(W.s("line", { x1: cx - 150, y1: cy, x2: cx + 150, y2: cy, stroke: "var(--plot-axis)" }));
+      svg.appendChild(W.s("line", { x1: cx, y1: cy - 150, x2: cx, y2: cy + 150, stroke: "var(--plot-axis)" }));
+      svg.appendChild(W.s("circle", { cx: cx, cy: cy, r: R, fill: "none", stroke: "var(--border-strong)" }));
+      svg.appendChild(W.s("text", { x: cx + R + 6, y: cy - 6, class: "lbl", text: "1" }));
+      svg.appendChild(W.s("text", { x: cx + 6, y: cy - R - 6, class: "lbl", text: "i" }));
+      var pts = [], real = 0;
+      for (var k = 0; k < n; k++) {
+        var a = 2 * Math.PI * k / n, x = Math.cos(a), y = Math.sin(a);
+        var isReal = Math.abs(y) < 1e-9;
+        if (isReal) real++;
+        pts.push([cx + R * x, cy - R * y]);
+        svg.appendChild(W.s("line", { x1: cx, y1: cy, x2: cx + R * x, y2: cy - R * y, stroke: "var(--faint)" }));
+        svg.appendChild(W.s("circle", { cx: cx + R * x, cy: cy - R * y, r: 7, fill: isReal ? "var(--plot-4)" : "var(--accent)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+      }
+      if (n > 2) svg.appendChild(W.s("polygon", { points: pts.map(function (p) { return p.join(","); }).join(" "), fill: "color-mix(in srgb, var(--accent) 12%, transparent)", stroke: "var(--accent)", "stroke-width": 1 }));
+      var tx = 380;
+      svg.appendChild(W.s("text", { x: tx, y: 90, style: "font: 600 15px var(--font-body); fill: var(--ink)", text: "z^" + n + " = 1" }));
+      svg.appendChild(W.s("text", { x: tx, y: 122, class: "lbl", text: "complex roots: " + n }));
+      svg.appendChild(W.s("text", { x: tx, y: 146, class: "lbl", style: "fill: var(--plot-4)", text: "real roots: " + real + (real === 1 ? " (just 1)" : " (1 and −1)") }));
+      svg.appendChild(W.s("text", { x: tx, y: 170, class: "lbl", text: "angle between roots: " + W.fmt(360 / n, 2) + "°" }));
+      svg.appendChild(W.s("text", { x: tx, y: 194, class: "lbl", text: "non-real roots come in" }));
+      svg.appendChild(W.s("text", { x: tx, y: 212, class: "lbl", text: "mirror-image (conjugate) pairs" }));
+      out.tex("z^{" + n + "} - 1 = 0 \\text{ has degree } " + n + " \\;\\Rightarrow\\; " + n + " \\text{ root" + (n > 1 ? "s" : "") + ", spaced } \\tfrac{360^\\circ}{" + n + "} = " + W.fmt(360 / n, 2) + "^\\circ \\text{ apart}");
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
