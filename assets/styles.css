@@ -450,8 +450,10 @@ input[type="number"], input[type="text"], select {
 /* SVG helpers */
 .stage .grid line { stroke: var(--plot-grid); stroke-width: 1; }
 .stage .axis line, .stage .axis path { stroke: var(--plot-axis); stroke-width: 1.4; }
-.stage .tick text, .stage text.lbl { fill: var(--muted); font: 12px var(--font-mono); }
-.stage text { fill: var(--ink); font-family: var(--font-body); }
+.stage text { font-family: var(--font-body); }
+.stage text:not([fill]) { fill: var(--ink); }
+.stage .tick text, .stage text.lbl { font: 12px var(--font-mono); }
+.stage .tick text:not([fill]), .stage text.lbl:not([fill]) { fill: var(--muted); }
 .stage .handle { cursor: grab; fill: var(--accent); stroke: var(--surface-solid); stroke-width: 3; }
 .stage .handle:hover, .stage .handle:focus { stroke: var(--ink); outline: none; }
 .stage .handle:focus-visible { stroke: var(--ink); stroke-width: 4; }
