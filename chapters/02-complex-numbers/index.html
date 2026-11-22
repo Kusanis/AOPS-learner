@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Chapter 2: Complex Numbers · AoPS Learner</title>
+  <meta name="description" content="The imaginary unit i, the cycle of its powers, and adding, multiplying, conjugating and dividing complex numbers, with interactive explorers and step-by-step worked examples.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=JetBrains+Mono:wght@400;700&display=swap">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" crossorigin="anonymous">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js" crossorigin="anonymous"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="../../assets/styles.css">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Cpath d='M16 3l3.4 8.6 9.2.7-7 5.9 2.2 9L16 22.3l-7.8 4.9 2.2-9-7-5.9 9.2-.7z' fill='%23f5c96b'/%3E%3C/svg%3E">
+</head>
+<body>
+<main class="chapter" data-chapter="2" id="main">
+
+  <header class="chapter-hero">
+    <span class="eyebrow">Chapter 2 · Algebra &amp; Number</span>
+    <h1>Complex Numbers</h1>
+    <p class="lede">The equation $x^2 = -1$ has no real solution, so mathematicians did something bold: they invented one. In this chapter you'll meet $i$, watch its powers spin in a circle, and learn to add, multiply and divide numbers that have a real part and an imaginary part.</p>
+    <div class="how-to">
+      <span>Each example climbs from <strong>Warm-up</strong> to <strong>Challenge</strong>.</span>
+      <span>Press <kbd>N</kbd> for the next step, <kbd>F</kbd> for the full solution.</span>
+    </div>
+  </header>
+
+  <details class="key-methods">
+    <summary>Key methods in this chapter</summary>
+    <ul>
+      <li>$i^2 = -1$, and for a positive real $a$, $\sqrt{-a} = i\sqrt{a}$. Pull out the $i$ <em>before</em> combining radicals.</li>
+      <li>Powers of $i$ cycle with period 4: $i, -1, -i, 1$. Reduce the exponent modulo 4.</li>
+      <li>Any four consecutive powers of $i$ add to $0$.</li>
+      <li>Add and subtract complex numbers part by part; multiply with the distributive law and replace $i^2$ by $-1$.</li>
+      <li>$(a+bi)(a-bi) = a^2 + b^2$ is real, so divide by multiplying top and bottom by the conjugate of the denominator.</li>
+      <li>Two complex numbers are equal exactly when their real parts match <em>and</em> their imaginary parts match.</li>
+    </ul>
+  </details>
+
+  <!-- ===================== 2.1 ===================== -->
+  <section class="lesson" id="s2-1" data-title="The Square Root of −1">
+    <h2><span class="sec-num">2.1</span> The Square Root of −1</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>Negative numbers were once called "absurd": how can you have less than nothing? Yet today a bank balance of $-40$ makes perfect sense. The square root of $-1$ went through the same journey. It started as a forbidden symbol and became an everyday tool for engineers working with electricity, waves and rotations.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>No real number squares to a negative, so we <em>define</em> a new number $i$ with the single property</p>
+      <div class="rule"><p>$$i^2 = -1.$$</p></div>
+      <p>Then $x^2 + 1 = 0$ has the two solutions $x = \pm i$. A real number times $i$, such as $5i$ or $\sqrt{2}\,i$, is called <strong>pure imaginary</strong>. "Imaginary" is just a name: these numbers obey the usual rules of algebra, with $i^2$ replaced by $-1$ whenever it appears.</p>
+      <p>For a positive real number $a$, we write $\sqrt{-a} = i\sqrt{a}$. So $\sqrt{-9} = 3i$ and $\sqrt{-12} = i\sqrt{12} = 2\sqrt{3}\,i$.</p>
+      <div class="note"><p><strong>Trap.</strong> The rule $\sqrt{x}\sqrt{y} = \sqrt{xy}$ works for nonnegative $x$ and $y$ only. $\sqrt{-1}\cdot\sqrt{-1} = i \cdot i = -1$, but "combining" first would give $\sqrt{(-1)(-1)} = \sqrt{1} = 1$, which is wrong. Always rewrite $\sqrt{-a}$ as $i\sqrt a$ first.</p></div>
+      <p>Keep multiplying by $i$ and a pattern appears: $i^1 = i$, $i^2 = -1$, $i^3 = i^2 \cdot i = -i$, $i^4 = (i^2)^2 = 1$. Since $i^4 = 1$, the next four powers repeat the same values. The powers of $i$ cycle with period 4:</p>
+      <div class="rule"><p>$$i^{4q + r} = (i^4)^q \cdot i^r = i^r, \qquad\text{so only the remainder of the exponent on division by 4 matters.}$$</p></div>
+    </div>
+
+    <figure class="explore" data-widget="powersOfI">
+      <figcaption><strong>Explore:</strong> Each multiplication by $i$ is a quarter turn counterclockwise around the origin. Slide the exponent (or press "× i") and count the full turns: every four steps you land back on $1$. Try negative exponents too; they turn the other way.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Square roots of negatives</h3>
+        <div class="problem"><p>Write $\sqrt{-49}$ and $\sqrt{-20}$ in terms of $i$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\sqrt{-49} = i\sqrt{49} = 7i$.</p></div><p class="why">Pull the $-1$ out as $i$, then take the ordinary square root of the positive part.</p></li>
+          <li><div class="do"><p>$\sqrt{-20} = i\sqrt{20} = i\sqrt{4\cdot 5} = 2\sqrt{5}\,i$.</p></div><p class="why">After extracting $i$, simplify the remaining radical exactly as in Chapter 1.</p></li>
+        </ol>
+        <p class="answer">$7i$ and $2\sqrt{5}\,i$</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>The first few powers</h3>
+        <div class="problem"><p>Compute $i^3$, $i^4$ and $i^5$ from $i^2 = -1$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$i^3 = i^2 \cdot i = (-1)i = -i$.</p></div><p class="why">Peel off one factor of $i$ so that the rest is the known value $i^2$.</p></li>
+          <li><div class="do"><p>$i^4 = i^2 \cdot i^2 = (-1)(-1) = 1$.</p></div><p class="why">Two copies of $i^2$ multiply to a positive number.</p></li>
+          <li><div class="do"><p>$i^5 = i^4 \cdot i = 1 \cdot i = i$.</p></div><p class="why">Because $i^4 = 1$, multiplying by it changes nothing: the cycle starts over.</p></li>
+        </ol>
+        <p class="answer">$i^3 = -i$, $i^4 = 1$, $i^5 = i$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Large powers of i</h3>
+        <div class="problem"><p>Evaluate $i^{30}$ and $i^{103}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$30 = 4\cdot 7 + 2$, so $i^{30} = (i^4)^7 \cdot i^2 = 1 \cdot (-1) = -1$.</p></div><p class="why">Each block of four factors of $i$ is $i^4 = 1$, so only the remainder $2$ survives.</p></li>
+          <li><div class="do"><p>$103 = 4 \cdot 25 + 3$, so $i^{103} = i^3 = -i$.</p></div><p class="why">Same idea: divide the exponent by 4 and keep the remainder.</p></li>
+        </ol>
+        <p class="answer">$i^{30} = -1$ and $i^{103} = -i$</p>
+        <p class="book-next">Next in the book: Exercise 2-1.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Don't combine the radicals</h3>
+        <div class="problem"><p>Evaluate $\sqrt{-4}\cdot\sqrt{-9}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\sqrt{-4} = 2i$ and $\sqrt{-9} = 3i$.</p></div><p class="why">Rewrite each square root of a negative with $i$ <em>before</em> doing anything else.</p></li>
+          <li><div class="do"><p>$(2i)(3i) = 6i^2 = -6$.</p></div><p class="why">Multiply the real coefficients and the $i$'s, then use $i^2 = -1$.</p></li>
+          <li><div class="do"><p>Note that $\sqrt{(-4)(-9)} = \sqrt{36} = 6$ gives the wrong sign.</p></div><p class="why">The product rule for radicals only holds when the numbers under the roots are nonnegative.</p></li>
+        </ol>
+        <p class="answer">$-6$</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Negative powers of i</h3>
+        <div class="problem"><p>Evaluate $i^{-1}$ and $i^{-7}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$i^{-1} = \dfrac{1}{i} = \dfrac{1}{i}\cdot\dfrac{i}{i} = \dfrac{i}{i^2} = \dfrac{i}{-1} = -i$.</p></div><p class="why">Multiplying top and bottom by $i$ turns the denominator into the real number $-1$.</p></li>
+          <li><div class="do"><p>$i^{-7} = i^{-8}\cdot i^{1} = (i^4)^{-2}\cdot i = 1\cdot i = i$.</p></div><p class="why">Add a multiple of 4 to the exponent to make it nonnegative: $-7 + 8 = 1$. Multiples of 4 contribute a factor of $1$.</p></li>
+        </ol>
+        <p class="answer">$i^{-1} = -i$ and $i^{-7} = i$</p>
+        <p class="key-idea">The cycle runs backwards too: reduce any integer exponent to a remainder $0, 1, 2$ or $3$.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Solving with imaginary roots</h3>
+        <div class="problem"><p>Solve $x^2 + 25 = 0$ and $2x^2 + 36 = 0$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$x^2 = -25$, so $x = \pm\sqrt{-25} = \pm 5i$.</p></div><p class="why">Like $x^2 = 25$, the equation has two square roots, one the negative of the other.</p></li>
+          <li><div class="do"><p>$2x^2 = -36$ gives $x^2 = -18$, so $x = \pm i\sqrt{18} = \pm 3\sqrt{2}\,i$.</p></div><p class="why">Isolate $x^2$ first, then take both square roots and simplify $\sqrt{18} = 3\sqrt2$.</p></li>
+          <li><div class="do"><p>Check one: $(3\sqrt2\, i)^2 = 9 \cdot 2 \cdot i^2 = -18$. ✓</p></div><p class="why">Squaring the answer confirms it satisfies $x^2 = -18$.</p></li>
+        </ol>
+        <p class="answer">$x = \pm 5i$; $\ x = \pm 3\sqrt{2}\,i$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A long sum of powers</h3>
+        <div class="problem"><p>Evaluate $i + i^2 + i^3 + \cdots + i^{50}$.</p></div>
+        <ol class="steps">
+          <li data-think="What do $i + i^2 + i^3 + i^4$ add up to?"><div class="do"><p>$i + i^2 + i^3 + i^4 = i - 1 - i + 1 = 0$.</p></div><p class="why">One full trip around the cycle cancels completely. The same is true of <em>any</em> four consecutive powers, since each block is the first block times some power of $i$.</p></li>
+          <li><div class="do"><p>$50 = 4 \cdot 12 + 2$, so the first $48$ terms form $12$ blocks that each sum to $0$.</p></div><p class="why">Group the terms in fours from the start.</p></li>
+          <li><div class="do"><p>What remains is $i^{49} + i^{50} = i^1 + i^2 = i - 1$.</p></div><p class="why">Reduce the leftover exponents modulo 4.</p></li>
+        </ol>
+        <p class="answer">$-1 + i$</p>
+        <p class="key-idea">Four consecutive powers of $i$ always sum to zero.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A product of many powers</h3>
+        <div class="problem"><p>Evaluate $i^1 \cdot i^2 \cdot i^3 \cdots i^{20}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>The product equals $i^{1+2+3+\cdots+20}$.</p></div><p class="why">Multiplying powers of the same base adds the exponents.</p></li>
+          <li><div class="do"><p>$1 + 2 + \cdots + 20 = \dfrac{20 \cdot 21}{2} = 210$.</p></div><p class="why">Pair the first and last terms: ten pairs, each adding to $21$.</p></li>
+          <li data-think="What is the remainder when 210 is divided by 4?"><div class="do"><p>$210 = 4 \cdot 52 + 2$, so $i^{210} = i^2 = -1$.</p></div><p class="why">Only the remainder of the exponent modulo 4 matters.</p></li>
+        </ol>
+        <p class="answer">$-1$</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Coefficients that climb</h3>
+        <div class="problem"><p>Evaluate $1 + 2i + 3i^2 + 4i^3 + \cdots + 20i^{19}$.</p></div>
+        <ol class="steps">
+          <li data-think="The coefficients change, so the blocks of four don't vanish. What does one block become?"><div class="do"><p>The first four terms are $1 + 2i - 3 - 4i = -2 - 2i$.</p></div><p class="why">Replace $i^2, i^3$ by $-1, -i$ and collect real and imaginary parts.</p></li>
+          <li><div class="do"><p>A general block is $(4k+1) + (4k+2)i - (4k+3) - (4k+4)i = -2 - 2i$.</p></div><p class="why">Within each block the powers of $i$ are again $1, i, -1, -i$. The $4k$'s cancel in pairs, so every block gives the same value.</p></li>
+          <li><div class="do"><p>There are $20/4 = 5$ blocks, so the sum is $5(-2 - 2i) = -10 - 10i$.</p></div><p class="why">The twenty terms split evenly into five blocks of four.</p></li>
+        </ol>
+        <p class="answer">$-10 - 10i$</p>
+        <p class="key-idea">Group by the period of the cycle, even when the blocks don't cancel completely.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ===================== 2.2 ===================== -->
+  <section class="lesson" id="s2-2" data-title="Complex Number Operations">
+    <h2><span class="sec-num">2.2</span> Complex Number Operations</h2>
+
+    <div class="block-label">Hook</div>
+    <div class="hook">
+      <p>A real number is a point on a line. A complex number needs two coordinates, so it lives in a plane: $3 + 2i$ sits three steps right and two steps up. Adding complex numbers turns out to be sliding arrows tip to tail, and multiplying by $i$ is a quarter turn. Arithmetic becomes geometry.</p>
+    </div>
+
+    <div class="block-label">Concept</div>
+    <div class="concept">
+      <p>A <strong>complex number</strong> has the form $z = a + bi$ with $a$ and $b$ real. The <strong>real part</strong> is $\operatorname{Re}(z) = a$, and $\operatorname{Im}(z) = b$ is the real <em>coefficient</em> of the imaginary part (note: $b$, not $bi$). Every real number is complex with $b = 0$. A complex number that is not real is called <em>imaginary</em>; it is <em>pure imaginary</em> if, in addition, $a = 0$.</p>
+      <p>Arithmetic follows ordinary algebra with $i^2 = -1$:</p>
+      <div class="rule">
+        <p>$$(a+bi) \pm (c+di) = (a \pm c) + (b \pm d)i$$</p>
+        <p>$$(a+bi)(c+di) = ac + adi + bci + bdi^2 = (ac - bd) + (ad + bc)i$$</p>
+      </div>
+      <p>The <strong>conjugate</strong> of $z = a + bi$ is $\overline{z} = a - bi$ (a reflection across the real axis). Its key property is that a number times its conjugate is real:</p>
+      <div class="rule"><p>$$z\overline{z} = (a+bi)(a-bi) = a^2 - b^2i^2 = a^2 + b^2.$$</p></div>
+      <p>That is exactly what we need to divide. Just as we rationalized $\dfrac{1}{a+\sqrt b}$ with a conjugate in Chapter 1, we clear $i$ from a denominator by multiplying top and bottom by the denominator's conjugate:</p>
+      <div class="rule"><p>$$\frac{a+bi}{c+di} = \frac{(a+bi)(c-di)}{(c+di)(c-di)} = \frac{(a+bi)(c-di)}{c^2+d^2}.$$</p></div>
+      <div class="note"><p>Two complex numbers are equal only if their real parts are equal <em>and</em> their imaginary parts are equal. One complex equation therefore gives two real equations.</p></div>
+    </div>
+
+    <figure class="explore" data-widget="complexOps">
+      <figcaption><strong>Explore:</strong> Drag $z$ (gold) and $w$ (blue) around the complex plane, then pick an operation; the result is drawn in violet. Notice that addition completes a parallelogram, the conjugate is a mirror image, and multiplying by $w$ stretches and turns $z$.</figcaption>
+    </figure>
+
+    <div class="examples">
+      <article class="example" data-tier="warmup">
+        <h3>Sorting out the names</h3>
+        <div class="problem"><p>Classify $-6$, $\ 4i$, $\ 2 - 5i$ and $0$ as real, imaginary, and/or pure imaginary.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$-6 = -6 + 0i$ is real (and complex), not imaginary.</p></div><p class="why">Its imaginary coefficient is $0$.</p></li>
+          <li><div class="do"><p>$4i = 0 + 4i$ is imaginary and pure imaginary.</p></div><p class="why">It is not real, and its real part is $0$.</p></li>
+          <li><div class="do"><p>$2 - 5i$ is imaginary but not pure imaginary.</p></div><p class="why">It is not real, but its real part $2$ is not zero.</p></li>
+          <li><div class="do"><p>$0$ is real, so it is not imaginary.</p></div><p class="why">$0 = 0 + 0i$ has imaginary coefficient $0$, which makes it real by definition.</p></li>
+        </ol>
+        <p class="answer">$-6$ and $0$: real. $4i$: imaginary and pure imaginary. $2-5i$: imaginary only.</p>
+        <p class="book-next">Compare with the book's Example 2-1.</p>
+      </article>
+
+      <article class="example" data-tier="warmup">
+        <h3>Add and subtract part by part</h3>
+        <div class="problem"><p>Compute $(4 - 7i) + (-1 + 3i)$ and $(2 + 5i) - (6 - i)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(4 - 1) + (-7 + 3)i = 3 - 4i$.</p></div><p class="why">Real parts combine with real parts and imaginary parts with imaginary parts, like collecting like terms.</p></li>
+          <li><div class="do"><p>$(2 - 6) + (5 - (-1))i = -4 + 6i$.</p></div><p class="why">Subtracting distributes the minus sign over both parts of $6 - i$; watch the double negative.</p></li>
+        </ol>
+        <p class="answer">$3 - 4i$ and $-4 + 6i$</p>
+        <p class="book-next">Next in the book: Exercises 2-2 and 2-3.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Multiply with FOIL</h3>
+        <div class="problem"><p>Compute $(2 + 3i)(4 - i)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(2)(4) + (2)(-i) + (3i)(4) + (3i)(-i) = 8 - 2i + 12i - 3i^2$.</p></div><p class="why">Distribute every term of the first factor over every term of the second.</p></li>
+          <li><div class="do"><p>$-3i^2 = -3(-1) = +3$.</p></div><p class="why">This is the one new move: every $i^2$ becomes $-1$, often flipping a sign.</p></li>
+          <li><div class="do"><p>$8 + 3 + (-2 + 12)i = 11 + 10i$.</p></div><p class="why">Collect real and imaginary parts.</p></li>
+        </ol>
+        <p class="answer">$11 + 10i$</p>
+        <p class="book-next">Next in the book: Exercises 2-4 and 2-5.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>A number times its conjugate</h3>
+        <div class="problem"><p>Compute $(5 + 2i)(5 - 2i)$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(5+2i)(5-2i) = 5^2 - (2i)^2$.</p></div><p class="why">This is a difference of squares, $(x+y)(x-y) = x^2 - y^2$; the middle terms $\pm 10i$ cancel.</p></li>
+          <li><div class="do"><p>$25 - 4i^2 = 25 + 4 = 29$.</p></div><p class="why">$(2i)^2 = 4i^2 = -4$, and subtracting a negative adds.</p></li>
+        </ol>
+        <p class="answer">$29$, a real number, equal to $5^2 + 2^2$.</p>
+      </article>
+
+      <article class="example" data-tier="core">
+        <h3>Divide using the conjugate</h3>
+        <div class="problem"><p>Write $\dfrac{7 + i}{1 - 2i}$ in the form $a + bi$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Multiply top and bottom by $1 + 2i$: $\dfrac{(7 + i)(1 + 2i)}{(1 - 2i)(1 + 2i)}$.</p></div><p class="why">Multiplying by $\frac{1+2i}{1+2i} = 1$ doesn't change the value, but it makes the denominator real.</p></li>
+          <li><div class="do"><p>Denominator: $1^2 + 2^2 = 5$.</p></div><p class="why">A number times its conjugate is the sum of the squares of its parts.</p></li>
+          <li><div class="do"><p>Numerator: $7 + 14i + i + 2i^2 = 7 - 2 + 15i = 5 + 15i$.</p></div><p class="why">FOIL, then replace $i^2$ with $-1$.</p></li>
+          <li><div class="do"><p>$\dfrac{5 + 15i}{5} = 1 + 3i$.</p></div><p class="why">Divide both parts by the real denominator.</p></li>
+        </ol>
+        <p class="answer">$1 + 3i$</p>
+        <p class="key-idea">Check by multiplying back: $(1+3i)(1-2i) = 1 - 2i + 3i + 6 = 7 + i$. ✓</p>
+        <p class="book-next">Next in the book: Exercises 2-7 and 2-8.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Real part, imaginary part, conjugate</h3>
+        <div class="problem"><p>Let $z = 2 - 3i$. Find $\operatorname{Im}(z)$, $\ z + \overline{z}$, $\ z - \overline{z}$ and $z\overline{z}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\operatorname{Im}(z) = -3$ and $\overline{z} = 2 + 3i$.</p></div><p class="why">$\operatorname{Im}$ is the real coefficient of $i$, so it is $-3$, not $-3i$. The conjugate flips the sign of the imaginary part.</p></li>
+          <li><div class="do"><p>$z + \overline{z} = 4$ and $z - \overline{z} = -6i$.</p></div><p class="why">Adding cancels the imaginary parts, leaving $2\operatorname{Re}(z)$; subtracting cancels the real parts, leaving $2i\operatorname{Im}(z)$.</p></li>
+          <li><div class="do"><p>$z\overline{z} = 2^2 + 3^2 = 13$.</p></div><p class="why">A number times its conjugate is $a^2 + b^2$.</p></li>
+        </ol>
+        <p class="answer">$-3$, $\ 4$, $\ -6i$, $\ 13$</p>
+        <p class="book-next">Next in the book: Exercises 2-9 to 2-14.</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>Powers of a complex number</h3>
+        <div class="problem"><p>Compute $(3 - 2i)^2$ and $(1 + i)^8$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$(3 - 2i)^2 = 9 - 12i + 4i^2 = 5 - 12i$.</p></div><p class="why">Use $(x - y)^2 = x^2 - 2xy + y^2$, then $4i^2 = -4$.</p></li>
+          <li data-think="Multiplying $(1+i)$ by itself eight times is a lot of work. Is there a shortcut?"><div class="do"><p>$(1 + i)^2 = 1 + 2i + i^2 = 2i$.</p></div><p class="why">Squaring first gives a pure imaginary number, which is easy to raise to powers.</p></li>
+          <li><div class="do"><p>$(1+i)^8 = \left((1+i)^2\right)^4 = (2i)^4 = 16i^4 = 16$.</p></div><p class="why">Power of a power, then $i^4 = 1$.</p></li>
+        </ol>
+        <p class="answer">$5 - 12i$ and $16$</p>
+      </article>
+
+      <article class="example" data-tier="stretch">
+        <h3>A reciprocal</h3>
+        <div class="problem"><p>Write $\dfrac{1}{3 + 4i}$ in the form $a + bi$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{1}{3+4i}\cdot\dfrac{3-4i}{3-4i} = \dfrac{3 - 4i}{3^2 + 4^2}$.</p></div><p class="why">Multiply by the conjugate over itself to make the denominator real.</p></li>
+          <li><div class="do"><p>$= \dfrac{3 - 4i}{25} = \dfrac{3}{25} - \dfrac{4}{25}i$.</p></div><p class="why">Split into real and imaginary parts.</p></li>
+        </ol>
+        <p class="answer">$\dfrac{3}{25} - \dfrac{4}{25}i$</p>
+        <p class="key-idea">In general $\dfrac{1}{z} = \dfrac{\overline{z}}{z\overline{z}} = \dfrac{\overline z}{a^2+b^2}$.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>Solve a complex linear equation</h3>
+        <div class="problem"><p>Find the complex number $z$ with $z + 2\overline{z} = 6 - i$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>Let $z = a + bi$, so $\overline{z} = a - bi$.</p></div><p class="why">The conjugate can't be handled by ordinary algebra on $z$ alone, so name the real and imaginary parts.</p></li>
+          <li><div class="do"><p>$z + 2\overline{z} = (a + bi) + (2a - 2bi) = 3a - bi$.</p></div><p class="why">Combine real parts and imaginary parts.</p></li>
+          <li data-think="One equation, two unknowns $a$ and $b$. How can you still solve it?"><div class="do"><p>$3a - bi = 6 - i$ gives $3a = 6$ and $-b = -1$.</p></div><p class="why">Complex numbers are equal only when both their real parts and their imaginary parts match, so one complex equation is two real equations.</p></li>
+          <li><div class="do"><p>$a = 2$, $b = 1$, so $z = 2 + i$. Check: $(2 + i) + 2(2 - i) = 6 - i$. ✓</p></div><p class="why">Substitute back to confirm.</p></li>
+        </ol>
+        <p class="answer">$z = 2 + i$</p>
+        <p class="key-idea">Matching real and imaginary parts turns one complex equation into two real ones.</p>
+      </article>
+
+      <article class="example" data-tier="challenge">
+        <h3>A quotient raised to a huge power</h3>
+        <div class="problem"><p>Evaluate $\left(\dfrac{1 + i}{1 - i}\right)^{2026}$.</p></div>
+        <ol class="steps">
+          <li><div class="do"><p>$\dfrac{1+i}{1-i}\cdot\dfrac{1+i}{1+i} = \dfrac{(1+i)^2}{1^2 + 1^2} = \dfrac{2i}{2} = i$.</p></div><p class="why">Simplify the base before thinking about the exponent; the conjugate trick reduces it to a single power of $i$.</p></li>
+          <li><div class="do"><p>So the expression is $i^{2026}$, and $2026 = 4 \cdot 506 + 2$.</p></div><p class="why">Divide the exponent by 4 to find where we are in the cycle.</p></li>
+          <li><div class="do"><p>$i^{2026} = i^2 = -1$.</p></div><p class="why">Only the remainder $2$ matters.</p></li>
+        </ol>
+        <p class="answer">$-1$</p>
+        <p class="book-next">You're ready for the chapter's Problems to Solve.</p>
+      </article>
+    </div>
+  </section>
+
+  <section class="chapter-end further-reading" aria-labelledby="further-2">
+    <h2 id="further-2">Further reading in the book</h2>
+    <ul>
+      <li><strong>§2.1 The Square Root of −1</strong>: the cycle of powers of $i$ and Exercise 2-1.</li>
+      <li><strong>§2.2 Complex Number Operations</strong>: Examples 2-1 to 2-5 and Exercises 2-2 to 2-14 (sums, products, quotients and conjugates in general form).</li>
+      <li><strong>Problems to Solve for Chapter 2</strong>: short computations with powers of $i$, products, quotients and conjugate identities.</li>
+    </ul>
+  </section>
+</main>
+
+<script src="../../assets/widgets.js"></script>
+<script src="../../assets/core.js"></script>
+<script>
+/* ---------- Chapter 2 explorers ---------- */
+(function () {
+  "use strict";
+
+  function cx(re, im) { return { re: re, im: im }; }
+  function cTex(z) {
+    var re = Math.round(z.re * 1000) / 1000, im = Math.round(z.im * 1000) / 1000;
+    if (Object.is(re, -0)) re = 0; if (Object.is(im, -0)) im = 0;
+    if (im === 0) return String(re);
+    var imPart = (Math.abs(im) === 1 ? "" : String(Math.abs(im))) + "i";
+    if (re === 0) return (im < 0 ? "-" : "") + imPart;
+    return re + (im < 0 ? " - " : " + ") + imPart;
+  }
+
+  /* 2.1 — powers of i as quarter turns */
+  AOPS.registerWidget("powersOfI", function (body) {
+    var svg = W.stage(body, { w: 620, h: 380, label: "Unit circle with the four values 1, i, -1, -i; a spiral path shows repeated quarter turns" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var n = 5;
+    var sl = W.slider(ctl, { label: "Exponent n", min: -8, max: 24, value: n, onInput: function (v) { n = v; draw(); } });
+    W.button(ctl, "× i", function () { if (n < 24) sl.set(n + 1); });
+    W.button(ctl, "÷ i", function () { if (n > -8) sl.set(n - 1); });
+    var cxp = 200, cyp = 190, R = 120;
+    var vals = [["1", 1, 0], ["i", 0, 1], ["−1", -1, 0], ["−i", 0, -1]];
+    function draw() {
+      W.clear(svg);
+      svg.appendChild(W.s("line", { x1: cxp - 175, y1: cyp, x2: cxp + 175, y2: cyp, stroke: "var(--border-strong)" }));
+      svg.appendChild(W.s("line", { x1: cxp, y1: cyp - 175, x2: cxp, y2: cyp + 175, stroke: "var(--border-strong)" }));
+      svg.appendChild(W.s("circle", { cx: cxp, cy: cyp, r: R, fill: "none", stroke: "var(--faint)", "stroke-dasharray": "4 6" }));
+      svg.appendChild(W.s("text", { x: cxp + 172, y: cyp + 22, class: "lbl", "text-anchor": "end", text: "real" }));
+      svg.appendChild(W.s("text", { x: cxp + 8, y: cyp - 160, class: "lbl", text: "imaginary" }));
+      // spiral path: radius grows slightly with each quarter turn so full turns are visible
+      var steps = Math.abs(n), dir = n >= 0 ? 1 : -1, d = "";
+      var samples = Math.max(1, steps * 24);
+      for (var k = 0; k <= samples; k++) {
+        var t = k / 24; // quarter turns
+        var ang = dir * t * Math.PI / 2;
+        var rr = 34 + t * (R - 34) / Math.max(steps, 1);
+        if (steps === 0) rr = 34;
+        d += (k ? "L" : "M") + (cxp + rr * Math.cos(ang)).toFixed(1) + " " + (cyp - rr * Math.sin(ang)).toFixed(1);
+      }
+      if (steps > 0) svg.appendChild(W.s("path", { d: d, fill: "none", stroke: "var(--accent-2)", "stroke-width": 2.5, opacity: 0.85 }));
+      var r = ((n % 4) + 4) % 4;
+      vals.forEach(function (v, idx) {
+        var px = cxp + R * v[1], py = cyp - R * v[2], on = idx === r;
+        svg.appendChild(W.s("circle", { cx: px, cy: py, r: on ? 13 : 8, fill: on ? "var(--accent)" : "var(--surface-2)", stroke: on ? "var(--accent)" : "var(--border-strong)", "stroke-width": 2 }));
+        var lx = px + (v[1] ? v[1] * 26 : 18), ly = py + (v[2] ? -v[2] * 24 : -14) + 5;
+        svg.appendChild(W.s("text", { x: lx, y: ly, "text-anchor": "middle", style: "font: 700 16px var(--font-mono)", fill: on ? "var(--accent)" : "var(--muted)", text: v[0] }));
+      });
+      // cycle table on the right
+      var tx = 420;
+      svg.appendChild(W.s("text", { x: tx, y: 40, class: "lbl", text: "remainder of n ÷ 4" }));
+      vals.forEach(function (v, idx) {
+        var y = 70 + idx * 54, on = idx === r;
+        svg.appendChild(W.s("rect", { x: tx, y: y, width: 170, height: 42, rx: 10, fill: on ? "color-mix(in srgb, var(--accent) 22%, transparent)" : "var(--surface-2)", stroke: on ? "var(--accent)" : "var(--border-strong)" }));
+        svg.appendChild(W.s("text", { x: tx + 16, y: y + 27, style: "font: 600 15px var(--font-mono)", fill: "var(--ink)", text: "r = " + idx }));
+        svg.appendChild(W.s("text", { x: tx + 154, y: y + 27, "text-anchor": "end", style: "font: 700 15px var(--font-mono)", fill: on ? "var(--accent)" : "var(--muted)", text: "i^r = " + v[0] }));
+      });
+      var turns = Math.floor(Math.abs(n) / 4);
+      svg.appendChild(W.s("text", { x: tx, y: 310, class: "lbl", text: Math.abs(n) + " quarter turn" + (Math.abs(n) === 1 ? "" : "s") + (n < 0 ? " clockwise" : "") }));
+      svg.appendChild(W.s("text", { x: tx, y: 330, class: "lbl", text: "= " + turns + " full turn" + (turns === 1 ? "" : "s") + " + " + (Math.abs(n) % 4) + " more" }));
+      var q = Math.floor(n / 4);
+      var valTex = ["1", "i", "-1", "-i"][r];
+      out.tex("i^{" + n + "} = i^{4(" + q + ") + " + r + "} = (i^4)^{" + q + "}\\cdot i^{" + r + "} = i^{" + r + "} = " + valTex);
+    }
+    draw();
+  });
+
+  /* 2.2 — operations in the complex plane */
+  AOPS.registerWidget("complexOps", function (body) {
+    var svg = W.stage(body, { w: 600, h: 460, label: "Complex plane with draggable points z and w and the result of the chosen operation" });
+    var ctl = W.controls(body);
+    var out = W.readout(body);
+    var z = cx(3, 2), w = cx(1, -2), op = "add";
+    var P = W.plane(svg, { x: [-8, 8], y: [-6, 6], step: 1, pad: 24, labelEvery: 2 });
+    svg.appendChild(W.s("text", { x: P.X(8) - 4, y: P.Y(0) - 8, "text-anchor": "end", class: "lbl", text: "Re" }));
+    svg.appendChild(W.s("text", { x: P.X(0) + 8, y: P.Y(6) + 14, class: "lbl", text: "Im" }));
+    var layer = W.s("g");
+    svg.appendChild(layer);
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+    function snap(px, py) { return cx(clamp(Math.round(P.ix(px)), -6, 6), clamp(Math.round(P.iy(py)), -5, 5)); }
+    var hz = W.handle(svg, { x: P.X(z.re), y: P.Y(z.im), label: "Point z; arrow keys move it", keyStep: P.X(1) - P.X(0), color: "var(--accent)",
+      onMove: function (px, py) { z = snap(px, py); draw(); return [P.X(z.re), P.Y(z.im)]; },
+      valueText: function () { return "z = " + cTex(z); } });
+    var hw = W.handle(svg, { x: P.X(w.re), y: P.Y(w.im), label: "Point w; arrow keys move it", keyStep: P.X(1) - P.X(0), color: "var(--plot-2)",
+      onMove: function (px, py) { w = snap(px, py); draw(); return [P.X(w.re), P.Y(w.im)]; },
+      valueText: function () { return "w = " + cTex(w); } });
+    W.segmented(ctl, { title: "Operation", value: op, options: [
+      { value: "add", label: "z + w" }, { value: "sub", label: "z − w" }, { value: "mul", label: "z · w" },
+      { value: "conj", label: "z̄" }, { value: "div", label: "z ÷ w" }], onChange: function (v) { op = v; draw(); } });
+    function arrow(a, b, color, dash, width) {
+      return W.s("line", { x1: P.X(a.re), y1: P.Y(a.im), x2: P.X(b.re), y2: P.Y(b.im), stroke: color, "stroke-width": width || 2.5, "stroke-dasharray": dash || null, "stroke-linecap": "round" });
+    }
+    function inView(p) { return p.re >= -8 && p.re <= 8 && p.im >= -6 && p.im <= 6; }
+    function lab(p, text, color, dx, dy) {
+      return W.s("text", { x: P.X(p.re) + (dx || 12), y: P.Y(p.im) + (dy || -12), style: "font: 700 14px var(--font-mono)", fill: color, text: text });
+    }
+    function draw() {
+      W.clear(layer);
+      var O = cx(0, 0), res = null, t = "";
+      layer.appendChild(arrow(O, z, "var(--accent)"));
+      if (op !== "conj") layer.appendChild(arrow(O, w, "var(--plot-2)"));
+      layer.appendChild(lab(z, "z", "var(--accent)"));
+      if (op !== "conj") layer.appendChild(lab(w, "w", "var(--plot-2)", 12, 22));
+      var zt = "(" + cTex(z) + ")", wt = "(" + cTex(w) + ")";
+      if (op === "add") {
+        res = cx(z.re + w.re, z.im + w.im);
+        layer.appendChild(arrow(z, res, "var(--plot-2)", "5 5", 1.5));
+        layer.appendChild(arrow(w, res, "var(--accent)", "5 5", 1.5));
+        t = zt + " + " + wt + " = (" + z.re + " + " + w.re + ") + (" + z.im + " + " + w.im + ")i = " + cTex(res);
+      } else if (op === "sub") {
+        res = cx(z.re - w.re, z.im - w.im);
+        layer.appendChild(arrow(w, z, "var(--faint)", "5 5", 1.5));
+        t = zt + " - " + wt + " = " + cTex(res) + "\\quad(\\text{the arrow from } w \\text{ to } z)";
+      } else if (op === "mul") {
+        res = cx(z.re * w.re - z.im * w.im, z.re * w.im + z.im * w.re);
+        t = zt + wt + " = " + (z.re * w.re) + " + " + (z.re * w.im) + "i + " + (z.im * w.re) + "i + " + (z.im * w.im) + "i^2 = " + cTex(res);
+      } else if (op === "conj") {
+        res = cx(z.re, -z.im);
+        layer.appendChild(W.s("line", { x1: P.X(z.re), y1: P.Y(z.im), x2: P.X(res.re), y2: P.Y(res.im), stroke: "var(--faint)", "stroke-dasharray": "3 5" }));
+        t = "\\overline{" + cTex(z) + "} = " + cTex(res) + ",\\qquad z\\overline{z} = " + z.re + "^2 + " + (z.im < 0 ? "(" + z.im + ")" : z.im) + "^2 = " + (z.re * z.re + z.im * z.im);
+      } else {
+        var den = w.re * w.re + w.im * w.im;
+        if (den === 0) { t = "\\text{Division by } 0 \\text{ is undefined: move } w \\text{ away from the origin.}"; }
+        else {
+          var nr = z.re * w.re + z.im * w.im, ni = z.im * w.re - z.re * w.im;
+          res = cx(nr / den, ni / den);
+          t = "\\frac{" + cTex(z) + "}{" + cTex(w) + "} = \\frac{" + zt + "(" + cTex(cx(w.re, -w.im)) + ")}{" + den + "} = \\frac{" + cTex(cx(nr, ni)) + "}{" + den + "} = " + W.frac(nr, den) + (ni === 0 ? "" : (ni < 0 ? " - " : " + ") + W.frac(Math.abs(ni), den) + "i");
+        }
+      }
+      if (res) {
+        if (inView(res)) {
+          layer.appendChild(arrow(O, res, "var(--plot-3)", null, 3.5));
+          layer.appendChild(W.s("circle", { cx: P.X(res.re), cy: P.Y(res.im), r: 7, fill: "var(--plot-3)", stroke: "var(--surface-solid)", "stroke-width": 2 }));
+          layer.appendChild(lab(res, "result", "var(--plot-3)", 10, 22));
+        } else {
+          layer.appendChild(W.s("text", { x: P.X(-7.8), y: P.Y(-5.4), class: "lbl", text: "result " + cTex(res) + " is off the chart" }));
+        }
+      }
+      out.tex(t.replace(/\+ -/g, "- "));
+    }
+    draw();
+  });
+})();
+</script>
+</body>
+</html>
